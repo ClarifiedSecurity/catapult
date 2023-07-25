@@ -8,9 +8,6 @@
 # This needs to be unique if you are running multiple Catapult container instances on the same host
 MAKEVAR_COMPOSE_PROJECT_NAME :=Catapult
 
-# If you are not using sudo you can set this to empty, eg for MacOS
-MAKEVAR_SUDO_COMMAND :=sudo -E
-
 # Timezone for container's /etc/timezone
 MAKEVAR_TZ :=UTC
 
@@ -41,6 +38,9 @@ KEEPASS_KEY_PATH :=
 ######################
 # Optional variables #
 ######################
+
+# If you are not using sudo you can leave this empty, MacOS for an example
+MAKEVAR_SUDO_COMMAND :=sudo -E
 
 # This repo is used to store your customizations for Catapult
 # Make sure to follow the correct folder and file structure defined in the Catapult README under customization section
