@@ -4,7 +4,7 @@ C_RED="\033[31m"
 C_GREEN="\033[32m"
 C_RST="\033[0m"
 
-echo -e ${C_RST}
+echo -n -e ${C_RST}
 SEARCH_DIR=/srv/inventories
 SEARCH_FILE=inventory.ini
 EXCLUDE_DIRS=(_TEMPLATE_PROJECT)
