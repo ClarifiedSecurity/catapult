@@ -66,8 +66,6 @@ ADD --chown=builder:builder /requirements /srv/requirements
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder /container/docker-entrypoint.sh /
 
-RUN sudo update-ca-certificates --fresh
-
 WORKDIR /srv
 
 # NOTCUSTOM because custom requirements will be installed on first run and updating them needs to be available without rebuilding the image
