@@ -50,7 +50,7 @@ start-tasks: checks
 .PHONY: build
 build: checks customizations
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use
-	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --platform linux/amd64,linux/arm64 -t ${IMAGE_FULL} .
+	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} -t ${IMAGE_FULL} . --load
 
 ## run: Run the container
 .PHONY: run
