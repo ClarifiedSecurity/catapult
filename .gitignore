@@ -1,0 +1,50 @@
+.yarnrc.yml
+*.log
+*.retry
+*.swp
+*.swp
+**/__pycache__/**
+/.makerc-custom
+/.makerc-personal
+/.makerc-project
+/.makerc-vars
+/container/home/builder/.custom_aliases
+/container/home/builder/.ssh/config.d/
+/container/home/builder/.ssh/known_hosts
+/custom/**
+ansible/**
+container/home/builder/.*_history
+/docker/docker-compose-extra.yml
+/docker/docker-compose-personal.yml
+node_modules
+poetry/**
+requirements/**
+# Since this list is parsed in order, the deny (!) needs to be after allow for the same folder
+/inventories/*
+!/inventories/_TEMPLATE_PROJECT
+!/inventories/group_vars
+sync-to-shared-roles.sh
+/roles
+/roles_core
+/.idea/webServers.xml
+/.idea/sshConfigs.xml
+/.idea/deployment.xml
+upload/
+download/
+archives/
+.vscode
+.DS_Store
+.githooks
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Swap the comments on the following lines if you don't wish to use zero-installs
+# Documentation here: https://yarnpkg.com/features/zero-installs
+# !.yarn/cache
+.pnp.*

@@ -1,0 +1,18 @@
+*.iso filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.exe filter=lfs diff=lfs merge=lfs -text
+*.tar filter=lfs diff=lfs merge=lfs -text
+*.tar.gz filter=lfs diff=lfs merge=lfs -text
+*.tgz filter=lfs diff=lfs merge=lfs -text
+*.deb filter=lfs diff=lfs merge=lfs -text
+*.tar.bz2 filter=lfs diff=lfs merge=lfs -text
+*.tar.xz filter=lfs diff=lfs merge=lfs -text
+*.go.bin filter=lfs diff=lfs merge=lfs -text
+*.jar filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text -diff
+*.jpeg filter=lfs diff=lfs merge=lfs -text -diff
+*.png filter=lfs diff=lfs merge=lfs -text -diff
+*.deb filter=lfs diff=lfs merge=lfs binary
+
+# Making sure that line endings are always LF othwrwsie Windows will convert them to CRLF and scripts will not work in WSL
+* text eol=lf

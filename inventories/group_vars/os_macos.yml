@@ -1,0 +1,22 @@
+---
+ansible_python_interpreter: /usr/bin/python3
+
+admin_account: root
+template_username: "{{ admin_account }}"
+
+# SSH
+default_connection_plugin: ssh
+default_ansible_shell_type: sh
+
+# Become defaults
+default_become_value: true
+default_become_user: root
+
+sysprep: no
+
+# Can't do gather facts, cuz no python by default, so let's improvise
+ansible_system: Darwin
+
+# increase ram for macos
+cpus: 4
+ram_gb: 4

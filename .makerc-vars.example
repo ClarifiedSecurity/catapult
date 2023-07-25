@@ -1,0 +1,102 @@
+######################
+# Required variables #
+######################
+
+# REQUIRED_START (DO NOT REMOVE THIS LINE)
+
+# Docker compose project name
+# This needs to be unique if you are running multiple Catapult container instances on the same host
+MAKEVAR_COMPOSE_PROJECT_NAME :=Catapult
+
+# If you are not using sudo you can set this to empty, eg for MacOS
+MAKEVAR_SUDO_COMMAND :=sudo -E
+
+# Timezone for container's /etc/timezone
+MAKEVAR_TZ :=UTC
+
+# This starts the SSH service on your host machine
+# This required when configuring your host machine with Catapult or configuring VMs that are running on your host machine's VMware Workstation
+# Set to true to enable, false to disable
+MAKEVAR_ALLOW_HOST_SSH_ACCESS :=false
+
+# This is the path inside your KeePass (https://keepassxc.org/) database.
+# It points to the entry where your LDAP username & password are.
+# These credentials will be used to authenticate to different services like Virtualization provider, Providentia, Vault etc.
+# Don't include the root folder in the path (usually named Root).
+# Example: Catapult/Credentials where Catapult is the group name and Credentials is the entry in KeePass
+KEEPASS_DEPLOYER_CREDENTIALS :=
+
+# This is the path to your KeePass database file in your host
+# It will be mounted inside the catapult container
+# Use fullpath, you can get it with the command "readlink -f /path/to/file.kdbx"
+KEEPASS_DB_PATH :=
+
+# This is the path to your KeePass database key file in your host
+# It will be mounted inside the catapult container
+# Use fullpath, you can get it with the command "readlink -f /path/to/file.key"
+KEEPASS_KEY_PATH :=
+
+# REQUIRED_END (DO NOT REMOVE THIS LINE)
+
+######################
+# Optional variables #
+######################
+
+# This repo is used to store your customizations for Catapult
+# Make sure to follow the correct folder and file structure defined in the Catapult README under customization section
+# Example for SSH git@github.com:YourAccount/YourProject.git or HTTPS https://github.com/YourAccount/YourProject.git
+MAKEVAR_CATAPULT_CUSTOMIZER_REPO :=
+
+# This is the FQDN of docker registry that is hosting the Catapult container image
+# This can be the place where the CI/CD pipelines build your custom Catapult image
+# Set the value to the registry machine's FQDN
+# Only HTTPS is supported so make sure that you are using a trusted certificates or Catapult trusts your CA (refer to README under customization section)
+MAKEVAR_CONTAINER_REGISTRY :=ghcr.io
+
+# Set to true if your docker registry requires authentication
+# Credentials will be asked when running `make prepare`
+MAKEVAR_CONTAINER_REGISTRY_REQUIRES_AUTH :=false
+
+# This is the name of the Catapult container image that will be used
+MAKEVAR_IMAGE_NAME :=clarifiedsecurity/catapult
+
+# This is the image tag of the Catapult container image that will be used
+# Available option is only latest
+MAKEVAR_IMAGE_TAG :=latest
+
+# This is the FQDN of your custom/internal docker proxy that will be used to pull images from Dockerhub (or other public) for an example
+# This can be required to avoid hitting the Dockerhub (or other public provider's) rate limits
+# Set the value to the proxy machine's FQDN
+# Will be configured in the hosts's /etc/docker/daemon.json when running `make prepare`
+MAKEVAR_CONTAINER_PROXY :=
+
+# It points to the KeePass entry where your base64 encoded SSH Private Key is on the username field & SSH Public Key is on the password field.
+# Make sure the Private Key is encoded like this "cat ~/.ssh/keyfile | base64 -w 0"
+# Only EC keypairs are supported because of KeePass field length limitation
+# This can be used to install your SSH keypair into different servers during deployment
+KEEPASS_SSH_KEYPAIR :=
+
+# It points to the Keepass entry where your GitLab token is on the password field.
+# The token can be generated in the GitLab GUI, under your profile and requires minimum of read_repository permissions
+# This can be used to check the version of different private collecions and compare it to the installed version
+KEEPASS_GITLAB_TOKEN :=
+
+# It points to the KeePass entry where your AWS Access Key ID is on the username field & Access Key itself is on the password field.
+# This can be used to deploy AWS resources
+KEEPASS_AWS_ACCESS_KEY :=
+
+# It points to the KeePass entry where your Linode API token is on the password field
+# This can be used to deploy Linode resources
+KEEPASS_LINODE_API_TOKEN :=
+
+# It points to the KeePass entry where your Azure Service Principal secret is on the password field
+# This can be used to deploy Azure resources
+KEEPASS_AZURE_SERVICE_PRINCIPAL :=
+
+# It points to the entry where your Providentia API token is on the password field
+# This can be used to read the Providentia API during deployment
+KEEPASS_PROVIDENTIA_API_TOKEN :=
+
+# Your E-Mail address
+# So your E-Mail address can be used during deployment for an example configuring .gitconfig file or sending notifications
+MAKEVAR_EMAIL :=

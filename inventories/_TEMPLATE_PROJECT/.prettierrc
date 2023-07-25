@@ -1,0 +1,19 @@
+{
+  "printWidth": 120,
+  "trailingComma": "es5",
+  "useTabs": false,
+  "tabWidth": 2,
+  "endOfLine": "lf",
+  "semi": true,
+  "singleQuote": false,
+  "overrides": [
+    {
+      "files": ".yml",
+      "options": { "parser": "yaml" }
+    },
+    {
+      "files": ".vue",
+      "options": { "parser": "vue" }
+    }
+  ]
+}

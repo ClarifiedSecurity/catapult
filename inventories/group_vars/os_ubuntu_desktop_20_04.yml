@@ -1,0 +1,18 @@
+---
+# Template created with packer
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_ubuntu_desktop2004
+
+# vCenter Template name
+vm_template: "{{ ubuntu_desktop2004_vm_template_name | default('catapult-template-ubuntu-desktop2004') }}"
+
+# AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
+ami_owner_id: "679593333241"
+ami_name_search_string: ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server*
+aws_template_username: ubuntu
+aws_vm_size: m5.large # Recommended by vendor
+
+# Linode Image curl https://api.linode.com/v4/images
+linode_image: linode/ubuntu20.04
+
+netplan_renderer: NetworkManager

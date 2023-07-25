@@ -1,0 +1,6 @@
+---
+# Template created with packer
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_winserver2019_gui
+
+vm_template: "{{ winserver2019_gui_vm_template_name | default('catapult-template-winserver2019-gui') }}"

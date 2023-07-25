@@ -1,0 +1,5 @@
+# Template created with packer
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_macos_11_7_bigsur
+
+vm_template: "{{ macos_11_7_bigsur_vm_template_name | default('catapult-template-macos-11-7-bigsur') }}"

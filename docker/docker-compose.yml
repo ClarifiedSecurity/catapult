@@ -1,0 +1,54 @@
+---
+name: ${CONTAINER_PROJECT_NAME}
+services:
+  catapult:
+    tty: true
+    image: ${IMAGE_FULL}
+    container_name: ${CONTAINER_NAME}
+    hostname: ${CONTAINER_NAME}
+    restart: no
+    volumes:
+      # This is /tmp so other make customization commands wont overwrite the certificate symlinks
+      # docker-entrypoint.sh moves the certificates to the correct location
+      - ${ROOT_DIR}/custom/certificates:/tmp/ca-certificates
+      - ${ROOT_DIR}/:/srv/
+      - ${KEEPASS_DB_PATH}:/home/builder/KPDB.kbdx:ro
+      - ${KEEPASS_KEY_PATH}:/home/builder/KPDB.key:ro
+      - ${ROOT_DIR}/container/docker-entrypoint.sh:/docker-entrypoint.sh
+      - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
+      - ${ROOT_DIR}/container/home/builder/.default_aliases:/home/builder/.default_aliases
+      - ${ROOT_DIR}/container/home/builder/.custom_aliases:/home/builder/.custom_aliases
+      - ${ROOT_DIR}/container/home/builder/.zsh_history:/home/builder/.zsh_history
+      - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
+      - ${HOST_SSH_AUTH_SOCK}:/ssh-agent
+    environment:
+      CONTAINER_USER_ID: ${CONTAINER_USER_ID}
+      CONTAINER_GROUP_ID: ${CONTAINER_GROUP_ID}
+      CONTAINER_USER_NAME: ${CONTAINER_USER_NAME}
+      CONTAINER_GROUP_NAME: ${CONTAINER_GROUP_NAME}
+      USER: ${CONTAINER_USER_NAME}
+      KEEPASS_DEPLOYER_CREDENTIALS: ${KEEPASS_DEPLOYER_CREDENTIALS}
+      KEEPASS_GITLAB_TOKEN: ${KEEPASS_GITLAB_TOKEN}
+      KEEPASS_AWS_ACCESS_KEY: ${KEEPASS_AWS_ACCESS_KEY}
+      KEEPASS_LINODE_API_TOKEN: ${KEEPASS_LINODE_API_TOKEN}
+      KEEPASS_PROVIDENTIA_API_TOKEN: ${KEEPASS_PROVIDENTIA_API_TOKEN}
+      KEEPASS_SSH_KEYPAIR: ${KEEPASS_SSH_KEYPAIR}
+      KEEPASS_AZURE_SERVICE_PRINCIPAL: ${KEEPASS_AZURE_SERVICE_PRINCIPAL}
+      ALLOW_HOST_SSH_ACCESS: ${MAKEVAR_ALLOW_HOST_SSH_ACCESS}
+      EMAIL: ${MAKEVAR_EMAIL}
+      DISPLAY: ${DISPLAY}
+      SSH_AUTH_SOCK: /ssh-agent
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
+      TZ: ${MAKEVAR_TZ}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    logging:
+      driver: json-file
+      options:
+        max-size: 250m
+        max-file: "1"
+
+networks:
+  default:
+    name: ${CONTAINER_NETWORK}
+    external: true # External becuase when compose creates the network the container does not have an IPv6 address

@@ -1,0 +1,5 @@
+---
+ansible_network_os: community.routeros.routeros
+customization_method: routeros
+
+admin_account: admin

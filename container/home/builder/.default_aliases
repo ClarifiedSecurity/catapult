@@ -1,0 +1,93 @@
+export PATH=$HOME/.local/bin:$PATH
+
+################
+# MISC aliases #
+################
+
+## Clear the terminal
+alias cls=clear
+
+## Update the system, sometimes useful during development
+alias update-computer="sudo apt autoclean -y && sudo apt autoremove -y && sudo apt update -y && sudo apt dist-upgrade -y"
+
+####################
+# Catapult aliases #
+####################
+
+### General ###
+
+alias ctp-install-all-requirements="/srv/scripts/general/install-all-requirements.sh ALL"
+
+alias ctp-install-custom-requirements="/srv/scripts/general/install-all-requirements.sh CUSTOM"
+
+alias ctp-select-project="source /srv/scripts/entrypoints/99-select-inventory.sh"
+
+### Deploy modes ###
+
+alias ctp-deploy="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -l"
+
+alias ctp-redeploy="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=redeploy -l"
+
+alias ctp-redeploy-until-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=redeploy -e just_clone=true -l"
+
+alias ctp-deploy-from-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e role_only_wp=true -l"
+
+alias ctp-deploy-role="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e role_only=true -l"
+
+alias ctp-deploy-network="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e reconfigure_network=yes -l"
+
+alias ctp-deploy-fresh="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=fresh_deploy=true -e=manual_fresh_deploy=true -l"
+
+alias ctp-remove="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=undeploy -l"
+
+alias ctp-rebuild-linode-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e rebuild=yes -l"
+
+### Deploy modes based on @start.retry file ###
+
+alias ctp-retry-deploy="ctp-deploy @start.retry"
+
+alias ctp-retry-redeploy="ctp-redeploy @start.retry"
+
+alias ctp-retry-until-configuration="ctp-redeploy-until-configuration @start.retry"
+
+alias ctp-retry-from-configuration="ctp-deploy-from-configuration @start.retry"
+
+alias ctp-retry-deploy-role="ctp-deploy-role @start.retry"
+
+### Snapshot modes ###
+
+alias ctp-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=snap -e pre_role=clarified.core.snapshots -l"
+
+alias ctp-clean-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=resnap -e pre_role=clarified.core.snapshots -l"
+
+alias ctp-live-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=live-snap -e pre_role=clarified.core.snapshots -l"
+
+alias ctp-revert="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=revert -e pre_role=clarified.core.snapshots -l"
+
+alias ctp-remove-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=remove -e pre_role=clarified.core.snapshots -l"
+
+alias ctp-rename-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=rename -e pre_role=clarified.core.snapshots -l"
+
+### Power state ###
+
+alias ctp-poweron="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweron -e=poweron=true -e pre_role=clarified.core.powerstate -l"
+
+alias ctp-restart="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=restart -e=restart=true -e pre_role=clarified.core.powerstate -l"
+
+alias ctp-shutdown="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=shutdown -e=shutdown=true -e pre_role=clarified.core.powerstate -l"
+
+alias ctp-poweroff="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweroff -e=poweroff=true -e pre_role=clarified.core.powerstate -l"
+
+alias ctp-reset="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=reset -e=reset=true -e pre_role=clarified.core.powerstate -l"
+
+### MISC ###
+
+alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e=single_role=shared.roles.updates -l"
+
+alias ctp-list="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy --list-hosts -l"
+
+alias ctp-list-vars="ansible-inventory /srv/inventories/start.yml -e=deploy_mode=deploy --vars --host"
+
+alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e pre_role=shared.roles.rename_vm -l"
+
+alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=shared.roles.get_ip -l"

@@ -1,0 +1,5 @@
+---
+ansible_network_os: vyos.vyos.vyos
+customization_method: vyos
+
+admin_account: vyos

@@ -1,0 +1,22 @@
+post_scripts_folder_on_target: c:\tmp
+
+# hardware
+cpus: 4
+ram_gb: 8
+
+admin_account: Administrator
+template_username: "{{ admin_account }}"
+
+customization_method: windows_cli
+configure_network_with_rest_api: yes
+
+# connection options
+default_connection_plugin: ssh
+default_ansible_shell_type: powershell
+ansible_shell_type: "{{ default_ansible_shell_type }}"
+
+# Become defaults
+default_become_value: false
+default_become_user: "{{ ansible_user }}"
+
+sysprep: yes # Used during template generation

@@ -1,0 +1,7 @@
+---
+roles:
+
+collections:
+  - name: https://github.com/ClarifiedSecurity/clarified.core.git#/clarified/core # https://github.com/ClarifiedSecurity/clarified.core
+    type: git
+    version: HEAD # Default version is latest but it can be locked to a specific tag - https://github.com/ClarifiedSecurity/clarified.core/tags

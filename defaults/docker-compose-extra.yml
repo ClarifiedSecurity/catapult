@@ -1,0 +1,8 @@
+---
+# This is an example file how to extend Catault with your own organizations docker-compose-extra.yml file.
+
+name: ${CONTAINER_PROJECT_NAME}
+services:
+  catapult:
+    environment:
+      EXTRA_ORG: EXAMPLE_ORG

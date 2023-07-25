@@ -1,0 +1,8 @@
+---
+# This is an example file how to extend Catault with your own personal docker-compose-personal.yml file.
+
+name: ${CONTAINER_PROJECT_NAME}
+services:
+  catapult:
+    environment:
+      EXTRA_PERSONAL: EXAMPLE_PERSONAL
