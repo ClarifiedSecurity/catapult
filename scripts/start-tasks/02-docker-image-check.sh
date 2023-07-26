@@ -2,6 +2,22 @@
 
 echo -n -e ${C_CYAN}
 
+# Docker image pull function
+docker_pull () {
+
+select option in "${options[@]}"; do
+    case "$REPLY" in
+        yes) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
+        no) echo -e "Not pulling now"; break;;
+        y) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
+        n) echo -e "Not pulling now"; break;;
+        1) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
+        2) echo -e "Not pulling now"; break;;
+    esac
+done
+
+}
+
 # Chcking for docker image updates if ${MAKEVAR_CONTAINER_REGISTRY} is defined
 if [[ -z "${MAKEVAR_CONTAINER_REGISTRY}" ]]; then
 
@@ -30,23 +46,6 @@ else
 
 fi
 
-docker_pull () {
-
-select option in "${options[@]}"; do
-    case "$REPLY" in
-        yes) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
-        no) echo -e "Not pulling now"; break;;
-        y) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
-        n) echo -e "Not pulling now"; break;;
-        1) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
-        2) echo -e "Not pulling now"; break;;
-    esac
-done
-
-}
-
-echo -e "Checking for docker image updates..."
-
 # Checking if local image exists and pulling if not
 if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
 
@@ -63,11 +62,11 @@ if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
 
 else
 
-    # Checkig if local image is up to date
-    local_image_sha256=$(${MAKEVAR_SUDO_COMMAND} docker inspect ${IMAGE_FULL} | jq '.[].Id')
-    remote_image_sha256=$(${MAKEVAR_SUDO_COMMAND} docker manifest inspect ${IMAGE_FULL} | jq .config.digest)
+    # Getting the local image sha256
+    local_image_sha256=$(${MAKEVAR_SUDO_COMMAND} docker inspect ${IMAGE_FULL} -f '{{.Id}}')
 
-    if [[ $local_image_sha256 != $remote_image_sha256 ]]; then
+    # Checking if local image sha256 is present in the remote image manifest
+    if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker manifest inspect ${IMAGE_FULL} -v | grep $local_image_sha256) ]]; then
 
         echo -n -e ${C_YELLOW}
         echo -e "New ${IMAGE_FULL} docker image is available"
