@@ -40,4 +40,3 @@ if [[ "${MAKEVAR_ALLOW_HOST_SSH_ACCESS}" == "true" ]]; then
   fi
 
 fi
-
