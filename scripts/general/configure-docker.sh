@@ -6,43 +6,52 @@ echo -n -e ${C_MAGENTA}
 
 if [[ $(uname) == "Linux" ]]; then
 
-  echo "Installing Docker on Linux..."
+  if grep -q "debian" /etc/os-release; then
 
-  if grep -q "Ubuntu" /etc/os-release; then
+    echo "Adding Docker apt repo on Linux..."
 
-    echo "Adding Docker repo for $(lsb_release -cs)..."
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
-    echo \
-    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+    if [[ -z $(grep -r download.docker.com /etc/apt/sources.list.d/) ]]; then
 
-  elif grep -q "Kali" /etc/os-release; then
+      if grep -q "Ubuntu" /etc/os-release; then
 
-    echo "Adding Docker repo for $(lsb_release -cs)..."
-    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg --yes
-    printf '%s\n' "deb https://download.docker.com/linux/debian bullseye stable" |  tee /etc/apt/sources.list.d/docker.list > /dev/null
+        echo "Adding Docker repo for $(lsb_release -cs)..."
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
+        echo \
+        "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-  elif grep -q "Debian" /etc/os-release; then
+      elif grep -q "Kali" /etc/os-release; then
 
-    echo "Adding Docker repo for $(lsb_release -cs)..."
-    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
-    echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        echo "Adding Docker repo for $(lsb_release -cs)..."
+        curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg --yes
+        printf '%s\n' "deb https://download.docker.com/linux/debian bullseye stable" |  tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+      elif grep -q "Debian" /etc/os-release; then
+
+        echo "Adding Docker repo for $(lsb_release -cs)..."
+        curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
+        echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+      fi
+
+    fi
 
   elif grep -q "arch" /etc/os-release; then
 
     echo "Docker will be installed with pacman..."
 
   else
-      echo "... !!! ..."
-      echo "... !!! ..."
-      echo "... !!! ..."
-      echo "Unsupported operating system, please install Docker for your OS, after installation run the following commands ( or similar ) to create the docker network with ipv6:"
-      echo "bash scripts/general/configure-docker.sh"
-      echo "systemctl start docker"
-      echo "systemctl reload docker"
-      echo "docker network create ${CONTAINER_NETWORK} --ipv6 --subnet ${CONTAINER_NETWORK_IPV6_SUBNET} --subnet ${CONTAINER_NETWORK_IPV4_SUBNET}"
+
+    echo "... !!! ..."
+    echo "... !!! ..."
+    echo "... !!! ..."
+    echo "Unsupported operating system, please install Docker for your OS, after installation run the following commands ( or similar ) to create the docker network with ipv6:"
+    echo "bash scripts/general/configure-docker.sh"
+    echo "systemctl start docker"
+    echo "systemctl reload docker"
+    echo "docker network create ${CONTAINER_NETWORK} --ipv6 --subnet ${CONTAINER_NETWORK_IPV6_SUBNET} --subnet ${CONTAINER_NETWORK_IPV4_SUBNET}"
 
   fi
 
