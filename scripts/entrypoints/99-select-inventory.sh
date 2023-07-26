@@ -6,13 +6,8 @@ C_RST="\033[0m"
 
 echo -n -e ${C_RST}
 SEARCH_DIR=/srv/inventories
-SEARCH_FILE=inventory.ini
-EXCLUDE_DIRS=(_TEMPLATE_PROJECT)
-EXCLUDE_ARGS=()
-for dir in "${EXCLUDE_DIRS[@]}"; do
-    EXCLUDE_ARGS+=(-not -path "*$dir*")
-done
-FOLDERS=($(find $SEARCH_DIR "${EXCLUDE_ARGS[@]}" -name $SEARCH_FILE -type f -printf '%h\n' | sort))
+SEARCH_FOLDER=".git"
+FOLDERS=($(find $SEARCH_DIR -type d -name $SEARCH_FOLDER -printf '%h\n' | sort))
 
 #----------------------------------------End of variables, start of script----------------------------------------#
 
