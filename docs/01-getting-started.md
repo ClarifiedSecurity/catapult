@@ -45,7 +45,7 @@ wsl --install
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install make
+brew install git make jq
 ```
 
 ## Universal getting started

@@ -33,7 +33,7 @@ if [[ $(uname) == "Darwin" ]]; then
   echo "Configuring MacOS..."
 
   echo "Installing MacOS packages with homebrew..."
-  brew install git-lfs curl jq
+  brew install git-lfs curl
 
 fi
 
@@ -45,7 +45,7 @@ if [[ $(uname) == "Linux" ]]; then
 
     echo "Installing required deb packages..."
     apt-get update
-    apt-get install git-lfs curl make jq -y
+    apt-get install git-lfs curl make -y
 
     if [[ "${MAKEVAR_ALLOW_HOST_SSH_ACCESS}" == "true" ]]; then
 
@@ -57,12 +57,13 @@ if [[ $(uname) == "Linux" ]]; then
   elif grep -q "arch" /etc/os-release; then
 
 	echo "Installing required pacman packages..."
-	pacman -S git git-lfs make curl jq --noconfirm
+	pacman -S git git-lfs make curl --noconfirm
 
 
   else
 
     echo "Unsupported OS"
+    echo "Please install git."
     echo "Please install git LFS for your OS and initialize it."
     echo "Please install curl"
     echo "Please install jq"
