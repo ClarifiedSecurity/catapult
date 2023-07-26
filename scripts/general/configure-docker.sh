@@ -8,9 +8,9 @@ if [[ $(uname) == "Linux" ]]; then
 
   if grep -q "debian" /etc/os-release; then
 
-    echo "Adding Docker apt repo on Linux..."
-
     if [[ -z $(grep -r download.docker.com /etc/apt/sources.list.d/) ]]; then
+
+      echo "Adding Docker apt repo on Linux..."
 
       if grep -q "Ubuntu" /etc/os-release; then
 
@@ -59,7 +59,7 @@ if [[ $(uname) == "Linux" ]]; then
   if grep -q "debian" /etc/os-release; then
 
     apt-get update
-    apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin git-lfs curl jq
+    apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin git-lfs curl
 
   elif grep -q "arch" /etc/os-release; then
 
