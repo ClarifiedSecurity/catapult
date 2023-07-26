@@ -16,7 +16,7 @@ catapult_update () {
   else
 
     git fetch origin $UPSTREAM:$UPSTREAM
-    echo -e "You are not on the main branch, make sure to rebase your $LOCAL_BRANCH branch with: `git rebase -i origin/$UPSTREAM`"
+    echo -e "You are not on the main branch, make sure to rebase your $LOCAL_BRANCH branch with: git rebase -i origin/$UPSTREAM"
 
   fi
 
