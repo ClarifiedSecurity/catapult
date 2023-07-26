@@ -6,7 +6,7 @@ Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is 
 
 ```sh
 sudo apt update && \
-sudo apt install git make -y
+sudo apt install git make jq -y
 ```
 
 - GOTO [Universal getting started](#universal-getting-started)
@@ -14,7 +14,7 @@ sudo apt install git make -y
 ## Linux (Arch)
 
 ```sh
-sudo pacman -S git make
+sudo pacman -S git make jq
 ```
 
 - GOTO [Universal getting started](#universal-getting-started)
@@ -33,7 +33,7 @@ wsl --install
 
   ```sh
   sudo apt update && \
-  sudo apt install git make keychain -y
+  sudo apt install git make jq keychain -y
   ```
 
 - Make sure all needed SSH keypairs are in `~/.ssh` folder in the WSL Ubuntu and ssh-agent is started. For easy-to-use SSH Agent you can follow this [guide](https://esc.sh/blog/ssh-agent-windows10-wsl2/). You can use this method to add multiple keys to the SSH Agent.
@@ -54,35 +54,35 @@ brew install make
 - Make sure all of the SSH keypairs you need are loaded ssh-agent, because Catapult will use them to connect to the VMs.
 - Clone the project from GitHub with:
 
-  ```sh
-  git clone https://github.com/ClarifiedSecurity/catapult
-  cd catapult
-  ```
+```sh
+git clone https://github.com/ClarifiedSecurity/catapult
+cd catapult
+```
 
 - Create your own variables file based on the example:
 
-  ```sh
-  cp .makerc-vars.example .makerc-vars
-  ```
+```sh
+cp .makerc-vars.example .makerc-vars
+```
 
 - Fill out all of the required vars in `.makerc-vars`, To avoid any syntax errors don't leave a space after the `:=`, follow the instructions in the comments for each variable. All of the `KEEPASS_*` paths are case sensitive.
 - Install all of the required dependencies for your host with:
 
-  ```sh
-  make prepare
-  ```
+```sh
+make prepare
+```
 
 - Start the Catapult container and connect to it with:
 
-  ```sh
-  make start
-  ```
+```sh
+make start
+```
 
 - Connect to an already started Catapult container with:
 
-  ```sh
-  make shell
-  ```
+```sh
+make shell
+```
 
 ## NB
 
