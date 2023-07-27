@@ -62,7 +62,7 @@ cd catapult
 cp .makerc-vars.example .makerc-vars
 ```
 
-- Fill out all of the required vars in `.makerc-vars`, To avoid any syntax errors don't leave a space after the `:=` sign. Read the comments for each variable for more information. All of the `KEEPASS_*` variables are case sensitive.
+- Fill out all of the required vars in `.makerc-vars`, To avoid any syntax errors don't leave a space after the `:=` sign. **Read the comments for each variable for more information.** All of the `KEEPASS_*` variables are case sensitive.
 
 - Install all of the required dependencies for your host with:
 
