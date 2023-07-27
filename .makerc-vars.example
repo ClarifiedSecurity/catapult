@@ -77,8 +77,9 @@ MAKEVAR_CONTAINER_PROXY :=
 KEEPASS_SSH_KEYPAIR :=
 
 # It points to the Keepass entry where your GitLab token is on the password field.
-# The token can be generated in the GitLab GUI, under your profile and requires minimum of read_repository permissions
+# The token can be generated in the GitLab GUI, under your profile https://gitlab-fqdn/-/profile/personal_access_tokens and requires minimum of read_repository permissions
 # This can be used to check the version of different private collecions and compare it to the installed version
+# Also make sure your SSH public key is added to GitLab https://gitlab-fqdn/-/profile/keys and your SSH private key is added to your SSH agent
 KEEPASS_GITLAB_TOKEN :=
 
 # It points to the KeePass entry where your AWS Access Key ID is on the username field & Access Key itself is on the password field.
