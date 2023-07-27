@@ -45,6 +45,8 @@ wsl --install
 brew install git make jq
 ```
 
+After installing brew make sure to add it to path with the commands it provides.
+
 ## Install
 
 - Make sure you have a working [KeePass](https://keepassxc.org/) database with a key file. Catapult will not work without the KeePass key file so make sure your database is configured to use one.
@@ -56,7 +58,7 @@ git clone https://github.com/ClarifiedSecurity/catapult
 cd catapult
 ```
 
-- Create your own variables file based on the example:
+- Create your own variables file based on the example but don't delete the example:
 
 ```sh
 cp .makerc-vars.example .makerc-vars
