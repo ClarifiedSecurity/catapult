@@ -181,6 +181,29 @@ if [[ $LOCAL_TAG == $REMOTE_TAG ]]; then
 
 fi
 
+# Looping thorugh .makerc-vars
+while IFS= read -r line; do
+
+    # Check if the line contains an equal sign (=) and either a single quote (') or double quotes (")
+    if [[ $line == *"="* ]] && { [[ $line == *"'"* ]] || [[ $line == *"\""* ]]; }; then
+
+        # Adding the error line to the array
+        error_variables+=("$line")
+
+    fi
+
+done < ${ROOT_DIR}/.makerc-vars
+
+# Print the variables that are not set correctly
+for error_variable in "${error_variables[@]}"; do
+
+  echo -n -e ${C_RED}
+  echo -e "$error_variable in ${ROOT_DIR}/.makerc-vars must not contain single or double quotes"
+  echo -n -e ${C_RST}
+  exit 1
+
+done
+
 # Checking if personal docker-compose file exists and creating it if it doesn't
 if ! [ -r docker/docker-compose-personal.yml  ]
 then
