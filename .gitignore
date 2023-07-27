@@ -6,7 +6,6 @@
 **/__pycache__/**
 /.makerc-custom
 /.makerc-personal
-/.makerc-project
 /.makerc-vars
 /container/home/builder/.custom_aliases
 /container/home/builder/.ssh/config.d/

@@ -1,8 +1,7 @@
 #!make
 
 -include .makerc-vars ### your personal values
--include .makerc-project ### project related values, these apply to everyone
--include .makerc-custom ### for your project make functions
+-include .makerc-custom ### for your custom make functions
 -include .makerc-personal ### for your own make functions
 -include .makerc ### Default initialization file
 export
