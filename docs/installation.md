@@ -1,4 +1,4 @@
-# Installation
+# 01 Installation
 
 Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is Ubuntu 22.04 LTS.
 
