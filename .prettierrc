@@ -18,6 +18,10 @@
     {
       "files": ".vue",
       "options": { "parser": "vue" }
+    },
+    {
+      "files": ".md",
+      "options": { "parser": "markdown" }
     }
   ]
 }
