@@ -204,6 +204,34 @@ for error_variable in "${error_variables[@]}"; do
 
 done
 
+# Checking that MAKEVAR_SUDO_COMMAND for MacOS is empty
+if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
+
+  echo -n -e ${C_RED}
+  echo -e "Your are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
+
+  # Prompt the user for confirmation
+  read -p "Do you still want to proceed? (y/n): " confirmation
+  echo -e -n ${C_CYAN}
+
+  # Convert the input to lowercase for case-insensitive comparison
+  confirmation_lower=$(echo "$confirmation" | tr '[:upper:]' '[:lower:]')
+
+  # Check the user's response
+  if [[ "$confirmation_lower" != "y" ]]; then
+
+    exit 1
+
+  fi
+
+  echo -n
+
+else
+
+  echo -n
+
+fi
+
 # Checking if personal docker-compose file exists and creating it if it doesn't
 if ! [ -r docker/docker-compose-personal.yml  ]
 then
