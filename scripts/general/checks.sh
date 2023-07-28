@@ -208,28 +208,12 @@ done
 # Checking that MAKEVAR_SUDO_COMMAND for MacOS is empty
 if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
 
-  echo -n -e ${C_RED}
-  echo -e "Your are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
+  echo -e ${C_RED}
+  echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
+  echo -e "sudo is not usually required on MacOS, so MAKEVAR_SUDO_COMMAND should be empty"
 
-  # Prompt the user for confirmation
-  read -p "Do you still want to proceed? (y/n): " confirmation
-  echo -e -n ${C_CYAN}
-
-  # Convert the input to lowercase for case-insensitive comparison
-  confirmation_lower=$(echo "$confirmation" | tr '[:upper:]' '[:lower:]')
-
-  # Check the user's response
-  if [[ "$confirmation_lower" != "y" ]]; then
-
-    exit 1
-
-  fi
-
-  echo -n
-
-else
-
-  echo -n
+  read -p "Press any key to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
+  echo -e ${C_CYAN}
 
 fi
 
