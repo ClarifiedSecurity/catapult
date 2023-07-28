@@ -217,6 +217,18 @@ if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_S
 
 fi
 
+# Checking if ssh-agent is running
+if [[ -z "${SSH_AUTH_SOCK}" ]]; then
+
+  echo -e ${C_RED}
+  echo -e SSH agent is not running.
+  echo -e Make sure ssh-agent is running and SSH_AUTH_SOCK is set.
+  echo -e If you are runnin Catapult on remote server, make sure you have forwarded the SSH agent...
+  echo -e ${C_RST}
+  exit 1
+
+fi
+
 # Checking if personal docker-compose file exists and creating it if it doesn't
 if ! [ -r docker/docker-compose-personal.yml  ]
 then
