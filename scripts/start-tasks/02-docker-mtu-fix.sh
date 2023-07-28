@@ -3,8 +3,9 @@
 echo -n -e ${C_CYAN}
 
 if ! [ -x "$(command -v iptables)" ]; then
-  echo -e "Not fixing Docker MTU, IPTables not installed..."
+
   exit 0
+
 fi
 
 docker_rule="FORWARD -p tcp -m tcp --tcp-flags SYN SYN -j TCPMSS --clamp-mss-to-pmtu" # https://stfc-cloud-docs.readthedocs.io/en/latest/faultfixes/HTTPConnectivityInContainerOnVM.html
