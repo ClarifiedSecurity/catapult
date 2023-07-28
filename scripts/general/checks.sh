@@ -151,9 +151,10 @@ then
 fi
 
 # Checking if the latest remote tag is different than the current local tag
+# Using curl to get the latest tag from raw file GitHub to avoid Github API rate limit
 UPSTREAM=main
-REMOTE_TAG=$(curl --silent https://api.github.com/repos/ClarifiedSecurity/catapult/tags | jq -r '.[0].name')
-LOCAL_TAG=$(git describe --tags --abbrev=0 $UPSTREAM)
+REMOTE_TAG=$(curl --silent https://raw.githubusercontent.com/ClarifiedSecurity/catapult/main/version.yml | cut -d ' ' -f 2)
+LOCAL_TAG=$(git describe --tags --abbrev=0 $UPSTREAM | cut -d 'v' -f 2)
 
 # Checking if remote tag is newer than local tag
 if [[ $LOCAL_TAG == $REMOTE_TAG ]]; then
