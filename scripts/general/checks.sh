@@ -222,8 +222,8 @@ if [[ -z "${SSH_AUTH_SOCK}" ]]; then
 
   echo -e ${C_RED}
   echo -e SSH agent is not running.
-  echo -e Make sure ssh-agent is running and SSH_AUTH_SOCK is set.
-  echo -e If you are runnin Catapult on remote server, make sure you have forwarded the SSH agent...
+  echo -e Make sure ssh-agent is running.
+  echo -e If you are running Catapult on remote server, make sure you have forwarded the SSH agent...
   echo -e ${C_RST}
   exit 1
 
