@@ -229,6 +229,21 @@ if [[ -z "${SSH_AUTH_SOCK}" ]]; then
 
 fi
 
+# Check if any keys exists in the ssh agent
+if ssh-add -l >/dev/null 2>&1; then
+
+  echo -n
+
+else
+
+  echo -e ${C_YELLOW}
+  echo -e There are no SSH keys in your ssh-agent.
+  echo -e Some of the functinality will not work without SSH keys.
+  read -p "Press any key to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
+  echo -e ${C_RST}
+
+fi
+
 # Checking if personal docker-compose file exists and creating it if it doesn't
 if ! [ -r docker/docker-compose-personal.yml  ]
 then
