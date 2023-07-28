@@ -15,6 +15,7 @@ ansible/**
 container/home/builder/.*_history
 /docker/docker-compose-extra.yml
 /docker/docker-compose-personal.yml
+exported_templates/**
 node_modules
 poetry/**
 requirements/**
