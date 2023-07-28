@@ -37,7 +37,7 @@ checks:
 
 ## prepare: Run checks and install project requirements
 .PHONY: prepare
-prepare: checks customizations
+prepare: customizations checks
 	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/prepare.sh
 
 ## start-tasks: Runs requires configurations tasks before starting the container
@@ -47,7 +47,7 @@ start-tasks: checks
 
 ## build: Run checks and then build container image
 .PHONY: build
-build: checks customizations
+build: customizations checks
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} -t ${IMAGE_FULL} . --load
 
@@ -88,7 +88,7 @@ customizations:
 
 ## start: Removes any existing container, starts the container and runs shell
 .PHONY: start
-start: project-banner checks customizations start-tasks run shell
+start: project-banner customizations checks start-tasks run shell
 
 ## project-banner: Print project banner
 .PHONY: project-banner
