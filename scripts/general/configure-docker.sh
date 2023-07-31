@@ -2,7 +2,7 @@
 
 set -e # exit when any command fails
 
-echo -n -e ${C_MAGENTA}
+install_docker(){
 
 if [[ $(uname) == "Linux" ]]; then
 
@@ -10,11 +10,16 @@ if [[ $(uname) == "Linux" ]]; then
 
     if [[ -z $(grep -r download.docker.com /etc/apt/sources.list.d/) ]]; then
 
+      echo -n -e ${C_MAGENTA}
       echo "Adding Docker apt repo on Linux..."
+      echo -n -e ${C_RST}
 
       if grep -q "Ubuntu" /etc/os-release; then
 
+        echo -n -e ${C_MAGENTA}
         echo "Adding Docker repo for $(lsb_release -cs)..."
+        echo -n -e ${C_RST}
+
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
         echo \
         "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
@@ -22,13 +27,19 @@ if [[ $(uname) == "Linux" ]]; then
 
       elif grep -q "Kali" /etc/os-release; then
 
+        echo -n -e ${C_MAGENTA}
         echo "Adding Docker repo for $(lsb_release -cs)..."
+        echo -n -e ${C_RST}
+
         curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg --yes
         printf '%s\n' "deb https://download.docker.com/linux/debian bullseye stable" |  tee /etc/apt/sources.list.d/docker.list > /dev/null
 
       elif grep -q "Debian" /etc/os-release; then
 
+        echo -n -e ${C_MAGENTA}
         echo "Adding Docker repo for $(lsb_release -cs)..."
+        echo -n -e ${C_RST}
+
         curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
         echo \
         "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
@@ -40,18 +51,19 @@ if [[ $(uname) == "Linux" ]]; then
 
   elif grep -q "arch" /etc/os-release; then
 
+    echo -n -e ${C_MAGENTA}
     echo "Docker will be installed with pacman..."
+    echo -n -e ${C_RST}
 
   else
 
-    echo "... !!! ..."
-    echo "... !!! ..."
-    echo "... !!! ..."
+    echo -n -e ${C_YELLOW}
     echo "Unsupported operating system, please install Docker for your OS, after installation run the following commands ( or similar ) to create the docker network with ipv6:"
     echo "bash scripts/general/configure-docker.sh"
     echo "systemctl start docker"
     echo "systemctl reload docker"
     echo "docker network create ${CONTAINER_NETWORK} --ipv6 --subnet ${CONTAINER_NETWORK_IPV6_SUBNET} --subnet ${CONTAINER_NETWORK_IPV4_SUBNET}"
+    echo -n -e ${C_RST}
 
   fi
 
@@ -74,7 +86,6 @@ fi
 
 if [[ $(uname) == "Darwin" ]]; then
 
-  echo "Installing Docker for MacOS"
   brew install --cask docker
 
   # Wait until Docker is running
@@ -89,22 +100,32 @@ if [[ $(uname) == "Darwin" ]]; then
 
 fi
 
+}
+
+echo -n -e ${C_MAGENTA}
 echo "Checking if ${CONTAINER_NETWORK} exists..."
+echo -n -e ${C_RST}
+
 if [[ -z $(docker network ls | grep ${CONTAINER_NETWORK}) ]]; then
 
+  echo -n -e ${C_MAGENTA}
   echo "Creating Docker ${CONTAINER_NETWORK} network..."
+  echo -n -e ${C_RST}
+
   docker network create ${CONTAINER_NETWORK} --ipv6 --subnet ${CONTAINER_NETWORK_IPV6_SUBNET} --subnet ${CONTAINER_NETWORK_IPV4_SUBNET}
 
 fi
 
 update_docker_config(){
 
-  echo -n -e ${C_MAGENTA}
-
   if [[ $(uname) == "Darwin" ]]; then
+
     DOCKER_CONFIG_FILE="$HOME/.docker/daemon.json"
 
+    echo -n -e ${C_MAGENTA}
     echo "Updating Docker configuration..."
+    echo -n -e ${C_RST}
+
     echo $docker_config | jq > $DOCKER_CONFIG_FILE
 
   else
@@ -114,17 +135,26 @@ update_docker_config(){
     # Only updating config if it's different
     if [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat $DOCKER_CONFIG_FILE | sha1sum - | cut -d " " -f 1) ]]; then
 
+      echo -n -e ${C_MAGENTA}
       echo "Updating Docker configuration..."
+      echo -n -e ${C_RST}
+
       echo $docker_config | jq > $DOCKER_CONFIG_FILE
 
+      echo -n -e ${C_MAGENTA}
       echo "Restarting Docker service..."
+      echo -n -e ${C_RST}
+
       systemctl restart docker
 
     fi
 
   fi
 
+  echo -n -e ${C_MAGENTA}
   echo "Testing IPv6 connectivity..."
+  echo -n -e ${C_RST}
+
   docker run --rm -t busybox ping6 -c 1 google.com || true # At this point it's more informational
 
 }
@@ -152,6 +182,27 @@ elif ! [[ -z "${MAKEVAR_CONTAINER_PROXY}" ]]; then
 
 fi
 
+echo -e ${C_YELLOW}
+echo -e "Installing latest Docker version for your OS"
+
+options=(
+  "Yes it's fine"
+  "No, I'll manage my Docker version manually"
+)
+
+select option in "${options[@]}"; do
+    case "$REPLY" in
+        yes) install_docker; break;;
+        no) echo -e "Not installing Docker"; break;;
+        y) install_docker; break;;
+        n) echo -e "Not installing Docker"; break;;
+        1) install_docker; break;;
+        2) echo -e "Not installing Docker"; break;;
+    esac
+done
+
+echo -n -e ${C_RST}
+
 docker_config=$(cat <<EOF
 {
   "experimental": true,
@@ -168,25 +219,32 @@ EOF
 
 echo -n -e ${C_YELLOW}
 if [[ $(uname) == "Darwin" ]]; then
-  echo -e "\n Overwriting your $HOME/.docker/daemon.json with the following config:"
-else
-  echo -e "\n Overwriting your /etc/docker/daemon.json with the following config:"
-fi
-echo -n -e ${C_MAGENTA}
 
+  echo -e "\n Overwriting your $HOME/.docker/daemon.json with the following config:"
+
+else
+
+  echo -e "\n Overwriting your /etc/docker/daemon.json with the following config:"
+
+fi
+
+echo $docker_config | jq
+
+echo -n -e ${C_YELLOW}
 options=(
   "Yes it's fine"
   "No it might break configurations I've made myself. I'll manually add the parameters."
 )
-echo $docker_config | jq
 
 select option in "${options[@]}"; do
     case "$REPLY" in
         yes) update_docker_config; break;;
-        no) read -p "Please update your Docker configuration manually and press enter to continue"; break;;
+        no) echo -e "Not configuring Docker"; break;;
         y) update_docker_config; break;;
-        n) read -p "Please update your Docker configuration manually and press enter to continue"; break;;
+        n) echo -e "Not configuring Docker"; break;;
         1) update_docker_config; break;;
-        2) read -p "Please update your Docker configuration manually and press enter to continue"; break;;
+        2) echo -e "Not configuring Docker"; break;;
     esac
 done
+
+echo -n -e ${C_RST}
