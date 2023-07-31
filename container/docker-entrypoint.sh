@@ -16,14 +16,6 @@ source $(poetry env info -C /srv/poetry --path)/bin/activate
 # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
 sudo chown -R $(id -u):$(id -g) /ssh-agent
 
-# Copying mounted certificates to the correct location and trusting them if they are present
-if [ "$(ls -A /tmp/ca-certificates)" ]; then
-
-  sudo rsync -ar /tmp/ca-certificates/ /usr/local/share/ca-certificates/ --ignore-existing --delete
-  sudo update-ca-certificates > /dev/null
-
-fi
-
 # Check if KeePass is already open
 if ls '/tmp' | grep -i ansible-keepass.sock -q; then
 
@@ -37,6 +29,14 @@ else
   /home/builder/kpsock.py /home/builder/KPDB.kbdx --key /home/builder/KPDB.key --log kpsock.log --log-level WARNING --ttl 28800 &
   unset KPPWD
   sleep 1
+fi
+
+# Copying mounted certificates to the correct location and trusting them if they are present
+if [ "$(ls -A /tmp/ca-certificates)" ]; then
+
+  sudo rsync -ar /tmp/ca-certificates/ /usr/local/share/ca-certificates/ --ignore-existing --delete
+  sudo update-ca-certificates > /dev/null
+
 fi
 
 DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES="/srv/custom/docker-entrypoints/*.sh"
