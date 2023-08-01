@@ -21,4 +21,4 @@ jobs:
     steps:
       - name: Trigger Catapult Docs build
         run: |
-          curl -XPOST -u "${{secrets.TOKEN_CATAPULT_DOCS_USERNAME}}:${{secrets.TOKEN_CATAPULT_DOCS}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" "https://api.github.com/repos/ClarifiedSecurity/datapult-docs/dispatches" --data '{"event_type": "build_docs_triggered_by_catapult"}'
+          curl -XPOST -u "${{secrets.TOKEN_CATAPULT_DOCS_USERNAME}}:${{secrets.TOKEN_CATAPULT_DOCS}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" "https://api.github.com/repos/ClarifiedSecurity/catapult-docs/dispatches" --data '{"event_type": "build_docs_triggered_by_catapult"}'
