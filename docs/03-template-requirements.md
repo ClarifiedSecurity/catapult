@@ -12,7 +12,7 @@ One really good tool for template generation is [Packer](https://www.packer.io/)
 
 - `MaxAuthTries` set to `20` in `C:/ProgramData/ssh/sshd_config` -- A lot of users will have more than 6 keys in their SSH agent and the default `MaxAuthTries` of 6 will cause Catapult to fail to connect to the VM. The value must not be 20 but it most likely must be higher than 6.
 
-- (Optional) [Chocolatey](https://chocolatey.org/install) installed -- It's not a hard requirement but it's really useful to have Chocolatey installed on your Windows VMs. Catapult will use Chocolatey to install the required software on the VMs. Chocolatey can also be used to install the OpenSSH server with `choco install openssh -params /SSHServerFeature -y`
+- (Optional) [Chocolatey](https://chocolatey.org/install) installed -- It's not a hard requirement but it's really useful to have Chocolatey installed on your Windows VMs. Catapult can use Chocolatey to install the required software on the VMs. Chocolatey can also be used to install the OpenSSH server on the base template with `choco install openssh -params /SSHServerFeature -y`
 
 ### Linux
 
@@ -20,4 +20,4 @@ One really good tool for template generation is [Packer](https://www.packer.io/)
 
 - `MaxAuthTries` set to `20` in `/etc/ssh/sshd_config` -- Same as with Windows.
 
-- `PermitRootLogin` set to `yes` in `/etc/ssh/sshd_config` -- Catapult needs to be able to login as root to the VMs the first time. After that Catapult can be used to crete new accounts and disable root login.
+- `PermitRootLogin` set to `yes` in `/etc/ssh/sshd_config` -- Catapult needs to be able to login as root to the VMs the first time. After that Catapult can be used to create new accounts and disable root login.
