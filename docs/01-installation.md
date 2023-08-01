@@ -19,24 +19,35 @@ sudo pacman -S git make jq
 
 ### Windows Subsystem for Linux
 
-From an admin PowerShell run:
+Log in interactively (over RDP or locally) to your Windows machine with an account that has admin rights and run the following commands in PowerShell. The first login needs to be with an admin account because the WSL installation needs to be done with admin rights. After the first installation you can use a non-admin account to log in.
 
 ```powershell
+Enable-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online -NoRestart
 wsl --install
 ```
 
 - Restart Windows
-- After restart Ubuntu setup should automatically run, if no then run Ubuntu manually from the start menu and finalize the setup.
-- From Ubuntu terminal run:
+- If your user account **IS** in the Administrators just log in, start Ubuntu from the start menu and follow the instructions to finalize the setup.
+- If your user account **IS NOT** in the Administrators group you need to run the following commands in non-admin PowerShell after your login:
 
-  ```sh
-  sudo apt update && \
-  sudo apt install git make jq keychain -y
-  ```
+```powershell
+wsl --update
+wsl --install -d Ubuntu
+```
+
+- After that follow the instructions to finalize the setup.
+
+- When your Ubuntu shell is ready. Run the following commands to install the needed dependencies:
+
+```sh
+sudo apt update && \
+sudo apt install git make jq keychain -y
+```
 
 - Make sure all needed SSH keypairs are in `~/.ssh` folder in the WSL Ubuntu and ssh-agent is started. For easy-to-use SSH Agent you can follow this [guide](https://esc.sh/blog/ssh-agent-windows10-wsl2/). You can use this method to add multiple keys to the SSH Agent.
 
-**PS - On Windows we suggest using [VSCode](https://code.visualstudio.com/) with the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension to edit the files in WSL and [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install) for easy connection to WSL.**
+When WSL is configured successfully then I'll show up in Windows Explorer as a network drive. You can use it to copy files between your host and the WSL system. On Windows we suggest using [VSCode](https://code.visualstudio.com/) with the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension to edit the files in WSL and [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install) for easy connection to WSL.
+
 
 ### MacOS
 
