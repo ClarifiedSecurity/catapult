@@ -96,17 +96,27 @@ ctp-rebuild-linode-vm <inventory_hostname> # Rebuilds the VM with the given inve
 
 ## Deploy commands based on @start.retry file
 
-Whenever a deploy fails a start.retry file is created under /srv/inventories/<project_name>/start.retry. Instead of going trough the logs to find what machines failed you can use the following commands to deploy only the failed machines. Keep in mind that only that latest fail is written into the start.retry file so when running multiple instances of Catapult (using `make shell` multiple times) and multiple deploys in parallel and you might get inconsistent results.
+Whenever a deploy fails a start.retry file is created under /srv/inventories/<project_name>/start.retry. Instead of going trough the logs to find what machines failed you can use the following commands to deploy only the failed machines. Keep in mind that only that latest fail is written into the start.retry file so when running multiple instances of Catapult (using `make shell` multiple times) and multiple deploys in parallel the latest fail will be written into the start.retry file.
 
-`ctp-retry-deploy` - Deploys failed machines based on start.retry file
+```zsh
+ctp-retry-deploy # Deploys failed machines based on start.retry file
+```
 
-`ctp-retry-redeploy` - Redeploy failed machines based on start.retry file
+```zsh
+ctp-retry-redeploy # Redeploy failed machines based on start.retry file
+```
 
-`ctp-retry-until-configuration` - Runs ctp-deploy-until-configuration on failed machines based on start.retry file
+```zsh
+ctp-retry-until-configuration # Runs ctp-deploy-until-configuration on failed machines based on start.retry file
+```
 
-`ctp-deploy-from-configuration-` - Runs ctp-deploy-from-configuration on failed machines based on start.retry file
+```zsh
+ctp-deploy-from-configuration- # Runs ctp-deploy-from-configuration on failed machines based on start.retry file
+```
 
-`ctp-retry-deploy-role` - Runs ctp-retry-deploy-role on failed machines based on start.retry file
+```zsh
+ctp-retry-deploy-role # Runs ctp-retry-deploy-role on failed machines based on start.retry file
+```
 
 ## Snapshot modes
 
