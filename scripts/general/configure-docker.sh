@@ -119,13 +119,15 @@ update_docker_config(){
     # Restarting Docker service if DOCKER_CONFIG_FILE does not exist or hash is different
     if [[ ! -f $DOCKER_CONFIG_FILE ]] || [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat $DOCKER_CONFIG_FILE | sha1sum - | cut -d " " -f 1) ]]; then
 
-        echo $docker_config | jq > $DOCKER_CONFIG_FILE
+      if [[ $(uname) == "Linux" ]]; then
 
-        echo -n -e ${C_MAGENTA}
-        echo "Restarting Docker service..."
-        echo -n -e ${C_RST}
+          echo -n -e ${C_MAGENTA}
+          echo "Restarting Docker service..."
+          echo -n -e ${C_RST}
 
-        systemctl restart docker
+          systemctl restart docker
+
+      fi
 
     fi
 
