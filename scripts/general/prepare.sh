@@ -32,7 +32,7 @@ if [[ $(uname) == "Darwin" ]]; then
   echo -e "Configuring MacOS..."
   echo -e "Installing MacOS packages with homebrew..."
   echo -n -e ${C_RST}
-  brew install git-lfs curl
+  brew install git-lfs curl md5sha1sum
 
 fi
 
