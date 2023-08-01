@@ -8,13 +8,13 @@ Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is 
 
 ```sh
 sudo apt update && \
-sudo apt install git make jq -y
+sudo apt install git make jq curl -y
 ```
 
 ### Arch
 
 ```sh
-sudo pacman -S git make jq
+sudo pacman -S git make curl jq
 ```
 
 ### Windows Subsystem for Linux
@@ -41,19 +41,18 @@ wsl --install -d Ubuntu
 
 ```sh
 sudo apt update && \
-sudo apt install git make jq keychain -y
+sudo apt install git make jq curl keychain -y
 ```
 
 - Make sure all needed SSH keypairs are in `~/.ssh` folder in the WSL Ubuntu and ssh-agent is started. For easy-to-use SSH Agent you can follow this [guide](https://esc.sh/blog/ssh-agent-windows10-wsl2/). You can use this method to add multiple keys to the SSH Agent.
 
 When WSL is configured successfully then I'll show up in Windows Explorer as a network drive. You can use it to copy files between your host and the WSL system. On Windows we suggest using [VSCode](https://code.visualstudio.com/) with the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension to edit the files in WSL and [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install) for easy connection to WSL.
 
-
 ### MacOS
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install git make jq
+brew install git make jq curl
 ```
 
 After installing brew make sure to add it to path with the commands it provides.
