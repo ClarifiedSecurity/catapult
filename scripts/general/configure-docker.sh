@@ -4,6 +4,8 @@ set -e # exit when any command fails
 
 install_docker(){
 
+  echo -n -e ${C_RST}
+
   if [[ $(uname) == "Linux" ]]; then
 
     if grep -q "debian" /etc/os-release; then
