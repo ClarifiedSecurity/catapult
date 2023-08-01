@@ -109,14 +109,15 @@ update_docker_config(){
     if [[ $(uname) == "Darwin" ]]; then
 
       DOCKER_CONFIG_FILE="$HOME/.docker/daemon.json"
-      echo $docker_config | jq > $DOCKER_CONFIG_FILE
 
     else
 
       DOCKER_CONFIG_FILE="/etc/docker/daemon.json"
 
-      # Only updating config if it's different
-      if [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat $DOCKER_CONFIG_FILE | sha1sum - | cut -d " " -f 1) ]]; then
+    fi
+
+    # Restarting Docker service if DOCKER_CONFIG_FILE does not exist or hash is different
+    if [[ ! -f $DOCKER_CONFIG_FILE ]] || [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat $DOCKER_CONFIG_FILE | sha1sum - | cut -d " " -f 1) ]]; then
 
         echo $docker_config | jq > $DOCKER_CONFIG_FILE
 
@@ -125,8 +126,6 @@ update_docker_config(){
         echo -n -e ${C_RST}
 
         systemctl restart docker
-
-      fi
 
     fi
 
@@ -138,12 +137,6 @@ update_docker_config(){
     echo -n -e ${C_RST}
 
   fi
-
-    echo -n -e ${C_MAGENTA}
-    echo "Testing IPv6 connectivity..."
-    echo -n -e ${C_RST}
-
-    docker run --rm -t busybox ping6 -c 1 google.com || true # At this point it's more informational
 
 }
 
