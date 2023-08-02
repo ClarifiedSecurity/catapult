@@ -8,13 +8,13 @@ Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is 
 
 ```sh
 sudo apt update && \
-sudo apt install git make jq curl -y
+sudo apt install git make jq curl sudo -y
 ```
 
 ### Arch
 
 ```sh
-sudo pacman -S git make curl jq
+sudo pacman -S git make curl sudo jq
 ```
 
 ### Windows Subsystem for Linux
@@ -41,7 +41,7 @@ wsl --install -d Ubuntu
 
 ```sh
 sudo apt update && \
-sudo apt install git make jq curl keychain -y
+sudo apt install git make jq curl sudo keychain -y
 ```
 
 - Make sure all needed SSH keypairs are in `~/.ssh` folder in the WSL Ubuntu and ssh-agent is started. For easy-to-use SSH Agent you can follow this [guide](https://esc.sh/blog/ssh-agent-windows10-wsl2/). You can use this method to add multiple keys to the SSH Agent.
