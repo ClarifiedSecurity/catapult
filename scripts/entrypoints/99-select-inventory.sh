@@ -4,7 +4,7 @@ C_RED="\033[31m"
 C_GREEN="\033[32m"
 C_RST="\033[0m"
 
-echo -n -e ${C_RST}
+echo -e ${C_RST}
 SEARCH_DIR=/srv/inventories
 SEARCH_FOLDER=".git"
 FOLDERS=($(find $SEARCH_DIR -type d -name $SEARCH_FOLDER -printf '%h\n' | sort))
