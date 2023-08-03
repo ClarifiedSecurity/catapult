@@ -50,12 +50,17 @@ When WSL is configured successfully then I'll show up in Windows Explorer as a n
 
 ### MacOS
 
-```sh
+- Install brew and after installing brew make sure to add it to path with the commands it provides.
+
+```zsh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install git make jq curl
 ```
 
-After installing brew make sure to add it to path with the commands it provides.
+- Install required packaes with brew:
+
+```zsh
+brew install git make jq curl
+```
 
 ## Install
 
