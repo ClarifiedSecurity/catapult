@@ -29,7 +29,6 @@ fi
 if [[ $(uname) == "Darwin" ]]; then
 
   echo -n -e ${C_MAGENTA}
-  echo -e "Configuring MacOS..."
   echo -e "Installing MacOS packages with homebrew..."
   echo -n -e ${C_RST}
   brew install git-lfs curl md5sha1sum
@@ -37,10 +36,6 @@ if [[ $(uname) == "Darwin" ]]; then
 fi
 
 if [[ $(uname) == "Linux" ]]; then
-
-  echo -n -e ${C_MAGENTA}
-  echo -e "Configuring Linux..."
-  echo -n -e ${C_RST}
 
   if grep -q "debian" /etc/os-release; then
 
@@ -57,15 +52,13 @@ if [[ $(uname) == "Linux" ]]; then
 
     fi
 
-
   elif grep -q "arch" /etc/os-release; then
 
-  echo -n -e ${C_MAGENTA}
-	echo -e "Installing required pacman packages..."
-  echo -n -e ${C_RST}
+    echo -n -e ${C_MAGENTA}
+    echo -e "Installing required pacman packages..."
+    echo -n -e ${C_RST}
 
-	pacman -S git git-lfs make curl --noconfirm
-
+    pacman -S git git-lfs make curl --noconfirm
 
   else
 
