@@ -1,7 +1,11 @@
 ---
-########## Use all.yml for universal predefined values and _project_vars.yml for customization >>>>>>>>>>
+###############################################################################################
+# YOU CAN USE all.yml FOR UNIVERSAL PREDEFINED VALUES AND _project_vars.yml FOR CUSTOMIZATION #
+###############################################################################################
 
-##### Global defaults >>>>>
+##########
+# Global #
+##########
 
 hostname: "{{ inventory_hostname }}"
 fqdn: "{{ hostname }}.{{ domain }}"
@@ -29,9 +33,9 @@ primary_ipv6_with_prefix: "{{ primary_network.addresses | selectattr('pool_id', 
 primary_ipv4_dns_enabled: "{{ primary_network.addresses | selectattr('pool_id', 'match', '^default.*') | selectattr('mode', 'match', '^ipv4_static.*') | map(attribute='dns_enabled') | first | default(omit) }}"
 primary_ipv6_dns_enabled: "{{ primary_network.addresses | selectattr('pool_id', 'match', '^default.*') | selectattr('mode', 'match', '^ipv6_static.*') | map(attribute='dns_enabled') | first | default(omit) }}"
 
-##### Global defaults <<<<<
-
-##### VMware vSphere >>>>>
+##################
+# VMware vSphere #
+##################
 
 vcenter_hostname: ### FILL THIS PART ###
 nsx_hostname: ### FILL THIS PART ### This is the NSX Manager fqdn if it is used
@@ -43,21 +47,17 @@ resource_pool: ### FILL THIS PART ###
 infra_env: vsphere # This is important for some roles that can also configure deploy machines in other environments like AWS
 linked_clone_status: true # Set to false not to use linked clones in vSphere
 
-##### VMware vSphere <<<<<
-
-##### VMware Workstation >>>>>
+######################
+# VMware Workstation #
+######################
 
 templates_path: ### FILL THIS PART ### This is the path where the VMware workstation looks for templates in vSphere to download example "{{ vcenter_hostname }}/{{ datacenter }}/vm/TEMPLATES"
 
-##### VMware Workstation <<<<<
-
-##### Services >>>>>
+############
+# Services #
+############
 
 ## Vault configuration
 vault_address: ### FILL THIS PART ### Your Vault https:// address
 vault_credentials: auth_method=ldap mount_point=ldap username={{ deployer_username }} password={{ deployer_password }}
 vault_lookup_fragment: "url={{ vault_address }} ca_cert=/etc/ssl/certs/ca-certificates.crt {{ vault_credentials }} " #The space before the ending quote is required
-
-##### Services <<<<<
-
-########## Use all.yml for universal predefined values and _project_vars.yml for customization >>>>>>>>>>
