@@ -4,4 +4,6 @@ By making contributions to this project, you acknowledge that these contribution
 
 Please note that by submitting your contributions, you affirm that you have the necessary rights to grant this license and that your contributions will be made available under the terms and conditions of the project's existing license.
 
+For mor details on how to Contribute to the project, please see the [Catapult documentation](https://clarifiedsecurity.github.io/catapult-docs/catapult/92-contributing/)
+
 Thank you for your contributions to the project!
