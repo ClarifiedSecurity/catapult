@@ -19,4 +19,4 @@ ansible_shell_type: "{{ default_ansible_shell_type }}"
 default_become_value: false
 default_become_user: "{{ ansible_user }}"
 
-sysprep: yes # Used during template generation
+sysprep: true # Used during template generation
