@@ -1,4 +1,5 @@
 ---
+customization_method: macos
 ansible_python_interpreter: /usr/bin/python3
 
 admin_account: root
@@ -12,9 +13,7 @@ default_ansible_shell_type: sh
 default_become_value: true
 default_become_user: root
 
-sysprep: no
-
-# Can't do gather facts, cuz no python by default, so let's improvise
+# Predefined here because cannot gather facets on MacOS that has no Python installed
 ansible_system: Darwin
 
 # increase ram for macos
