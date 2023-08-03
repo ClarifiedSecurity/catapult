@@ -48,9 +48,9 @@ alias ctp-retry-deploy="ctp-deploy @start.retry"
 
 alias ctp-retry-redeploy="ctp-redeploy @start.retry"
 
-alias ctp-retry-until-configuration="ctp-redeploy-until-configuration @start.retry"
+alias ctp-retry-redeploy-until-configuration="ctp-redeploy-until-configuration @start.retry"
 
-alias ctp-retry-from-configuration="ctp-deploy-from-configuration @start.retry"
+alias ctp-retry-deploy-from-configuration="ctp-deploy-from-configuration @start.retry"
 
 alias ctp-retry-deploy-role="ctp-deploy-role @start.retry"
 
