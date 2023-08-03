@@ -82,12 +82,12 @@ alias ctp-reset="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=rese
 
 ### MISC ###
 
-alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e=single_role=shared.roles.updates -l"
+alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e=single_role=clarified.core.updates -l"
 
 alias ctp-list="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy --list-hosts -l"
 
 alias ctp-list-vars="ansible-inventory /srv/inventories/start.yml -e=deploy_mode=deploy --vars --host"
 
-alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e pre_role=shared.roles.rename_vm -l"
+alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e pre_role=clarified.core.rename_vm -l"
 
-alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=shared.roles.get_ip -l"
+alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=clarified.core.get_ip -l"
