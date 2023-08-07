@@ -44,8 +44,10 @@ jobs:
           # Tagging and pushing the change
           git tag $TAG_NAME
           git push origin $TAG_NAME
+          git log --pretty=format:"%s" $(git describe --tags --abbrev=0 HEAD^^)..$(git describe --tags --abbrev=0 HEAD^) > commit_messages.txt
 
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.LATEST_TAG }}
           generateReleaseNotes: true
+          bodyFile: commit_messages.txt
