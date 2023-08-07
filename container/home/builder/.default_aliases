@@ -28,6 +28,8 @@ alias ctp-deploy="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=dep
 
 alias ctp-redeploy="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=redeploy -l"
 
+alias ctp-deploy-until-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e just_clone=true -l"
+
 alias ctp-redeploy-until-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=redeploy -e just_clone=true -l"
 
 alias ctp-deploy-from-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e role_only_wp=true -l"
@@ -47,6 +49,8 @@ alias ctp-rebuild-linode-vm="ansible-playbook /srv/inventories/start.yml -e=depl
 alias ctp-retry-deploy="ctp-deploy @start.retry"
 
 alias ctp-retry-redeploy="ctp-redeploy @start.retry"
+
+alias ctp-retry-deploy-until-configuration="ctp-deploy-until-configuration @start.retry"
 
 alias ctp-retry-redeploy-until-configuration="ctp-redeploy-until-configuration @start.retry"
 
