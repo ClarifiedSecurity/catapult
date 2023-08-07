@@ -49,7 +49,7 @@ collections:
   - name: community.vmware
     version: 3.3.0
   - name: community.windows
-    version: 1.13.0
+    version: 2.0.0
   - name: kubernetes.core
     version: 2.4.0
   - name: linode.cloud
