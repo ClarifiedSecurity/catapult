@@ -50,6 +50,18 @@ _Example usage:_
 ctp-redeploy <inventory_hostname>
 ```
 
+### ctp-deploy-until-configuration
+
+Deploys the machine, stops the play after os_configuration role and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp-deploy-from-configuration` to configure them in the correct order afterwards.
+
+_Example usage:_
+
+- Deploys the VM with the given inventory_hostname and creates a snapshot
+
+```zsh
+ctp-deploy-until-configuration <inventory_hostname>
+```
+
 ### ctp-redeploy-until-configuration
 
 Redeploys the machine, stops the play after os_configuration role and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp-deploy-from-configuration` to configure them in the correct order afterwards.
@@ -59,7 +71,7 @@ _Example usage:_
 - Redeploys the VM with the given inventory_hostname and creates a snapshot
 
 ```zsh
-ctp-deploy-until-configuration <inventory_hostname>
+ctp-redeploy-until-configuration <inventory_hostname>
 ```
 
 ### ctp-deploy-from-configuration
@@ -160,6 +172,12 @@ ctp-retry-deploy
 
 ```zsh
 ctp-retry-redeploy
+```
+
+- Runs `ctp-deploy-until-configuration` on failed machines based on start.retry file
+
+```zsh
+ctp-retry-deploy-until-configuration
 ```
 
 - Runs `ctp-redeploy-until-configuration` on failed machines based on start.retry file
