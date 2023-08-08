@@ -257,9 +257,9 @@ if [[ $(uname) == "Linux" ]]; then
 
         echo -e ${C_RED}
         echo -e "Your user id is not 1000"
-        echo -e "Change your used id to 1000 or build the Catapult Docker images yourself with: "
+        echo -e "Change your user id to 1000 or build the Catapult Docker images yourself with: "
         echo -e "make build"
-        read -p "Press any key to continue, or Ctrl + C to cancel and and build the image..."
+        read -p "Press any key to continue"
         echo -e ${C_RST}
 
     fi
