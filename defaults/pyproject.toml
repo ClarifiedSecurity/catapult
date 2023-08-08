@@ -2,7 +2,7 @@
 name = "catapult"
 version = "0.1.1"
 description = "Required libraries for running Catapult"
-authors = ["Clarified Security"]
+authors = ["Clarified Security <catapult@clarifiedsecurity.com>"]
 
 [tool.poetry.dependencies]
 aiohttp = "*"
