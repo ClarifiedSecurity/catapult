@@ -37,6 +37,8 @@ else
 
 fi
 
+echo -n -e ${C_BLUE}
+
 # Copying custom .makerc files to project root if they are in the customizer repo
 if [[ -d "custom/makefiles" ]]; then
     #for file in custom/makefiles/*; do

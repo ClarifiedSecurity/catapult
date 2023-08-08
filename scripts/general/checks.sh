@@ -26,6 +26,7 @@ catapult_update () {
 if ! [ -x "$(command -v git)" ]; then
   echo -n -e ${C_RED}
   echo -e "Git is not installed!"
+  echo -n -e ${C_RST}
   exit 1
 fi
 
@@ -34,6 +35,7 @@ if ! ping -c 1 github.com &> /dev/null; then
   echo -n -e ${C_YELLOW}
   echo -e "Cannot check for Catapult version!"
   echo -e "GitHub is not reachable"
+  echo -n -e ${C_RST}
   exit 0;
 fi
 
