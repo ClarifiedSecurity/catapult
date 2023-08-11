@@ -21,3 +21,7 @@ One really good tool for template generation is [Packer](https://www.packer.io/)
 - `MaxAuthTries` set to `20` in `/etc/ssh/sshd_config` -- Same as with Windows.
 
 - `PermitRootLogin` set to `yes` in `/etc/ssh/sshd_config` -- Catapult needs to be able to login as root to the VMs the first time. After that Catapult can be used to create new accounts and disable root login.
+
+## Per-environment/project/datacenter etc. template requirements
+
+We recommend applying the [template_os_configuration](https://github.com/ClarifiedSecurity/clarified.core/tree/main/clarified/core/roles/template_os_configuration) the specific project templates. It contains some prerequisites for different `clarified.core` roles that you might otherwise need to install before using those roles.
