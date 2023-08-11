@@ -1,0 +1,8 @@
+---
+# You can use this file to run ansible-lint inside the container against roles with:
+# ansible-lint --write -c /srv/ansible-lint.yml /path/to/role
+skip_list: # https://ansible-lint.readthedocs.io/rules/
+  - yaml[line-length]
+  - name[template]
+  - meta-no-info
+  - role-name[path]
