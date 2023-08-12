@@ -69,7 +69,7 @@ brew install git make jq curl
 - Clone the project from GitHub with:
 
 ```sh
-git clone https://github.com/ClarifiedSecurity/catapult
+git clone https://github.com/ClarifiedSecurity/catapult --depth 1
 cd catapult
 ```
 
