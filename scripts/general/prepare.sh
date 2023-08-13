@@ -44,7 +44,7 @@ if [[ $(uname) == "Linux" ]]; then
     echo -n -e ${C_RST}
 
     apt-get update
-    apt-get install git-lfs curl make -y
+    apt-get install git-lfs curl make gpg -y
 
     if [[ "${MAKEVAR_ALLOW_HOST_SSH_ACCESS}" == "true" ]]; then
 
