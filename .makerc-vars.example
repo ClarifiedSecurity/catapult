@@ -29,7 +29,7 @@ KEEPASS_KEY_PATH :=
 # This is the path inside your KeePass (https://keepassxc.org/) database.
 # It points to the entry where your LDAP username & password are.
 # These credentials will be used to authenticate to different services like Virtualization provider, Providentia, Vault etc.
-# Don't include the root folder in the path (usually named Root).
+# Don't include the root folder in the path (usually named Passwords).
 # You can get the path by clicking on the entry and looking at the bottom of the KeePass window next to a key icon.
 # The correct path is usually everyting after the first /
 # Example: Catapult/Credentials where Catapult is the group name and Credentials is the entry in KeePass

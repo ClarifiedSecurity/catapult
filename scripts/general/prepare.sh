@@ -91,7 +91,27 @@ chown -R $CONTAINER_USER_NAME .githooks
 chown -R $CONTAINER_USER_NAME .git
 
 scripts/general/configure-docker.sh
-docker-registry-login
+
+echo -e ${C_YELLOW}
+echo -e "Do you want Catapult to install and configure KeePassXC database and key?"
+
+options=(
+  "Yes it's fine"
+  "No, already have my own database and key"
+)
+
+select option in "${options[@]}"; do
+    case "$REPLY" in
+        yes) scripts/general/configure-keepassxc.sh; break;;
+        no) echo -e "Not configuring KeePassXC"; break;;
+        y) scripts/general/configure-keepassxc.sh; break;;
+        n) echo -e "Not configuring KeePassXC"; break;;
+        1) scripts/general/configure-keepassxc.sh; break;;
+        2) echo -e "Not configuring KeePassXC"; break;;
+    esac
+done
+
+echo -n -e ${C_RST}
 
 echo -n -e ${C_MAGENTA}
 echo "Preparation finished"
