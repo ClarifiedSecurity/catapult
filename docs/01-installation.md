@@ -64,7 +64,7 @@ brew install git make jq curl
 
 ## Install
 
-- Make sure all of the SSH keypairs you need are loaded ssh-agent, because Catapult will use them to connect to the VMs.
+- Make sure all of the SSH keypairs you need are loaded into your ssh-agent. Catapult will use them to connect to the VMs.
 - Clone the project from GitHub with:
 
 ```sh
