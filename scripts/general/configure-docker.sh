@@ -20,7 +20,7 @@ install_docker(){
 
           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
           echo \
-          "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+          "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
           $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
         elif grep -q "Kali" /etc/os-release; then
@@ -29,8 +29,10 @@ install_docker(){
           echo "Adding Docker repo for $(lsb_release -cs)..."
           echo -n -e ${C_RST}
 
-          curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg --yes
-          printf '%s\n' "deb https://download.docker.com/linux/debian bullseye stable" |  tee /etc/apt/sources.list.d/docker.list > /dev/null
+          curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
+          echo \
+          "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+          bullseye stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
         elif grep -q "Debian" /etc/os-release; then
 
