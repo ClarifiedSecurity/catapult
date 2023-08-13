@@ -35,6 +35,8 @@ archives/
 .vscode
 .DS_Store
 .githooks
+creds.kdbx
+creds.key
 
 # Yarn
 .yarn/*

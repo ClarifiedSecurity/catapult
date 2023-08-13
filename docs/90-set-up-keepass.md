@@ -4,7 +4,7 @@
 
 Catapult uses [KeePassXC](https://keepassxc.org/) to store your personal secrets. Keepass is needed to store your LDAP/AD credentials, your personal API keys, your SSH keypairs etc. Catapult will not work without a KeePass database.
 
-Follow these steps to set up your KeePass database:
+Catapult will offer to create a Keepass database for you but you can follow these steps to set up your KeePass database manually:
 
 - Install KeePassXC on your computer, it's available for all major platforms, just check your package manager or download it directly from the [KeePassXC website](https://keepassxc.org/download/).
 - Run the KeePassXC application and create a new database.
