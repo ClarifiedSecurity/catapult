@@ -11,7 +11,7 @@ if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE ]]; then
     # Cloning the customizer repo if it's set
     if [[ -z "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" ]]; then
 
-        echo -e "No customizer repo defined"
+        echo -n -e
 
     else
 
@@ -42,7 +42,7 @@ echo -n -e ${C_BLUE}
 # Copying custom .makerc files to project root if they are in the customizer repo
 if [[ -d "custom/makefiles" ]]; then
     #for file in custom/makefiles/*; do
-        echo -e "Copying .makerc files to project root..."
+        echo -e "Copying custom .makerc files to project root..."
         cp -R custom/makefiles/. .
 fi
 
@@ -62,7 +62,6 @@ if [ -f custom/start.yml ]; then
 
   else
 
-    echo -e "Using default start.yml..."
     rm -f inventories/start
     cp -R defaults/start.yml inventories/start.yml
 
@@ -77,7 +76,6 @@ if [ -d custom/poetry ]; then
 
   else
 
-    echo -e "Copying default Poetry files to poetry folder..."
     cp defaults/pyproject.toml poetry/pyproject.toml
     cp defaults/poetry.lock poetry/poetry.lock
 
@@ -85,7 +83,6 @@ fi
 
 # Copying requirements files to the correct location
 mkdir -p requirements
-echo -e "Copying default requirements files to requirements folder..."
 cp -R defaults/requirements*.yml requirements
 
 # Copying custom roles & collection requirements if they exist
@@ -104,7 +101,6 @@ if [ -f custom/docker/docker-compose-extra.yml ]; then
 
   else
 
-    echo -e "Using default docker-compose-extra.yml..."
     cp defaults/docker-compose-extra.yml docker/docker-compose-extra.yml
 
 fi
