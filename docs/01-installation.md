@@ -84,7 +84,7 @@ cp .makerc-vars.example .makerc-vars
 make prepare
 ```
 
-- Fill out missing vars in `.makerc-vars`, To avoid any syntax errors don't leave a space after the `:=` sign. **Read the comments for each variable for more information.** All of the `KEEPASS_*` variables are case sensitive.
+- If you didn't configure Keepass automatically during `make prepare` then fill out missing vars in `.makerc-vars`. **Read the comments for each variable for more information.** All of the `KEEPASS_*` variables are case sensitive.
 
 - Start the Catapult container and connect to it with:
 
