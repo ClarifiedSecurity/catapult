@@ -120,7 +120,7 @@ sed -i'' -e "s#KEEPASS_DB_PATH.*#KEEPASS_DB_PATH :=$KEEPASS_DB_FILE_PATH_FULLPAT
 sed -i'' -e "s#KEEPASS_KEY_PATH.*#KEEPASS_KEY_PATH :=$KEEPASS_KEY_FILE_PATH_FULLPATH#" ${ROOT_DIR}/.makerc-vars
 sed -i'' -e "s#KEEPASS_DEPLOYER_CREDENTIALS_PATH.*#KEEPASS_DEPLOYER_CREDENTIALS_PATH :=DEPLOYER_CREDENTIALS#" ${ROOT_DIR}/.makerc-vars
 
-echo -n -e ${C_YELLOW}
+echo -e ${C_YELLOW}
 echo -e "Your database is located at $KEEPASS_DB_FILE_PATH_FULLPATH"
 echo -e "Your database key is located at $KEEPASS_KEY_FILE_PATH_FULLPATH"
 echo
