@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e # exit when any command fails
+
 C_RED="\033[31m"
 C_GREEN="\033[32m"
 C_YELLOW="\033[33m"
