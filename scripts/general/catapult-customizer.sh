@@ -83,6 +83,7 @@ fi
 
 # Copying requirements files to the correct location
 mkdir -p requirements
+rm -f requirements/*
 cp -R defaults/requirements*.yml requirements
 
 # Copying custom roles & collection requirements if they exist
