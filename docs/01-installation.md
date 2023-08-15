@@ -1,25 +1,26 @@
 # Installation
 
-Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is Ubuntu 22.04 LTS.
+Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is Ubuntu 22.04 LTS. For Windows follow the [Windows Subsystem for Linux](#windows-subsystem-for-linux) section to pre-configure WSL and then return to [Quickstart](#quickstart).
 
-## Prerequisites
+## Quickstart
 
-### Ubuntu/Debian
-
-```sh
-sudo apt update && \
-sudo apt install git make jq curl sudo -y
-```
-
-### Arch
+- Make sure all of the SSH keypairs you need are loaded into your ssh-agent. Catapult will use them to connect to the VMs.
+- Make sure you have `git` installed.
+- Run the following commands to install and configure Catapult:
 
 ```sh
-sudo pacman -S git make curl sudo jq
+git clone https://github.com/ClarifiedSecurity/catapult --depth 1
+cd catapult
+./install.sh
 ```
+
+- You can run `./install.sh` multiple times until it finishes without errors.
+
+If you didn't configure Keepass automatically during the installation then fill out missing vars in `.makerc-vars`. **Read the comments for each variable for more information.** All of the `KEEPASS_*` variables are case sensitive.
 
 ### Windows Subsystem for Linux
 
-Log in interactively (over RDP or locally) to your Windows machine with an account that has admin rights and run the following commands in PowerShell. The first login needs to be with an admin account because the WSL installation needs to be done with admin rights. After the first installation you can use a non-admin account to log in.
+Log in interactively (over RDP or locally) to your Windows machine with an account that has **admin** rights and run the following commands in PowerShell. The first login needs to be with an **admin** account because the WSL installation needs to be done with admin rights. After the first installation you can use a non-admin account to log in.
 
 ```powershell
 Enable-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online -NoRestart
@@ -27,8 +28,8 @@ wsl --install
 ```
 
 - Restart Windows
-- If your user account **IS** in the Administrators just log in, start Ubuntu from the start menu and follow the instructions to finalize the setup.
-- If your user account **IS NOT** in the Administrators group you need to run the following commands in non-admin PowerShell after your login:
+- If your user account **IS** in the Administrators group just log in, start Ubuntu from the start menu and follow the instructions to finalize the setup.
+- If your user account **IS NOT** in the Administrators group you need to run the following commands in **non-admin** PowerShell after your login:
 
 ```powershell
 wsl --update
@@ -37,66 +38,11 @@ wsl --install -d Ubuntu
 
 - After that follow the instructions to finalize the setup.
 
-- When your Ubuntu shell is ready. Run the following commands to install the needed dependencies:
-
-```sh
-sudo apt update && \
-sudo apt install git make jq curl sudo keychain -y
-```
-
 - Make sure all needed SSH keypairs are in `~/.ssh` folder in the WSL Ubuntu and ssh-agent is started. For easy-to-use SSH Agent you can follow this [guide](https://esc.sh/blog/ssh-agent-windows10-wsl2/). You can use this method to add multiple keys to the SSH Agent.
 
 When WSL is configured successfully then I'll show up in Windows Explorer as a network drive. You can use it to copy files between your host and the WSL system. On Windows we suggest using [VSCode](https://code.visualstudio.com/) with the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension to edit the files in WSL and [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install) for easy connection to WSL.
 
-### MacOS
-
-- Install brew and after installing brew make sure to add it to path with the commands it provides.
-
-```zsh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-- Install required packaes with brew:
-
-```zsh
-brew install git make jq curl
-```
-
-## Install
-
-- Make sure all of the SSH keypairs you need are loaded into your ssh-agent. Catapult will use them to connect to the VMs.
-- Clone the project from GitHub with:
-
-```sh
-git clone https://github.com/ClarifiedSecurity/catapult --depth 1
-cd catapult
-```
-
-- Create your own variables file based on the example but don't delete the example file:
-
-```sh
-cp .makerc-vars.example .makerc-vars
-```
-
-- Install all of the required dependencies for your host with:
-
-```sh
-make prepare
-```
-
-- If you didn't configure Keepass automatically during `make prepare` then fill out missing vars in `.makerc-vars`. **Read the comments for each variable for more information.** All of the `KEEPASS_*` variables are case sensitive.
-
-- Start the Catapult container and connect to it with:
-
-```sh
-make start
-```
-
-- Connect to an already started Catapult container with:
-
-```sh
-make shell
-```
+- When your Ubuntu shell is ready, return to [Quickstart](#quickstart)
 
 ## Caveats
 

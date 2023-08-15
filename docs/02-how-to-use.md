@@ -1,5 +1,19 @@
 # How to use
 
+## Enter the Catapult
+
+- Start the Catapult container and connect to it with:
+
+```sh
+make start
+```
+
+- Connect to an already started Catapult container with:
+
+```sh
+make shell
+```
+
 Once inside the Catapult container you can type `ctp-` and use the tab key to see all of the available commands, here is also list of all commands with examples:
 
 ## General commands

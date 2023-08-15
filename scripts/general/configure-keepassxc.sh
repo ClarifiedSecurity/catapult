@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo -n -e ${C_RST}
-
 set -e # exit when any command fails
+
+echo -n -e ${C_RST}
 
 KEEPASS_KEY_FILE_PATH="creds.key" # Defaults to Catapult root directory where the file is in .gitignore
 KEEPASS_DB_FILE_PATH="creds.kdbx" # Defaults to Catapult root directory where the file is in .gitignore
