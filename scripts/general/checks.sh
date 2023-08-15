@@ -59,6 +59,7 @@ then
   echo -e ".makerc-vars does not exist."
   echo -n -e ${C_YELLOW}
   echo -e "You can create it with ${C_BLUE}cp $example_vars_file .makerc-vars${C_YELLOW} command."
+  echo -e "If you are using custom .makerc-vars it exists in $(pwd)/.makerc-vars folder."
   echo -e "Make sure to fill out the required variables in .makerc-vars"
   echo -e ${C_RST}
   exit 1
