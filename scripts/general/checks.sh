@@ -97,28 +97,32 @@ LOCAL_TAG=$(git describe --tags --abbrev=0 $UPSTREAM | cut -d 'v' -f 2)
 
 # Checking if remote tag is newer than local tag
 if [[ $LOCAL_TAG == $REMOTE_TAG ]]; then
-
     echo -e -n
-
   else
+    if [ $AUTO_UPDATE == 1 ]; then
 
-    echo -e "Catapult version $REMOTE_TAG is available, do you want to update?"
-    options=(
-      "yes"
-      "no"
-    )
+      echo -e "Catapult version $REMOTE_TAG is available, updating..."
+      catapult_update
 
-    select option in "${options[@]}"; do
-        case "$REPLY" in
-            yes) catapult_update; break;;
-            no) echo -e "Not updating Catapult"; break;;
-            y) catapult_update; break;;
-            n) echo -e "Not updating Catapult"; break;;
-            1) catapult_update; break;;
-            2) echo -e "Not updating Catapult"; break;;
-        esac
-    done
+    else
 
+      echo -e "Catapult version $REMOTE_TAG is available, do you want to update?"
+      options=(
+        "yes"
+        "no"
+      )
+
+      select option in "${options[@]}"; do
+          case "$REPLY" in
+              yes) catapult_update; break;;
+              no) echo -e "Not updating Catapult"; break;;
+              y) catapult_update; break;;
+              n) echo -e "Not updating Catapult"; break;;
+              1) catapult_update; break;;
+              2) echo -e "Not updating Catapult"; break;;
+          esac
+      done
+    fi
 fi
 
 # Looping thorugh .makerc-vars

@@ -97,3 +97,7 @@ KEEPASS_PROVIDENTIA_API_TOKEN :=
 # Your E-Mail address
 # So your E-Mail address can be used during deployment for an example configuring .gitconfig file or sending notifications
 MAKEVAR_EMAIL :=
+
+# Automatically update Catapult and Docker image when new version is available
+# Set to 1 to enable, 0 to disable
+AUTO_UPDATE :=0
