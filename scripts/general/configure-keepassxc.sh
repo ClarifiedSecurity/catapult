@@ -116,9 +116,21 @@ echo -n -e ${C_MAGENTA}
 echo "Updating values in .makerc-vars..."
 echo -n -e ${C_RST}
 
-sed -i'' -e "s#KEEPASS_DB_PATH.*#KEEPASS_DB_PATH :=$KEEPASS_DB_FILE_PATH_FULLPATH#" ${ROOT_DIR}/.makerc-vars
-sed -i'' -e "s#KEEPASS_KEY_PATH.*#KEEPASS_KEY_PATH :=$KEEPASS_KEY_FILE_PATH_FULLPATH#" ${ROOT_DIR}/.makerc-vars
-sed -i'' -e "s#KEEPASS_DEPLOYER_CREDENTIALS_PATH.*#KEEPASS_DEPLOYER_CREDENTIALS_PATH :=DEPLOYER_CREDENTIALS#" ${ROOT_DIR}/.makerc-vars
+# MacOS
+if [[ $(uname) == "Darwin" ]]; then
+
+  sed -i "" "s#KEEPASS_DB_PATH.*#KEEPASS_DB_PATH :=$KEEPASS_DB_FILE_PATH_FULLPATH#" ${ROOT_DIR}/.makerc-vars
+  sed -i "" "s#KEEPASS_KEY_PATH.*#KEEPASS_KEY_PATH :=$KEEPASS_KEY_FILE_PATH_FULLPATH#" ${ROOT_DIR}/.makerc-vars
+  sed -i "" "s#KEEPASS_DEPLOYER_CREDENTIALS_PATH.*#KEEPASS_DEPLOYER_CREDENTIALS_PATH :=DEPLOYER_CREDENTIALS#" ${ROOT_DIR}/.makerc-vars
+
+# Everything else
+else
+
+  sed -i "s#KEEPASS_DB_PATH.*#KEEPASS_DB_PATH :=$KEEPASS_DB_FILE_PATH_FULLPATH#" ${ROOT_DIR}/.makerc-vars
+  sed -i "s#KEEPASS_KEY_PATH.*#KEEPASS_KEY_PATH :=$KEEPASS_KEY_FILE_PATH_FULLPATH#" ${ROOT_DIR}/.makerc-vars
+  sed -i "s#KEEPASS_DEPLOYER_CREDENTIALS_PATH.*#KEEPASS_DEPLOYER_CREDENTIALS_PATH :=DEPLOYER_CREDENTIALS#" ${ROOT_DIR}/.makerc-vars
+
+fi
 
 echo -e ${C_YELLOW}
 echo -e "Your database is located at $KEEPASS_DB_FILE_PATH_FULLPATH"
