@@ -87,7 +87,7 @@ if [[ $(uname) == "Darwin" ]]; then
   echo -e "Removing MacOS sudo requirement for Catapult..."
   echo -n -e ${C_RST}
 
-  sed -i'' -e "s#MAKEVAR_SUDO_COMMAND.*#MAKEVAR_SUDO_COMMAND :=#" .makerc-vars
+  sed -i "" "s#MAKEVAR_SUDO_COMMAND.*#MAKEVAR_SUDO_COMMAND :=#" .makerc-vars
 
   echo -n -e ${C_MAGENTA}
   echo -e "Installing Homebrew..."
