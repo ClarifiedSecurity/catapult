@@ -54,5 +54,5 @@ done
 echo -n -e ${C_RST}
 
 echo -n -e ${C_MAGENTA}
-echo "Preparation finished"
+echo "Install finished successfully"
 echo -n -e ${C_RST}
