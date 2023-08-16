@@ -86,7 +86,18 @@ install_docker(){
 
   if [[ $(uname) == "Darwin" ]]; then
 
-    brew install --cask docker
+    if [[ -x "$(command -v brew)" ]]; then
+
+      brew install --cask docker
+
+    else
+
+        echo -n -e ${C_RED}
+        echo -e "Homebrew not installed, cannot install Docker"
+        echo -n -e ${C_RST}
+        exit 1
+
+    fi
 
     # Wait until Docker is running
     while ! docker ps >/dev/null 2>&1; do
