@@ -83,22 +83,88 @@ done
 # MacOS
 if [[ $(uname) == "Darwin" ]]; then
 
-  echo -n -e ${C_MAGENTA}
-  echo -e "Removing MacOS sudo requirement for Catapult..."
-  echo -n -e ${C_RST}
+    echo -n -e ${C_MAGENTA}
+    echo -e "Removing MacOS sudo requirement for Catapult..."
+    echo -e ${C_RST}
 
-  sed -i "" "s#MAKEVAR_SUDO_COMMAND.*#MAKEVAR_SUDO_COMMAND :=#" .makerc-vars
+    sed -i "" "s#MAKEVAR_SUDO_COMMAND.*#MAKEVAR_SUDO_COMMAND :=#" .makerc-vars
 
-  echo -n -e ${C_MAGENTA}
-  echo -e "Installing Homebrew..."
-  echo -n -e ${C_RST}
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew-install() {
 
-  echo -n -e ${C_MAGENTA}
-  echo -e "Installing MacOS packages with homebrew..."
-  echo -n -e ${C_RST}
+        echo -n -e ${C_MAGENTA}
+        echo -e "Installing Homebrew..."
+        echo -n -e ${C_RST}
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  brew install git git-lfs make jq curl md5sha1sum
+    }
+
+    brew-packages-install() {
+
+
+        if [[ -x "$(command -v brew)" ]]; then
+
+            echo -n -e ${C_MAGENTA}
+            echo -e "Installing MacOS packages with homebrew..."
+            echo -n -e ${C_RST}
+
+            brew install ${BREW_PACKAGES[@]}
+
+        else
+
+            echo -n -e ${C_RED}
+            echo -e "Homebrew not installed, cannot install:"
+            echo -e "$BREW_PACKAGES"
+            echo -n -e ${C_RST}
+            exit 0
+
+        fi
+
+    }
+
+    BREW_PACKAGES="git git-lfs make jq curl md5sha1sum"
+
+    echo -n -e ${C_YELLOW}
+    echo -e "Installing homebrew."
+
+    options=(
+        "Yes"
+        "No"
+    )
+
+    select option in "${options[@]}"; do
+        case "$REPLY" in
+            yes) brew-install; break;;
+            no) read -p "If you don't install homebrew you'll need to install Docker manually. Press any key to continue"; break;;
+            y) brew-install; break;;
+            n) read -p "If you don't install homebrew you'll need to install Docker manually. Press any key to continue"; break;;
+            1) brew-install; break;;
+            2) read -p "If you don't install homebrew you'll need to install Docker manually. Press any key to continue"; break;;
+        esac
+    done
+
+    echo -e ${C_RST}
+
+    echo -n -e ${C_YELLOW}
+    echo -e "Installing following packages with homebrew:"
+    echo -e $BREW_PACKAGES
+
+    options=(
+        "Yes"
+        "No, I'll install these packages myself"
+    )
+
+    select option in "${options[@]}"; do
+        case "$REPLY" in
+            yes) brew-packages-install; break;;
+            no) read -p "Make sure $BREW_PACKAGES are installed and press any key to continue"; break;;
+            y) brew-packages-install; break;;
+            n) read -p "Make sure $BREW_PACKAGES are installed and press any key to continue"; break;;
+            1) brew-packages-install; break;;
+            2) read -p "Make sure $BREW_PACKAGES are installed and press any key to continue"; break;;
+        esac
+    done
+
+    echo -e ${C_RST}
 
 fi
 
