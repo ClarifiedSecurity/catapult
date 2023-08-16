@@ -61,7 +61,6 @@ if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
     )
     docker_pull
 
-
 else
 
     # Getting the local image sha256
@@ -70,16 +69,29 @@ else
     # Checking if local image sha256 is present in the remote image manifest
     if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker manifest inspect ${IMAGE_FULL} -v | grep $local_image_sha256) ]]; then
 
-        echo -n -e ${C_YELLOW}
-        echo -e "New ${IMAGE_FULL} docker image is available"
-        echo -e "Would you like to update now?"
-        echo -n -e ${C_CYAN}
-        options=(
-        "yes"
-        "no"
-        )
-        docker_pull
+        if [ $AUTO_UPDATE == 1 ]; then
 
+          echo -n -e ${C_YELLOW}
+          echo -e "New ${IMAGE_FULL} docker image is available"
+          echo -e "Updating now..."
+          echo -n -e ${C_CYAN}
+          ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}
+
+        else
+
+          echo -n -e ${C_YELLOW}
+          echo -e "New ${IMAGE_FULL} docker image is available"
+          echo -e "Would you like to update now?"
+          echo -n -e ${C_CYAN}
+
+          options=(
+          "yes"
+          "no"
+          )
+
+          docker_pull
+
+        fi
     fi
 
 fi
