@@ -8,11 +8,11 @@ install_docker(){
 
   if [[ $(uname) == "Linux" ]]; then
 
-    if grep -q "debian" /etc/os-release; then
+    if grep -q -E "ID=(kali|debian|ubuntu)" /etc/os-release; then
 
       if [[ -z $(grep -r download.docker.com /etc/apt/sources.list.d/) ]]; then
 
-        if grep -q "Ubuntu" /etc/os-release; then
+        if grep -q "ID=ubuntu" /etc/os-release; then
 
           echo -n -e ${C_MAGENTA}
           echo "Adding Docker repo for $(lsb_release -cs)..."
@@ -23,7 +23,7 @@ install_docker(){
           "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
           $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-        elif grep -q "Kali" /etc/os-release; then
+        elif grep -q "ID=kali" /etc/os-release; then
 
           echo -n -e ${C_MAGENTA}
           echo "Adding Docker repo for $(lsb_release -cs)..."
@@ -34,7 +34,7 @@ install_docker(){
           "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
           bullseye stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-        elif grep -q "Debian" /etc/os-release; then
+        elif grep -q "ID=debian" /etc/os-release; then
 
           echo -n -e ${C_MAGENTA}
           echo "Adding Docker repo for $(lsb_release -cs)..."
@@ -57,21 +57,24 @@ install_docker(){
 
     else
 
-      echo -n -e ${C_YELLOW}
-      echo "Unsupported operating system, please install Docker for your OS, after installation run the following commands ( or similar ) to create the docker network with ipv6:"
-      echo "bash scripts/general/configure-docker.sh"
-      echo "systemctl start docker"
-      echo "systemctl reload docker"
-      echo "docker network create ${CONTAINER_NETWORK} --ipv6 --subnet ${CONTAINER_NETWORK_IPV6_SUBNET} --subnet ${CONTAINER_NETWORK_IPV4_SUBNET}"
+      echo -n -e ${C_RED}
+      echo -e "You are using unsupported or untested (Linux) operating system. Catapult may still work if you install Docker manually"
+      echo -e "You'll need to follow these steps:"
+      echo -e
+      echo -e "1) Install ${C_YELLOW}Docker engine and Docker compose plugin${C_RED} for your OS from: ${C_YELLOW}https://docs.docker.com/engine/install${C_RED}"
+      echo -e "1.1) If you don't find your OS in the link above look around in the internet there might be guides available on how to install Docker for your OS"
+      echo -e
+
+      read -p "Once you have installed Docker & Docker compose plugin press any key to continue..."
       echo -n -e ${C_RST}
 
     fi
 
     # Installing Docker & required tools
-    if grep -q "debian" /etc/os-release; then
+    if grep -q -E "ID=(kali|debian|ubuntu)" /etc/os-release; then
 
       apt-get update
-      apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin git-lfs curl
+      apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
     elif grep -q "arch" /etc/os-release; then
 

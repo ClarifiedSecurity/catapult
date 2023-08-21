@@ -180,7 +180,7 @@ if [[ $(uname) == "Linux" ]]; then
 
     fi
 
-    # Debian
+    # Debian based OS
     if grep -q "debian" /etc/os-release; then
 
         echo -n -e ${C_MAGENTA}
@@ -209,13 +209,17 @@ if [[ $(uname) == "Linux" ]]; then
     # Other
     else
 
-        echo -n -e ${C_YELLOW}
-        echo -e "Unsupported OS"
-        echo -e "Please install git."
-        echo -e "Please install git LFS for your OS and initialize it."
-        echo -e "Please install curl"
-        echo -e "Please install jq"
-        echo -n -e ${C_RST}
+        echo -n -e ${C_RED}
+        echo -e
+        echo -e "You are using unsupported or untested (Linux) operating system. Catapult may still work if you configure it manually"
+        echo -e "You'll need to follow these steps:"
+        echo -e
+        echo -e "1) Install following packages: ${C_YELLOW}git git-lfs make jq curl sudo gpg ssh${C_RED}"
+        echo -e "2) Initialize git LFS with: ${C_YELLOW}git lfs install${C_RED}"
+        echo -e
+        read -p "Once you have installed the required packages press any key to continue..."
+        echo -e ${C_RST}
+
 
     fi
 
