@@ -1,5 +1,6 @@
 ---
-# This is an example file how to extend Catault with your own organizations docker-compose-extra.yml file.
+# This is an example file how to extend Catault with your own organization's or project's docker-compose-extra.yml file.
+# This file will override any matching value from docker-compose.yml.
 
 name: ${CONTAINER_PROJECT_NAME}
 services:
