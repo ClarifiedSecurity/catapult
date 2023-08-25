@@ -54,6 +54,10 @@ RUN cd /srv \
  && $HOME/.local/bin/poetry completions zsh > /home/builder/.oh-my-zsh/custom/plugins/poetry/_poetry \
 # fzf
  && git clone https://github.com/junegunn/fzf.git /home/builder/.fzf --depth 1 \
+ && /home/builder/.fzf/install --key-bindings --completion --update-rc \
+# Aliases
+ && echo "source $HOME/.default_aliases" | sudo tee -a /etc/zsh/zshrc \
+ && echo "source $HOME/.custom_aliases" | sudo tee -a /etc/zsh/zshrc \
  && echo "source $HOME/.personal_aliases" | sudo tee -a /etc/zsh/zshrc
 
 ADD --chown=builder:builder /container/home/builder/.default_aliases /home/builder/.default_aliases

@@ -98,16 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Loading default aliases
-if [ -f ~/.default_aliases ]; then
-    . ~/.default_aliases
-fi
-
-# Loading custom aliases
-if [ -f ~/.custom_aliases ]; then
-    . ~/.custom_aliases
-fi
-
 # Loading fzf extension if it exists
 if [ -f ~/.fzf.zsh ]; then
     . ~/.fzf.zsh
