@@ -183,28 +183,85 @@ if [[ $(uname) == "Linux" ]]; then
     # Debian based OS
     if grep -q "debian" /etc/os-release; then
 
-        echo -n -e ${C_MAGENTA}
-        echo -e "Installing required deb packages..."
-        echo -n -e ${C_RST}
+        DEBIAN_PACKAGES="git git-lfs make jq curl sudo gpg ssh"
 
-        sudo -E apt-get update
-        sudo -E apt-get install git git-lfs make jq curl sudo gpg ssh -y
+        debian-packages-install() {
 
-        if [ -n "$WSL_DISTRO_NAME" ]; then
+            echo -n -e ${C_MAGENTA}
+            echo -e "Installing required deb packages..."
+            echo -n -e ${C_RST}
 
             sudo -E apt-get update
-            sudo -E apt-get install keychain -y
+            sudo -E apt-get install $DEBIAN_PACKAGES -y
 
-        fi
+            if [ -n "$WSL_DISTRO_NAME" ]; then
+
+                sudo -E apt-get update
+                sudo -E apt-get install keychain -y
+
+            fi
+
+        }
+
+        echo -e ${C_YELLOW}
+        echo -e "Installing following packages:"
+        echo -e $DEBIAN_PACKAGES
+
+        options=(
+            "Yes"
+            "No, I'll install these packages myself"
+        )
+
+        select option in "${options[@]}"; do
+            case "$REPLY" in
+                yes) debian-packages-install; break;;
+                no) read -p "Make sure $DEBIAN_PACKAGES are installed and press any key to continue"; break;;
+                y) debian-packages-install; break;;
+                n) read -p "Make sure $DEBIAN_PACKAGES are installed and press any key to continue"; break;;
+                1) debian-packages-install; break;;
+                2) read -p "Make sure $DEBIAN_PACKAGES are installed and press any key to continue"; break;;
+            esac
+        done
+
+        echo -e ${C_RST}
 
     # Arch
     elif grep -q "arch" /etc/os-release; then
 
-        echo -n -e ${C_MAGENTA}
-        echo -e "Installing required pacman packages..."
-        echo -n -e ${C_RST}
 
-        sudo -E pacman -S git git-lfs make jq curl sudo --noconfirm
+        ARCH_PACKAGES="git git-lfs make jq curl sudo"
+
+        arch-packages-install() {
+
+            echo -n -e ${C_MAGENTA}
+            echo -e "Installing required pacman packages..."
+            echo -n -e ${C_RST}
+
+            sudo -E pacman -S $ARCH_PACKAGES --noconfirm
+
+        }
+
+        echo -e ${C_YELLOW}
+        echo -e "Installing following packages:"
+        echo -e $ARCH_PACKAGES
+
+        options=(
+            "Yes"
+            "No, I'll install these packages myself"
+        )
+
+        select option in "${options[@]}"; do
+            case "$REPLY" in
+                yes) arch-packages-install; break;;
+                no) read -p "Make sure $ARCH_PACKAGES are installed and press any key to continue"; break;;
+                y) arch-packages-install; break;;
+                n) read -p "Make sure $ARCH_PACKAGES are installed and press any key to continue"; break;;
+                1) arch-packages-install; break;;
+                2) read -p "Make sure $ARCH_PACKAGES are installed and press any key to continue"; break;;
+            esac
+        done
+
+        echo -e ${C_RST}
 
     # Other
     else
