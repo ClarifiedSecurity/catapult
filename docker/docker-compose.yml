@@ -18,6 +18,7 @@ services:
       - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
       - ${ROOT_DIR}/container/home/builder/.default_aliases:/home/builder/.default_aliases
       - ${ROOT_DIR}/container/home/builder/.custom_aliases:/home/builder/.custom_aliases
+      - ${ROOT_DIR}/container/home/builder/.personal_aliases:/home/builder/.personal_aliases
       - ${ROOT_DIR}/container/home/builder/.zsh_history:/home/builder/.zsh_history
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
       - ${HOST_SSH_AUTH_SOCK}:/ssh-agent
