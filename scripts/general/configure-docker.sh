@@ -162,29 +162,6 @@ update_docker_config(){
 
 }
 
-# Parsing the correct registry-mirrors value
-if [[ -z "${MAKEVAR_CONTAINER_REGISTRY}" ]] && [[ -z "${MAKEVAR_CONTAINER_PROXY}" ]]; then
-
-  DOCKER_REGISTRY_VALUE=
-
-elif [[ "${MAKEVAR_CONTAINER_REGISTRY}" != "ghcr.io" ]] && ! [[ -z "${MAKEVAR_CONTAINER_PROXY}" ]]; then
-
-  DOCKER_REGISTRY_VALUE="\"https://${MAKEVAR_CONTAINER_REGISTRY}\", \"https://${MAKEVAR_CONTAINER_PROXY}\""
-
-elif [[ "${MAKEVAR_CONTAINER_REGISTRY}" == "ghcr.io" ]] && ! [[ -z "${MAKEVAR_CONTAINER_PROXY}" ]]; then
-
-  DOCKER_REGISTRY_VALUE="\"https://${MAKEVAR_CONTAINER_PROXY}\""
-
-elif [[ "${MAKEVAR_CONTAINER_REGISTRY}" != "ghcr.io" ]]; then
-
-  DOCKER_REGISTRY_VALUE="\"https://${MAKEVAR_CONTAINER_REGISTRY}\""
-
-elif ! [[ -z "${MAKEVAR_CONTAINER_PROXY}" ]]; then
-
-  DOCKER_REGISTRY_VALUE="\"https://${MAKEVAR_CONTAINER_PROXY}\""
-
-fi
-
 echo -e ${C_YELLOW}
 echo -e "Installing latest Docker version for your OS"
 
