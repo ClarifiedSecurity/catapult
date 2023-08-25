@@ -186,13 +186,7 @@ echo -n -e ${C_RST}
 docker_config=$(cat <<EOF
 {
   "experimental": true,
-  "features": {
-    "buildkit": true
-  },
-  "ipv6": true,
-  "ip6tables": true,
-  "fixed-cidr-v6": "fd69::/64",
-  "registry-mirrors": [ $DOCKER_REGISTRY_VALUE ]
+  "ip6tables": true
 }
 EOF
 )
@@ -200,11 +194,11 @@ EOF
 echo -n -e ${C_YELLOW}
 if [[ $(uname) == "Darwin" ]]; then
 
-  echo -e "\n Overwriting your $HOME/.docker/daemon.json with the following config:"
+  echo -e "\n Overwriting your $HOME/.docker/daemon.json with the following config to add IPv6 support:"
 
 else
 
-  echo -e "\n Overwriting your /etc/docker/daemon.json with the following config:"
+  echo -e "\n Overwriting your /etc/docker/daemon.json with the following config to add IPv6 support:"
 
 fi
 
