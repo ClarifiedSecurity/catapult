@@ -74,7 +74,7 @@ install_docker(){
     if grep -q -E "ID=(kali|debian|ubuntu)" /etc/os-release; then
 
       apt-get update
-      apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+      apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
 
     elif grep -q "arch" /etc/os-release; then
 
