@@ -50,14 +50,10 @@ MAKEVAR_SUDO_COMMAND :=sudo -E
 MAKEVAR_CATAPULT_CUSTOMIZER_REPO :=
 
 # This is the FQDN of docker registry that is hosting the Catapult container image
-# This can be the place where the CI/CD pipelines build your custom Catapult image
+# This can be the place where the CI/CD pipelines build your custom Catapult image or your own private registry proxy
 # Set the value to the registry machine's FQDN
 # Only HTTPS is supported so make sure that you are using a trusted certificates or Catapult trusts your CA (refer to README under customization section)
 MAKEVAR_CONTAINER_REGISTRY :=ghcr.io
-
-# Set to true if your docker registry requires authentication
-# Credentials will be asked when running `make prepare`
-MAKEVAR_CONTAINER_REGISTRY_REQUIRES_AUTH :=false
 
 # This is the name of the Catapult container image that will be used
 MAKEVAR_IMAGE_NAME :=clarifiedsecurity/catapult

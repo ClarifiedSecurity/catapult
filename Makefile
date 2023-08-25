@@ -71,11 +71,6 @@ shell:
 shell-raw:
 	${MAKEVAR_SUDO_COMMAND} docker exec -it ${CONTAINER_NAME} zsh
 
-## docker-login: Log in Docker registry and copy the credentials under root
-.PHONY: docker-login
-docker-login:
-	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/docker-login.sh
-
 ## clean: Stop and delete the container and the image
 .PHONY: clean
 clean: stop
