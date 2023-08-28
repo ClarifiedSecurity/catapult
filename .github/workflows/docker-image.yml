@@ -33,6 +33,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Installing QEMU
+        uses: docker/setup-qemu-action@v2
+
       - name: Building Catapult image...
         run: |
           docker buildx create --use
