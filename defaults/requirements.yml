@@ -43,7 +43,7 @@ collections:
   - name: community.network
     version: 5.0.0
   - name: community.postgresql
-    version: 2.4.1
+    version: 3.2.0
   - name: community.routeros
     version: 2.8.3
   - name: community.vmware
