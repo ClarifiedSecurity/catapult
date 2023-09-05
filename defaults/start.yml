@@ -51,9 +51,10 @@
     - role: clarified.core.customization_pre_role
       when: pre_role is defined
 
-    - role: clarified.core.generate_credentials # Pregenerating credentials/secrets & saving them to Vault
+    # Saving account's passwords to Vault
+    - role: clarified.core.secrets_to_vault
       when:
-        - save_secrets_to_vault # Requires a running HashiCorp Vault server with LDAP auth enabled to be set to true
+        - save_secrets_to_vault # Requires a running HashiCorp Vault server with LDAP auth enabled
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
@@ -81,11 +82,11 @@
       become_user: "{{ default_become_user | default(omit) }}"
       when: template
 
-    - role: clarified.core.os_configuration
+    - role: clarified.core.os_configuration # Running OS specific configurations
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
       when:
-        - "'zone_local' not in group_names" # To avoid configuration for your own laptop # Running OS specific configurations
+        - "'zone_local' not in group_names" # To avoid configuration for your own laptop
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
