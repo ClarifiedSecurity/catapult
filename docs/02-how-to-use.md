@@ -138,7 +138,7 @@ ctp-deploy-network <inventory_hostname>
 
 ### ctp-deploy-fresh
 
-Runs deploy as it if the machine does not exist
+Runs deploy as if the machine does not exist. This can be useful when deploy has failed before configuring accounts. Use this command to deploy the machine again as if it didn't exist and thus use the default values for the accounts.
 
 _Example usage:_
 
