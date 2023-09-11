@@ -57,6 +57,7 @@
         - save_secrets_to_vault # Requires a running HashiCorp Vault server with LDAP auth enabled
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
+        - not deploy_mode == 'undeploy' # No need to save secrets when undeploying
 
     - role: clarified.core.create # Creating (usually a virtual machine)
 
