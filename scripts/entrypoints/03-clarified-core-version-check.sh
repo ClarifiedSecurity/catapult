@@ -7,8 +7,6 @@ C_RST="\033[0m"
 
 echo -n -e ${C_GREEN}
 
-NOVA_CORE_REMOTE_URL=https://raw.githubusercontent.com/novateams/nova.core/main/nova/core/galaxy.yml
-
 if ping -c 1 github.com &> /dev/null
 then
 
@@ -19,7 +17,7 @@ then
 
   fi
 
-  galaxy_remote_version_row=$(curl $NOVA_CORE_REMOTE_URL -s | grep "version:" | cut -d " " -f 2)
+  galaxy_remote_version_row=$(curl https://raw.githubusercontent.com/ClarifiedSecurity/clarified.core/main/clarified/core/galaxy.yml -s | grep "version:" | cut -d " " -f 2)
   galaxy_remote_version=$( echo $galaxy_remote_version_row | cut -d: -f2 | xargs )
   galaxy_local_version_patch=$( echo $galaxy_local_version | cut -d. -f3 )
   galaxy_remote_version_patch=$( echo $galaxy_remote_version | cut -d. -f3 )
@@ -51,6 +49,9 @@ then
     echo -n -e ${C_RST}
     done
   fi
+
+  unset galaxy_local_version
+  unset galaxy_remote_version
 
 else
 
