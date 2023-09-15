@@ -45,45 +45,45 @@
     group/azure.azcollection.all: "{{ azure_defaults | default(omit) }}"
 
   roles:
-    - role: clarified.core.deploy_vars # Including deployment variables
+    - role: nova.core.deploy_vars # Including deployment variables
 
     # Define -e pre_vm=role_name with the deploy alias to run the role and stop the play, the role must be able to run on localhost
-    - role: clarified.core.customization_pre_role
+    - role: nova.core.customization_pre_role
       when: pre_role is defined
 
     # Saving account's passwords to Vault
-    - role: clarified.core.secrets_to_vault
+    - role: nova.core.secrets_to_vault
       when:
         - save_secrets_to_vault # Requires a running HashiCorp Vault server with LDAP auth enabled
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
         - not deploy_mode == 'undeploy' # No need to save secrets when undeploying
 
-    - role: clarified.core.create # Creating (usually a virtual machine)
+    - role: nova.core.create # Creating (usually a virtual machine)
 
-    - role: clarified.core.configure_networking # Configuring VM networking
+    - role: nova.core.configure_networking # Configuring VM networking
 
-    - role: clarified.core.connection # Setting correct network connection parameters
+    - role: nova.core.connection # Setting correct network connection parameters
 
     # Define -e single_role=role_name with the deploy alias run the role and stop the play, useful for testing/development
-    - role: clarified.core.customization_single_role
+    - role: nova.core.customization_single_role
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
       when: single_role is defined
 
-    - role: clarified.core.accounts # Creating required accounts
+    - role: nova.core.accounts # Creating required accounts
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
       when:
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
-    - role: clarified.core.template_os_configuration # Used for configuring project or env specific templates
+    - role: nova.core.template_os_configuration # Used for configuring project or env specific templates
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
       when: template
 
-    - role: clarified.core.os_configuration # Running OS specific configurations
+    - role: nova.core.os_configuration # Running OS specific configurations
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
       when:
@@ -91,24 +91,24 @@
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
-    - role: clarified.core.customization_pre_vm_role # Including pre_customization role if it exists
+    - role: nova.core.customization_pre_vm_role # Including pre_customization role if it exists
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
       when:
         - not role_only
 
-    - role: clarified.core.customization # Including machine specific role if exists
+    - role: nova.core.customization # Including machine specific role if exists
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
 
-    - role: clarified.core.customization_post_vm_role # Including post_customization specific role if exists
+    - role: nova.core.customization_post_vm_role # Including post_customization specific role if exists
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
       when:
         - not role_only
 
-    - role: clarified.core.finalize # Running final & cleanup tasks
+    - role: nova.core.finalize # Running final & cleanup tasks
       become: "{{ default_become_value | default(omit) }}"
       become_user: "{{ default_become_user | default(omit) }}"
 
-    - role: clarified.core.get_ip
+    - role: nova.core.get_ip
