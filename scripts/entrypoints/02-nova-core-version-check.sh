@@ -7,16 +7,16 @@ C_RST="\033[0m"
 
 echo -n -e ${C_GREEN}
 
-REQUIREMENTS_FILE="/srv/requirements/requirements_cs.yml"
+REQUIREMENTS_FILE="/srv/requirements/requirements_nova.yml"
 REMOTE_URL=$(cat $REQUIREMENTS_FILE | grep "version_check_url:" | awk '{print $2}')
 
 if ping -c 1 github.com &> /dev/null
 then
 
   # Checking for shared roles version if MANIFEST.json exists
-  if [[ -f "/srv/ansible/ansible_collections/clarified/core/MANIFEST.json" ]]; then
+  if [[ -f "/srv/ansible/ansible_collections/nova/core/MANIFEST.json" ]]; then
 
-    galaxy_local_version=$(cat /srv/ansible/ansible_collections/clarified/core/MANIFEST.json | jq -r '.collection_info.version')
+    galaxy_local_version=$(cat /srv/ansible/ansible_collections/nova/core/MANIFEST.json | jq -r '.collection_info.version')
 
   fi
 
@@ -28,10 +28,10 @@ then
   if [[ "$galaxy_local_version" != "$galaxy_remote_version" ]]; then
 
     echo -n -e ${C_YELLOW}
-    echo -e "${C_YELLOW}Local clarified.core collection version:${C_RST}" $galaxy_local_version
-    echo -e "${C_YELLOW}Remote clarified.core collection version:${C_RST}" $galaxy_remote_version
+    echo -e "${C_YELLOW}Local nova.core collection version:${C_RST}" $galaxy_local_version
+    echo -e "${C_YELLOW}Remote nova.core collection version:${C_RST}" $galaxy_remote_version
     echo -n -e ${C_YELLOW}
-    echo -e "Remote clarified.core collection differs from local"
+    echo -e "Remote nova.core collection differs from local"
     echo -e "Would you like to update now?"
     echo -n -e ${C_RST}
     options=(
@@ -59,7 +59,7 @@ then
 else
 
   echo -n -e ${C_RED}
-  echo -e Cannot check for clarified.core version!
+  echo -e Cannot check for nova.core version!
   echo -e github.com is not reachable
   echo -n -e ${C_RST}
 
