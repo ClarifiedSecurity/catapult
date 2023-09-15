@@ -23,6 +23,7 @@ services:
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
       - ${HOST_SSH_AUTH_SOCK}:/ssh-agent
     environment:
+      CATAPULT: 1
       CONTAINER_USER_ID: ${CONTAINER_USER_ID}
       CONTAINER_GROUP_ID: ${CONTAINER_GROUP_ID}
       CONTAINER_USER_NAME: ${CONTAINER_USER_NAME}
