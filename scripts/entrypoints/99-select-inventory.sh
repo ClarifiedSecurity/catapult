@@ -7,13 +7,20 @@ C_RST="\033[0m"
 echo -e ${C_RST}
 SEARCH_DIR=/srv/inventories
 SEARCH_FOLDER=".git"
-FOLDERS=($(find $SEARCH_DIR -type d -name $SEARCH_FOLDER -printf '%h\n' | sort))
+FOLDERS=($(find $SEARCH_DIR -name $SEARCH_FOLDER -printf '%h\n' | sort))
 
 #----------------------------------------End of variables, start of script----------------------------------------#
 
 # Function to select inventory when using zsh
 function zsh_selector() {
-    if [ ${#FOLDERS[@]} -gt 0 ]; then
+    if [ ${#FOLDERS[@]} -eq 1 ]; then
+
+        selected_folder=${FOLDERS[1]}
+        selected_folder_name=$(basename "$selected_folder")
+        echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+        cd $selected_folder
+
+    elif [ ${#FOLDERS[@]} -gt 0 ]; then
 
         for i in $(seq 1 ${#FOLDERS}); do
 
@@ -26,7 +33,7 @@ function zsh_selector() {
         read choice
         choice=$((choice))
 
-        if [ ${choice-0} -ge 0 ] && [ ${choice-0} -lt $((${#FOLDERS} + 1)) ]; then
+        if (($choice >= 1 && choice <= ${#FOLDERS[@]})); then
 
             selected_folder=${FOLDERS[choice]}
             selected_folder_name=$(basename "$selected_folder")
@@ -39,6 +46,7 @@ function zsh_selector() {
             cd /srv
 
         fi
+
     else
 
         echo "No projects found."
@@ -50,7 +58,14 @@ function zsh_selector() {
 # Function to select inventory when using bash
 function bash_selector() {
 
-    if [ ${#FOLDERS[@]} -gt 0 ]; then
+    if [ ${#FOLDERS[@]} -eq 1 ]; then
+
+        selected_folder=${FOLDERS[0]}
+        selected_folder_name=$(basename "$selected_folder")
+        echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+        cd $selected_folder
+
+    elif [ ${#FOLDERS[@]} -gt 0 ]; then
 
         for i in "${!FOLDERS[@]}"; do
 
@@ -59,9 +74,11 @@ function bash_selector() {
 
         done
 
-        read -p "Select project: " choice
+        echo -n "Select project: "
+        read choice
+        choice=$((choice))
 
-        if [ ${choice-0} -ge 1 ] && [ ${choice-0} -le ${#FOLDERS[@]} ]; then
+        if (($choice >= 1 && choice <= ${#FOLDERS[@]})); then
 
             selected_folder=${FOLDERS[choice-1]}
             selected_folder_name=$(basename "$selected_folder")
@@ -74,6 +91,7 @@ function bash_selector() {
             cd /srv
 
         fi
+
     else
 
         echo "No projects found."
@@ -82,11 +100,11 @@ function bash_selector() {
 
 }
 
-if [[ -n ${ZSH_VERSION} ]] && [[ ! -z ${ZSH_VERSION} ]]; then
+if [ ! -z ${ZSH_VERSION} ]; then
 
     zsh_selector
 
-elif [[ -n $BASH_VERSION ]]; then
+elif [ ! -z $BASH_VERSION ]; then
 
     bash_selector
 
