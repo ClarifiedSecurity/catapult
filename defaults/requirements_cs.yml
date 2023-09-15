@@ -2,11 +2,8 @@
 roles:
 
 collections:
-  - name: https://github.com/novateams/nova.core.git#/nova/core # https://github.com/novateams/nova.core
-    type: git
-    version: HEAD # Default version is latest but it can be locked to a specific tag - https://github.com/novateams/nova.core/tags
-
   # Legacy collections that will be replaced by nova.core in the future
   - name: https://github.com/ClarifiedSecurity/clarified.core.git#/clarified/core # https://github.com/ClarifiedSecurity/clarified.core
     type: git
     version: HEAD # Default version is latest but it can be locked to a specific tag - https://github.com/ClarifiedSecurity/clarified.core/tags
+    version_check_url: https://raw.githubusercontent.com/ClarifiedSecurity/clarified.core/main/clarified/core/galaxy.yml
