@@ -189,26 +189,6 @@ else
 
 fi
 
-# Checking if user id equals 1000 on Linux
-if [[ $(uname) == "Linux" ]]; then
-
-    if [ "$(id -u)" -eq 1000 ]; then
-
-        echo -n -e
-
-    else
-
-        echo -e ${C_RED}
-        echo -e "Your user id is not 1000"
-        echo -e "Change your user id to 1000 or build the Catapult Docker images yourself with: "
-        echo -e "make build"
-        read -p "Press any key to continue"
-        echo -e ${C_RST}
-
-    fi
-
-fi
-
 # Checking if personal docker-compose file exists and creating it if it doesn't
 if ! [ -r docker/docker-compose-personal.yml  ]
 then
