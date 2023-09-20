@@ -18,6 +18,22 @@ if [[ $(uname) == "Linux" ]]; then
 
   if grep -q "debian" /etc/os-release; then
 
+    if grep -q "20.04" /etc/os-release; then
+
+      echo -n -e ${C_MAGENTA}
+      echo "Adding KeePassXC official repo..."
+      echo -n -e ${C_RST}
+
+      apt-get update
+      apt-get install software-properties-common -y
+      add-apt-repository ppa:phoerious/keepassxc -y
+
+    fi
+
+    echo -n -e ${C_MAGENTA}
+    echo "Installing KeePassXC..."
+    echo -n -e ${C_RST}
+
     apt-get update
     apt-get install keepassxc -y
 
