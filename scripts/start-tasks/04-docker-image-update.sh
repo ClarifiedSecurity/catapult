@@ -48,26 +48,45 @@ else
 
 fi
 
-# Checking if local image exists and pulling if not
-if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
+# Checking if user id equals 1000 on Linux
+if [ $(uname) == "Linux" ] && [ "$(id -u)" -ne 1000 ]; then
 
-    echo -n -e ${C_YELLOW}
-    echo -e "Local ${IMAGE_FULL} docker image not found"
-    echo -e "Would you like to pull it now?"
-    echo -n -e ${C_CYAN}
-    options=(
-        "yes"
-        "no"
-    )
-    docker_pull
+    echo -e ${C_RED}
+    echo -e "Your user id is not 1000"
+    echo -e "For most stable results run Catapult from a user with an ID of 1000"
+    read -p "Press any key to continue and build image locally, or Ctrl + C to cancel and change your user or user ID..."
+    echo -e
+    echo -e ${C_RST}
 
-else
+    # Checking if local image exists and building if not
+    if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
 
-    # Getting the local image sha256
-    local_image_sha256=$(${MAKEVAR_SUDO_COMMAND} docker inspect ${IMAGE_FULL} -f '{{.Id}}')
+      make build
 
-    # Checking if local image sha256 is present in the remote image manifest
-    if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker manifest inspect ${IMAGE_FULL} -v | grep $local_image_sha256) ]]; then
+    fi
+
+  else
+
+    # Checking if local image exists and pulling if not
+    if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
+
+      echo -n -e ${C_YELLOW}
+      echo -e "Local ${IMAGE_FULL} docker image not found"
+      echo -e "Would you like to pull it now?"
+      echo -n -e ${C_CYAN}
+      options=(
+          "yes"
+          "no"
+      )
+      docker_pull
+
+    else
+
+      # Getting the local image sha256
+      local_image_sha256=$(${MAKEVAR_SUDO_COMMAND} docker inspect ${IMAGE_FULL} -f '{{.Id}}')
+
+      # Checking if local image sha256 is present in the remote image manifest
+      if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker manifest inspect ${IMAGE_FULL} -v | grep $local_image_sha256) ]]; then
 
         if [ $AUTO_UPDATE == 1 ]; then
 
@@ -91,7 +110,10 @@ else
 
           docker_pull
 
-        fi
+      fi
+
     fi
+
+  fi
 
 fi
