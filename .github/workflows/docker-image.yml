@@ -38,7 +38,15 @@ jobs:
       - name: Installing QEMU
         uses: docker/setup-qemu-action@v2
 
+      - name: Getting current version...
+        run: |
+          VERSION=$(cat version.yml | cut -d ' ' -f 2)
+          echo "IMAGE_VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Building Catapult image...
         run: |
           docker buildx create --use
-          docker buildx build --file Dockerfile --tag ghcr.io/clarifiedsecurity/catapult:latest --platform linux/amd64,linux/arm64 --push .
+          docker buildx build --file Dockerfile --tag ghcr.io/clarifiedsecurity/catapult:latest . --load
+          docker push ghcr.io/clarifiedsecurity/catapult:latest
+          docker tag ghcr.io/clarifiedsecurity/catapult:latest ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
+          docker push ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
