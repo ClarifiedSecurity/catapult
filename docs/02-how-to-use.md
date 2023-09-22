@@ -18,19 +18,7 @@ Once inside the Catapult container you can type `ctp-` and use the tab key to se
 
 ## General commands
 
-- Installs all Ansible roles, collections and Python dependencies (useful for development)
-
-```zsh
-ctp-install-all-requirements
-```
-
-- Installs only Ansible roles & collections from files that are NOT named requirements.yml under /srv/requirements folder (useful for development).
-
-```zsh
-ctp-install-custom-requirements
-```
-
-- Lists all available projects under /srv/inventories and allows you to select one
+- Lists all available projects under /srv/inventories and allows you to select one if there is only one project the command will select it automatically
 
 ```zsh
 ctp-select-project
