@@ -59,7 +59,7 @@
         - not role_only_wp # wp means with pre/post_vm_role
         - not deploy_mode == 'undeploy' # No need to save secrets when undeploying
 
-    - role: nova.core.create # Creating (usually a virtual machine)
+    - role: nova.core.machine_operations # Creating (usually a virtual machine)
 
     - role: nova.core.configure_networking # Configuring VM networking
 
