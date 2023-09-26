@@ -46,7 +46,7 @@ jobs:
       - name: Building Catapult image...
         run: |
           docker buildx create --use
-          docker buildx build --file Dockerfile --tag ghcr.io/clarifiedsecurity/catapult:latest . --load
+          docker buildx build --file Dockerfile --tag ghcr.io/clarifiedsecurity/catapult:latest --platform linux/amd64,linux/arm64 . --load
           docker push ghcr.io/clarifiedsecurity/catapult:latest
           docker tag ghcr.io/clarifiedsecurity/catapult:latest ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
