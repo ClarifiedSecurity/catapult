@@ -1,9 +1,5 @@
 post_scripts_folder_on_target: c:\tmp
 
-# hardware
-cpus: 4
-ram_gb: 8
-
 admin_account: Administrator
 template_username: "{{ admin_account }}"
 
