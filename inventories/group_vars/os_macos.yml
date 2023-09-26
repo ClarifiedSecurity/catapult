@@ -15,7 +15,3 @@ default_become_user: root
 
 # Predefined here because cannot gather facets on MacOS that has no Python installed
 ansible_system: Darwin
-
-# increase ram for macos
-cpus: 4
-ram_gb: 4

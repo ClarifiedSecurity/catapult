@@ -2,5 +2,4 @@
 customization_method: nmcli
 configure_network_with_rest_api: yes
 
-cpus: 2
-ram_gb: 4
+
