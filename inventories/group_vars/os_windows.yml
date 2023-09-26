@@ -4,7 +4,6 @@ admin_account: Administrator
 template_username: "{{ admin_account }}"
 
 customization_method: windows_cli
-configure_network_with_rest_api: yes
 
 # connection options
 default_connection_plugin: ssh
