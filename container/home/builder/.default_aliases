@@ -60,38 +60,38 @@ alias ctp-retry-deploy-role="ctp-deploy-role @start.retry"
 
 ### Snapshot modes ###
 
-alias ctp-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=snap -e pre_role=clarified.core.snapshots -l"
+alias ctp-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=snap -e pre_role=nova.core.snapshots -l"
 
-alias ctp-clean-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=resnap -e pre_role=clarified.core.snapshots -l"
+alias ctp-clean-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=resnap -e pre_role=nova.core.snapshots -l"
 
-alias ctp-live-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=live-snap -e pre_role=clarified.core.snapshots -l"
+alias ctp-live-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=live-snap -e pre_role=nova.core.snapshots -l"
 
-alias ctp-revert="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=revert -e pre_role=clarified.core.snapshots -l"
+alias ctp-revert="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=revert -e pre_role=nova.core.snapshots -l"
 
-alias ctp-remove-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=remove -e pre_role=clarified.core.snapshots -l"
+alias ctp-remove-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=remove -e pre_role=nova.core.snapshots -l"
 
-alias ctp-rename-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=rename -e pre_role=clarified.core.snapshots -l"
+alias ctp-rename-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=rename -e pre_role=nova.core.snapshots -l"
 
 ### Power state ###
 
-alias ctp-poweron="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweron -e=poweron=true -e pre_role=clarified.core.powerstate -l"
+alias ctp-poweron="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweron -e=poweron=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-restart="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=restart -e=restart=true -e pre_role=clarified.core.powerstate -l"
+alias ctp-restart="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=restart -e=restart=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-shutdown="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=shutdown -e=shutdown=true -e pre_role=clarified.core.powerstate -l"
+alias ctp-shutdown="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=shutdown -e=shutdown=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-poweroff="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweroff -e=poweroff=true -e pre_role=clarified.core.powerstate -l"
+alias ctp-poweroff="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweroff -e=poweroff=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-reset="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=reset -e=reset=true -e pre_role=clarified.core.powerstate -l"
+alias ctp-reset="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=reset -e=reset=true -e pre_role=nova.core.powerstate -l"
 
 ### MISC ###
 
-alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e=single_role=clarified.core.updates -l"
+alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e=single_role=nova.core.updates -l"
 
 alias ctp-list="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy --list-hosts -l"
 
 alias ctp-list-vars="ansible-inventory /srv/inventories/start.yml -e=deploy_mode=deploy --vars --host"
 
-alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e pre_role=clarified.core.rename_vm -l"
+alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e pre_role=nova.core.rename_vm -l"
 
-alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=clarified.core.get_ip -l"
+alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=nova.core.get_ip -l"
