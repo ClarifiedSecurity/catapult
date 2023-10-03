@@ -1,9 +1,9 @@
 ---
 # Template created with packer
 # Used only to create project templates from
-base_vm_template: BASE_TEMPLATE_kali2023_2
+base_vm_template: BASE_TEMPLATE_kali2023_3
 
-vm_template: "{{ kali2023_2_vm_template_name | default('catapult-template-kali2023-2') }}"
+vm_template: "{{ kali2023_3_vm_template_name | default('catapult-template-kali2023-3') }}"
 
 # AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
 ami_owner_id: "679593333241"
