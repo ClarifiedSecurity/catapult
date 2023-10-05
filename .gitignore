@@ -23,7 +23,7 @@ requirements/**
 # Since this list is parsed in order, the deny (!) needs to be after allow for the same folder
 /inventories/*
 !/inventories/_TEMPLATE_PROJECT
-!/inventories/group_vars
+!/inventories/_operating_systems
 sync-to-shared-roles.sh
 /roles
 /roles_core
