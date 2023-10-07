@@ -13,7 +13,7 @@ roles:
 
 collections:
   - name: amazon.aws
-    version: 6.4.0
+    version: 6.5.0
   - name: ansible.netcommon
     version: 5.2.0
   - name: ansible.posix
