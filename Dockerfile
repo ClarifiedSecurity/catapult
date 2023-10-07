@@ -1,5 +1,5 @@
 # Matches the Python version in pyproject.toml
-FROM python:3.11.3-slim-bullseye
+FROM python:3.11.6-slim-bullseye
 
 # Timezone configuration from .makerc-vars
 ARG TZ

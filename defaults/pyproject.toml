@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "catapult"
-version = "0.1.1"
+version = "1.0.0"
 description = "Required libraries for running Catapult"
 authors = ["Clarified Security <catapult@clarifiedsecurity.com>"]
 
@@ -28,7 +28,7 @@ polling = "*"
 psycopg2-binary = "*"
 pykeepass = "*"
 pyopenssl = "*"
-python = "3.11.3"
+python = "3.11.6"
 pyvmomi = "*"
 pywinrm = "*"
 redis = "*"
