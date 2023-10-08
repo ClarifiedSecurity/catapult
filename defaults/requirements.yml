@@ -45,7 +45,7 @@ collections:
   - name: community.postgresql
     version: 3.2.0
   - name: community.routeros
-    version: 2.8.3
+    version: 2.10.0
   - name: community.vmware
     version: 3.3.0
   - name: community.windows
