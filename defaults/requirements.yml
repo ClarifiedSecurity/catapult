@@ -35,7 +35,7 @@ collections:
   - name: community.docker
     version: 3.4.9
   - name: community.general
-    version: 7.4.0
+    version: 7.5.0
   - name: community.hashi_vault
     version: 5.0.0
   - name: community.mysql
