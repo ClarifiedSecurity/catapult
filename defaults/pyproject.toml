@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "catapult"
-version = "1.0.0"
+version = "2.0.0"
 description = "Required libraries for running Catapult"
 authors = ["Clarified Security <catapult@clarifiedsecurity.com>"]
 
 [tool.poetry.dependencies]
 aiohttp = "*"
-ansible-core = "2.13.12" # Will be fixed in 2.15.5 according to https://github.com/ansible/ansible/issues/79652
+ansible-core = "2.15.5"
 ansible-lint = { version = "*", markers = "platform_system != 'Windows'" } # https://github.com/python-poetry/poetry/issues/7112#issuecomment-1329385572
 ansible-pylibssh = "*"
 ansible-specdoc = "*"
