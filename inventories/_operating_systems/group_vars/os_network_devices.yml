@@ -1,10 +1,16 @@
 ---
-default_connection_plugin: ansible.netcommon.network_cli
-ansible_python_interpreter: /usr/bin/python3
-customization_method: "{{ ansible_network_os }}"
-ansible_system: "{{ ansible_network_os }}"
+# Accounts
 template_username: "{{ admin_account }}"
-default_ansible_shell_type: sh
 
-# Become defaults
-default_become_value: false
+# Network
+customization_method: "{{ ansible_network_os }}"
+default_ansible_shell_type: sh
+default_connection_plugin: ansible.netcommon.network_cli
+
+# Connection
+ansible_python_interpreter: /usr/bin/python3
+ansible_system: "{{ ansible_network_os }}"
+
+# Become
+default_ansible_become: false
+default_ansible_become_user: "{{ admin_account }}"
