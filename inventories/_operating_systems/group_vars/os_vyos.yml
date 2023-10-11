@@ -1,5 +1,10 @@
 ---
-ansible_network_os: vyos.vyos.vyos
-customization_method: vyos
-
+# Accounts
 admin_account: vyos
+
+# Network
+customization_method: vyos
+ansible_network_os: vyos.vyos.vyos
+
+# Become
+default_ansible_become_user: root # For some reason, this is required for VyOS although the account is vyos

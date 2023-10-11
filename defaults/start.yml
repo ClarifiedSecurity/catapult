@@ -67,48 +67,48 @@
 
     # Define -e single_role=role_name with the deploy alias run the role and stop the play, useful for testing/development
     - role: nova.core.customization_single_role
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
       when: single_role is defined
 
     - role: nova.core.accounts # Creating required accounts
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
       when:
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
     - role: nova.core.template_os_configuration # Used for configuring project or env specific templates
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
       when: template
 
     - role: nova.core.os_configuration # Running OS specific configurations
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
       when:
         - "'zone_local' not in group_names" # To avoid configuration for your own laptop
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
     - role: nova.core.customization_pre_vm_role # Including pre_customization role if it exists
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
       when:
         - not role_only
 
     - role: nova.core.customization # Including machine specific role if exists
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
 
     - role: nova.core.customization_post_vm_role # Including post_customization specific role if exists
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
       when:
         - not role_only
 
     - role: nova.core.finalize # Running final & cleanup tasks
-      become: "{{ default_become_value | default(omit) }}"
-      become_user: "{{ default_become_user | default(omit) }}"
+      become: "{{ default_ansible_become | default(omit) }}"
+      become_user: "{{ default_ansible_become_user | default(omit) }}"
 
     - role: nova.core.get_ip
