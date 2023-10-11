@@ -4,7 +4,6 @@ admin_account: root
 template_username: "{{ admin_account }}"
 
 # Connection
-ansible_python_interpreter: /usr/bin/python3
 default_connection_plugin: ssh
 default_ansible_shell_type: sh
 

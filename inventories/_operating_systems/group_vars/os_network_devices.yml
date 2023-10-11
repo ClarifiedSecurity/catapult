@@ -4,11 +4,10 @@ template_username: "{{ admin_account }}"
 
 # Network
 customization_method: "{{ ansible_network_os }}"
-default_ansible_shell_type: sh
 default_connection_plugin: ansible.netcommon.network_cli
+default_ansible_shell_type: sh
 
 # Connection
-ansible_python_interpreter: /usr/bin/python3
 ansible_system: "{{ ansible_network_os }}"
 
 # Become
