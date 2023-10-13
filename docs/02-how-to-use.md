@@ -202,7 +202,7 @@ ctp-retry-deploy-role
 
 ## Snapshot modes
 
-Different commands for managing machine snapshots. Note that the commands might not work with all providers. In that case you will receive a message that the command not implemented for the provider.
+Different commands for managing machine snapshots. Note that the commands might not work with all providers. In that case you will receive a message that the command not implemented for the provider. Each snapshot creation command can have be appended with `- live_snap=true` to create a snapshot of a running machine.
 
 ### ctp-snapshot
 
@@ -279,7 +279,7 @@ ctp-revert <inventory_hostname> -e snapshot_name=<snapshot_name>
 
 ### ctp-remove-snapshot
 
-Removing snapshot, requires -e snapshot_name=snapshot_name_to_remove
+Removing snapshot, requires -e snapshot_name=snapshot_name_to_remove or removes current snapshot if snapshot_name is not defined
 
 _Example usage:_
 
@@ -289,10 +289,12 @@ _Example usage:_
 ctp-remove-snapshot <inventory_hostname> -e snapshot_name=snapshot_name_to_remove
 ```
 
+### ctp-remove-all-snapshot
+
 - Removes all snapshots for the given inventory_hostname
 
 ```zsh
-ctp-remove-snapshot <inventory_hostname> -e remove_all_snapshots=true
+ctp-remove-all-snapshot <inventory_hostname>
 ```
 
 ### ctp-rename-snapshot
