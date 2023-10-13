@@ -62,9 +62,9 @@ alias ctp-retry-deploy-role="ctp-deploy-role @start.retry"
 
 alias ctp-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=snap -e pre_role=nova.core.snapshots -l"
 
-alias ctp-clean-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=resnap -e pre_role=nova.core.snapshots -l"
+alias ctp-clean-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=clean-snap -e pre_role=nova.core.snapshots -l"
 
-alias ctp-live-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=live-snap -e pre_role=nova.core.snapshots -l"
+alias ctp-live-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=snap -e live_snap=true -e pre_role=nova.core.snapshots -l"
 
 alias ctp-revert="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=revert -e pre_role=nova.core.snapshots -l"
 
