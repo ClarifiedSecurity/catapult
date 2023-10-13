@@ -70,6 +70,8 @@ alias ctp-revert="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=dep
 
 alias ctp-remove-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=remove -e pre_role=nova.core.snapshots -l"
 
+alias ctp-remove-all-snapshots="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=remove -e remove_all_snapshots=true -e pre_role=nova.core.snapshots -l"
+
 alias ctp-rename-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=rename -e pre_role=nova.core.snapshots -l"
 
 ### Power state ###
