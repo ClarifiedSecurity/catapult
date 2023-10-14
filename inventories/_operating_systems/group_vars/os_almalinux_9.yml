@@ -1,0 +1,6 @@
+---
+# Template created with Packer or manually
+base_vm_template: BASE_TEMPLATE_almalinux9
+
+# Project/environment specific template created with Catapult with base_vm_template as source
+vm_template: catapult-template-almalinux9
