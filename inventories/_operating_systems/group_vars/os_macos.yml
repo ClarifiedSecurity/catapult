@@ -12,5 +12,6 @@ default_ansible_shell_type: sh
 default_ansible_become: true
 default_ansible_become_user: "{{ admin_account }}"
 
-# Predefined here because cannot gather facets on MacOS that has no Python installed
+# Defined here because MacOS does not have Python installed by default so it cannot gather facts
+macos_no_python: true
 ansible_system: Darwin
