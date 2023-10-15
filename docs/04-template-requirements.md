@@ -22,6 +22,8 @@ One really good tool for template generation is [Packer](https://www.packer.io/)
 
 - `PermitRootLogin` set to `yes` in `/etc/ssh/sshd_config` -- Catapult needs to be able to login as root to the VMs the first time. After that Catapult can be used to create new accounts and disable root login.
 
+- `sudo` package needs to be installed for your distribution.
+
 ## Per-environment/project/datacenter etc. template requirements
 
 We recommend applying the [template_os_configuration](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/template_os_configuration) to the specific project templates. It contains some prerequisites for different `nova.core` roles that you might otherwise need to install before using those roles.
