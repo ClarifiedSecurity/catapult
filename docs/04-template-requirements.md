@@ -2,9 +2,11 @@
 
 When using Catapult with a cloud provider you can just use the VM templates provided by the cloud provider. When using Catapult in your own private cloud you need to make sure that the VM templates your create are compatible with Catapult.
 
-One really good tool for template generation is [Packer](https://www.packer.io/). Packer can be used to create base images for all major cloud providers and also for local virtualization solutions like VirtualBox or VMWare. We recommend using Packer or manually creating base images for yourself and then using Catapult to create per-environment/project/datacenter etc. VM templates from those base images.
+One great tool for template generation is [Packer](https://www.packer.io/). Packer can be used to create base images for all major cloud providers and also for local virtualization solutions like VirtualBox or VMWare. We recommend using Packer for creating base images for yourself and then using Catapult to create per-environment/project/datacenter etc. templates based on the base images. Alternatively you can just install the base templates manually.
 
 ## Base template requirements
+
+However you install your base templates make sure that they meet the following requirements. These configurations need to be present for initial configuration to the VMs to work. After the initial configuration is done you can change these configurations to whatever you want.
 
 ### Windows
 
@@ -21,6 +23,8 @@ One really good tool for template generation is [Packer](https://www.packer.io/)
 - `MaxAuthTries` set to `20` in `/etc/ssh/sshd_config` -- Same as with Windows.
 
 - `PermitRootLogin` set to `yes` in `/etc/ssh/sshd_config` -- Catapult needs to be able to login as root to the VMs the first time. After that Catapult can be used to create new accounts and disable root login.
+
+- `PasswordAuthentication` set to `yes` in `/etc/ssh/sshd_config` -- It is usually set to yes for most Linux distributions but it's good to check.
 
 - `sudo` package needs to be installed for your distribution.
 
