@@ -24,4 +24,4 @@ One really good tool for template generation is [Packer](https://www.packer.io/)
 
 ## Per-environment/project/datacenter etc. template requirements
 
-We recommend applying the [template_os_configuration](https://github.com/ClarifiedSecurity/clarified.core/tree/main/clarified/core/roles/template_os_configuration) the specific project templates. It contains some prerequisites for different `clarified.core` roles that you might otherwise need to install before using those roles.
+We recommend applying the [template_os_configuration](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/template_os_configuration) to the specific project templates. It contains some prerequisites for different `nova.core` roles that you might otherwise need to install before using those roles.
