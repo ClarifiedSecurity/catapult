@@ -90,7 +90,7 @@ ctp-deploy-from-configuration <inventory_hostname>
 
 ### ctp-deploy-role
 
-Runs only the /srv/<project_name>/vm/<role_name> part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something. For an example only reconfiguring the user accounts of the machine by using single_role with `clarified.core.accounts` role.
+Runs only the /srv/<project_name>/vm/<role_name> part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something. For an example only reconfiguring the user accounts of the machine by using single_role with `nova.core.accounts` role.
 
 _Example usage:_
 
@@ -369,7 +369,7 @@ ctp-reset <inventory_hostname>
 
 ### ctp-update-os
 
-Runs only the clarified.core.updates role on the given targets. Useful for only updating the OS packages.
+Runs only the `nova.core.updates` role on the given targets. Useful for only updating the OS packages.
 
 _Example usage:_
 
