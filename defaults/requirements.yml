@@ -26,6 +26,8 @@ collections:
     version: 1.18.1
   - name: chocolatey.chocolatey
     version: 1.5.1
+  - name: cisco.ios
+    version: 5.1.0
   - name: cloud.common
     version: 2.1.2
   - name: community.aws
