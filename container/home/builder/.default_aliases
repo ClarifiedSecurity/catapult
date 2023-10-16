@@ -88,12 +88,12 @@ alias ctp-reset="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=rese
 
 ### MISC ###
 
-alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e=single_role=nova.core.updates -l"
+alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=single_role=nova.core.updates -l"
 
 alias ctp-list="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy --list-hosts -l"
 
 alias ctp-list-vars="ansible-inventory /srv/inventories/start.yml -e=deploy_mode=deploy --vars --host"
 
-alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy-role -e pre_role=nova.core.rename_vm -l"
+alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=nova.core.rename_vm -l"
 
 alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=nova.core.get_ip -l"
