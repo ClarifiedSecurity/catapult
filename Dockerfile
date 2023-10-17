@@ -21,7 +21,7 @@ RUN apt update \
  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
  && apt update \
  # Required tools
- && apt install -y gcc rsync iputils-ping jq sshpass git git-lfs sudo zsh software-properties-common nodejs \
+ && apt install -y gcc rsync iputils-ping jq sshpass git git-lfs sudo zsh software-properties-common nodejs unzip \
  # Dev tools
  # && apt install -y iproute2 traceroute dnsutils wget netcat-openbsd vim nano htop procps \
  # Node and Yarn
