@@ -1,5 +1,7 @@
 ---
 roles:
+  - name: geerlingguy.apache
+    version: 3.3.0
   - name: geerlingguy.composer
     version: 1.9.2
   - name: geerlingguy.mysql
