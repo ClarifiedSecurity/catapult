@@ -88,7 +88,7 @@ alias ctp-reset="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=rese
 
 ### MISC ###
 
-alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=single_role=nova.core.updates -l"
+alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e role_only=true -e=single_role=nova.core.updates -l"
 
 alias ctp-list="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy --list-hosts -l"
 
