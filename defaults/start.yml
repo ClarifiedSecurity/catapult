@@ -7,7 +7,8 @@
 
   pre_tasks:
     # - ansible.builtin.debug: msg="{{  }}" # Uncommend to debug variables
-    - ansible.builtin.setup:
+    - name: Getting the time...
+      ansible.builtin.setup:
         filter: "*_time"
       delegate_to: localhost
       when: (deploy_mode == 'deploy') or (deploy_mode == 'redeploy')
