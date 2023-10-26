@@ -10,4 +10,4 @@ Catapult runs in a Docker container, so the developer only needs a few dependenc
 
 Catapult also designed to be modifiable by the developer or the organization using it without the need to modify or fork this project itself.
 
-Refer to [Catapult Docs](https://clarifiedsecurity.github.io/catapult-docs) for getting started and usage instructions.
+Refer to [Catapult Docs](https://clarifiedsecurity.github.io/catapult-docs/catapult/01-installation/) for getting started and usage instructions.
