@@ -6,7 +6,7 @@
   strategy: ansible.builtin.host_pinned
 
   pre_tasks:
-    # - ansible.builtin.debug: msg="{{  }}" # Uncommend to debug variables
+    # - ansible.builtin.debug: msg="{{  }}" # Uncomment to debug variables
     - name: Getting the time...
       ansible.builtin.setup:
         filter: "*_time"
