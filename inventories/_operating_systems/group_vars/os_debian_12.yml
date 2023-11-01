@@ -4,4 +4,4 @@
 base_vm_template: BASE_TEMPLATE_debian12
 
 # vCenter Template name
-vm_template: "{{ debian12_vm_template_name | default('catapult-template-debian12') }}"
+vm_template: catapult-template-debian12
