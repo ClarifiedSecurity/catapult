@@ -3,4 +3,4 @@
 # Used only to create project templates from
 base_vm_template: BASE_TEMPLATE_routeros7
 
-vm_template: "{{ routeros7_vm_template_name | default('catapult-template-routeros7') }}"
+vm_template: catapult-template-routeros7

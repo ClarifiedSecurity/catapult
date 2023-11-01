@@ -2,4 +2,4 @@
 # Used only to create project templates from
 base_vm_template: BASE_TEMPLATE_macos_13_0_ventura
 
-vm_template: "{{ macos_13_0_ventura_vm_template_name | default('catapult-template-macos-13-0-ventura') }}"
+vm_template: catapult-template-macos-13-0-ventura

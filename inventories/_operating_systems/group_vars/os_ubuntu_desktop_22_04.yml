@@ -4,7 +4,7 @@
 base_vm_template: BASE_TEMPLATE_ubuntu_desktop2204
 
 # vCenter Template name
-vm_template: "{{ ubuntu_desktop2204_vm_template_name | default('catapult-template-ubuntu-desktop2204') }}"
+vm_template: catapult-template-ubuntu-desktop2204
 
 # AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
 ami_owner_id: "679593333241"
