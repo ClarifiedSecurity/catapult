@@ -97,3 +97,7 @@ alias ctp-list-vars="ansible-inventory /srv/inventories/start.yml -e=deploy_mode
 alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=nova.core.rename_vm -l"
 
 alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=nova.core.get_ip -l"
+
+alias ctp-enable-debugging="export ANSIBLE_CALLBACKS_ENABLED=ansible.posix.profile_tasks && export ANSIBLE_SHOW_PER_HOST_START=true && echo 'Debugging enabled'"
+
+alias ctp-disable-debugging="unset ANSIBLE_CALLBACKS_ENABLED && unset ANSIBLE_SHOW_PER_HOST_START && echo 'Debugging disabled'"
