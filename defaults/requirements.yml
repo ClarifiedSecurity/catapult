@@ -17,7 +17,7 @@ collections:
   - name: amazon.aws
     version: 6.5.0
   - name: ansible.netcommon
-    version: 5.2.0
+    version: 5.3.0
   - name: ansible.posix
     version: 1.5.2
   - name: ansible.utils
@@ -29,23 +29,23 @@ collections:
   - name: chocolatey.chocolatey
     version: 1.5.1
   - name: cisco.ios
-    version: 5.1.0
+    version: 5.2.0
   - name: cloud.common
     version: 2.1.2
   - name: community.aws
-    version: 6.3.0
+    version: 6.4.0
   - name: community.crypto
-    version: 2.15.1
+    version: 2.16.0
   - name: community.docker
-    version: 3.4.9
+    version: 3.4.10
   - name: community.general
-    version: 7.5.0
+    version: 8.0.0
   - name: community.hashi_vault
     version: 5.0.0
   - name: community.mysql
-    version: 3.7.2
+    version: 3.8.0
   - name: community.network
-    version: 5.0.0
+    version: 5.0.2
   - name: community.postgresql
     version: 3.2.0
   - name: community.routeros
