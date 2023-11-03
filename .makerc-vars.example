@@ -86,10 +86,6 @@ KEEPASS_LINODE_API_TOKEN :=
 # This can be used to deploy Azure resources
 KEEPASS_AZURE_SERVICE_PRINCIPAL :=
 
-# It points to the entry where your Providentia API token is on the password field
-# This can be used to read the Providentia API during deployment
-KEEPASS_PROVIDENTIA_API_TOKEN :=
-
 # Your E-Mail address
 # So your E-Mail address can be used during deployment for an example configuring .gitconfig file or sending notifications
 MAKEVAR_EMAIL :=
