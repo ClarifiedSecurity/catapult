@@ -58,6 +58,6 @@ templates_path: ### FILL THIS PART ### This is the path where the VMware worksta
 ############
 
 ## Vault configuration
-vault_address: ### FILL THIS PART ### Your Vault https:// address
+vault_address: {} ### FILL THIS PART ### Your Vault https:// address
 vault_credentials: auth_method=ldap mount_point=ldap username={{ deployer_username }} password={{ deployer_password }}
 vault_lookup_fragment: "url={{ vault_address }} ca_cert=/etc/ssl/certs/ca-certificates.crt {{ vault_credentials }} " #The space before the ending quote is required
