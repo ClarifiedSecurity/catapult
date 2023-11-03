@@ -93,3 +93,14 @@ MAKEVAR_EMAIL :=
 # Automatically update Catapult and Docker image when new version is available
 # Set to 1 to enable, 0 to disable
 MAKEVAR_AUTO_UPDATE :=0
+
+# This is the webhook URL for Slack or Mattermost where you'll start receiving notifications about the deployment start and end
+# Define the URL to enable notifications
+MAKEVAR_WEBHOOK_URL :=
+
+# This is the username that will be used to send notifications to Slack or Mattermost
+MAKEVAR_WEBHOOK_USERNAME :=Catapult
+
+# This is the channel that will be used to send notifications to Slack or Mattermost
+# Use channelname for sending notifications to a channel or @username for sending to a notifications user
+MAKEVAR_WEBHOOK_CHANNEL :=
