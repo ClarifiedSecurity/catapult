@@ -88,7 +88,7 @@ if [ $(uname) == "Linux" ] && [ "$(id -u)" -ne 1000 ]; then
       # Checking if local image sha256 is present in the remote image manifest
       if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker manifest inspect ${IMAGE_FULL} -v | grep $local_image_sha256) ]]; then
 
-        if [ $AUTO_UPDATE == 1 ]; then
+        if [ $MAKEVAR_AUTO_UPDATE == 1 ]; then
 
           echo -n -e ${C_YELLOW}
           echo -e "New ${IMAGE_FULL} docker image is available"

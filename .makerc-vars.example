@@ -96,4 +96,4 @@ MAKEVAR_EMAIL :=
 
 # Automatically update Catapult and Docker image when new version is available
 # Set to 1 to enable, 0 to disable
-AUTO_UPDATE :=0
+MAKEVAR_AUTO_UPDATE :=0

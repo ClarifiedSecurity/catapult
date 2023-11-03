@@ -101,7 +101,7 @@ LOCAL_TAG=$(git describe --tags --abbrev=0 $UPSTREAM | cut -d 'v' -f 2)
 if [[ $LOCAL_TAG == $REMOTE_TAG ]]; then
     echo -e -n
   else
-    if [ $AUTO_UPDATE == 1 ]; then
+    if [ $MAKEVAR_AUTO_UPDATE == 1 ]; then
 
       echo -e "Catapult version $REMOTE_TAG is available, updating..."
       catapult_update
