@@ -3,7 +3,7 @@
   hosts: all
   serial: "{{ playbook_serial_number | default('100%') }}"
   gather_facts: false
-  strategy: ansible.builtin.host_pinned
+  strategy: ansible.builtin.linear
 
   pre_tasks:
     # - ansible.builtin.debug: msg="{{  }}" # Uncomment to debug variables
