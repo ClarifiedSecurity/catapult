@@ -100,10 +100,10 @@ _Example usage:_
 ctp-deploy-role <inventory_hostname>
 ```
 
-- Looks for role under `/srv/<project_name>/roles/<role>` and only runs it.
+- Looks for role under defined path and only runs that and stops
 
 ```zsh
-ctp-deploy-role <inventory_hostname> -e single_role=<role>
+ctp-deploy-role <inventory_hostname> -e single_role=path/to/role
 ```
 
 - Looks for role with the fully qualified role name (FQCN) in the installed collections and only runs that and stops
