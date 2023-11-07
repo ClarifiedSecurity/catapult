@@ -3,15 +3,10 @@
   hosts: all
   serial: "{{ playbook_serial_number | default('100%') }}"
   gather_facts: false
-  strategy: ansible.builtin.linear
+  strategy: ansible.builtin.free
 
   pre_tasks:
     # - ansible.builtin.debug: msg="{{  }}" # Uncomment to debug variables
-    - name: Getting the time...
-      ansible.builtin.setup:
-        filter: "*_time"
-      delegate_to: localhost
-      when: (deploy_mode == 'deploy') or (deploy_mode == 'redeploy')
 
   module_defaults:
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#modules
