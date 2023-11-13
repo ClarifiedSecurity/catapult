@@ -1,3 +1,0 @@
----
-infra_env: vmware_workstation
-ansible_host: host.docker.internal # It is used to connect from the Catapult container to your host to run VMware Workstation commands

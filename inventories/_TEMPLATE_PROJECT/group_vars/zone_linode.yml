@@ -1,3 +1,0 @@
----
-# Linode specific variables
-infra_env: linode

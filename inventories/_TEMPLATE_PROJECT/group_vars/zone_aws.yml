@@ -1,3 +1,0 @@
----
-# AWS specific variables
-infra_env: aws
