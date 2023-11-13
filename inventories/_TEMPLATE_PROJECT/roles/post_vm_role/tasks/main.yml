@@ -1,8 +1,0 @@
----
-- name: Configuring Windows...
-  include_tasks: windows.yml
-  when: "'os_windows' in group_names"
-
-- name: Configuring Linux...
-  include_tasks: linux.yml
-  when: "'os_linux' in group_names"
