@@ -1,3 +1,7 @@
 ---
 infra_env: vmware_workstation
 ansible_host: host.docker.internal # It is used to connect from the Catapult container to your host to run VMware Workstation commands
+
+# Variables where the VM will be put on disk.
+local_vmx_path: /home/{{ lookup('env', 'USER') }}/vmware/{{project_fullname}}/{{ custom_vm_name | default(vm_name) }}/{{ custom_vm_name | default(vm_name) }}.vmx
+local_vm_folder: /home/{{ lookup('env', 'USER') }}/vmware/{{project_fullname}}/
