@@ -1,0 +1,5 @@
+# Template created with packer
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_macos_14_1_1_sonoma
+
+vm_template: catapult-template-macos-14-1-1-sonoma
