@@ -78,7 +78,7 @@ ctp-redeploy-until-configuration <inventory_hostname>
 
 ### ctp-deploy-from-configuration
 
-Starts the play from /srv/<project_name>/pre_vm_role part of the playbook and runs until the end. This is a useful command during mass deploy when you have run the `ctp-deploy-until-configuration` first and then you want to configure the cloned machines. Should anything go wrong you can always revert to the snapshot and start again.
+Starts the play from `/srv/<project_name>/pre_vm_role part` of the playbook and runs until the end. This is a useful command during mass deploy when you have run the `ctp-deploy-until-configuration` first and then you want to configure the cloned machines. Should anything go wrong you can always revert to the snapshot and start again.
 
 _Example usage:_
 
@@ -90,7 +90,7 @@ ctp-deploy-from-configuration <inventory_hostname>
 
 ### ctp-deploy-role
 
-Runs only the /srv/<project_name>/vm/<role_name> part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something. For an example only reconfiguring the user accounts of the machine by using single_role with `nova.core.accounts` role.
+Runs only the `/srv/<project_name>/vm/<role_name>` part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something. For an example only reconfiguring the user accounts of the machine by using single_role with `nova.core.accounts` role.
 
 _Example usage:_
 
@@ -162,7 +162,7 @@ ctp-rebuild-linode-vm <inventory_hostname>
 
 ## Deploy commands based on @start.retry file
 
-Whenever a deploy fails a start.retry file is created under /srv/inventories/<project_name>/start.retry. Instead of going trough the logs to find what machines failed you can use the following commands to deploy only the failed machines. Keep in mind that only that latest fail is written into the start.retry file so when running multiple instances of Catapult (using `make shell` multiple times) and multiple deploys in parallel the latest fail will be written into the start.retry file.
+Whenever a deploy fails a start.retry file is created under `/srv/inventories/<project_name>/start.retry`. Instead of going trough the logs to find what machines failed you can use the following commands to deploy only the failed machines. Keep in mind that only that latest fail is written into the start.retry file so when running multiple instances of Catapult (using `make shell` multiple times) and multiple deploys in parallel the latest fail will be written into the start.retry file.
 
 - Run `ctp-deploy` on failed machines based on start.retry file
 
@@ -279,7 +279,7 @@ ctp-revert <inventory_hostname> -e snapshot_name=<snapshot_name>
 
 ### ctp-remove-snapshot
 
-Removing snapshot, requires -e snapshot_name=snapshot_name_to_remove or removes current snapshot if snapshot_name is not defined
+Removing snapshot, requires `-e snapshot_name=snapshot_name_to_remove` or removes current snapshot if snapshot_name is not defined
 
 _Example usage:_
 
@@ -299,7 +299,7 @@ ctp-remove-all-snapshot <inventory_hostname>
 
 ### ctp-rename-snapshot
 
-Renaming snapshot, requires -e snapshot_name=existing_snapshot_name_to_rename -e new_snapshot_name=new_snapshot_name
+Renaming snapshot, requires `-e snapshot_name=existing_snapshot_name_to_rename -e new_snapshot_name=new_snapshot_name`
 
 _Example usage:_
 
@@ -405,7 +405,7 @@ ctp-list <group_var>
 
 ### ctp-list-vars
 
-List (most) of the variables for the given inventory_hostname. This command is useful to check what variables are available in the given inventory_hostname. It is not a complete list of all the variables because of home some host_vars get loaded but it's useful when getting started with the role development.
+List (most) of the variables for the given inventory_hostname. This command is useful to check what variables are available in the given inventory_hostname. It is not a complete list of all the variables because of home some `host_vars` get loaded but it's useful when getting started with the role development.
 
 _Example usage:_
 
