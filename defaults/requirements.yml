@@ -54,6 +54,8 @@ collections:
     version: 3.3.0
   - name: community.windows
     version: 2.0.0
+  - name: fortinet.fortios
+    version: 2.3.4
   - name: kubernetes.core
     version: 2.4.0
   - name: linode.cloud
