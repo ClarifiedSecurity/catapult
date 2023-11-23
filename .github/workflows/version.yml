@@ -1,0 +1,51 @@
+---
+name: Updating tag & version...
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  version_collection_and_tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloning current branch...
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Updating tag & version...
+        run: |
+          target_file="version.yml"
+
+          # Configuring git
+          git config --global user.name "Catapult CI"
+          git config --global user.email "Catapult@clarifiedsecurity.com"
+
+          # Updating the version in the galaxy.yml file
+          version_row_old=$(grep "version: " $target_file)
+          version=$(echo $version_row_old | cut -d: -f2)
+          major=$(echo $version | cut -d. -f1)
+          minor=$(echo $version | cut -d. -f2)
+          patch=$(echo $version | cut -d. -f3)
+          patch_new=$(( $patch+1 ))
+          version_row_new="version: $major.$minor.$patch_new"
+          sed -i "s/$version_row_old/$version_row_new/" $target_file
+
+          # Adding the changed file to git
+          git add $target_file
+
+          # Committing the change
+          git commit -m "Set Catapult version to $major.$minor.$patch_new"
+          git push
+
+          # Tagging and pushing the change
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
