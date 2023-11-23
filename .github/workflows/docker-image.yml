@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Pulling Catapult repository...
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Preparing image build...
         run: make customizations
