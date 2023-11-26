@@ -25,8 +25,8 @@ jobs:
           version_file="${{ vars.PROJECT_VERSION_FILE }}"
 
           # Configuring git
-          git config --global user.name ${{ vars.PROJECT_CI_USERNAME }}
-          git config --global user.email ${{ vars.PROJECT_CI_EMAIL }}
+          git config --global user.name "${{ vars.PROJECT_CI_USERNAME }}"
+          git config --global user.email "${{ vars.PROJECT_CI_EMAIL }}"
 
           # Updating the version
           version_row_old=$(grep "version: " $version_file)
