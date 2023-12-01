@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export PATH=$HOME/.local/bin:$PATH
 REQUIREMENTS_FILES="requirements*.yml" # Requirements file catch-all variable
 
@@ -13,7 +15,7 @@ cd /srv/requirements
 install_all_requirements () {
 
 # Installing Python requirements based on poetry.lock
-poetry install --directory=/srv/poetry
+poetry install --directory=/srv/poetry --no-root
 
 # Looping over all requirements.yml files in the folder and running install on them
 for requirement_file in $REQUIREMENTS_FILES; do
