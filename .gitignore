@@ -2,7 +2,6 @@
 *.log
 *.retry
 *.swp
-*.swp
 **/__pycache__/**
 /.makerc-custom
 /.makerc-personal
