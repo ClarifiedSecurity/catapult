@@ -15,7 +15,7 @@ roles:
 
 collections:
   - name: amazon.aws
-    version: 7.0.0
+    version: 7.1.0
   - name: ansible.netcommon
     version: 6.0.0
   - name: ansible.posix
@@ -35,11 +35,11 @@ collections:
   - name: community.aws
     version: 7.0.0
   - name: community.crypto
-    version: 2.16.0
+    version: 2.16.1
   - name: community.docker
     version: 3.4.11
   - name: community.general
-    version: 8.0.2
+    version: 8.1.0
   - name: community.hashi_vault
     version: 6.0.0
   - name: community.mysql
