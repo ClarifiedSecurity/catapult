@@ -48,8 +48,7 @@ start-tasks: checks
 ## build: Run checks and then build container image
 .PHONY: build
 build: customizations checks
-	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use
-	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} -t ${IMAGE_FULL} . --load
+	@${MAKEVAR_SUDO_COMMAND} podman build ${BUILD_ARGS} -t ${IMAGE_FULL} . --load
 
 ## run: Run the container
 .PHONY: run
@@ -59,7 +58,7 @@ run:
 ## stop: Stop the container
 .PHONY: stop
 stop:
-	@${MAKEVAR_SUDO_COMMAND} docker stop ${CONTAINER_NAME} || true
+	@${MAKEVAR_SUDO_COMMAND} podman stop ${CONTAINER_NAME} || true
 
 ## shell: Go into container shell via entrypoint
 .PHONY: shell

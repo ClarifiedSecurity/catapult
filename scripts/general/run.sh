@@ -18,5 +18,4 @@ if [[ $(uname) == "Linux" ]]; then
 
 fi
 
-${MAKEVAR_SUDO_COMMAND} podman rm -f ${CONTAINER_NAME} > /dev/null 2>&1 || true
-${MAKEVAR_SUDO_COMMAND} /home/awk/.local/bin/podman-compose -f ${ROOT_DIR}/docker/docker-compose.yml -f ${ROOT_DIR}/docker/docker-compose-extra.yml -f ${ROOT_DIR}/docker/docker-compose-personal.yml up -d
+${MAKEVAR_SUDO_COMMAND} $HOME/.local/bin/podman-compose -f ${ROOT_DIR}/compose/docker-compose.yml -f ${ROOT_DIR}/compose/docker-compose-extra.yml -f ${ROOT_DIR}/compose/docker-compose-personal.yml up -d --remove-orphans --force-recreate > /dev/null 2>&1

@@ -7,14 +7,17 @@ services:
     container_name: ${CONTAINER_NAME}
     hostname: ${CONTAINER_NAME}
     # restart: no
+    cap_add:
+      - NET_RAW
+      - CAP_AUDIT_WRITE
     volumes:
       # This is /tmp so other make customization commands wont overwrite the certificate symlinks
-      # docker-entrypoint.sh moves the certificates to the correct location
+      # entrypoint.sh moves the certificates to the correct location
       - ${ROOT_DIR}/custom/certificates:/tmp/ca-certificates
       - ${ROOT_DIR}/:/srv
       - ${KEEPASS_DB_PATH}:/home/builder/KPDB.kbdx
       - ${KEEPASS_KEY_PATH}:/home/builder/KPDB.key
-      - ${ROOT_DIR}/container/docker-entrypoint.sh:/docker-entrypoint.sh
+      - ${ROOT_DIR}/container/entrypoint.sh:/entrypoint.sh
       - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
       - ${ROOT_DIR}/container/home/builder/.default_aliases:/home/builder/.default_aliases
       - ${ROOT_DIR}/container/home/builder/.custom_aliases:/home/builder/.custom_aliases
@@ -43,8 +46,8 @@ services:
       SSH_AUTH_SOCK: /ssh-agent
       REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
       TZ: ${MAKEVAR_TZ}
-    # extra_hosts:
-    #   - host.docker.internal:host-gateway
+    extra_hosts:
+      - host.docker.internal:${CONTAINER_NETWORK_IPV4_SUBNET_GW}
     logging:
       driver: k8s-file
       options:
@@ -53,5 +56,9 @@ services:
 
 networks:
   default:
-    name: podman
-    external: true # External becuase when compose creates the network the container does not have an IPv6 address
+    name: ${CONTAINER_NETWORK}
+    ipam:
+      driver: default
+      config:
+        - subnet: ${CONTAINER_NETWORK_IPV4_SUBNET}
+        - subnet: ${CONTAINER_NETWORK_IPV6_SUBNET}
