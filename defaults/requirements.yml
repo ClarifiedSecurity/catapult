@@ -35,7 +35,7 @@ collections:
   - name: community.aws
     version: 7.0.0
   - name: community.crypto
-    version: 2.16.1
+    version: 2.16.2
   - name: community.docker
     version: 3.4.11
   - name: community.general
