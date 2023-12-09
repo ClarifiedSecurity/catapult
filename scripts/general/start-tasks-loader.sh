@@ -7,13 +7,13 @@ set -e # exit when any command fails
 
 echo -n -e ${C_CYAN}
 
-# Checking if docker is installed
-if ! [ -x "$(command -v docker)" ]; then
-  echo -n -e ${C_RED}
-  echo -e "Docker not found did you run 'make prepare' first!"
-  exit 1
-  echo -n -e ${C_RST}
-fi
+# # Checking if docker is installed
+# if ! [ -x "$(command -v docker)" ]; then
+#   echo -n -e ${C_RED}
+#   echo -e "Docker not found did you run 'make prepare' first!"
+#   exit 1
+#   echo -n -e ${C_RST}
+# fi
 
 START_TASKS_FILES="scripts/start-tasks/*.sh"
 CUSTOM_START_TASKS_FILES="custom/start-tasks/*.sh"

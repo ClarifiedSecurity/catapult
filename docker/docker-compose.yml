@@ -6,14 +6,14 @@ services:
     image: ${IMAGE_FULL}
     container_name: ${CONTAINER_NAME}
     hostname: ${CONTAINER_NAME}
-    restart: no
+    # restart: no
     volumes:
       # This is /tmp so other make customization commands wont overwrite the certificate symlinks
       # docker-entrypoint.sh moves the certificates to the correct location
       - ${ROOT_DIR}/custom/certificates:/tmp/ca-certificates
-      - ${ROOT_DIR}/:/srv/
-      - ${KEEPASS_DB_PATH}:/home/builder/KPDB.kbdx:ro
-      - ${KEEPASS_KEY_PATH}:/home/builder/KPDB.key:ro
+      - ${ROOT_DIR}/:/srv
+      - ${KEEPASS_DB_PATH}:/home/builder/KPDB.kbdx
+      - ${KEEPASS_KEY_PATH}:/home/builder/KPDB.key
       - ${ROOT_DIR}/container/docker-entrypoint.sh:/docker-entrypoint.sh
       - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
       - ${ROOT_DIR}/container/home/builder/.default_aliases:/home/builder/.default_aliases
@@ -43,15 +43,15 @@ services:
       SSH_AUTH_SOCK: /ssh-agent
       REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
       TZ: ${MAKEVAR_TZ}
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    # extra_hosts:
+    #   - host.docker.internal:host-gateway
     logging:
-      driver: json-file
+      driver: k8s-file
       options:
         max-size: 250m
         max-file: "1"
 
 networks:
   default:
-    name: ${CONTAINER_NETWORK}
+    name: podman
     external: true # External becuase when compose creates the network the container does not have an IPv6 address

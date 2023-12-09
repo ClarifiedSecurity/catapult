@@ -9,11 +9,11 @@ docker_pull () {
 
 select option in "${options[@]}"; do
     case "$REPLY" in
-        yes) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
+        yes) ${MAKEVAR_SUDO_COMMAND} podman pull ${IMAGE_FULL}; break;;
         no) echo -e "Not pulling now"; break;;
-        y) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
+        y) ${MAKEVAR_SUDO_COMMAND} podman pull ${IMAGE_FULL}; break;;
         n) echo -e "Not pulling now"; break;;
-        1) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
+        1) ${MAKEVAR_SUDO_COMMAND} podman pull ${IMAGE_FULL}; break;;
         2) echo -e "Not pulling now"; break;;
     esac
 done
@@ -59,7 +59,7 @@ if [ $(uname) == "Linux" ] && [ "$(id -u)" -ne 1000 ]; then
     echo -e ${C_RST}
 
     # Checking if local image exists and building if not
-    if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
+    if [[ -z "$(${MAKEVAR_SUDO_COMMAND} podman images -q ${IMAGE_FULL})" ]]; then
 
       make build
 
@@ -68,7 +68,7 @@ if [ $(uname) == "Linux" ] && [ "$(id -u)" -ne 1000 ]; then
   else
 
     # Checking if local image exists and pulling if not
-    if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q ${IMAGE_FULL})" ]]; then
+    if [[ -z "$(${MAKEVAR_SUDO_COMMAND} podman images -q ${IMAGE_FULL})" ]]; then
 
       echo -n -e ${C_YELLOW}
       echo -e "Local ${IMAGE_FULL} docker image not found"
@@ -83,10 +83,10 @@ if [ $(uname) == "Linux" ] && [ "$(id -u)" -ne 1000 ]; then
     else
 
       # Getting the local image sha256
-      local_image_sha256=$(${MAKEVAR_SUDO_COMMAND} docker inspect ${IMAGE_FULL} -f '{{.Id}}')
+      local_image_sha256=$(${MAKEVAR_SUDO_COMMAND} podman inspect ${IMAGE_FULL} -f '{{.Id}}')
 
       # Checking if local image sha256 is present in the remote image manifest
-      if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker manifest inspect ${IMAGE_FULL} -v | grep $local_image_sha256) ]]; then
+      if [[ -z $(${MAKEVAR_SUDO_COMMAND} podman manifest inspect ${IMAGE_FULL} -v | grep $local_image_sha256) ]]; then
 
         if [ $MAKEVAR_AUTO_UPDATE == 1 ]; then
 
@@ -94,7 +94,7 @@ if [ $(uname) == "Linux" ] && [ "$(id -u)" -ne 1000 ]; then
           echo -e "New ${IMAGE_FULL} docker image is available"
           echo -e "Updating now..."
           echo -n -e ${C_CYAN}
-          ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}
+          ${MAKEVAR_SUDO_COMMAND} podman pull ${IMAGE_FULL}
 
         else
 

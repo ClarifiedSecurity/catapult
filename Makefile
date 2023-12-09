@@ -64,12 +64,12 @@ stop:
 ## shell: Go into container shell via entrypoint
 .PHONY: shell
 shell:
-	@${MAKEVAR_SUDO_COMMAND} docker exec -it ${CONTAINER_NAME} ${CONTAINER_ENTRYPOINT}
+	@${MAKEVAR_SUDO_COMMAND} podman exec -it ${CONTAINER_NAME} ${CONTAINER_ENTRYPOINT}
 
 ## shell-raw: Bypass docker-entrypoint.sh and directly into shell
 .PHONY: shell-raw
 shell-raw:
-	${MAKEVAR_SUDO_COMMAND} docker exec -it ${CONTAINER_NAME} zsh
+	@${MAKEVAR_SUDO_COMMAND} podman exec -it ${CONTAINER_NAME} zsh
 
 ## clean: Stop and delete the container and the image
 .PHONY: clean
