@@ -14,7 +14,7 @@ if [ $EUID -eq 0 ]; then
     echo -e ${C_RED}
     echo -e "Don't run this script with sudo, it will ask for sudo password when needed."
 
-    read -p "Press Ctrl + C to cancel or Press any key to continue..."
+    read -p $'\n'"Press Ctrl + C to cancel or Press any key to continue..."
     echo -e ${C_RST}
 
 fi
@@ -24,8 +24,9 @@ makerc-vars-creator() {
 # Checking if .makerc-vars already exists and asking for an overwrite
 if [ -f .makerc-vars ]; then
 
+    echo -e ${C_RED}
+    echo -e "$(pwd)/.makerc-vars already exists, do you want to overwrite it with $(pwd)/.makerc-vars.example?"
     echo -e ${C_YELLOW}
-    echo -e ".makerc-vars already exists, do you want to overwrite it?"
 
     options=(
         "Yes"
@@ -34,12 +35,8 @@ if [ -f .makerc-vars ]; then
 
     select option in "${options[@]}"; do
         case "$REPLY" in
-            yes) cp -f .makerc-vars.example .makerc-vars; break;;
-            no) echo -e "Not overwriting .makerc-vars"; break;;
-            y) cp -f .makerc-vars.example .makerc-vars; break;;
-            n) echo -e "Not overwriting .makerc-vars"; break;;
-            1) cp -f .makerc-vars.example .makerc-vars; break;;
-            2) echo -e "Not overwriting .makerc-vars"; break;;
+            yes|y|1) cp -f .makerc-vars.example .makerc-vars; break;;
+            no|n|2) echo -e "Not overwriting .makerc-vars"$'\n'; break;;
         esac
     done
 
@@ -53,12 +50,13 @@ fi
 
 }
 
-while [ ! -f .makerc-vars ]; do
+if [ ! -f .makerc-vars ]; then
 
     echo -e ${C_RED}
     echo -e "$(pwd)/.makerc-vars not found"
     echo -e ${C_YELLOW}
-    echo -e "Do you want to create your .makerc-vars file from the .makerc-vars.example file?"
+    echo -e "Do you want to create your .makerc-vars file from the $(pwd)/.makerc-vars.example file?"
+    echo -e
 
     options=(
         "Yes"
@@ -68,17 +66,21 @@ while [ ! -f .makerc-vars ]; do
     select option in "${options[@]}"; do
         case "$REPLY" in
             yes) makerc-vars-creator; break;;
-            no) read -p "Make sure your $(pwd)/.makerc-vars exists and press any key to continue"; break;;
+            no) read -p $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
             y) makerc-vars-creator; break;;
-            n) read -p "Make sure your $(pwd)/.makerc-vars exists and press any key to continue"; break;;
+            n) read -p $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
             1) makerc-vars-creator; break;;
-            2) read -p "Make sure your $(pwd)/.makerc-vars exists and press any key to continue"; break;;
+            2) read -p $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
         esac
     done
 
     echo -n -e $C_RST
 
-done
+else
+
+    makerc-vars-creator
+
+fi
 
 # MacOS
 if [[ $(uname) == "Darwin" ]]; then
@@ -124,7 +126,8 @@ if [[ $(uname) == "Darwin" ]]; then
     BREW_PACKAGES="git git-lfs make jq curl md5sha1sum"
 
     echo -n -e ${C_YELLOW}
-    echo -e "Installing homebrew."
+    echo -e "Installing homebrew?"
+    echo -e
 
     options=(
         "Yes"
@@ -134,11 +137,11 @@ if [[ $(uname) == "Darwin" ]]; then
     select option in "${options[@]}"; do
         case "$REPLY" in
             yes) brew-install; break;;
-            no) read -p "If you don't install homebrew you'll need to install Docker manually. Press any key to continue"; break;;
+            no) read -p $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
             y) brew-install; break;;
-            n) read -p "If you don't install homebrew you'll need to install Docker manually. Press any key to continue"; break;;
+            n) read -p $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
             1) brew-install; break;;
-            2) read -p "If you don't install homebrew you'll need to install Docker manually. Press any key to continue"; break;;
+            2) read -p $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
         esac
     done
 
@@ -147,6 +150,7 @@ if [[ $(uname) == "Darwin" ]]; then
     echo -n -e ${C_YELLOW}
     echo -e "Installing following packages with homebrew:"
     echo -e $BREW_PACKAGES
+    echo -e
 
     options=(
         "Yes"
@@ -156,11 +160,11 @@ if [[ $(uname) == "Darwin" ]]; then
     select option in "${options[@]}"; do
         case "$REPLY" in
             yes) brew-packages-install; break;;
-            no) read -p "Make sure $BREW_PACKAGES are installed and press any key to continue"; break;;
+            no) read -p $'\n'"Make sure $BREW_PACKAGES are installed - Press any key to continue"$'\n'; break;;
             y) brew-packages-install; break;;
-            n) read -p "Make sure $BREW_PACKAGES are installed and press any key to continue"; break;;
+            n) read -p $'\n'"Make sure $BREW_PACKAGES are installed - Press any key to continue"$'\n'; break;;
             1) brew-packages-install; break;;
-            2) read -p "Make sure $BREW_PACKAGES are installed and press any key to continue"; break;;
+            2) read -p $'\n'"Make sure $BREW_PACKAGES are installed - Press any key to continue"$'\n'; break;;
         esac
     done
 
@@ -206,6 +210,7 @@ if [[ $(uname) == "Linux" ]]; then
         echo -e ${C_YELLOW}
         echo -e "Installing following packages:"
         echo -e $DEBIAN_PACKAGES
+        echo -e
 
         options=(
             "Yes"
@@ -215,11 +220,11 @@ if [[ $(uname) == "Linux" ]]; then
         select option in "${options[@]}"; do
             case "$REPLY" in
                 yes) debian-packages-install; break;;
-                no) read -p "Make sure $DEBIAN_PACKAGES are installed and press any key to continue"; break;;
+                no) read -p $'\n'"Make sure $DEBIAN_PACKAGES are installed - Press any key to continue"$'\n'; break;;
                 y) debian-packages-install; break;;
-                n) read -p "Make sure $DEBIAN_PACKAGES are installed and press any key to continue"; break;;
+                n) read -p $'\n'"Make sure $DEBIAN_PACKAGES are installed - Press any key to continue"$'\n'; break;;
                 1) debian-packages-install; break;;
-                2) read -p "Make sure $DEBIAN_PACKAGES are installed and press any key to continue"; break;;
+                2) read -p $'\n'"Make sure $DEBIAN_PACKAGES are installed - Press any key to continue"$'\n'; break;;
             esac
         done
 
@@ -244,6 +249,7 @@ if [[ $(uname) == "Linux" ]]; then
         echo -e ${C_YELLOW}
         echo -e "Installing following packages:"
         echo -e $ARCH_PACKAGES
+        echo -e
 
         options=(
             "Yes"
@@ -253,11 +259,11 @@ if [[ $(uname) == "Linux" ]]; then
         select option in "${options[@]}"; do
             case "$REPLY" in
                 yes) arch-packages-install; break;;
-                no) read -p "Make sure $ARCH_PACKAGES are installed and press any key to continue"; break;;
+                no) read -p $'\n'"Make sure $ARCH_PACKAGES are installed - Press any key to continue"$'\n'; break;;
                 y) arch-packages-install; break;;
-                n) read -p "Make sure $ARCH_PACKAGES are installed and press any key to continue"; break;;
+                n) read -p $'\n'"Make sure $ARCH_PACKAGES are installed - Press any key to continue"$'\n'; break;;
                 1) arch-packages-install; break;;
-                2) read -p "Make sure $ARCH_PACKAGES are installed and press any key to continue"; break;;
+                2) read -p $'\n'"Make sure $ARCH_PACKAGES are installed - Press any key to continue"$'\n'; break;;
             esac
         done
 
@@ -274,7 +280,7 @@ if [[ $(uname) == "Linux" ]]; then
         echo -e "1) Install following packages: ${C_YELLOW}git git-lfs make jq curl sudo gpg ssh${C_RED}"
         echo -e "2) Initialize git LFS with: ${C_YELLOW}git lfs install${C_RED}"
         echo -e
-        read -p "Once you have installed the required packages press any key to continue..."
+        read -p $'\n'"Once you have installed the required packages press any key to continue..."$'\n'
         echo -e ${C_RST}
 
 

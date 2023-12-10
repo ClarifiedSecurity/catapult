@@ -6,6 +6,7 @@ scripts/general/configure-docker.sh
 
 echo -e ${C_YELLOW}
 echo -e "Do you want Catapult to install and configure KeePassXC database and key?"
+echo -e
 
 options=(
   "Yes it's fine"
