@@ -45,7 +45,7 @@ ADD --chown=builder:builder poetry/poetry.lock /srv/poetry/poetry.lock
 RUN cd /srv \
  && curl -sSL https://install.python-poetry.org | python3 - \
  && $HOME/.local/bin/poetry config installer.max-workers 10 \
- && $HOME/.local/bin/poetry install --directory=/srv/poetry \
+ && $HOME/.local/bin/poetry install --directory=/srv/poetry --no-root \
  && cd $HOME \
 # Oh My Zsh
  && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
