@@ -2,6 +2,9 @@
 
 set -e # exit when any command fails
 
+###########################
+# Docker install function #
+###########################
 install_docker(){
 
   echo -n -e ${C_RST}
@@ -116,36 +119,86 @@ install_docker(){
 
 }
 
+#######################################
+# Docker daemon.json install function #
+#######################################
 update_docker_config(){
 
   if [[ -x "$(command -v docker)" ]]; then
 
-    echo -n -e ${C_MAGENTA}
-    echo "Updating Docker configuration..."
-    echo -n -e ${C_RST}
-
+    # Setting the correct daemon.json path
     if [[ $(uname) == "Darwin" ]]; then
 
-      DOCKER_CONFIG_FILE="$HOME/.docker/daemon.json"
+      daemon_path=$HOME/.docker/daemon.json
 
     else
 
-      DOCKER_CONFIG_FILE="/etc/docker/daemon.json"
+      daemon_path=/etc/docker/daemon.json
 
     fi
 
-    # Restarting Docker service if DOCKER_CONFIG_FILE does not exist or hash is different
-    if [[ ! -f $DOCKER_CONFIG_FILE ]] || [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat $DOCKER_CONFIG_FILE | sha1sum - | cut -d " " -f 1) ]]; then
+    if [[ $catapult_docker_mode == "unconfigured" ]]; then
 
-      echo $docker_config | jq > $DOCKER_CONFIG_FILE
+      echo -e ${C_YELLOW}
+      echo -e "For IPv6 support make sure that the following parameters are in $daemon_path:"
+      echo -e
+      echo -e $docker_config | jq
+      echo -e ${C_YELLOW}
+      read -p "Press any key to continue"$'\n'
 
-      if [[ $(uname) == "Linux" ]]; then
+    else
 
-          echo -n -e ${C_MAGENTA}
-          echo "Restarting Docker service..."
-          echo -n -e ${C_RST}
+      if [[ $(uname) == "Darwin" ]]; then
 
-          systemctl restart docker
+        echo -e
+        echo -e "Overwriting your $daemon_path with the following config:"
+        echo -e
+
+      else
+
+        echo -e
+        echo -e "Overwriting your $daemon_path with the following config:"
+        echo -e
+
+      fi
+
+      echo $docker_config | jq
+
+      echo -e ${C_YELLOW}
+      read -p "Press any key to continue, or Ctrl + C to cancel and start over..."$'\n'
+      echo -e
+
+      echo -n -e ${C_MAGENTA}
+      echo "Updating Docker configuration..."
+      echo -n -e ${C_RST}
+
+      # Using the correct Docker Compose file for networking
+      cp -R ${ROOT_DIR}/defaults/docker-compose-$catapult_docker_mode.yml ${ROOT_DIR}/docker/docker-compose-network.yml
+
+      if [[ $(uname) == "Darwin" ]]; then
+
+        DOCKER_CONFIG_FILE="$HOME/.docker/daemon.json"
+
+      else
+
+        DOCKER_CONFIG_FILE="/etc/docker/daemon.json"
+
+      fi
+
+      # Restarting Docker service if DOCKER_CONFIG_FILE does not exist or hash is different
+      if [[ ! -f $DOCKER_CONFIG_FILE ]] || [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat $DOCKER_CONFIG_FILE | sha1sum - | cut -d " " -f 1) ]]; then
+
+        echo $docker_config | jq > $DOCKER_CONFIG_FILE
+
+        if [[ $(uname) == "Linux" ]]; then
+
+            echo -n -e ${C_MAGENTA}
+            echo "Restarting Docker service..."
+            echo -n -e ${C_RST}
+
+            systemctl restart docker
+
+        fi
 
       fi
 
@@ -164,6 +217,7 @@ update_docker_config(){
 
 echo -e ${C_YELLOW}
 echo -e "Installing latest Docker version for your OS"
+echo -e
 
 options=(
   "Yes it's fine"
@@ -183,7 +237,7 @@ done
 
 echo -n -e ${C_RST}
 
-docker_config=$(cat <<EOF
+docker_config_bridge=$(cat <<EOF
 {
   "experimental": true,
   "ip6tables": true
@@ -191,33 +245,29 @@ docker_config=$(cat <<EOF
 EOF
 )
 
-echo -n -e ${C_YELLOW}
-if [[ $(uname) == "Darwin" ]]; then
+docker_config_host=$(cat <<EOF
+{
+  "iptables": false,
+  "ip6tables": false
+}
+EOF
+)
 
-  echo -e "\n Overwriting your $HOME/.docker/daemon.json with the following config to add IPv6 support:"
+echo -e ${C_YELLOW}
+echo -e "Do you want Docker to automatically configure IPv6 & manage it's IPtables?"
+echo -e
 
-else
-
-  echo -e "\n Overwriting your /etc/docker/daemon.json with the following config to add IPv6 support:"
-
-fi
-
-echo $docker_config | jq
-
-echo -n -e ${C_YELLOW}
 options=(
-  "Yes it's fine"
-  "No it might break configurations I've made myself. I'll manually add the parameters."
+  "Yes it's fine (recommended - will use Docker bridge network)"
+  "No I'll manage IPTables myself (advanced - will use Docker host network)"
+  "No it might break my existing configurations, I'll manually add the required parameters (advanced - will use Docker bridge network)"
 )
 
 select option in "${options[@]}"; do
     case "$REPLY" in
-        yes) update_docker_config; break;;
-        no) echo -e "Not configuring Docker"; break;;
-        y) update_docker_config; break;;
-        n) echo -e "Not configuring Docker"; break;;
-        1) update_docker_config; break;;
-        2) echo -e "Not configuring Docker"; break;;
+        1) catapult_docker_mode=bridge docker_config=$docker_config_bridge update_docker_config; break;;
+        2) catapult_docker_mode=host docker_config=$docker_config_host update_docker_config; break;;
+        3) catapult_docker_mode=unconfigured docker_config=$docker_config_bridge update_docker_config; break;;
     esac
 done
 

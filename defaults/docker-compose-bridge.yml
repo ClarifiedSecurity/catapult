@@ -1,0 +1,11 @@
+---
+name: ${CONTAINER_PROJECT_NAME}
+services:
+  catapult:
+    environment:
+      CATAPULT_NETWORK: bridge
+
+networks:
+  default:
+    name: ${CONTAINER_NETWORK}
+    external: true # External becuase when compose creates the network the container does not have an IPv6 address
