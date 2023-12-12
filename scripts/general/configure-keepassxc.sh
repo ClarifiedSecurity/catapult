@@ -41,6 +41,13 @@ if [[ $(uname) == "Linux" ]]; then
 
     pacman -S keepassxc --noconfirm
 
+  elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
+
+    dnf config-manager --set-enabled crb
+    dnf install -y epel-release
+    dnf makecache
+    dnf install -y keepassxc
+
   fi
 
 fi
