@@ -75,3 +75,15 @@ for variable in "${variables[@]}"; do
   echo -n -e ${C_RST}
 
 done
+
+# Checking if networkpersonal docker-compose file exists
+if ! [ -r docker/docker-compose-network.yml  ]
+then
+
+  echo -e ${C_RED}
+  echo -e Docker network prefrerences file does not exist.
+  echo -e Please run ./install.sh again and follow the instructions.
+  echo -e ${C_RST}
+  exit 1
+
+fi
