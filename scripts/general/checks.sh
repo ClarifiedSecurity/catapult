@@ -116,12 +116,8 @@ if [[ $LOCAL_TAG == $REMOTE_TAG ]]; then
 
       select option in "${options[@]}"; do
           case "$REPLY" in
-              yes) catapult_update; break;;
-              no) echo -e "Not updating Catapult"; break;;
-              y) catapult_update; break;;
-              n) echo -e "Not updating Catapult"; break;;
-              1) catapult_update; break;;
-              2) echo -e "Not updating Catapult"; break;;
+              yes|y|1) catapult_update; break;;
+              no|n|2) echo -e "Not updating Catapult"; break;;
           esac
       done
     fi

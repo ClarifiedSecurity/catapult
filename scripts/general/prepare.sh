@@ -15,12 +15,8 @@ options=(
 
 select option in "${options[@]}"; do
     case "$REPLY" in
-        yes) scripts/general/configure-keepassxc.sh; break;;
-        no) echo -e "Make sure you fill out the required values in ${ROOT_DIR}/.makerc-vars"; break;;
-        y) scripts/general/configure-keepassxc.sh; break;;
-        n) echo -e "Make sure you fill out the required values in ${ROOT_DIR}/.makerc-vars"; break;;
-        1) scripts/general/configure-keepassxc.sh; break;;
-        2) echo -e "Make sure you fill out the required values in ${ROOT_DIR}/.makerc-vars"; break;;
+        yes|y|1) scripts/general/configure-keepassxc.sh; break;;
+        no|n|2) echo -e "Make sure you fill out the required values in ${ROOT_DIR}/.makerc-vars"; break;;
     esac
 done
 

@@ -65,12 +65,8 @@ if [ ! -f .makerc-vars ]; then
 
     select option in "${options[@]}"; do
         case "$REPLY" in
-            yes) makerc-vars-creator; break;;
-            no) read -p $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
-            y) makerc-vars-creator; break;;
-            n) read -p $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
-            1) makerc-vars-creator; break;;
-            2) read -p $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
+            yes|y|1) makerc-vars-creator; break;;
+            no|n|2) read -p $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
         esac
     done
 
@@ -136,12 +132,8 @@ if [[ $(uname) == "Darwin" ]]; then
 
     select option in "${options[@]}"; do
         case "$REPLY" in
-            yes) brew-install; break;;
-            no) read -p $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
-            y) brew-install; break;;
-            n) read -p $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
-            1) brew-install; break;;
-            2) read -p $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
+            yes|y|1) brew-install; break;;
+            no|n|2) read -p $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
         esac
     done
 
@@ -159,12 +151,8 @@ if [[ $(uname) == "Darwin" ]]; then
 
     select option in "${options[@]}"; do
         case "$REPLY" in
-            yes) brew-packages-install; break;;
-            no) read -p $'\n'"Make sure $BREW_PACKAGES are installed - Press any key to continue"$'\n'; break;;
-            y) brew-packages-install; break;;
-            n) read -p $'\n'"Make sure $BREW_PACKAGES are installed - Press any key to continue"$'\n'; break;;
-            1) brew-packages-install; break;;
-            2) read -p $'\n'"Make sure $BREW_PACKAGES are installed - Press any key to continue"$'\n'; break;;
+            yes|y|1) brew-packages-install; break;;
+            no|n|2) read -p $'\n'"Make sure $BREW_PACKAGES are installed - Press any key to continue"$'\n'; break;;
         esac
     done
 
@@ -219,12 +207,8 @@ if [[ $(uname) == "Linux" ]]; then
 
         select option in "${options[@]}"; do
             case "$REPLY" in
-                yes) debian-packages-install; break;;
-                no) read -p $'\n'"Make sure $DEBIAN_PACKAGES are installed - Press any key to continue"$'\n'; break;;
-                y) debian-packages-install; break;;
-                n) read -p $'\n'"Make sure $DEBIAN_PACKAGES are installed - Press any key to continue"$'\n'; break;;
-                1) debian-packages-install; break;;
-                2) read -p $'\n'"Make sure $DEBIAN_PACKAGES are installed - Press any key to continue"$'\n'; break;;
+                yes|y|1) debian-packages-install; break;;
+                no|n|2) read -p $'\n'"Make sure $DEBIAN_PACKAGES are installed - Press any key to continue"$'\n'; break;;
             esac
         done
 
@@ -258,12 +242,8 @@ if [[ $(uname) == "Linux" ]]; then
 
         select option in "${options[@]}"; do
             case "$REPLY" in
-                yes) arch-packages-install; break;;
-                no) read -p $'\n'"Make sure $ARCH_PACKAGES are installed - Press any key to continue"$'\n'; break;;
-                y) arch-packages-install; break;;
-                n) read -p $'\n'"Make sure $ARCH_PACKAGES are installed - Press any key to continue"$'\n'; break;;
-                1) arch-packages-install; break;;
-                2) read -p $'\n'"Make sure $ARCH_PACKAGES are installed - Press any key to continue"$'\n'; break;;
+                yes|y|1) arch-packages-install; break;;
+                no|n|2) read -p $'\n'"Make sure $ARCH_PACKAGES are installed - Press any key to continue"$'\n'; break;;
             esac
         done
 
