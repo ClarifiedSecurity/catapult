@@ -139,6 +139,8 @@ update_docker_config(){
 
     if [[ $catapult_docker_mode == "unconfigured" ]]; then
 
+      cp -R ${ROOT_DIR}/defaults/docker-compose-bridge.yml ${ROOT_DIR}/docker/docker-compose-network.yml
+
       echo -e ${C_YELLOW}
       echo -e "For IPv6 support make sure that the following parameters are in $daemon_path:"
       echo -e
