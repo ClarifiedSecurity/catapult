@@ -51,3 +51,8 @@ services:
       options:
         max-size: 250m
         max-file: "1"
+
+networks:
+  default:
+    name: ${CONTAINER_NETWORK}
+    external: true # External becuase when compose creates the network the container does not have an IPv6 address

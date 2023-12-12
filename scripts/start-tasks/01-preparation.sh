@@ -76,14 +76,10 @@ for variable in "${variables[@]}"; do
 
 done
 
-# Checking if networkpersonal docker-compose file exists
+# Checking if personal docker-compose-network.yml file exists and creating it if it doesn't
 if ! [ -r docker/docker-compose-network.yml  ]
 then
 
-  echo -e ${C_RED}
-  echo -e Docker network prefrerences file does not exist.
-  echo -e Please run ./install.sh again and follow the instructions.
-  echo -e ${C_RST}
-  exit 1
+  cp defaults/docker-compose-network.yml docker/docker-compose-network.yml
 
 fi
