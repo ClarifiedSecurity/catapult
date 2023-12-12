@@ -269,12 +269,48 @@ if [[ $(uname) == "Linux" ]]; then
 
         echo -e ${C_RST}
 
+    # RedHat based OS
+    elif grep -q "rhel" /etc/os-release; then
+
+        RHEL_PACKAGES="git git-lfs make jq curl sudo gpg openssh-server dnf-plugins-core"
+
+        rhel-packages-install() {
+
+            echo -n -e ${C_MAGENTA}
+            echo -e "Installing required rhel packages..."
+            echo -n -e ${C_RST}
+
+            sudo -E dnf makecache
+            sudo -E dnf install $RHEL_PACKAGES -y
+
+        }
+
+        echo -e ${C_YELLOW}
+        echo -e "Installing following packages:"
+        echo -e $RHEL_PACKAGES
+        echo -e
+
+        options=(
+            "Yes"
+            "No, I'll install these packages myself"
+        )
+
+        select option in "${options[@]}"; do
+            case "$REPLY" in
+                yes|y|1) rhel-packages-install; break;;
+                no|n|2) read -p $'\n'"Make sure $RHEL_PACKAGES are installed - Press any key to continue"$'\n'; break;;
+            esac
+        done
+
+        echo -e ${C_RST}
+
     # Other
     else
 
         echo -n -e ${C_RED}
         echo -e
         echo -e "You are using unsupported or untested (Linux) operating system. Catapult may still work if you configure it manually"
+        echo -e
         echo -e "You'll need to follow these steps:"
         echo -e
         echo -e "1) Install following packages: ${C_YELLOW}git git-lfs make jq curl sudo gpg ssh${C_RED}"

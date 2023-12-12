@@ -58,6 +58,14 @@ install_docker(){
       echo "Docker will be installed with pacman..."
       echo -n -e ${C_RST}
 
+    elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
+
+      echo -n -e ${C_MAGENTA}
+      echo "Adding Docker repo for RedHat..."
+      echo -n -e ${C_RST}
+
+      dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
     else
 
       echo -n -e ${C_RED}
@@ -85,6 +93,14 @@ install_docker(){
       systemctl enable docker.service
       systemctl start docker.service
       mkdir -p /etc/docker
+
+
+    elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
+
+      dnf makecache
+      dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
+      systemctl enable docker.service
+      systemctl start docker.service
 
     fi
 
