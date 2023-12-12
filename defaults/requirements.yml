@@ -37,7 +37,7 @@ collections:
   - name: community.crypto
     version: 2.16.2
   - name: community.docker
-    version: 3.4.11
+    version: 3.5.0
   - name: community.general
     version: 8.1.0
   - name: community.hashi_vault
