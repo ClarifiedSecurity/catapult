@@ -9,12 +9,8 @@ docker_pull () {
 
 select option in "${options[@]}"; do
     case "$REPLY" in
-        yes) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
-        no) echo -e "Not pulling now"; break;;
-        y) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
-        n) echo -e "Not pulling now"; break;;
-        1) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
-        2) echo -e "Not pulling now"; break;;
+        yes|y|1) ${MAKEVAR_SUDO_COMMAND} docker pull ${IMAGE_FULL}; break;;
+        no|n|2) echo -e "Not pulling now"; break;;
     esac
 done
 

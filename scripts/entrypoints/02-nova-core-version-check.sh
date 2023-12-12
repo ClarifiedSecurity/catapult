@@ -42,12 +42,8 @@ then
     select option in "${options[@]}"; do
     echo -n -e ${C_YELLOW}
         case "$REPLY" in
-            yes) ansible-galaxy collection install -r $REQUIREMENTS_FILE --force -p /srv/ansible; break;;
-            no) echo -e "Not updating now"; break;;
-            y) ansible-galaxy collection install -r $REQUIREMENTS_FILE --force -p /srv/ansible; break;;
-            n) echo -e "Not updating now"; break;;
-            1) ansible-galaxy collection install -r $REQUIREMENTS_FILE --force -p /srv/ansible; break;;
-            2) echo -e "Not updating now"; break;;
+            yes|y|1) ansible-galaxy collection install -r $REQUIREMENTS_FILE --force -p /srv/ansible; break;;
+            no|n|2) echo -e "Not updating now"; break;;
         esac
     echo -n -e ${C_RST}
     done

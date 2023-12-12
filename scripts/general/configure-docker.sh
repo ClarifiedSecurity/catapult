@@ -244,12 +244,8 @@ options=(
 
 select option in "${options[@]}"; do
     case "$REPLY" in
-        yes) install_docker; break;;
-        no) echo -e "Not installing Docker"; break;;
-        y) install_docker; break;;
-        n) echo -e "Not installing Docker"; break;;
-        1) install_docker; break;;
-        2) echo -e "Not installing Docker"; break;;
+        yes|y|1) install_docker; break;;
+        no|n|2) echo -e "Not installing Docker"; break;;
     esac
 done
 
