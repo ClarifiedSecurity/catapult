@@ -48,8 +48,8 @@ start-tasks: checks
 ## build: Run checks and then build container image
 .PHONY: build
 build: customizations checks
-	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use
-	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} -t ${IMAGE_FULL} . --load
+	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
+	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --tag ${IMAGE_FULL} . --load
 
 ## run: Run the container
 .PHONY: run

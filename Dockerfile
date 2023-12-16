@@ -1,4 +1,4 @@
-# Matches the Python version in pyproject.toml
+# Must match the Python version in pyproject.toml
 FROM python:3.11.7-slim-bookworm
 
 # Timezone configuration from .makerc-vars
