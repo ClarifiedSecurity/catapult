@@ -25,7 +25,7 @@ collections:
   - name: ansible.windows
     version: 2.2.0
   - name: azure.azcollection
-    version: 1.18.1
+    version: 2.1.1
   - name: chocolatey.chocolatey
     version: 1.5.1
   - name: cisco.ios
@@ -59,7 +59,7 @@ collections:
   - name: kubernetes.core
     version: 2.4.0
   - name: linode.cloud
-    version: 0.22.0
+    version: 0.23.0
   - name: microsoft.ad
     version: 1.4.1
   - name: microsoft.sql
