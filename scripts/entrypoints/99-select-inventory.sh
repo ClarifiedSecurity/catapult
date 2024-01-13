@@ -94,7 +94,7 @@ function bash_selector() {
 
     else
 
-        echo "No projects found."
+        echo "No projects found in /srv/inventories or project does not have .git folder."
 
     fi
 
