@@ -18,11 +18,13 @@ Once inside the Catapult container you can type `ctp-` and use the tab key to se
 
 ## General commands
 
-- Lists all available projects under /srv/inventories and allows you to select one if there is only one project the command will select it automatically
+- Lists all available projects under /srv/inventories and allows you to select one if there is only one project the command will select it automatically. The command looks for projects that contain .git folder. If you are not using git for your project you can create an empty .git folder to make the project selectable.
+
+````zsh
 
 ```zsh
 ctp-select-project
-```
+````
 
 ## Deploy commands
 
