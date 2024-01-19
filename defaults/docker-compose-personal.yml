@@ -1,6 +1,6 @@
 ---
 # This is an example file how to extend Catault with your own personal docker-compose-personal.yml file.
-# It has the highest priority and will overwrite matching settings from docker-compose.yml & docker-compose-extra.yml.
+# It has the highest priority and will be merged with docker-compose.yml & docker-compose-extra.yml files and will overwrite any matching values from them.
 
 name: ${CONTAINER_PROJECT_NAME}
 services:
