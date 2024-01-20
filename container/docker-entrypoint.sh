@@ -39,7 +39,7 @@ fi
 # Copying mounted certificates to the correct location and trusting them if they are present
 if [ "$(ls -A /tmp/ca-certificates)" ]; then
 
-  sudo rsync -ar /tmp/ca-certificates/ /usr/local/share/ca-certificates/ --ignore-existing --delete
+  sudo rsync -ar /tmp/ca-certificates/ /usr/local/share/ca-certificates/ --ignore-existing
   sudo update-ca-certificates > /dev/null 2>/dev/null # To avoid false positive error rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
 
 fi
