@@ -37,11 +37,13 @@ collections:
   - name: community.crypto
     version: 2.16.2
   - name: community.docker
-    version: 3.5.0
+    version: 3.7.0
   - name: community.general
     version: 8.2.0
   - name: community.hashi_vault
     version: 6.1.0
+  - name: community.library_inventory_filtering_v1 # Required for community.docker
+    version: 1.0.0
   - name: community.mysql
     version: 3.8.0
   - name: community.network
