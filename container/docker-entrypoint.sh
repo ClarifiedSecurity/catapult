@@ -16,25 +16,9 @@ source $(poetry env info -C /srv/poetry --path)/bin/activate
 # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
 sudo chown -R $(id -u):$(id -g) /ssh-agent
 
-# Check if KeePass is already open
-if ls '/tmp' | grep -i ansible-keepass.sock -q; then
-
-  echo -n -e ${C_GREEN}
-  echo -e "KeePass already open"
-
-else
-
-  until ~/keepass-decrypt-check.py; do
-
-    read -s -p "$(echo -e "Enter your KeePass password: ")" kppwd && export KPPWD=$kppwd
-
-  done
-
-  /home/builder/kpsock.py /home/builder/KPDB.kbdx --key /home/builder/KPDB.key --log kpsock.log --log-level WARNING --ttl 28800 &
-  unset KPPWD
-  sleep 1
-
-fi
+# KeePass unlocker script
+# Can also be used with ctp-unlock-secrets
+source /home/builder/keepass-unlocker.sh
 
 # Copying mounted certificates to the correct location and trusting them if they are present
 if [ "$(ls -A /tmp/ca-certificates)" ]; then
