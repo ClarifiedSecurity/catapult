@@ -8,7 +8,7 @@ services:
     hostname: ${CONTAINER_NAME}
     restart: no
     volumes:
-      # This is /tmp so other make customization commands wont overwrite the certificate symlinks
+      # This is /tmp so other make customization commands will not overwrite the certificate symlinks
       # docker-entrypoint.sh moves the certificates to the correct location
       - ${ROOT_DIR}/custom/certificates:/tmp/ca-certificates
       - ${ROOT_DIR}/:/srv/
@@ -23,7 +23,7 @@ services:
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
       - ${HOST_SSH_AUTH_SOCK}:/ssh-agent
     environment:
-      CATAPULT: 1 # This is used to check if the deployment is running in a CataPult container
+      CATAPULT: 1 # This is used to check if the deployment is running in a Catapult container
       CONTAINER_USER_ID: ${CONTAINER_USER_ID}
       CONTAINER_GROUP_ID: ${CONTAINER_GROUP_ID}
       CONTAINER_USER_NAME: ${CONTAINER_USER_NAME}

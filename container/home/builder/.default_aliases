@@ -22,6 +22,8 @@ alias ctp-install-custom-requirements="/srv/scripts/general/install-all-requirem
 
 alias ctp-select-project="source /srv/scripts/entrypoints/99-select-inventory.sh"
 
+alias ctp-unlock-secrets="~/keepass-unlocker.sh"
+
 ### Deploy modes ###
 
 alias ctp-deploy="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -l"
