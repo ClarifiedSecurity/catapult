@@ -91,24 +91,27 @@ echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_
   exit 1
 fi
 
-# Checking if the latest remote tag is different than the current local tag
-# Using curl to get the latest tag from raw file GitHub to avoid Github API rate limit
+# Checking if the latest remote version is different than the current local version
+# Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
 UPSTREAM=main
-REMOTE_TAG=$(curl --silent https://raw.githubusercontent.com/ClarifiedSecurity/catapult/main/version.yml | cut -d ' ' -f 2)
-LOCAL_TAG=$(git describe --tags --abbrev=0 $UPSTREAM | cut -d 'v' -f 2)
+REMOTE_VERSION=$(curl --silent https://raw.githubusercontent.com/ClarifiedSecurity/catapult/main/version.yml | cut -d ' ' -f 2)
+LOCAL_VERSION=$(cat version.yml | cut -d ' ' -f 2)
 
-# Checking if remote tag is newer than local tag
-if [[ $LOCAL_TAG == $REMOTE_TAG ]]; then
+# Checking if remote version is diffrent than local version
+if [[ $LOCAL_VERSION == $REMOTE_VERSION ]]; then
+
     echo -e -n
+
   else
+
     if [ $MAKEVAR_AUTO_UPDATE == 1 ]; then
 
-      echo -e "Catapult version $REMOTE_TAG is available, updating..."
+      echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
       catapult_update
 
     else
 
-      echo -e "Catapult version $REMOTE_TAG is available, do you want to update?"
+      echo -e "Catapult version $REMOTE_VERSION is available, do you want to update?"
       options=(
         "yes"
         "no"
@@ -120,7 +123,9 @@ if [[ $LOCAL_TAG == $REMOTE_TAG ]]; then
               no|n|2) echo -e "Not updating Catapult"; break;;
           esac
       done
+
     fi
+
 fi
 
 # Looping thorugh .makerc-vars
