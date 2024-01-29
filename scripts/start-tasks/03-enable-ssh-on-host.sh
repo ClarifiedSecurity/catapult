@@ -5,37 +5,42 @@ echo -n -e ${C_CYAN}
 # If ALLOW_HOST_SSH_ACCESS is set to true, then we will allow SSH access to the host from the container.
 if [[ "${MAKEVAR_ALLOW_HOST_SSH_ACCESS}" == "true" ]]; then
 
-  # Creating IPTables rule to allow SSH access to the host from the container, if iptables is installed.
-  if ! [ -x "$(command -v iptables)" ]; then
+  # Only supported on Linux.
+  if [[ $(uname) == "Linux" ]]; then
 
-      echo -e "Iptables is not installed..."
+    # Creating IPTables rule to allow SSH access to the host from the container, if iptables is installed.
+    if ! [ -x "$(command -v iptables)" ]; then
 
-    elif [[ $(uname) == "Linux" ]]; then
+        echo -e "Iptables is not installed..."
 
-      host_ssh_rule="INPUT -p tcp -m tcp -s ${CONTAINER_NETWORK_IPV4_SUBNET} --dport 22 -j ACCEPT"
+      elif [[ $(uname) == "Linux" ]]; then
 
-      if ${MAKEVAR_SUDO_COMMAND} iptables -S | grep -q "$host_ssh_rule"; then
+        host_ssh_rule="INPUT -p tcp -m tcp -s ${CONTAINER_NETWORK_IPV4_SUBNET} --dport 22 -j ACCEPT"
 
-        echo -e "Host SSH access already enabled..."
+        if ${MAKEVAR_SUDO_COMMAND} iptables -S | grep -q "$host_ssh_rule"; then
 
-      else
+          echo -e "Host SSH access already enabled..."
 
-        echo -e "Enabling host SSH access only from the container network..."
-        ${MAKEVAR_SUDO_COMMAND} iptables -I $host_ssh_rule
+        else
 
-      fi
+          echo -e "Enabling host SSH access only from the container network..."
+          ${MAKEVAR_SUDO_COMMAND} iptables -I $host_ssh_rule
 
-      echo -e "Starting SSH server on $(hostname)..."
+        fi
 
-      if grep -q "arch" /etc/os-release; then
+        echo -e "Starting SSH server on $(hostname)..."
 
-        ${MAKEVAR_SUDO_COMMAND} systemctl start sshd
+        if grep -q "arch" /etc/os-release; then
 
-      else
+          ${MAKEVAR_SUDO_COMMAND} systemctl start sshd
 
-        ${MAKEVAR_SUDO_COMMAND} systemctl start ssh
+        else
 
-      fi
+          ${MAKEVAR_SUDO_COMMAND} systemctl start ssh
+
+        fi
+
+    fi
 
   fi
 
