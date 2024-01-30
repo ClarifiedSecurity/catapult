@@ -27,7 +27,8 @@ C_RST      = \033[0m
 ## help: List all available make targets with descriptions
 .PHONY: help
 help: project-banner
-	@echo -e "${C_YELLOW}[*] ${C_WHITE}usage: ${C_MAGENTA}make ${C_CYAN}<target>${C_RST}"
+	@echo "${C_YELLOW}[*] ${C_WHITE}usage: ${C_MAGENTA}make ${C_CYAN}<target>${C_RST}"
+	@echo
 	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':' | sort
 
 ## checks: Running different checks before starting the container
