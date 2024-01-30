@@ -1,5 +1,10 @@
 # How to use
 
+Catapult's commands fall into two categories:
+
+- External commands - All commands that start with `make` are external commands and are used to manage the Catapult container itself.
+- Internal commands - All commands that start with `ctp-` are internal commands and are used when the user is inside the Catapult container. You can use tab completion to see all available commands.
+
 ## Enter the Catapult
 
 - Start the Catapult container and connect to it with:
@@ -14,17 +19,13 @@ make start
 make shell
 ```
 
-Once inside the Catapult container you can type `ctp-` and use the tab key to see all of the available commands, here is also list of all commands with examples:
-
 ## General commands
 
 - Lists all available projects under /srv/inventories and allows you to select one if there is only one project the command will select it automatically. The command looks for projects that contain .git folder. If you are not using git for your project you can create an empty .git folder to make the project selectable.
 
-````zsh
-
 ```zsh
 ctp-select-project
-````
+```
 
 ## Deploy commands
 
