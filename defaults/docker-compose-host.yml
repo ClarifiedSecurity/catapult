@@ -1,7 +1,0 @@
----
-name: ${CONTAINER_PROJECT_NAME}
-services:
-  catapult:
-    network_mode: host
-    environment:
-      CATAPULT_NETWORK: host

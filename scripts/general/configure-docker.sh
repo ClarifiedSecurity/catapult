@@ -76,7 +76,7 @@ install_docker(){
       echo -e "1.1) If you don't find your OS in the link above look around in the internet there might be guides available on how to install Docker for your OS"
       echo -e
 
-      read -p "Once you have installed Docker & Docker compose plugin press any key to continue..."
+      read -p "Once you have installed Docker & Docker compose plugin press enter key to continue..."
       echo -n -e ${C_RST}
 
     fi
@@ -153,16 +153,14 @@ update_docker_config(){
 
     fi
 
-    if [[ $catapult_docker_mode == "unconfigured" ]]; then
-
-      cp -R ${ROOT_DIR}/defaults/docker-compose-bridge.yml ${ROOT_DIR}/docker/docker-compose-network.yml
+    if [[ $catapult_docker_mode == "advanced" ]]; then
 
       echo -e ${C_YELLOW}
-      echo -e "For IPv6 support make sure that the following parameters are in $daemon_path:"
+      echo -e "To disable IPtables and enable IPv6 make sure that the following parameters are in $daemon_path:"
       echo -e
       echo -e $docker_config | jq
       echo -e ${C_YELLOW}
-      read -p "Press any key to continue"$'\n'
+      read -p "Press enter key to continue"$'\n'
 
     else
 
@@ -183,15 +181,12 @@ update_docker_config(){
       echo $docker_config | jq
 
       echo -e ${C_YELLOW}
-      read -p "Press any key to continue, or Ctrl + C to cancel and start over..."$'\n'
+      read -p "Press enter key to continue, or Ctrl + C to cancel and start over..."$'\n'
       echo -e
 
       echo -n -e ${C_MAGENTA}
       echo "Updating Docker configuration..."
       echo -n -e ${C_RST}
-
-      # Using the correct Docker Compose file for networking
-      cp -R ${ROOT_DIR}/defaults/docker-compose-$catapult_docker_mode.yml ${ROOT_DIR}/docker/docker-compose-network.yml
 
       if [[ $(uname) == "Darwin" ]]; then
 
@@ -251,7 +246,7 @@ done
 
 echo -n -e ${C_RST}
 
-docker_config_bridge=$(cat <<EOF
+docker_config_default=$(cat <<EOF
 {
   "experimental": true,
   "ip6tables": true
@@ -259,8 +254,9 @@ docker_config_bridge=$(cat <<EOF
 EOF
 )
 
-docker_config_host=$(cat <<EOF
+docker_config_no_iptables=$(cat <<EOF
 {
+  "experimental": true,
   "iptables": false,
   "ip6tables": false
 }
@@ -268,47 +264,19 @@ EOF
 )
 
 echo -e ${C_YELLOW}
-echo -e "Do you want Docker to automatically configure IPv6 & manage it's IPtables?"
+echo -e "Do you want Docker to automatically configure IPv4, IPv6 & manage it's IPtables?"
 echo -e
 
 options=(
-  "Yes it's fine (recommended - will use Docker bridge network)"
-  "No I'll manage IPTables myself (advanced - will use Docker host network)"
-  "No it might break my existing configurations, I'll manually add the required parameters (advanced - will use Docker bridge network)"
+  "Yes (recommended)"
+  "No I'll manage Docker config & IPTables myself (for advanced users)"
 )
 
 select option in "${options[@]}"; do
     case "$REPLY" in
-        1) catapult_docker_mode=bridge docker_config=$docker_config_bridge update_docker_config; break;;
-        2) catapult_docker_mode=host docker_config=$docker_config_host update_docker_config; break;;
-        3) catapult_docker_mode=unconfigured docker_config=$docker_config_bridge update_docker_config; break;;
+        yes|y|1) catapult_docker_mode=default docker_config=$docker_config_default update_docker_config; break;;
+        no|n|2) catapult_docker_mode=advanced docker_config=$docker_config_no_iptables update_docker_config; break;;
     esac
 done
-
-# Configuring Docker network if docker is installed
-if [[ -x "$(command -v docker)" ]]; then
-
-  echo -n -e ${C_MAGENTA}
-  echo "Checking if ${CONTAINER_NETWORK} exists..."
-  echo -n -e ${C_RST}
-
-  if [[ -z $(docker network ls | grep ${CONTAINER_NETWORK}) ]]; then
-
-    echo -n -e ${C_MAGENTA}
-    echo "Creating Docker ${CONTAINER_NETWORK} network..."
-    echo -n -e ${C_RST}
-
-    docker network create ${CONTAINER_NETWORK} --ipv6 --subnet ${CONTAINER_NETWORK_IPV6_SUBNET} --subnet ${CONTAINER_NETWORK_IPV4_SUBNET}
-
-  fi
-
-else
-
-  echo -n -e ${C_RED}
-  echo "Cannot create ${CONTAINER_NETWORK} network, docker not found."
-  exit 1
-  echo -n -e ${C_RST}
-
-fi
 
 echo -n -e ${C_RST}

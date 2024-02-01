@@ -15,10 +15,9 @@
 /container/home/builder/.custom_aliases
 /container/home/builder/.personal_aliases
 /container/home/builder/.ssh/config.d/
-/container/home/builder/.ssh/known_hosts
+/container/home/builder/.ssh/known_hosts**
 /custom/**
 /docker/docker-compose-extra.yml
-/docker/docker-compose-network.yml
 /docker/docker-compose-personal.yml
 /roles
 /roles_core

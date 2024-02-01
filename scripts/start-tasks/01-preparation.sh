@@ -75,11 +75,3 @@ for variable in "${variables[@]}"; do
   echo -n -e ${C_RST}
 
 done
-
-# Checking if personal docker-compose-network.yml file exists and creating it if it doesn't
-if ! [ -r docker/docker-compose-network.yml  ]
-then
-
-  cp defaults/docker-compose-network.yml docker/docker-compose-network.yml
-
-fi

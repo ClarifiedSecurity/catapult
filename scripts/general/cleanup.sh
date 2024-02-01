@@ -18,11 +18,3 @@ if ${MAKEVAR_SUDO_COMMAND} docker images | grep -q ${IMAGE_FULL}; then
     ${MAKEVAR_SUDO_COMMAND} docker rmi -f ${IMAGE_FULL}
 
 fi
-
-# Deleting Catapult network if it exists
-if ${MAKEVAR_SUDO_COMMAND} docker network ls | grep -q ${CONTAINER_NETWORK}; then
-
-    echo -e "Deleting ${CONTAINER_NETWORK} network..."
-    ${MAKEVAR_SUDO_COMMAND} docker network rm ${CONTAINER_NETWORK}
-
-fi

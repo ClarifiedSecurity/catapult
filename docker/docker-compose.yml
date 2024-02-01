@@ -6,6 +6,7 @@ services:
     image: ${IMAGE_FULL}
     container_name: ${CONTAINER_NAME}
     hostname: ${CONTAINER_NAME}
+    network_mode: host
     restart: no
     volumes:
       # This is /tmp so other make customization commands will not overwrite the certificate symlinks
@@ -51,8 +52,3 @@ services:
       options:
         max-size: 250m
         max-file: "1"
-
-networks:
-  default:
-    name: ${CONTAINER_NETWORK}
-    external: true # External becuase when compose creates the network the container does not have an IPv6 address

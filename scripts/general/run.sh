@@ -18,4 +18,4 @@ if [[ $(uname) == "Linux" ]]; then
 
 fi
 
-${MAKEVAR_SUDO_COMMAND} docker compose -f ${ROOT_DIR}/docker/docker-compose.yml -f ${ROOT_DIR}/docker/docker-compose-network.yml -f ${ROOT_DIR}/docker/docker-compose-extra.yml -f ${ROOT_DIR}/docker/docker-compose-personal.yml up --detach --force-recreate --remove-orphans
+${MAKEVAR_SUDO_COMMAND} docker compose -f ${ROOT_DIR}/docker/docker-compose.yml -f ${ROOT_DIR}/docker/docker-compose-extra.yml -f ${ROOT_DIR}/docker/docker-compose-personal.yml up --detach --force-recreate --remove-orphans
