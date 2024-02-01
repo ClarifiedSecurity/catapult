@@ -36,9 +36,9 @@ wsl --update
 wsl --install -d Ubuntu
 ```
 
-- After that follow the instructions to finalize the setup.
+- After that follow the instructions on screen to finalize the setup.
 
-- Make sure all needed SSH keypairs are in `~/.ssh` folder in the WSL Ubuntu and ssh-agent is started. For easy-to-use SSH Agent you can follow this [guide](https://esc.sh/blog/ssh-agent-windows10-wsl2/). You can use this method to add multiple keys to the SSH Agent.
+- Make sure all needed SSH keypairs are in `~/.ssh` folder in the WSL Ubuntu and ssh-agent is started. For easy-to-use SSH Agent you can follow this [guide](https://esc.sh/blog/ssh-agent-windows10-wsl2/). You can use this method to add multiple keys to the SSH Agent. **If you don't have SSH agent up and running the installation script will fail**
 
 When WSL is configured successfully then I'll show up in Windows Explorer as a network drive. You can use it to copy files between your host and the WSL system. On Windows we suggest using [VSCode](https://code.visualstudio.com/) with the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension to edit the files in WSL and [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install) for easy connection to WSL.
 
