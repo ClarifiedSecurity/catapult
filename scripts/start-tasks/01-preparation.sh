@@ -1,15 +1,23 @@
 #!/bin/bash
 
-echo -n -e ${C_CYAN}
+echo -n -e "${C_CYAN}"
 
-# Creating required files to avoid errors
-touch ./container/home/builder/.zsh_history
+# Creating required files and folders to avoid errors
+mkdir -p ./container/home/builder/.history
 touch ./container/home/builder/.custom_aliases
 touch ./container/home/builder/.personal_aliases
 touch .makerc-custom
 touch .makerc-personal
 
-echo -n -e ${C_RST}
+echo -n -e "${C_RST}"
+
+# Checking if shell history file exists in legacy path and moving it to the new path
+if [ -r ./container/home/builder/.zsh_history ]
+then
+
+  mv ./container/home/builder/.zsh_history ./container/home/builder/.history/.zsh_history
+
+fi
 
 # Checking if custom .makerc-vars.example exists and using it if it does
 if [ -r custom/.makerc-vars.example  ]
