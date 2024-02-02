@@ -23,7 +23,7 @@
 /roles_core
 ansible/**
 archives/
-container/home/builder/.*_history
+container/home/builder/.*history
 creds.kdbx
 creds.key
 download/
