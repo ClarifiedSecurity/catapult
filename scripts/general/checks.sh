@@ -158,7 +158,7 @@ if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_S
   echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
   echo -e "sudo is not usually required on MacOS, so MAKEVAR_SUDO_COMMAND should be empty"
 
-  read -p "Press any key to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
+  read -p "Press enter to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
   echo -e ${C_CYAN}
 
 fi
@@ -185,7 +185,7 @@ else
   echo -e ${C_YELLOW}
   echo -e There are no SSH keys in your ssh-agent.
   echo -e Some of the functinality will not work without SSH keys.
-  read -p "Press any key to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
+  read -p "Press enter to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
   echo -e ${C_RST}
 
 fi

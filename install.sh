@@ -10,8 +10,8 @@ if [ $EUID -eq 0 ]; then
     print_nl "${C_RED}"
     print_nl "Don't run this script with sudo, it will ask for sudo password when needed."
 
-    read -rp $'\n'"Press Ctrl + C to cancel or Press any key to continue..."
-    print_nl "${C_RST}"
+    read -rp $'\n'"Press Ctrl + C to cancel or Press enter to continue..."
+    echo -e "${C_RST}"
 fi
 
 makerc-vars-creator() {
@@ -107,7 +107,7 @@ if [[ $(uname) == "Darwin" ]]; then
     select _ in "${options[@]}"; do
         case "$REPLY" in
             yes|y|1) brew-install; break;;
-            no|n|2) read -rp $'\n'"If you don't install homebrew you'll need to install Docker manually - Press any key to continue"$'\n'; break;;
+            no|n|2) read -rp $'\n'"If you don't install homebrew you'll need to install Docker manually - Press enter to continue"$'\n'; break;;
         esac
     done
 
@@ -123,7 +123,7 @@ if [[ $(uname) == "Darwin" ]]; then
     select _ in "${options[@]}"; do
         case "$REPLY" in
             yes|y|1) brew-packages-install; break;;
-            no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press any key to continue"$'\n'; break;;
+            no|n|2) read -rp $'\n'"Make sure $BREW_PACKAGES are installed - Press enter to continue"$'\n'; break;;
         esac
     done
 
@@ -169,7 +169,7 @@ if [[ $(uname) == "Linux" ]]; then
         select _ in "${options[@]}"; do
             case "$REPLY" in
                 yes|y|1) debian-packages-install; break;;
-                no|n|2) read -rp $'\n'"Make sure ${PACKAGES} are installed - Press any key to continue"$'\n'; break;;
+                no|n|2) read -rp $'\n'"Make sure ${PACKAGES} are installed - Press enter to continue"$'\n'; break;;
             esac
         done
 
@@ -198,7 +198,7 @@ if [[ $(uname) == "Linux" ]]; then
         select _ in "${options[@]}"; do
             case "$REPLY" in
                 yes|y|1) arch-packages-install; break;;
-                no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press any key to continue"$'\n'; break;;
+                no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press enter to continue"$'\n'; break;;
             esac
         done
 
@@ -228,7 +228,7 @@ if [[ $(uname) == "Linux" ]]; then
         select _ in "${options[@]}"; do
             case "$REPLY" in
                 yes|y|1) rhel-packages-install; break;;
-                no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press any key to continue"$'\n'; break;;
+                no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press enter to continue"$'\n'; break;;
             esac
         done
 
