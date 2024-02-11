@@ -209,7 +209,7 @@ Different commands for managing machine snapshots. Note that the commands might 
 
 ### ctp-snapshot
 
-Create a snapshot of the VM
+Shuts down the VM, creates a snapshot and powers the VM back on.
 
 _Example usage:_
 

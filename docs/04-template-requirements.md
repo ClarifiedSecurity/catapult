@@ -28,6 +28,10 @@ However you install your base templates make sure that they meet the following r
 
 - `sudo` package needs to be installed for your distribution.
 
+- `python3` package needs to be installed for your distribution.
+
+- `open-vm-tools` package might need to be installed for your distribution depending on your virtualization platform.
+
 ## Per-environment/project/datacenter etc. template requirements
 
 We recommend applying the [template_os_configuration](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/template_os_configuration) to the specific project templates. It contains some prerequisites for different `nova.core` roles that you might otherwise need to install before using those roles.
