@@ -1,2 +1,2 @@
 ---
-customization_method: nmcli
+customization_method: networkd
