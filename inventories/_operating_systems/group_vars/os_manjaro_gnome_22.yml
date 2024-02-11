@@ -1,6 +1,0 @@
----
-# Template created with packer
-# Used only to create project templates from
-base_vm_template: BASE_TEMPLATE_manjaro_gnome22
-
-vm_template: catapult-template-manjaro-gnome22
