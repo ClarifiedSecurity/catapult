@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-# Check if KeePass is already open
-if ls '/tmp' | grep -i ansible-keepass.sock -q; then
+set -e
 
-  echo -n -e ${C_GREEN}
+# Check if KeePass is already open
+if [ -S /tmp/ansible-keepass.sock ]; then
+
   echo -e "KeePass already open"
 
 # Unlocking KeePass
@@ -11,12 +12,12 @@ else
 
   until ~/keepass-decrypt-check.py; do
 
-    read -s -p "$(echo -e "Enter your KeePass password: ")" kppwd && export KPPWD=$kppwd
+    read -rsp "$(echo -e "Enter your KeePass password: ")" kppwd && export KPPWD=$kppwd
 
   done
 
   /home/builder/kpsock.py /home/builder/KPDB.kbdx --key /home/builder/KPDB.key --log kpsock.log --log-level WARNING --ttl 28800 &
   unset KPPWD
-  sleep 1
+  sleep 0.25
 
 fi
