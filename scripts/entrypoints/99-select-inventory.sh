@@ -1,8 +1,9 @@
 #!/bin/bash
 
-C_RED="\033[31m"
-C_GREEN="\033[32m"
-C_RST="\033[0m"
+set -e # exit when any command fails
+
+# shellcheck disable=SC1091
+source /srv/scripts/general/colors.sh
 
 echo -e ${C_RST}
 SEARCH_DIR=/srv/inventories

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -e # exit when any command fails
+
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
 echo -n -e ${C_CYAN}
 echo -e "Cleaning up Catapult..."
 

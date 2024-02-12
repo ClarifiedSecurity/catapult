@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -e # exit when any command fails
+
+# shellcheck disable=SC1091
+source /srv/scripts/general/colors.sh
+
 echo -e "${C_GREEN}"
 
 # Chcking if ansible folder exists, if not then including requirements installer

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -e # exit when any command fails
+
+# shellcheck disable=SC1091
+source /srv/scripts/general/colors.sh
+
 # Checking that WEBHOOK_URL is not empty
 if [ ! -z "$SLACK_WEBHOOK_URL" ]; then
 

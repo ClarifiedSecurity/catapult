@@ -1,6 +1,11 @@
 #!/bin/bash
 
-echo -n -e ${C_CYAN}
+set -e
+
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
+echo -n -e "${C_CYAN}"
 
 # If ALLOW_HOST_SSH_ACCESS is set to true, then we will allow SSH access to the host from the container.
 if [[ "${MAKEVAR_ALLOW_HOST_SSH_ACCESS}" == "true" ]]; then

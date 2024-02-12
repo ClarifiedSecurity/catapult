@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -e
+
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
 echo -n -e "${C_CYAN}"
 
 # Creating required files and folders to avoid errors

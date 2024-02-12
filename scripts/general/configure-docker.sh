@@ -2,12 +2,15 @@
 
 set -e # exit when any command fails
 
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
 ###########################
 # Docker install function #
 ###########################
 install_docker(){
 
-  echo -n -e ${C_RST}
+  echo -n -e "${C_RST}"
 
   if [[ $(uname) == "Linux" ]]; then
 
@@ -17,9 +20,9 @@ install_docker(){
 
         if grep -q "ID=ubuntu" /etc/os-release; then
 
-          echo -n -e ${C_MAGENTA}
+          echo -n -e "${C_MAGENTA}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
-          echo -n -e ${C_RST}
+          echo -n -e "${C_RST}"
 
           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
           echo \
@@ -28,9 +31,9 @@ install_docker(){
 
         elif grep -q "ID=kali" /etc/os-release; then
 
-          echo -n -e ${C_MAGENTA}
+          echo -n -e "${C_MAGENTA}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
-          echo -n -e ${C_RST}
+          echo -n -e "${C_RST}"
 
           curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
           echo \
@@ -39,9 +42,9 @@ install_docker(){
 
         elif grep -q "ID=debian" /etc/os-release; then
 
-          echo -n -e ${C_MAGENTA}
+          echo -n -e "${C_MAGENTA}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
-          echo -n -e ${C_RST}
+          echo -n -e "${C_RST}"
 
           curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
           echo \
@@ -54,30 +57,30 @@ install_docker(){
 
     elif grep -q "arch" /etc/os-release; then
 
-      echo -n -e ${C_MAGENTA}
+      echo -n -e "${C_MAGENTA}"
       echo "Docker will be installed with pacman..."
-      echo -n -e ${C_RST}
+      echo -n -e "${C_RST}"
 
     elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
 
-      echo -n -e ${C_MAGENTA}
+      echo -n -e "${C_MAGENTA}"
       echo "Adding Docker repo for RedHat..."
-      echo -n -e ${C_RST}
+      echo -n -e "${C_RST}"
 
       dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
     else
 
-      echo -n -e ${C_RED}
+      echo -n -e "${C_RED}"
       echo -e "You are using unsupported or untested (Linux) operating system. Catapult may still work if you install Docker manually"
       echo -e "You'll need to follow these steps:"
       echo -e
-      echo -e "1) Install ${C_YELLOW}Docker engine and Docker compose plugin${C_RED} for your OS from: ${C_YELLOW}https://docs.docker.com/engine/install${C_RED}"
+      echo -e "1) Install "${C_YELLOW}"Docker engine and Docker compose plugin"${C_RED}" for your OS from: "${C_YELLOW}"https://docs.docker.com/engine/install"${C_RED}""
       echo -e "1.1) If you don't find your OS in the link above look around in the internet there might be guides available on how to install Docker for your OS"
       echo -e
 
       read -p "Once you have installed Docker & Docker compose plugin press enter key to continue..."
-      echo -n -e ${C_RST}
+      echo -n -e "${C_RST}"
 
     fi
 
@@ -114,9 +117,9 @@ install_docker(){
 
     else
 
-        echo -n -e ${C_RED}
+        echo -n -e "${C_RED}"
         echo -e "Homebrew not installed, cannot install Docker"
-        echo -n -e ${C_RST}
+        echo -n -e "${C_RST}"
         exit 1
 
     fi
@@ -155,11 +158,11 @@ update_docker_config(){
 
     if [[ $catapult_docker_mode == "advanced" ]]; then
 
-      echo -e ${C_YELLOW}
+      echo -e "${C_YELLOW}"
       echo -e "To disable IPtables and enable IPv6 make sure that the following parameters are in $daemon_path:"
       echo -e
       echo -e $docker_config | jq
-      echo -e ${C_YELLOW}
+      echo -e "${C_YELLOW}"
       read -p "Press enter key to continue"$'\n'
 
     else
@@ -180,13 +183,13 @@ update_docker_config(){
 
       echo $docker_config | jq
 
-      echo -e ${C_YELLOW}
+      echo -e "${C_YELLOW}"
       read -p "Press enter key to continue, or Ctrl + C to cancel and start over..."$'\n'
       echo -e
 
-      echo -n -e ${C_MAGENTA}
+      echo -n -e "${C_MAGENTA}"
       echo "Updating Docker configuration..."
-      echo -n -e ${C_RST}
+      echo -n -e "${C_RST}"
 
       if [[ $(uname) == "Darwin" ]]; then
 
@@ -199,15 +202,15 @@ update_docker_config(){
       fi
 
       # Restarting Docker service if DOCKER_CONFIG_FILE does not exist or hash is different
-      if [[ ! -f $DOCKER_CONFIG_FILE ]] || [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat $DOCKER_CONFIG_FILE | sha1sum - | cut -d " " -f 1) ]]; then
+      if [[ ! -f $DOCKER_CONFIG_FILE ]] || [[ $(echo $docker_config | jq | sha1sum - | cut -d " " -f 1) != $(cat "$DOCKER_CONFIG_FILE" | sha1sum - | cut -d " " -f 1) ]]; then
 
         echo $docker_config | jq > $DOCKER_CONFIG_FILE
 
         if [[ $(uname) == "Linux" ]]; then
 
-            echo -n -e ${C_MAGENTA}
+            echo -n -e "${C_MAGENTA}"
             echo "Restarting Docker service..."
-            echo -n -e ${C_RST}
+            echo -n -e "${C_RST}"
 
             systemctl restart docker
 
@@ -219,16 +222,16 @@ update_docker_config(){
 
   else
 
-    echo -n -e ${C_RED}
+    echo -n -e "${C_RED}"
     echo "Cannot update configuration, docker not found."
+    echo -n -e "${C_RST}"
     exit 1
-    echo -n -e ${C_RST}
 
   fi
 
 }
 
-echo -e ${C_YELLOW}
+echo -e "${C_YELLOW}"
 echo -e "Installing latest Docker version for your OS"
 echo -e
 
@@ -244,7 +247,7 @@ select option in "${options[@]}"; do
     esac
 done
 
-echo -n -e ${C_RST}
+echo -n -e "${C_RST}"
 
 docker_config_default=$(cat <<EOF
 {
@@ -263,7 +266,7 @@ docker_config_no_iptables=$(cat <<EOF
 EOF
 )
 
-echo -e ${C_YELLOW}
+echo -e "${C_YELLOW}"
 echo -e "Do you want Docker to automatically configure IPv4, IPv6 & manage it's IPtables?"
 echo -e
 
@@ -279,4 +282,4 @@ select option in "${options[@]}"; do
     esac
 done
 
-echo -n -e ${C_RST}
+echo -n -e "${C_RST}"
