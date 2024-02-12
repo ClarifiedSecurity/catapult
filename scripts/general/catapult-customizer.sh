@@ -2,7 +2,10 @@
 
 set -e # exit when any command fails
 
-echo -n -e ${C_BLUE}
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
+echo -n -e "${C_BLUE}"
 
 # Cloninig and overwriting the customizatiins if env variable CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE is not
 # Set `export CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE=true` variable temporarily to prevent overwriting your local customizations during development and testing

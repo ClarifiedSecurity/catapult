@@ -2,7 +2,10 @@
 
 set -e
 
-echo -e -n ${C_CYAN}
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
+echo -e -n "${C_CYAN}"
 
 # Docker image pull function
 docker_pull () {
