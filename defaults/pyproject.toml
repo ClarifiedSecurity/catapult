@@ -6,7 +6,7 @@ authors = ["Clarified Security <catapult@clarifiedsecurity.com>"]
 
 [tool.poetry.dependencies]
 aiohttp = "*"
-ansible-core = "2.16.0"
+ansible-core = "2.16.3"
 ansible-lint = { version = "*", markers = "platform_system != 'Windows'" } # https://github.com/python-poetry/poetry/issues/7112#issuecomment-1329385572
 ansible-pylibssh = "*"
 ansible-specdoc = "*"
