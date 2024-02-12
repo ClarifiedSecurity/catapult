@@ -1,6 +1,9 @@
 #!/bin/bash
 
-set -e
+set -e # exit when any command fails
+
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
 
 echo -e -n ${C_CYAN}
 

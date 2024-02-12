@@ -1,12 +1,16 @@
 #!/bin/bash
 
-set -e
+set -e # exit when any command fails
+
+# shellcheck disable=SC1091
+source /srv/scripts/general/colors.sh
 
 export PATH=$HOME/.local/bin:$PATH
 REQUIREMENTS_FILES="requirements*.yml" # Requirements file catch-all variable
 
 # Activating the poetry environment for better speed
-source $(poetry env info -C /srv/poetry --path)/bin/activate
+# shellcheck disable=SC1091
+source "$(poetry env info -C /srv/poetry --path)/bin/activate"
 
 echo -e "\033[32mGetting requirements from /srv/requirements folder...\033[0m"
 cd /srv/requirements

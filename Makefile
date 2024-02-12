@@ -8,22 +8,6 @@ export
 
 .DEFAULT_GOAL := help
 
-C_RED      = \033[31m
-C_GREEN    = \033[32m
-C_YELLOW   = \033[33m
-C_BLUE     = \033[34m
-C_MAGENTA  = \033[95m
-C_CYAN     = \033[36m
-C_WHITE    = \033[97m
-CB_RED     = \033[91;1m
-CB_GREEN   = \033[92;1m
-CB_YELLOW  = \033[93;1m
-CB_BLUE    = \033[94;1m
-CB_MAGENTA = \033[95;1m
-CB_CYAN    = \033[96;1m
-CB_WHITE   = \033[97;1m
-C_RST      = \033[0m
-
 ## help: List all available make targets with descriptions
 .PHONY: help
 help: project-banner

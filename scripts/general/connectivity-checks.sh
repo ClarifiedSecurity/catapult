@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e # exit when any command fails
+
 if ping -c 1 1.1.1.1 &> /dev/null
 then
   echo -e "\033[32mIPv4 connectivity OK\033[0m"

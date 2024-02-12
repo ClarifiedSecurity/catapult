@@ -2,6 +2,9 @@
 
 set -e # exit when any command fails
 
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
 scripts/general/configure-docker.sh
 
 echo -e ${C_YELLOW}

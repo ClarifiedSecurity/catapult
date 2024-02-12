@@ -1,23 +1,26 @@
 #!/usr/bin/env bash
 
-C_RED="\033[31m"
-C_GREEN="\033[32m"
-C_RST="\033[0m"
+set -e # exit when any command fails
 
-echo -n -e ${C_GREEN}
+# shellcheck disable=SC1091
+source /srv/scripts/general/colors.sh
+
+echo -n -e "${C_GREEN}"
 
 # Going into Poetry shell
 export PATH=$HOME/.local/bin:$PATH
-source $(poetry env info -C /srv/poetry --path)/bin/activate
+# shellcheck disable=SC1091
+source "$(poetry env info -C /srv/poetry --path)/bin/activate"
 
 # Running connectivity checks
 /srv/scripts/general/connectivity-checks.sh
 
 # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
-sudo chown -R $(id -u):$(id -g) /ssh-agent
+sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
 
 # KeePass unlocker script
 # Can also be used with ctp-unlock-secrets
+# shellcheck disable=SC1091
 source /home/builder/keepass-unlocker.sh
 
 # Copying mounted certificates to the correct location and trusting them if they are present
@@ -30,22 +33,22 @@ fi
 
 DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES="/srv/custom/docker-entrypoints/*.sh"
 for custom_entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES; do
-  if [ -f $custom_entrypoint ]; then
+  if [ -f "$custom_entrypoint" ]; then
     # Comment in the echo line below for better debugging
     # echo -e "\n Processing $custom_entrypoint...\n"
-    source $custom_entrypoint
+    source "$custom_entrypoint"
   fi
 done
 
 DOCKER_CONTAINER_ENTRYPOINT_FILES="/srv/scripts/entrypoints/*.sh"
 for entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_FILES; do
-  if [ -f $entrypoint ]; then
+  if [ -f "$entrypoint" ]; then
     # Comment in the echo line below for better debugging
     # echo -e "\n Processing $entrypoint...\n"
-    source $entrypoint
+    source "$entrypoint"
   fi
 done
 
-echo -n -e ${C_RST}
+echo -n -e "${C_RST}"
 
 exec zsh

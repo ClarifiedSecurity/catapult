@@ -1,8 +1,11 @@
 #!/bin/bash
 
-set -e
+set -e # exit when any command fails
 
-echo -n -e ${C_CYAN}
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
+echo -n -e "${C_CYAN}"
 
 if [[ $(uname) == "Darwin" ]]; then
 
@@ -18,4 +21,4 @@ if [[ $(uname) == "Linux" ]]; then
 
 fi
 
-${MAKEVAR_SUDO_COMMAND} docker compose -f ${ROOT_DIR}/docker/docker-compose.yml -f ${ROOT_DIR}/docker/docker-compose-extra.yml -f ${ROOT_DIR}/docker/docker-compose-personal.yml up --detach --force-recreate --remove-orphans
+${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/docker/docker-compose-extra.yml" -f "${ROOT_DIR}/docker/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans

@@ -2,6 +2,9 @@
 
 set -e # exit when any command fails
 
+# shellcheck disable=SC1091
+source ./scripts/general/colors.sh
+
 echo -n -e ${C_RST}
 
 KEEPASS_KEY_FILE_PATH="creds.key" # Defaults to Catapult root directory where the file is in .gitignore
