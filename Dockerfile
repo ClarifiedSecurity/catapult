@@ -28,7 +28,8 @@ RUN apt update \
 && corepack enable \
 && cd /srv \
 && yarn set version stable \
-# Apt cleanup
+# Apt upgrade & cleanup
+&& apt upgrade -y \
 && apt clean \
 && rm -rf /var/lib/apt/lists/*
 
