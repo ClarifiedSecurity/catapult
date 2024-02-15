@@ -53,7 +53,7 @@ jobs:
           git push origin $TAG_NAME
 
           # Creating temp changelog file
-          git log --pretty=format:"- %s" $(git describe --tags --abbrev=0 HEAD^^)..HEAD > CHANGELOG.md
+          git log --pretty=format:"- %s" $(git describe --tags --abbrev=0 HEAD^^)..HEAD | grep -v "Set ${{ vars.PROJECT_NAME }} version to" > CHANGELOG.md
 
       - uses: ncipollo/release-action@v1
         with:
