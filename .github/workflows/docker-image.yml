@@ -38,15 +38,23 @@ jobs:
       - name: Installing QEMU
         uses: docker/setup-qemu-action@v3
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Getting current version...
         run: |
           VERSION=$(cat version.yml | cut -d ' ' -f 2)
           echo "IMAGE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Building Catapult image...
-        run: |
-          docker buildx create --use
-          docker buildx build --file Dockerfile --tag ghcr.io/clarifiedsecurity/catapult:latest --platform linux/amd64,linux/arm64 --push .
-          docker pull ghcr.io/clarifiedsecurity/catapult:latest
-          docker tag ghcr.io/clarifiedsecurity/catapult:latest ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
-          docker push ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          file: ./Dockerfile
+          build-args: |
+            VERSION=${{ env.IMAGE_VERSION }}
+          push: true
+          tags: |
+            ghcr.io/clarifiedsecurity/catapult:latest
+            ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
