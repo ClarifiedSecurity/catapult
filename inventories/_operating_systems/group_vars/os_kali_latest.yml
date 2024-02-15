@@ -7,9 +7,9 @@ vm_template: catapult-template-kali2023-4
 
 # AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
 ami_owner_id: "679593333241"
-ami_name_search_string: kali-rolling-amd64-2023.4*
+ami_name_search_string: kali-last-snapshot-amd64-2023.4*
 aws_template_username: kali
-aws_vm_size: t2.medium # Recommended by vendor
+aws_vm_size: t3.medium # Recommended by vendor
 
 # Linode Image curl https://api.linode.com/v4/images
 linode_image: linode/kali
