@@ -30,13 +30,13 @@ for requirement_file in $REQUIREMENTS_FILES; do
     ansible-galaxy role install -r $requirement_file --force --no-deps -p ~/ansible
 
     echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p ~/ansible
+    ansible-galaxy collection install -r $requirement_file --force --no-deps -p ~/ansible --no-cache --clear-response-cache
   else
     echo -e "\033[33mInstalling roles from $(readlink -f $requirement_file)\033[0m"
     ansible-galaxy role install -r $requirement_file --force --no-deps -p /srv/ansible
 
     echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p /srv/ansible
+    ansible-galaxy collection install -r $requirement_file --force --no-deps -p /srv/ansible --no-cache --clear-response-cache
   fi
 done
 }
@@ -53,7 +53,7 @@ for requirement_file in $REQUIREMENTS_FILES; do
     ansible-galaxy role install -r $requirement_file --force --no-deps -p ~/ansible
 
     echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p ~/ansible
+    ansible-galaxy collection install -r $requirement_file --force --no-deps -p ~/ansible --no-cache --clear-response-cache
   fi
 done
 }
@@ -70,7 +70,7 @@ for requirement_file in $REQUIREMENTS_FILES; do
     ansible-galaxy role install -r $requirement_file --force --no-deps -p /srv/ansible
 
     echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p /srv/ansible
+    ansible-galaxy collection install -r $requirement_file --force --no-deps -p /srv/ansible --no-cache --clear-response-cache
   fi
 done
 }
