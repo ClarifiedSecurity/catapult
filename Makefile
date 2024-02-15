@@ -58,7 +58,7 @@ shell-raw:
 
 ## clean: Stop and delete the container and the image
 .PHONY: clean
-clean: stop
+clean:
 	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/cleanup.sh
 
 ## customizations: Clone and configure Catapult customizations
