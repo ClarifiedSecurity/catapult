@@ -5,21 +5,21 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
 REQUIREMENTS_FILES="requirements*.yml" # Requirements file catch-all variable
 
-# Activating the poetry environment for better speed
+# Activating the virtual environment
 # shellcheck disable=SC1091
-source "$(poetry env info -C /srv/poetry --path)/bin/activate"
+source "$HOME/.venv/bin/activate"
 
 echo -e "\033[32mGetting requirements from /srv/requirements folder...\033[0m"
 cd /srv/requirements
 
-# Installing all requirements based on requirements*.yml files and also installes all Python requirements based on poetry.lock
+# Installing all requirements based on requirements*.yml files and also installes all Python requirements based on requirements.txt
 install_all_requirements () {
 
-# Installing Python requirements based on poetry.lock
-poetry install --directory=/srv/poetry --no-root
+# Installing Python requirements based on requirements.txt
+uv pip install -r /srv/defaults/requirements.txt
 
 # Looping over all requirements.yml files in the folder and running install on them
 for requirement_file in $REQUIREMENTS_FILES; do
@@ -41,7 +41,7 @@ for requirement_file in $REQUIREMENTS_FILES; do
 done
 }
 
-# Installing only requirements in requirements.yml file and Python requirements based on poetry.lock
+# Installing only requirements in requirements.yml file and Python requirements based on requirements.txt
 install_notcustom_requirements () {
 
 # Looping over all requirements.yml files in the folder and running install on them

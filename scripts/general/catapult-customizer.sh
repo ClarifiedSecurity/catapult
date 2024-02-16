@@ -70,19 +70,6 @@ if [ -f custom/start.yml ]; then
 
 fi
 
-# Copying Poetry files to the correct location for Dockerfile to find them
-mkdir -p poetry
-if [ -d custom/poetry ]; then
-
-    echo -e "Copying custom Poetry files to poetry folder..."
-    cp -R custom/poetry/. poetry
-
-  else
-
-    cp defaults/pyproject.toml poetry/pyproject.toml
-    cp defaults/poetry.lock poetry/poetry.lock
-
-fi
 
 # Copying requirements files to the correct location
 mkdir -p requirements

@@ -5,10 +5,10 @@ source /srv/scripts/general/colors.sh
 
 echo -n -e "${C_GREEN}"
 
-# Going into Poetry shell
-export PATH=$HOME/.local/bin:$PATH
+# Activating Python virtual environment
+export PATH=$HOME/.cargo/bin:$PATH
 # shellcheck disable=SC1091
-source "$(poetry env info -C /srv/poetry --path)/bin/activate"
+source "$HOME/.venv/bin/activate"
 
 # Running connectivity checks
 /srv/scripts/general/connectivity-checks.sh
