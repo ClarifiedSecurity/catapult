@@ -17,9 +17,6 @@ RUN mkdir -p /etc/sudoers.d
 RUN echo "builder     ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder
 RUN groupadd builder -g ${CONTAINER_GROUP_ID} && useradd -u ${CONTAINER_USER_ID} -g builder -m -d /home/builder -s /bin/bash -c "Builder user" builder
 
-ADD --chown=builder:builder poetry/pyproject.toml /srv/poetry/pyproject.toml
-ADD --chown=builder:builder poetry/poetry.lock /srv/poetry/poetry.lock
-
 ADD --chown=builder:builder /container/home/builder/.default_aliases /home/builder/.default_aliases
 ADD --chown=builder:builder /container/home/builder/.ssh /home/builder/.ssh
 ADD --chown=builder:builder /container/home/builder/kpsock.py /home/builder/kpsock.py
@@ -30,6 +27,7 @@ ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
 ADD --chown=builder:builder /requirements /srv/requirements
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder /container/docker-entrypoint.sh /
+ADD --chown=builder:builder defaults/requirements.txt /srv/defaults/requirements.txt
 ADD --chown=builder:builder scripts/general/install-docker-image.sh /tmp/install-docker-image.sh
 
 # Installing everything in one script to avoid creating multiple layers and reduce the image size

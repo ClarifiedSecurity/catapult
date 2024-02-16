@@ -6,9 +6,8 @@ on:
     paths:
       - .github/workflows/docker-image.yml
       - Dockerfile
-      - defaults/poetry.lock
-      - defaults/pyproject.toml
       - defaults/requirements.yml
+      - defaults/requirements.txt
       - container/home/builder/**
 
   # Allows you to run this workflow manually from the Actions tab

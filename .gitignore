@@ -28,7 +28,6 @@ creds.key
 download/
 exported_templates/**
 node_modules
-poetry/**
 requirements/**
 sync-to-shared-roles.sh
 upload/
