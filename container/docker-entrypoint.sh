@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e # exit when any command fails
-
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
@@ -36,6 +34,7 @@ for custom_entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES; do
   if [ -f "$custom_entrypoint" ]; then
     # Comment in the echo line below for better debugging
     # echo -e "\n Processing $custom_entrypoint...\n"
+    # shellcheck disable=SC1090
     source "$custom_entrypoint"
   fi
 done
@@ -45,6 +44,7 @@ for entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_FILES; do
   if [ -f "$entrypoint" ]; then
     # Comment in the echo line below for better debugging
     # echo -e "\n Processing $entrypoint...\n"
+    # shellcheck disable=SC1090
     source "$entrypoint"
   fi
 done
