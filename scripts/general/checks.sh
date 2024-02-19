@@ -5,44 +5,44 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
-echo -e -n ${C_CYAN}
+echo -e -n "${C_CYAN}"
+
+# Checking if git is installed
+if ! [ -x "$(command -v git)" ]; then
+  echo -n -e "${C_RED}"
+  echo -e "Git is not installed!"
+  echo -n -e "${C_RST}"
+  exit 1
+fi
+
+# Checking if github.com is reachable
+if ! curl github.com --connect-timeout 2 -s > /dev/null; then
+  echo -n -e "${C_YELLOW}"
+  echo -e "Cannot check for Catapult version!"
+  echo -e "GitHub is not reachable"
+  echo -n -e "${C_RST}"
+  exit 0;
+fi
 
 # Catalpult update function
 catapult_update () {
 
   LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-  if [ $LOCAL_BRANCH == "main" ]; then
+  if [ "$LOCAL_BRANCH" == "main" ]; then
 
     git pull
 
   else
 
     git fetch origin $UPSTREAM:$UPSTREAM
-    echo -e ${C_YELLOW}
+    echo -e "${C_YELLOW}"
     echo -e "You are not on the main branch, make sure to rebase your $LOCAL_BRANCH branch with: ${C_CYAN}git rebase -i origin/$UPSTREAM"
-    echo -e ${C_RST}
+    echo -e "${C_RST}"
 
   fi
 
 }
-
-# Checking if git is installed
-if ! [ -x "$(command -v git)" ]; then
-  echo -n -e ${C_RED}
-  echo -e "Git is not installed!"
-  echo -n -e ${C_RST}
-  exit 1
-fi
-
-# Checking if gituhb is reachable
-if ! ping -c 1 github.com &> /dev/null; then
-  echo -n -e ${C_YELLOW}
-  echo -e "Cannot check for Catapult version!"
-  echo -e "GitHub is not reachable"
-  echo -n -e ${C_RST}
-  exit 0;
-fi
 
 # Checking if custom .makerc-vars.example exists and using it if it does
 if [ -r custom/.makerc-vars.example  ]
@@ -60,13 +60,13 @@ fi
 if ! [ -r .makerc-vars  ]
 then
 
-  echo -e ${C_RED}
+  echo -e "${C_RED}"
   echo -e ".makerc-vars does not exist."
-  echo -n -e ${C_YELLOW}
+  echo -n -e "${C_YELLOW}"
   echo -e "You can create it with ${C_BLUE}cp $example_vars_file .makerc-vars${C_YELLOW} command."
   echo -e "If you are using custom .makerc-vars it exists in $(pwd)/.makerc-vars folder."
   echo -e "Make sure to fill out the required variables in .makerc-vars"
-  echo -e ${C_RST}
+  echo -e "${C_RST}"
   exit 1
 
 fi
@@ -77,19 +77,19 @@ new_vars=$(diff <( cat .makerc-vars | grep -v '^#' | grep '=' | cut -d '=' -f 1 
 
 if [ ! -z "$new_vars" ]
 then
-echo -e ${C_RST}
+echo -e "${C_RST}"
 echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_CYAN} that are not present in ${C_YELLOW}${ROOT_DIR}/.makerc-vars:${C_CYAN}"
 
   for var in "${new_vars[@]}"
   do
-      echo -e ${C_RED}
+      echo -e "${C_RED}"
       stripped_var=$(echo "$var" | cut -d ' ' -f 2)
       echo -e "$stripped_var"
-      echo -e ${C_RST}
-      echo -n -e ${C_YELLOW}
+      echo -e "${C_RST}"
+      echo -n -e "${C_YELLOW}"
       echo -e "Even if not used make sure they are present in .makerc-vars"
       echo -e "You can copy them from $example_vars_file just leave the values empty"
-      echo -e ${C_RST}
+      echo -e "${C_RST}"
   done
   exit 1
 fi
@@ -101,13 +101,13 @@ REMOTE_VERSION=$(curl --silent https://raw.githubusercontent.com/ClarifiedSecuri
 LOCAL_VERSION=$(cat version.yml | cut -d ' ' -f 2)
 
 # Checking if remote version is diffrent than local version
-if [[ $LOCAL_VERSION == $REMOTE_VERSION ]]; then
+if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
 
     echo -e -n
 
   else
 
-    if [ $MAKEVAR_AUTO_UPDATE == 1 ]; then
+    if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
 
       echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
       catapult_update
@@ -120,6 +120,7 @@ if [[ $LOCAL_VERSION == $REMOTE_VERSION ]]; then
         "no"
       )
 
+      # shellcheck disable=SC2034
       select option in "${options[@]}"; do
           case "$REPLY" in
               yes|y|1) catapult_update; break;;
@@ -142,14 +143,14 @@ while IFS= read -r line; do
 
     fi
 
-done < ${ROOT_DIR}/.makerc-vars
+done < "${ROOT_DIR}/.makerc-vars"
 
 # Print the variables that are not set correctly
 for error_variable in "${error_variables[@]}"; do
 
-  echo -n -e ${C_RED}
+  echo -n -e "${C_RED}"
   echo -e "$error_variable in ${ROOT_DIR}/.makerc-vars must not contain single or double quotes"
-  echo -n -e ${C_RST}
+  echo -n -e "${C_RST}"
   exit 1
 
 done
@@ -157,23 +158,23 @@ done
 # Checking that MAKEVAR_SUDO_COMMAND for MacOS is empty
 if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
 
-  echo -e ${C_RED}
+  echo -e "${C_RED}"
   echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
   echo -e "sudo is not usually required on MacOS, so MAKEVAR_SUDO_COMMAND should be empty"
 
   read -p "Press enter to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
-  echo -e ${C_CYAN}
+  echo -e "${C_CYAN}"
 
 fi
 
 # Checking if ssh-agent is running
 if [[ -z "${SSH_AUTH_SOCK}" ]]; then
 
-  echo -e ${C_RED}
+  echo -e "${C_RED}"
   echo -e SSH agent is not running.
   echo -e Make sure ssh-agent is running.
   echo -e If you are running Catapult on remote server, make sure you have forwarded the SSH agent with the -A parameter...
-  echo -e ${C_RST}
+  echo -e "${C_RST}"
   exit 1
 
 fi
@@ -185,11 +186,11 @@ if ssh-add -l >/dev/null 2>&1; then
 
 else
 
-  echo -e ${C_YELLOW}
+  echo -e "${C_YELLOW}"
   echo -e There are no SSH keys in your ssh-agent.
   echo -e Some of the functinality will not work without SSH keys.
   read -p "Press enter to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
-  echo -e ${C_RST}
+  echo -e "${C_RST}"
 
 fi
 
@@ -201,4 +202,4 @@ then
 
 fi
 
-echo -e -n ${C_RST}
+echo -e -n "${C_RST}"
