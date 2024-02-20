@@ -18,6 +18,7 @@ if ! [ -x "$(command -v git)" ]; then
   exit 1
 fi
 
+# Checking for user is in the correct branch
 if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
 
   echo -n -e "${C_YELLOW}"
@@ -129,12 +130,16 @@ if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
 
     if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
 
+      echo -n -e "${C_YELLOW}"
       echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
+      echo -n -e "${C_RST}"
       catapult_update
 
     else
 
+      echo -n -e "${C_YELLOW}"
       echo -e "Catapult version $REMOTE_VERSION is available, do you want to update?"
+      echo -n -e "${C_RST}"
       options=(
         "yes"
         "no"
