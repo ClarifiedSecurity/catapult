@@ -29,15 +29,15 @@ catapult_update () {
 
   LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-  if [ "$LOCAL_BRANCH" == "${MAKEVAR_CATAPULT_VERSION}" ]; then
+  if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
 
     git pull
 
   else
 
-    git fetch origin $BRANCH:$BRANCH
+    git fetch origin "$BRANCH:$BRANCH"
     echo -e "${C_YELLOW}"
-    echo -e "You are not on the ${MAKEVAR_CATAPULT_VERSION} branch, make sure to rebase your $LOCAL_BRANCH branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
+    echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch, make sure to rebase your ${C_CYAN}$LOCAL_BRANCH${C_YELLOW} branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
     echo -e "${C_RST}"
 
   fi
@@ -97,8 +97,8 @@ fi
 # Checking if the latest remote version is different than the current local version
 # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
 BRANCH="${MAKEVAR_CATAPULT_VERSION}"
-REMOTE_VERSION=$(curl --silent https://raw.githubusercontent.com/ClarifiedSecurity/catapult/main/version.yml | cut -d ' ' -f 2)
-LOCAL_VERSION=$(git archive $BRANCH version.yml | tar xO | cut -d ' ' -f 2)
+REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
+LOCAL_VERSION=$(git archive "$BRANCH" version.yml | tar xO | cut -d ' ' -f 2)
 
 # Checking if remote version is diffrent than local version
 if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
@@ -189,7 +189,7 @@ else
   echo -e "${C_YELLOW}"
   echo -e There are no SSH keys in your ssh-agent.
   echo -e Some of the functinality will not work without SSH keys.
-  read -p "Press enter to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
+  read -pr "Press enter to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
   echo -e "${C_RST}"
 
 fi
