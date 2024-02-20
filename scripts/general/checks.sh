@@ -202,4 +202,12 @@ then
 
 fi
 
+# Removing legacy Poetry folder
+if [ -d poetry  ]
+then
+
+  rm -rf poetry
+
+fi
+
 echo -e -n "${C_RST}"
