@@ -2,7 +2,8 @@ name: Catapult documentation builder
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
     paths:
       - .github/workflows/catapult-docs.yml
       - Readme.md

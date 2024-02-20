@@ -29,15 +29,15 @@ catapult_update () {
 
   LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-  if [ "$LOCAL_BRANCH" == "main" ]; then
+  if [ "$LOCAL_BRANCH" == "${MAKEVAR_CATAPULT_VERSION}" ]; then
 
     git pull
 
   else
 
-    git fetch origin $UPSTREAM:$UPSTREAM
+    git fetch origin $BRANCH:$BRANCH
     echo -e "${C_YELLOW}"
-    echo -e "You are not on the main branch, make sure to rebase your $LOCAL_BRANCH branch with: ${C_CYAN}git rebase -i origin/$UPSTREAM"
+    echo -e "You are not on the ${MAKEVAR_CATAPULT_VERSION} branch, make sure to rebase your $LOCAL_BRANCH branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
     echo -e "${C_RST}"
 
   fi
@@ -96,9 +96,9 @@ fi
 
 # Checking if the latest remote version is different than the current local version
 # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
-UPSTREAM=main
+BRANCH="${MAKEVAR_CATAPULT_VERSION}"
 REMOTE_VERSION=$(curl --silent https://raw.githubusercontent.com/ClarifiedSecurity/catapult/main/version.yml | cut -d ' ' -f 2)
-LOCAL_VERSION=$(cat version.yml | cut -d ' ' -f 2)
+LOCAL_VERSION=$(git archive $BRANCH version.yml | tar xO | cut -d ' ' -f 2)
 
 # Checking if remote version is diffrent than local version
 if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then

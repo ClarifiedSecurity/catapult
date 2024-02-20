@@ -2,9 +2,10 @@ name: Catapult Docker image builder
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - staging
     paths:
-      - .github/workflows/docker-image.yml
+      - .github/workflows/docker-image_staging.yml
       - Dockerfile
       - defaults/requirements.yml
       - defaults/requirements.txt
@@ -54,6 +55,4 @@ jobs:
           build-args: |
             VERSION=${{ env.IMAGE_VERSION }}
           push: true
-          tags: |
-            ghcr.io/clarifiedsecurity/catapult:latest
-            ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
+          tags: ghcr.io/clarifiedsecurity/catapult:staging
