@@ -40,6 +40,14 @@ catapult_update () {
     echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch, make sure to rebase your ${C_CYAN}$LOCAL_BRANCH${C_YELLOW} branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
     echo -e "${C_RST}"
 
+    # shellcheck disable=SC2034
+    select option in "${options[@]}"; do
+        case "$REPLY" in
+            yes|y|1) git switch "$BRANCH" && git pull; break;;
+            no|n|2) echo -e "Make sure to rebase your $LOCAL_BRANCH branch with: ${C_CYAN}git rebase -i origin/$BRANCH${C_RST}"; break;;
+        esac
+    done
+
   fi
 
 }
