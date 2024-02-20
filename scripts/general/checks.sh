@@ -7,12 +7,35 @@ source ./scripts/general/colors.sh
 
 echo -e -n "${C_CYAN}"
 
+BRANCH="${MAKEVAR_CATAPULT_VERSION}"
+LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
 # Checking if git is installed
 if ! [ -x "$(command -v git)" ]; then
   echo -n -e "${C_RED}"
   echo -e "Git is not installed!"
   echo -n -e "${C_RST}"
   exit 1
+fi
+
+if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
+
+  echo -n -e "${C_YELLOW}"
+  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch, do you want to go there now?"
+  echo -n -e "${C_RST}"
+  options=(
+    "yes"
+    "no"
+  )
+
+  # shellcheck disable=SC2034
+  select option in "${options[@]}"; do
+      case "$REPLY" in
+          yes|y|1) git switch "$BRANCH"; break;;
+          no|n|2) echo -e "Not changing branch"; break;;
+      esac
+  done
+
 fi
 
 # Checking if github.com is reachable
@@ -26,8 +49,6 @@ fi
 
 # Catalpult update function
 catapult_update () {
-
-  LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
   if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
 
@@ -96,7 +117,6 @@ fi
 
 # Checking if the latest remote version is different than the current local version
 # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
-BRANCH="${MAKEVAR_CATAPULT_VERSION}"
 REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
 LOCAL_VERSION=$(git archive "$BRANCH" version.yml | tar xO | cut -d ' ' -f 2)
 
