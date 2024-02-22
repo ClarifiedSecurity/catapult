@@ -18,54 +18,6 @@ if ! [ -x "$(command -v git)" ]; then
   exit 1
 fi
 
-# Checking for user is in the correct branch
-if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
-
-  echo -n -e "${C_YELLOW}"
-  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to go there now?"
-  echo -n -e "${C_RST}"
-  options=(
-    "yes"
-    "no"
-  )
-
-  # shellcheck disable=SC2034
-  select option in "${options[@]}"; do
-      case "$REPLY" in
-          yes|y|1) git switch "$BRANCH"; break;;
-          no|n|2) echo -e "Not changing branch"; break;;
-      esac
-  done
-
-fi
-
-# Checking if github.com is reachable
-if ! curl github.com --connect-timeout 2 -s > /dev/null; then
-  echo -n -e "${C_YELLOW}"
-  echo -e "Cannot check for Catapult version!"
-  echo -e "GitHub is not reachable"
-  echo -n -e "${C_RST}"
-  exit 0;
-fi
-
-# Catalpult update function
-catapult_update () {
-
-  if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
-
-    git pull
-
-  else
-
-    git fetch origin "$BRANCH:$BRANCH"
-    echo -e "${C_YELLOW}"
-    echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch, make sure to rebase your ${C_CYAN}$LOCAL_BRANCH${C_YELLOW} branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
-    echo -e "${C_RST}"
-
-  fi
-
-}
-
 # Checking if custom .makerc-vars.example exists and using it if it does
 if [ -r custom/.makerc-vars.example  ]
 then
@@ -115,6 +67,54 @@ echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_
   done
   exit 1
 fi
+
+# Checking for user is in the correct branch
+if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
+
+  echo -n -e "${C_YELLOW}"
+  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to go there now?"
+  echo -n -e "${C_RST}"
+  options=(
+    "yes"
+    "no"
+  )
+
+  # shellcheck disable=SC2034
+  select option in "${options[@]}"; do
+      case "$REPLY" in
+          yes|y|1) git switch "$BRANCH"; break;;
+          no|n|2) echo -e "Not changing branch"; break;;
+      esac
+  done
+
+fi
+
+# Checking if github.com is reachable
+if ! curl github.com --connect-timeout 2 -s > /dev/null; then
+  echo -n -e "${C_YELLOW}"
+  echo -e "Cannot check for Catapult version!"
+  echo -e "GitHub is not reachable"
+  echo -n -e "${C_RST}"
+  exit 0;
+fi
+
+# Catalpult update function
+catapult_update () {
+
+  if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
+
+    git pull
+
+  else
+
+    git fetch origin "$BRANCH:$BRANCH"
+    echo -e "${C_YELLOW}"
+    echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch, make sure to rebase your ${C_CYAN}$LOCAL_BRANCH${C_YELLOW} branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
+    echo -e "${C_RST}"
+
+  fi
+
+}
 
 # Checking if the latest remote version is different than the current local version
 # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
