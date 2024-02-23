@@ -28,10 +28,13 @@ ADD --chown=builder:builder /requirements /srv/requirements
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder /container/docker-entrypoint.sh /
 ADD --chown=builder:builder defaults/requirements.txt /srv/defaults/requirements.txt
-ADD --chown=builder:builder scripts/general/install-docker-image.sh /tmp/install-docker-image.sh
+ADD --chown=builder:builder scripts/general/install-docker-image-python.sh /tmp/install-docker-image-python.sh
+ADD --chown=builder:builder scripts/general/install-docker-image-tools.sh /tmp/install-docker-image-tools.sh
 
-# Installing everything in one script to avoid creating multiple layers and reduce the image size
-RUN bash /tmp/install-docker-image.sh
+# Installing everything in two script to avoid creating multiple layers and reduce the image size
+# This also keeps the layers small and easy to cache
+RUN bash /tmp/install-docker-image-tools.sh
+RUN bash /tmp/install-docker-image-python.sh
 
 USER builder
 WORKDIR /srv
