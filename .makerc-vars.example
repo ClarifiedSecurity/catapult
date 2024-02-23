@@ -66,12 +66,6 @@ MAKEVAR_IMAGE_TAG :=latest
 # Available options are main, staging, or a specific tag name listed here https://github.com/ClarifiedSecurity/catapult/tags
 MAKEVAR_CATAPULT_VERSION :=main
 
-# This is the FQDN of your custom/internal docker proxy that will be used to pull images from Dockerhub (or other public) for an example
-# This can be required to avoid hitting the Dockerhub (or other public provider's) rate limits
-# Set the value to the proxy machine's FQDN
-# Will be configured in the hosts's /etc/docker/daemon.json when running `make prepare`
-MAKEVAR_CONTAINER_PROXY :=
-
 # It points to the KeePass entry where your base64 encoded SSH Private Key is on the username field & SSH Public Key is on the password field.
 # Make sure the Private Key is encoded like this "cat ~/.ssh/keyfile | base64 -w 0"
 # Only EC keypairs are supported because of KeePass field length limitation
