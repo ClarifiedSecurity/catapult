@@ -3,7 +3,7 @@
 Catapult's commands fall into two categories:
 
 - External commands - All commands that start with `make` are external commands and are used to manage the Catapult container itself.
-- Internal commands - All commands that start with `ctp-` are internal commands and are used when the user is inside the Catapult container. You can use tab completion to see all available commands.
+- Internal commands - All commands that start with `ctp-` are internal commands and are used when the user is inside the Catapult container.
 
 ## Enter the Catapult
 
@@ -18,6 +18,12 @@ make start
 ```sh
 make shell
 ```
+
+## Tips and tricks
+
+- Use tab completion to get the list of available commands. For example, type `ctp-` and press tab to get the list of available commands.
+- Use `Ctrl + R` to search through the command history and find the command you have used before. Fuzzy search is enabled so you can type parts of the commands or separate words that must be contained in the command.
+- Use arrow up after you have started typing the command to get the previous command that starts the same way. For example, if you have used `ctp-deploy` before you can use arrow up to get the previous `ctp-deploy` commands.
 
 ## General commands
 
