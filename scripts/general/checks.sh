@@ -7,16 +7,11 @@ source ./scripts/general/colors.sh
 
 echo -e -n "${C_CYAN}"
 
-BRANCH="${MAKEVAR_CATAPULT_VERSION}"
-LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+#########################
+# .make-vars validation #
+#########################
 
-# Checking if git is installed
-if ! [ -x "$(command -v git)" ]; then
-  echo -n -e "${C_RED}"
-  echo -e "Git is not installed!"
-  echo -n -e "${C_RST}"
-  exit 1
-fi
+# This needs to be first, because if any of the variables are not set correctly, next tasks might fail
 
 # Checking if custom .makerc-vars.example exists and using it if it does
 if [ -r custom/.makerc-vars.example  ]
@@ -67,6 +62,48 @@ echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_
   done
   exit 1
 fi
+
+# Looping thorugh .makerc-vars
+while IFS= read -r line; do
+
+    # Check if the line contains an equal sign (=) and either a single quote (') or double quotes (")
+    if [[ $line == *"="* ]] && { [[ $line == *"'"* ]] || [[ $line == *"\""* ]]; }; then
+
+        # Adding the error line to the array
+        error_variables+=("$line")
+
+    fi
+
+done < "${ROOT_DIR}/.makerc-vars"
+
+# Print the variables that are not set correctly
+for error_variable in "${error_variables[@]}"; do
+
+  echo -n -e "${C_RED}"
+  echo -e "$error_variable in ${ROOT_DIR}/.makerc-vars must not contain single or double quotes"
+  echo -n -e "${C_RST}"
+  exit 1
+
+done
+
+# Checking that MAKEVAR_SUDO_COMMAND for MacOS is empty
+if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
+
+  echo -e "${C_RED}"
+  echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
+  echo -e "sudo is not usually required on MacOS, so MAKEVAR_SUDO_COMMAND should be empty"
+
+  read -pr "Press enter to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
+  echo -e "${C_CYAN}"
+
+fi
+
+##########################
+# Catapult version check #
+##########################
+
+BRANCH="${MAKEVAR_CATAPULT_VERSION}"
+LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Checking for user is in the correct branch
 if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
@@ -157,40 +194,9 @@ if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
 
 fi
 
-# Looping thorugh .makerc-vars
-while IFS= read -r line; do
-
-    # Check if the line contains an equal sign (=) and either a single quote (') or double quotes (")
-    if [[ $line == *"="* ]] && { [[ $line == *"'"* ]] || [[ $line == *"\""* ]]; }; then
-
-        # Adding the error line to the array
-        error_variables+=("$line")
-
-    fi
-
-done < "${ROOT_DIR}/.makerc-vars"
-
-# Print the variables that are not set correctly
-for error_variable in "${error_variables[@]}"; do
-
-  echo -n -e "${C_RED}"
-  echo -e "$error_variable in ${ROOT_DIR}/.makerc-vars must not contain single or double quotes"
-  echo -n -e "${C_RST}"
-  exit 1
-
-done
-
-# Checking that MAKEVAR_SUDO_COMMAND for MacOS is empty
-if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
-
-  echo -e "${C_RED}"
-  echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
-  echo -e "sudo is not usually required on MacOS, so MAKEVAR_SUDO_COMMAND should be empty"
-
-  read -pr "Press enter to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
-  echo -e "${C_CYAN}"
-
-fi
+#######################
+# MISC checks for QOL #
+#######################
 
 # Checking if ssh-agent is running
 if [[ -z "${SSH_AUTH_SOCK}" ]]; then
