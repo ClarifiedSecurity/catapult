@@ -39,5 +39,9 @@ $BUILDER_HOME/.fzf/install --key-bindings --completion --update-rc
 apt remove -y gcc
 apt autoremove -y
 apt autoclean -y
+
+# Cleanup to keep the image size down
 rm -rf /var/lib/apt/lists/*
 rm -rf /var/cache/*
+rm -rf /tmp/*
+rm -rf /home/builder/.cache/*
