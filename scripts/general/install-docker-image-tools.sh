@@ -18,5 +18,9 @@ apt upgrade -y
 apt remove -y software-properties-common gnupg
 apt autoremove -y
 apt autoclean -y
+
+# Cleanup to keep the image size down
 rm -rf /var/lib/apt/lists/*
 rm -rf /var/cache/*
+rm -rf /tmp/*
+rm -rf /home/builder/.cache/*
