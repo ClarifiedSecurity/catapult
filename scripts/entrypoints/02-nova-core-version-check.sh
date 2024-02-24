@@ -16,7 +16,7 @@ then
   fi
 
   galaxy_remote_version_row=$(curl "$REMOTE_URL" -s | grep "version:" | cut -d " " -f 2)
-  galaxy_remote_version=$( echo "$galaxy_remote_version_row" | cut -d: -f2 | xargs )
+  galaxy_remote_version=$(echo "$galaxy_remote_version_row" | cut -d: -f2 | xargs)
 
   if [[ "$galaxy_local_version" != "$galaxy_remote_version" ]]; then
 
@@ -32,6 +32,7 @@ then
       "no"
     )
 
+    # shellcheck disable=SC2034
     select option in "${options[@]}"; do
     echo -n -e "${C_YELLOW}"
         case "$REPLY" in

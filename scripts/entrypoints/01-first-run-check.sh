@@ -1,11 +1,12 @@
 #!/bin/bash
 
-echo -e "${C_GREEN}"
+echo -n -e "${C_GREEN}"
 
 # Chcking if ansible folder exists, if not then including requirements installer
 if [[ ! -d "/srv/ansible" ]]; then
 
   echo -e "Running first-run requirements installer..."
+  # shellcheck disable=SC1091
   source scripts/general/install-all-requirements.sh CUSTOM
 
 fi
