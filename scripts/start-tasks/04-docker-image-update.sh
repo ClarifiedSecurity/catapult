@@ -30,9 +30,7 @@ if [[ -z "${MAKEVAR_CONTAINER_REGISTRY}" ]]; then
 fi
 
 # Checking if ${MAKEVAR_CONTAINER_REGISTRY} is reachable
-http_code=$(curl -L https://${MAKEVAR_CONTAINER_REGISTRY} --write-out "%{http_code}" -s -o /dev/null)
-
-if [[ $http_code == 200 ]]
+if curl ghcr.io --connect-timeout 2 -s > /dev/null
 then
 
     echo -n -e
