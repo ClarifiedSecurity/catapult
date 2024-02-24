@@ -3,7 +3,7 @@
 echo -e "${C_RST}"
 SEARCH_DIR=/srv/inventories
 SEARCH_FOLDER=".git"
-mapfile -t FOLDERS < <(find "$SEARCH_DIR" -name "$SEARCH_FOLDER" -printf '%h\n' | sort)
+FOLDERS=($(find $SEARCH_DIR -name $SEARCH_FOLDER -printf '%h\n' | sort))
 
 #----------------------------------------End of variables, start of script----------------------------------------#
 
