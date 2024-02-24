@@ -3,7 +3,8 @@
 set -e # exit when any command fails
 
 apt update
-apt install -y sudo git zsh gcc
+apt install -y sudo git zsh # Reqired for Docker image creation
+apt install -y gcc # Reqired for compiling some Python packages
 
 su - builder -c '
 set -e # exit when any command fails
