@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/docker-image_main.yml
       - Dockerfile
+      - scripts/general/install-docker-image**
       - defaults/requirements.yml
       - defaults/requirements.txt
       - container/home/builder/**
