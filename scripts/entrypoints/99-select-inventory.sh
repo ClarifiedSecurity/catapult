@@ -3,7 +3,7 @@
 echo -e "${C_RST}"
 SEARCH_DIR=/srv/inventories
 SEARCH_FOLDER=".git"
-FOLDERS=($(find $SEARCH_DIR -name $SEARCH_FOLDER -printf '%h\n' | sort))
+mapfile -t FOLDERS < <(find "$SEARCH_DIR" -name "$SEARCH_FOLDER" -printf '%h\n' | sort)
 
 #----------------------------------------End of variables, start of script----------------------------------------#
 
@@ -12,9 +12,8 @@ function zsh_selector() {
     if [ ${#FOLDERS[@]} -eq 1 ]; then
 
         selected_folder=${FOLDERS[1]}
-        selected_folder_name=$(basename "$selected_folder")
         echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-        cd $selected_folder
+        cd "$selected_folder" || exit
 
     elif [ ${#FOLDERS[@]} -gt 0 ]; then
 
@@ -26,20 +25,19 @@ function zsh_selector() {
         done
 
         echo -n "Select project: "
-        read choice
+        read -r choice
         choice=$((choice))
 
         if (($choice >= 1 && choice <= ${#FOLDERS[@]})); then
 
             selected_folder=${FOLDERS[choice]}
-            selected_folder_name=$(basename "$selected_folder")
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-            cd $selected_folder
+            cd "$selected_folder" || exit
 
         else
 
             echo "Invalid selection."
-            cd /srv
+            cd /srv || exit
 
         fi
 
@@ -57,9 +55,8 @@ function bash_selector() {
     if [ ${#FOLDERS[@]} -eq 1 ]; then
 
         selected_folder=${FOLDERS[0]}
-        selected_folder_name=$(basename "$selected_folder")
         echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-        cd $selected_folder
+        cd "$selected_folder" || exit
 
     elif [ ${#FOLDERS[@]} -gt 0 ]; then
 
@@ -71,20 +68,19 @@ function bash_selector() {
         done
 
         echo -n "Select project: "
-        read choice
+        read -r choice
         choice=$((choice))
 
         if (($choice >= 1 && choice <= ${#FOLDERS[@]})); then
 
             selected_folder=${FOLDERS[choice-1]}
-            selected_folder_name=$(basename "$selected_folder")
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-            cd $selected_folder
+            cd "$selected_folder" || exit
 
         else
 
             echo "Invalid selection."
-            cd /srv
+            cd /srv || exit
 
         fi
 
