@@ -28,6 +28,7 @@ ADD --chown=builder:builder /requirements /srv/requirements
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder /container/docker-entrypoint.sh /
 ADD --chown=builder:builder defaults/requirements.txt /srv/defaults/requirements.txt
+ADD --chown=builder:builder package.json /srv/package.json
 
 # Installing everything in two script to avoid creating multiple layers thus reducing the image size
 # Having 2 layers also keeps them small and easy to download and extract on low bandwidth connections

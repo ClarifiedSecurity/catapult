@@ -32,7 +32,7 @@ ln -s /usr/local/lib/nodejs/node-$NODE_VERSION-$OS_PLATFORM/bin/corepack /usr/bi
 
 corepack enable
 cd /srv
-npm install --global yarn
+yarn
 
 apt upgrade -y
 apt autoremove -y

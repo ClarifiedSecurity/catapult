@@ -11,14 +11,6 @@ if [[ ! -d "/srv/ansible" ]]; then
 
 fi
 
-# Checking if node_modules folder exists, if not then installing NPM packages
-if [ -d /srv/node_modules ]; then
-
-  cd /srv/ && yarn --silent
-
-else
-
-  echo -e "Installing NPM packages..."
-  cd /srv/ && yarn
-
-fi
+# Installing or updating yarn npm packages
+# Using /dev/null because the --silent flag is not working for some reason anymore
+cd /srv/ && yarn > /dev/null
