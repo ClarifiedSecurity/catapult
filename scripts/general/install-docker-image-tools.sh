@@ -33,6 +33,7 @@ ln -s /usr/local/lib/nodejs/node-$NODE_VERSION-$OS_PLATFORM/bin/corepack /usr/bi
 corepack enable
 cd /srv
 yarn
+yarn config set enableTelemetry 0
 
 apt upgrade -y
 apt autoremove -y
