@@ -31,9 +31,6 @@ ln -s /usr/local/lib/nodejs/node-$NODE_VERSION-$OS_PLATFORM/bin/npx /usr/bin/npx
 ln -s /usr/local/lib/nodejs/node-$NODE_VERSION-$OS_PLATFORM/bin/corepack /usr/bin/corepack
 
 corepack enable
-cd /srv
-yarn
-yarn config set enableTelemetry 0
 
 apt upgrade -y
 apt autoremove -y

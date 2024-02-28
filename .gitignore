@@ -1,7 +1,6 @@
 .DS_Store
 .githooks
 .vscode
-.yarnrc.yml
 *.log
 *.retry
 *.swp
