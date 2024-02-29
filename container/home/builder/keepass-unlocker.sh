@@ -12,7 +12,17 @@ else
 
   until ~/keepass-decrypt-check.py; do
 
-    read -rsp "$(echo -e "Enter your KeePass password: ")" kppwd && export KPPWD=$kppwd
+    # Checking if the KEEPASS_CI_PASSWORD is set
+    # This can be used to unlock the KeePass database without user interaction for CI/CD
+    if [ -z "$KEEPASS_CI_PASSWORD" ]; then
+
+      read -rsp "$(echo -e "Enter your KeePass password: ")" kppwd && export KPPWD=$kppwd
+
+    else
+
+        export KPPWD=$KEEPASS_CI_PASSWORD
+
+    fi
 
   done
 
