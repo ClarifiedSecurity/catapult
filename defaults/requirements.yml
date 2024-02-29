@@ -35,11 +35,11 @@ collections:
   - name: community.aws
     version: 7.0.0
   - name: community.crypto
-    version: 2.17.1
+    version: 2.18.0
   - name: community.docker
-    version: 3.7.0
+    version: 3.8.0
   - name: community.general
-    version: 8.3.0
+    version: 8.4.0
   - name: community.hashi_vault
     version: 6.1.0
   - name: community.library_inventory_filtering_v1 # Required for community.docker
@@ -51,7 +51,7 @@ collections:
   - name: community.postgresql
     version: 3.4.0
   - name: community.routeros
-    version: 2.12.0
+    version: 2.13.0
   - name: community.vmware
     version: 4.0.1
   - name: community.windows
