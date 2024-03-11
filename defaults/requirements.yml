@@ -29,7 +29,7 @@ collections:
   - name: chocolatey.chocolatey
     version: 1.5.1
   - name: cisco.ios
-    version: 6.1.2
+    version: 6.1.3
   - name: cloud.common
     version: 2.1.3
   - name: community.aws
@@ -61,7 +61,7 @@ collections:
   - name: kubernetes.core
     version: 2.4.0
   - name: linode.cloud
-    version: 0.25.1
+    version: 0.25.3
   - name: microsoft.ad
     version: 1.4.1
   - name: microsoft.sql
