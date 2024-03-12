@@ -5,9 +5,7 @@
 *.retry
 *.swp
 **/__pycache__/**
-/.idea/deployment.xml
-/.idea/sshConfigs.xml
-/.idea/webServers.xml
+/.idea
 /.makerc-custom
 /.makerc-personal
 /.makerc-vars
