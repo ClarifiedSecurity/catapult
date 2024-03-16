@@ -1,0 +1,44 @@
+# Required variables
+# These variables are required to be filled out in order to use Catapult
+deployer_username:
+deployer_password:
+
+# Optional variables
+# Fill these out if you know you will be using them otherwise leave them blank
+aws_access_key_id:
+aws_access_key:
+linode_api_token:
+
+################
+################
+#### LEGEND ####
+################
+################
+
+# This legend contains more information about the variables that are used in the file.
+
+#########################################
+# deployer_username & deployer_password #
+#########################################
+
+# These credentials will be used to authenticate to different services like Virtualization provider, Providentia, Vault etc.
+# Usually these are LDAP credentials, but might be different for different environments.
+
+######################################
+# aws_access_key_id & aws_access_key #
+######################################
+
+# These are the AWS access key ID & aws access key itself that will be used to authenticate to AWS services.
+# They can be generated from the AWS Identity and Access Management (IAM) console.
+# This is required if you are using AWS services.
+
+####################
+# linode_api_token #
+####################
+
+# This is the Linode API token that will be used to authenticate to Linode services.
+# The API key can be generated from the Linode Cloud Manager - https://cloud.linode.com/profile/tokens.
+# This is required if you are using Linode services.
+
+# DO NOT MODIFY BELOW THIS LINE
+ansible_vault_used: true # This is here to let different roles know if the vault is used or not

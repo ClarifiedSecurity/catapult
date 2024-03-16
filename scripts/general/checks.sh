@@ -47,7 +47,7 @@ new_vars=$(diff <( cat .makerc-vars | grep -v '^#' | grep '=' | cut -d '=' -f 1 
 if [ ! -z "$new_vars" ]
 then
 echo -e "${C_RST}"
-echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_CYAN} that are not present in ${C_YELLOW}${ROOT_DIR}/.makerc-vars:${C_CYAN}"
+echo -e "${C_CYAN}Found following variable(s) in ${C_YELLOW}$example_vars_file${C_CYAN} that are not present in your ${C_YELLOW}${ROOT_DIR}/.makerc-vars:${C_CYAN}"
 
   for var in "${new_vars[@]}"
   do
@@ -57,7 +57,7 @@ echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_
       echo -e "${C_RST}"
       echo -n -e "${C_YELLOW}"
       echo -e "Even if not used make sure they are present in .makerc-vars"
-      echo -e "You can copy them from $example_vars_file just leave the values empty"
+      echo -e "You can copy the default values from $example_vars_file"
       echo -e "${C_RST}"
   done
   exit 1
@@ -109,7 +109,7 @@ LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
 
   echo -n -e "${C_YELLOW}"
-  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to go there now?"
+  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to switch branch?"
   echo -n -e "${C_RST}"
   options=(
     "yes"

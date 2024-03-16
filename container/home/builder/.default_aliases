@@ -22,29 +22,33 @@ alias ctp-install-custom-requirements="/srv/scripts/general/install-all-requirem
 
 alias ctp-select-project="source /srv/scripts/entrypoints/99-select-inventory.sh"
 
-alias ctp-unlock-secrets="~/keepass-unlocker.sh"
+alias ctp-secrets-unlock="source /srv/scripts/general/secrets-unlock.sh"
+
+alias ctp-secrets-edit="/srv/scripts/general/secrets-edit.sh"
+
+alias ctp-secrets-change-password="/srv/scripts/general/secrets-change-password.sh"
 
 ### Deploy modes ###
 
-alias ctp-deploy="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -l"
+alias ctp-deploy="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -l"
 
-alias ctp-redeploy="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=redeploy -l"
+alias ctp-redeploy="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=redeploy -l"
 
-alias ctp-deploy-until-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e just_clone=true -l"
+alias ctp-deploy-until-configuration="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e just_clone=true -l"
 
-alias ctp-redeploy-until-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=redeploy -e just_clone=true -l"
+alias ctp-redeploy-until-configuration="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=redeploy -e just_clone=true -l"
 
-alias ctp-deploy-from-configuration="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e role_only_wp=true -l"
+alias ctp-deploy-from-configuration="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e role_only_wp=true -l"
 
-alias ctp-deploy-role="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e role_only=true -l"
+alias ctp-deploy-role="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e role_only=true -l"
 
-alias ctp-deploy-network="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e reconfigure_network=yes -l"
+alias ctp-deploy-network="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e reconfigure_network=yes -l"
 
-alias ctp-deploy-fresh="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=fresh_deploy=true -e=manual_fresh_deploy=true -l"
+alias ctp-deploy-fresh="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=fresh_deploy=true -e=manual_fresh_deploy=true -l"
 
-alias ctp-remove="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=undeploy -l"
+alias ctp-remove="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=undeploy -l"
 
-alias ctp-rebuild-linode-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e rebuild=yes -l"
+alias ctp-rebuild-linode-vm="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e rebuild=yes -l"
 
 ### Deploy modes based on @start.retry file ###
 
@@ -62,43 +66,43 @@ alias ctp-retry-deploy-role="ctp-deploy-role @start.retry"
 
 ### Snapshot modes ###
 
-alias ctp-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=snap -e pre_role=nova.core.snapshots -l"
+alias ctp-snapshot="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=snapshot_mode=snap -e pre_role=nova.core.snapshots -l"
 
-alias ctp-clean-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=clean-snap -e pre_role=nova.core.snapshots -l"
+alias ctp-clean-snapshot="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=snapshot_mode=clean-snap -e pre_role=nova.core.snapshots -l"
 
-alias ctp-live-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=snap -e live_snap=true -e pre_role=nova.core.snapshots -l"
+alias ctp-live-snapshot="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=snapshot_mode=snap -e live_snap=true -e pre_role=nova.core.snapshots -l"
 
-alias ctp-revert="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=revert -e pre_role=nova.core.snapshots -l"
+alias ctp-revert="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=snapshot_mode=revert -e pre_role=nova.core.snapshots -l"
 
-alias ctp-remove-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=remove -e pre_role=nova.core.snapshots -l"
+alias ctp-remove-snapshot="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=snapshot_mode=remove -e pre_role=nova.core.snapshots -l"
 
-alias ctp-remove-all-snapshots="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=remove -e remove_all_snapshots=true -e pre_role=nova.core.snapshots -l"
+alias ctp-remove-all-snapshots="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=snapshot_mode=remove -e remove_all_snapshots=true -e pre_role=nova.core.snapshots -l"
 
-alias ctp-rename-snapshot="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e=snapshot_mode=rename -e pre_role=nova.core.snapshots -l"
+alias ctp-rename-snapshot="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e=snapshot_mode=rename -e pre_role=nova.core.snapshots -l"
 
 ### Power state ###
 
-alias ctp-poweron="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweron -e=poweron=true -e pre_role=nova.core.powerstate -l"
+alias ctp-poweron="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=poweron -e=poweron=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-restart="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=restart -e=restart=true -e pre_role=nova.core.powerstate -l"
+alias ctp-restart="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=restart -e=restart=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-shutdown="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=shutdown -e=shutdown=true -e pre_role=nova.core.powerstate -l"
+alias ctp-shutdown="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=shutdown -e=shutdown=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-poweroff="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=poweroff -e=poweroff=true -e pre_role=nova.core.powerstate -l"
+alias ctp-poweroff="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=poweroff -e=poweroff=true -e pre_role=nova.core.powerstate -l"
 
-alias ctp-reset="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=reset -e=reset=true -e pre_role=nova.core.powerstate -l"
+alias ctp-reset="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=reset -e=reset=true -e pre_role=nova.core.powerstate -l"
 
 ### MISC ###
 
-alias ctp-update-os="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e role_only=true -e=single_role=nova.core.updates -l"
+alias ctp-update-os="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e role_only=true -e=single_role=nova.core.updates -l"
 
-alias ctp-list="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy --list-hosts -l"
+alias ctp-list="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy --list-hosts -l"
 
-alias ctp-list-vars="ansible-inventory /srv/inventories/start.yml -e=deploy_mode=deploy --vars --host"
+alias ctp-list-vars="ansible-inventory /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy --vars --host"
 
-alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=nova.core.rename_vm -l"
+alias ctp-rename-vm="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e pre_role=nova.core.rename_vm -l"
 
-alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml -e=deploy_mode=deploy -e pre_role=nova.core.get_ip -l"
+alias ctp-get-ip="ansible-playbook /srv/inventories/start.yml $CATAPULT_VAULT_PATH -e=deploy_mode=deploy -e pre_role=nova.core.get_ip -l"
 
 alias ctp-enable-debugging="export ANSIBLE_CALLBACKS_ENABLED=ansible.posix.profile_tasks && export ANSIBLE_SHOW_PER_HOST_START=true && echo 'Debugging enabled'"
 
