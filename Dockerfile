@@ -21,7 +21,6 @@ ADD --chown=builder:builder /container/home/builder/.default_aliases /home/build
 ADD --chown=builder:builder /container/home/builder/.ssh /home/builder/.ssh
 ADD --chown=builder:builder /container/home/builder/kpsock.py /home/builder/kpsock.py
 ADD --chown=builder:builder /container/home/builder/keepass-decrypt-check.py /home/builder/keepass-decrypt-check.py
-ADD --chown=builder:builder /container/home/builder/keepass-unlocker.sh /home/builder/keepass-unlocker.sh
 ADD --chown=builder:builder plugins /srv/plugins
 ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
 ADD --chown=builder:builder /requirements /srv/requirements

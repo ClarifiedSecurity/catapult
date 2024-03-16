@@ -83,8 +83,20 @@ done < "$FILE_PATH"
 # Print the variables that are not set
 for variable in "${variables[@]}"; do
 
-  echo -n -e ${C_RED}
+  echo -n -e "${C_RED}"
   echo -e "$variable value missing in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
-  echo -n -e ${C_RST}
+  echo -n -e "${C_RST}"
 
 done
+
+# Chcking if Ansible Vault is used
+if [[ $MAKEVAR_USE_ANSIBLE_VAULT != 1 ]]; then
+
+  echo -e "${C_YELLOW}"
+  echo -e "Using KeePassXC will be deprecated in the future and Catapult will use Ansible Vault instead."
+  echo -e "In order to configure Ansible Vault, you need to modify ${C_CYAN}MAKEVAR_USE_ANSIBLE_VAULT :=1${C_YELLOW} in your ${C_CYAN}.makerc-vars${C_YELLOW} file."
+  echo -e "Then run ${C_CYAN}make start${C_YELLOW} and follow the instructions for setting up Ansible Vault."
+  read -rp $'\n'"Press ENTER to to skip it for now or Ctrl + C to cancel and set the variable in your .makerc-vars file."
+  echo -e "${C_RST}"
+
+fi

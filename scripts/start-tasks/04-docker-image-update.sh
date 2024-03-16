@@ -52,7 +52,7 @@ if [ "$(uname)" == "Linux" ] && [ "$(id -u)" -ne 1000 ]; then
     echo -e "${C_RED}"
     echo -e "Your user id is not 1000"
     echo -e "For most stable results run Catapult from a user with an ID of 1000"
-    read -rp "Press enter to continue and build image locally, or Ctrl + C to cancel and change your user or user ID..."
+    read -rp "Press ENTER to continue and build image locally, or Ctrl + C to cancel and change your user or user ID..."
     echo -e
     echo -e "${C_RST}"
 

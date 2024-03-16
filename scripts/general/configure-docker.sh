@@ -79,7 +79,7 @@ install_docker(){
       echo -e "1.1) If you don't find your OS in the link above look around in the internet there might be guides available on how to install Docker for your OS"
       echo -e
 
-      read -p "Once you have installed Docker & Docker compose plugin press enter key to continue..."
+      read -p "Once you have installed Docker & Docker compose plugin Press ENTER key to continue..."
       echo -n -e "${C_RST}"
 
     fi
@@ -163,7 +163,7 @@ update_docker_config(){
       echo -e
       echo -e $docker_config | jq
       echo -e "${C_YELLOW}"
-      read -p "Press enter key to continue"$'\n'
+      read -p "Press ENTER key to continue"$'\n'
 
     else
 
@@ -184,7 +184,7 @@ update_docker_config(){
       echo $docker_config | jq
 
       echo -e "${C_YELLOW}"
-      read -p "Press enter key to continue, or Ctrl + C to cancel and start over..."$'\n'
+      read -p "Press ENTER key to continue, or Ctrl + C to cancel and start over..."$'\n'
       echo -e
 
       echo -n -e "${C_MAGENTA}"

@@ -47,7 +47,7 @@ new_vars=$(diff <( cat .makerc-vars | grep -v '^#' | grep '=' | cut -d '=' -f 1 
 if [ ! -z "$new_vars" ]
 then
 echo -e "${C_RST}"
-echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_CYAN} that are not present in ${C_YELLOW}${ROOT_DIR}/.makerc-vars:${C_CYAN}"
+echo -e "${C_CYAN}Found following variable(s) in ${C_YELLOW}$example_vars_file${C_CYAN} that are not present in your ${C_YELLOW}${ROOT_DIR}/.makerc-vars:${C_CYAN}"
 
   for var in "${new_vars[@]}"
   do
@@ -57,7 +57,7 @@ echo -e "${C_CYAN}Found Following variables in ${C_YELLOW}$example_vars_file${C_
       echo -e "${C_RST}"
       echo -n -e "${C_YELLOW}"
       echo -e "Even if not used make sure they are present in .makerc-vars"
-      echo -e "You can copy them from $example_vars_file just leave the values empty"
+      echo -e "You can copy the default values from $example_vars_file"
       echo -e "${C_RST}"
   done
   exit 1
@@ -93,7 +93,7 @@ if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_S
   echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
   echo -e "sudo is not usually required on MacOS, so MAKEVAR_SUDO_COMMAND should be empty"
 
-  read -pr "Press enter to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
+  read -pr "Press ENTER to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
   echo -e "${C_CYAN}"
 
 fi
@@ -109,7 +109,7 @@ LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
 
   echo -n -e "${C_YELLOW}"
-  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to go there now?"
+  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to switch branch?"
   echo -n -e "${C_RST}"
   options=(
     "yes"
@@ -220,7 +220,7 @@ else
   echo -e "${C_YELLOW}"
   echo -e There are no SSH keys in your ssh-agent.
   echo -e Some of the functinality will not work without SSH keys.
-  read -pr "Press enter to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
+  read -pr "Press ENTER to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
   echo -e "${C_RST}"
 
 fi
