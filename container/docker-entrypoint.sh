@@ -18,8 +18,7 @@ sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
 
 # KeePass unlocker script
 # Can also be used with ctp-unlock-secrets
-# shellcheck disable=SC1091
-source /home/builder/keepass-unlocker.sh
+source /srv/scripts/general/secrets-unlock.sh
 
 # Copying mounted certificates to the correct location and trusting them if they are present
 if [ "$(ls -A /tmp/ca-certificates)" ]; then

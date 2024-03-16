@@ -22,6 +22,7 @@ services:
       - ${ROOT_DIR}/container/home/builder/.personal_aliases:/home/builder/.personal_aliases
       - ${ROOT_DIR}/container/home/builder/.history:/home/builder/.history
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
+      - ${ROOT_DIR}/container/home/builder/.vault:/home/builder/.vault
       - ${HOST_SSH_AUTH_SOCK}:/ssh-agent
     environment:
       CATAPULT: 1 # This is used to check if the deployment is running in a Catapult container
@@ -44,6 +45,7 @@ services:
       SSH_AUTH_SOCK: /ssh-agent
       REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
       TZ: ${MAKEVAR_TZ}
+      USE_ANSIBLE_VAULT: ${MAKEVAR_USE_ANSIBLE_VAULT}
     extra_hosts:
       - host.docker.internal:host-gateway
       - ${CONTAINER_NAME}:127.0.1.1

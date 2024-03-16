@@ -70,7 +70,6 @@ if [ -f custom/start.yml ]; then
 
 fi
 
-
 # Copying requirements files to the correct location
 mkdir -p requirements
 rm -f requirements/*
