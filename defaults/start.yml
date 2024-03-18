@@ -21,6 +21,8 @@
     vmware.vmware_rest.vcenter_vm_guest_operations_info: "{{ vmware_rest_defaults | default(omit) }}"
     vmware.vmware_rest.vcenter_vm_guest_power_info: "{{ vmware_rest_defaults | default(omit) }}"
     vmware.vmware_rest.vcenter_vm_guest_power: "{{ vmware_rest_defaults | default(omit) }}"
+    vmware.vmware_rest.vcenter_vm_hardware_cdrom_info: "{{ vmware_rest_defaults | default(omit) }}"
+    vmware.vmware_rest.vcenter_vm_hardware_cdrom: "{{ vmware_rest_defaults | default(omit) }}"
     vmware.vmware_rest.vcenter_vm_hardware_ethernet_info: "{{ vmware_rest_defaults | default(omit) }}"
     vmware.vmware_rest.vcenter_vm_hardware_ethernet: "{{ vmware_rest_defaults | default(omit) }}"
     vmware.vmware_rest.vcenter_vm_info: "{{ vmware_rest_defaults | default(omit) }}"
