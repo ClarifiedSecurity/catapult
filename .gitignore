@@ -9,6 +9,7 @@
 /.makerc-custom
 /.makerc-personal
 /.makerc-vars
+/container/home/builder/.vault/vlt**
 /container/home/builder/.custom_aliases
 /container/home/builder/.personal_aliases
 /container/home/builder/.ssh/config.d/
