@@ -1,0 +1,11 @@
+---
+# Accounts
+admin_account: admin
+template_username: "{{ admin_account }}"
+
+# Connection
+default_connection_plugin: ansible.builtin.local
+
+# Network
+ansible_network_os: panos # Not natively supported by Ansible but Catapult can use it to determine the correct tasks to run
+customization_method: panos
