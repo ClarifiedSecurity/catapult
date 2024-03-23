@@ -63,7 +63,7 @@ collections:
   - name: linode.cloud
     version: 0.25.4
   - name: microsoft.ad
-    version: 1.4.1
+    version: 1.5.0
   - name: microsoft.sql
     version: 2.2.2
   - name: paloaltonetworks.panos
