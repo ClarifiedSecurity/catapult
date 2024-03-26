@@ -11,6 +11,7 @@ update_collection() {
 
 }
 
+echo -e "Checking for nova.core updates..."
 if curl github.com --connect-timeout 2 -s > /dev/null
 then
 
