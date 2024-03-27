@@ -1,31 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC1091
-source /srv/scripts/general/secrets-initialize.sh
-
-# Function to check for missing secret keys
-check_for_missing_keys () {
-
-  # Checking if custom vault_example.yml exists and using it if it does
-  if [[ -r custom/vault_example.yml ]]
-  then
-
-      VAULT_SRC=/srv/custom/vault_example.yml
-
-    else
-
-      VAULT_SRC=/srv/defaults/vault_example.yml
-
-  fi
-
-  # Validationg that all variables defined in the example are present in the vault
-  SECRETS_SRC=$(cat $VAULT_SRC | yq -r 'keys[]')
-  SECRETS_CURRENT_SRC=$1
-  MISSING_KEYS=$(comm -23 <(echo -n "$SECRETS_SRC" | sort) <(echo -n "$SECRETS_CURRENT_SRC" | sort))
-
-}
-
-if [[ "$USE_ANSIBLE_VAULT" != 1 ]]; then
+if [[ "$USE_ANSIBLE_VAULT" == 0 ]]; then
 
   # Check if KeePass is already open
   if [[ -S /tmp/ansible-keepass.sock ]]; then
@@ -58,6 +33,31 @@ if [[ "$USE_ANSIBLE_VAULT" != 1 ]]; then
   fi
 
 elif [[ "$USE_ANSIBLE_VAULT" == 1 ]]; then
+
+  # shellcheck disable=SC1091
+  source /srv/scripts/general/secrets-initialize.sh
+
+  # Function to check for missing secret keys
+  check_for_missing_keys () {
+
+    # Checking if custom vault_example.yml exists and using it if it does
+    if [[ -r custom/vault_example.yml ]]
+    then
+
+        VAULT_SRC=/srv/custom/vault_example.yml
+
+      else
+
+        VAULT_SRC=/srv/defaults/vault_example.yml
+
+    fi
+
+    # Validationg that all variables defined in the example are present in the vault
+    SECRETS_SRC=$(cat $VAULT_SRC | yq -r 'keys[]')
+    SECRETS_CURRENT_SRC=$1
+    MISSING_KEYS=$(comm -23 <(echo -n "$SECRETS_SRC" | sort) <(echo -n "$SECRETS_CURRENT_SRC" | sort))
+
+  }
 
   export CATAPULT_VAULT_PATH="-e @~/.vault/vlt"
   export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault/unlock-vault.sh
