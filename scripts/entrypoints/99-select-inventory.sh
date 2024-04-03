@@ -99,6 +99,7 @@ if [ -z "${ZSH_VERSION}" ]; then
 elif [ -z "$BASH_VERSION" ]; then
 
     zsh_selector
+    exec zsh # This is done so tab completion works with the selected project
 
 else
 
