@@ -1,5 +1,5 @@
 aiohttp
-ansible-core==2.16.3
+ansible-core==2.16.5
 ansible-lint
 ansible-pylibssh
 ansible-specdoc
@@ -59,7 +59,7 @@ hvac
 jinja2
 jmespath
 linode-api4
-lxml
+lxml==5.1.0 # 5.2.0 breaks XML modifications for PfSense & Opnsense
 msgraph-sdk
 netaddr
 oauthlib
