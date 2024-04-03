@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Checking that WEBHOOK_URL is not empty
-if [ ! -z "$SLACK_WEBHOOK_URL" ]; then
+if [ -n "$SLACK_WEBHOOK_URL" ]; then
 
     # Checking if callbacks_enabled is used in ansible.cfg
     if grep -q "callbacks_enabled" /srv/ansible.cfg; then
@@ -14,7 +14,7 @@ if [ ! -z "$SLACK_WEBHOOK_URL" ]; then
 
 
     # Checking if ANSIBLE_CALLBACKS_ENABLED env var exists
-    elif [ ! -z "$ANSIBLE_CALLBACKS_ENABLED" ]; then
+    elif [ -n "$ANSIBLE_CALLBACKS_ENABLED" ]; then
 
         # Checking if existing ANSIBLE_CALLBACKS_ENABLED has already been saved to EXISTING_ANSIBLE_CALLBACKS_ENABLED
         if [ -z "$EXISTING_ANSIBLE_CALLBACKS_ENABLED" ]; then

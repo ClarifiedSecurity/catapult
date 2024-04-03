@@ -1,0 +1,24 @@
+---
+###################################################################################
+# Refer to documentation for more information on how to fill out these variables. #
+# https://clarifiedsecurity.github.io/catapult-docs/                              #
+###################################################################################
+
+######################
+# Required variables #
+######################
+# These variables are required and must to be filled out in order to use Catapult
+# Catapult will also notify you during the deployment process if you need to fill these out
+
+deployer_username: # Usually your LDAP username in the form of firstname.lastname or firstname.lastname@domain
+deployer_password: # Password for the username above
+
+######################
+# Optional variables #
+######################
+# Fill these out if you know you will be using them otherwise leave them blank
+# Catapult will also notify you during the deployment process if you need any of the optional variables
+
+aws_access_key_id: # AWS access key ID - can be generated from the AWS Identity and Access Management (IAM) console
+aws_access_key: # AWS access key itself - can be generated from the AWS Identity and Access Management (IAM) console
+linode_api_token: # Linode API token - can be generated from the Linode Cloud Manager https://cloud.linode.com/profile/tokens
