@@ -1,0 +1,163 @@
+autocomplete:
+  function_name: ctp
+  commands:
+    - command: host
+      description: Commands for configuring hosts
+      hosts_as_arguments: true
+      subcommands:
+        - subcommand_name: deploy
+          subcommand_description: Deploys the VM with the given inventory_hostname
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -l "$@"
+        - subcommand_name: redeploy
+          subcommand_description: Destroys the existing VM and runs the ctp deploy command
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=redeploy -l "$@"
+        - subcommand_name: deploy-until-configuration
+          subcommand_description: Deploys the VM with the given inventory_hostname and creates a snapshot
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e just_clone=true -l "$@"
+        - subcommand_name: redeploy-until-configuration
+          subcommand_description: Destroys the existing VM and runs the ctp deploy-until-configuration command
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=redeploy -e just_clone=true -l "$@"
+        - subcommand_name: deploy-from-configuration
+          subcommand_description: Starts the play from /srv/<project_name>/pre_vm_role part of the playbook and runs until the end
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only_wp=true -l "$@"
+        - subcommand_name: deploy-role
+          subcommand_description: Runs only the /srv/<project_name>/vm/<role_name> part of the playbook and then stops
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only=true -l "$@"
+        - subcommand_name: deploy-network
+          subcommand_description: Runs ctp deploy and also includes networks configuration role
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e reconfigure_network=yes -l "$@"
+        - subcommand_name: deploy-fresh
+          subcommand_description: Runs deploy as if the machine does not exist
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e fresh_deploy=true -e manual_fresh_deploy=true -l "$@"
+        - subcommand_name: remove
+          subcommand_description: Destroys the existing VM
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=undeploy -l "$@"
+        - subcommand_name: rebuild-linode-vm
+          subcommand_description: Rebuilds the existing Linode VM with a new disk but keeps the existing IP
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e rebuild=yes -l "$@"
+        - subcommand_name: vars
+          subcommand_description: Lists the variables for the given inventory_hostname
+          subcommand_to_execute: ansible-inventory /srv/inventories/start.yml -e @~/.vault/vlt --vars --host "$@"
+        - subcommand_name: list
+          subcommand_description: Lists the hosts for the given inventory_hostname, group or matching pattern
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy --list-hosts -l "$@"
+        - subcommand_name: update
+          subcommand_description: Installs the OS updates for the given inventory_hostname
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only=true -e=single_role=nova.core.updates -l "$@"
+        - subcommand_name: ip
+          subcommand_description: Get the IP of the given inventory_hostname
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e pre_role=nova.core.get_ip -l "$@"
+        - subcommand_name: rename-vm
+          subcommand_description: Renames the VM with the given inventory_hostname
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e pre_role=nova.core.rename_vm -l "$@"
+
+    - command: retry
+      description: Commands for retrying failed machines
+      hosts_as_arguments: false
+      subcommands:
+        - subcommand_name: deploy
+          subcommand_description: Run deploy on failed machines based on start.retry file
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -l @start.retry "$@"
+        - subcommand_name: redeploy
+          subcommand_description: Run redeploy failed machines based on start.retry file
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=redeploy -l @start.retry "$@"
+        - subcommand_name: deploy-until-configuration
+          subcommand_description: Run deploy-until-configuration on failed machines based on start.retry file
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e just_clone=true -l @start.retry "$@"
+        - subcommand_name: redeploy-until-configuration
+          subcommand_description: Run redeploy-until-configuration on failed machines based on start.retry file
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=redeploy -e just_clone=true -l @start.retry "$@"
+        - subcommand_name: deploy-from-configuration
+          subcommand_description: Run deploy-from-configuration on failed machines based on start.retry file
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only_wp=true -l @start.retry "$@"
+        - subcommand_name: deploy-role
+          subcommand_description: Run deploy-role on failed machines based on start.retry file
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only=true -l @start.retry "$@"
+
+    - command: snap
+      description: Commands for managing snapshots
+      hosts_as_arguments: true
+      subcommands:
+        - subcommand_name: create
+          subcommand_description: Creates a snapshot
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=snapshot_mode=snap -e pre_role=nova.core.snapshots -l "$@"
+        - subcommand_name: create-clean
+          subcommand_description: Removes existing snapshots and creates a new one
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=snapshot_mode=clean-snap -e pre_role=nova.core.snapshots -l "$@"
+        - subcommand_name: create-live
+          subcommand_description: Creates a running state snapshot
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=snapshot_mode=snap -e live_snap=true -e pre_role=nova.core.snapshots -l "$@"
+        - subcommand_name: revert
+          subcommand_description: Reverts to latest snapshot or the one defined as -e snapshot_name=<snapshot_name>
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=snapshot_mode=revert -e pre_role=nova.core.snapshots -l "$@"
+        - subcommand_name: remove
+          subcommand_description: Removes snapshot defined as -e snapshot_name=<snapshot_name_to_remove>
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=snapshot_mode=remove -e pre_role=nova.core.snapshots -l "$@"
+        - subcommand_name: remove-all
+          subcommand_description: Removes all snapshots
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=snapshot_mode=remove -e remove_all_snapshots=true -e pre_role=nova.core.snapshots -l "$@"
+        - subcommand_name: rename
+          subcommand_description: Renames the snapshot defined as -e snapshot_name=<snapshot_name_to_rename> to -e new_snapshot_name=<new_snapshot_name>
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=snapshot_mode=rename -e pre_role=nova.core.snapshots -l "$@"
+
+    - command: power
+      description: Commands for managing the power state of the host
+      hosts_as_arguments: true
+      subcommands:
+        - subcommand_name: "on"
+          subcommand_description: Powers on the VM
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=poweron=true -e pre_role=nova.core.powerstate -l "$@"
+        - subcommand_name: restart
+          subcommand_description: Restarts the VM
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=restart=true -e pre_role=nova.core.powerstate -l "$@"
+        - subcommand_name: shutdown
+          subcommand_description: Shuts down the VM
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=shutdown=true -e pre_role=nova.core.powerstate -l "$@"
+        - subcommand_name: "off"
+          subcommand_description: Powers off the VM
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=poweroff=true -e pre_role=nova.core.powerstate -l "$@"
+        - subcommand_name: reset
+          subcommand_description: Resets the VM
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=reset=true -e pre_role=nova.core.powerstate -l "$@"
+        - subcommand_name: suspend
+          subcommand_description: Suspends the VM
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e=suspend=true -e pre_role=nova.core.powerstate -l "$@"
+
+    - command: secrets
+      description: Commands for managing your personal secrets
+      hosts_as_arguments: false
+      subcommands:
+        - subcommand_name: unlock
+          subcommand_description: Unlocks the Ansible Vault
+          subcommand_to_execute: /srv/scripts/general/secrets-unlock.sh
+        - subcommand_name: edit
+          subcommand_description: Opens the Ansible Vault for editing
+          subcommand_to_execute: /srv/scripts/general/secrets-edit.sh
+        - subcommand_name: change-password
+          subcommand_description: Changes the Ansible Vault password
+          subcommand_to_execute: /srv/scripts/general/secrets-change-password.sh
+
+    - command: project
+      description: Commands for managing projects
+      hosts_as_arguments: false
+      subcommands:
+        - subcommand_name: select
+          subcommand_description: Lists all available projects under /srv/inventories and allows you to select one
+          subcommand_to_execute: source /srv/scripts/general/select-inventory.sh
+
+    - command: dev
+      description: Commands for Catapult developers
+      hosts_as_arguments: false
+      subcommands:
+        - subcommand_name: enable-debugging
+          subcommand_description: Enables debugging mode stdout
+          subcommand_to_execute: export ANSIBLE_CALLBACKS_ENABLED=ansible.posix.profile_tasks && export ANSIBLE_SHOW_PER_HOST_START=true && echo 'Debugging enabled'
+        - subcommand_name: disable-debugging
+          subcommand_description: Disables debugging mode stdout
+          subcommand_to_execute: unset ANSIBLE_CALLBACKS_ENABLED && unset ANSIBLE_SHOW_PER_HOST_START && echo 'Debugging disabled'
+        - subcommand_name: all-requirements
+          subcommand_description: Updates all requirements, overwriting the existing ones
+          subcommand_to_execute: ansible-galaxy collection install -r /srv/requirements/requirements.yml --force
+        - subcommand_name: custom-requirements
+          subcommand_description: Updates only the custom collections, overwriting the existing ones
+          subcommand_to_execute: ansible-galaxy collection install -r /srv/requirements/custom-requirements.yml --force

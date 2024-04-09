@@ -32,7 +32,9 @@ function zsh_selector() {
 
             selected_folder=${FOLDERS[choice]}
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-            cd "$selected_folder" || exit
+            # shellcheck disable=SC2164
+            cd "$selected_folder"
+            touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
 
         else
 
@@ -75,7 +77,9 @@ function bash_selector() {
 
             selected_folder=${FOLDERS[choice-1]}
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-            cd "$selected_folder" || exit
+            # shellcheck disable=SC2164
+            cd "$selected_folder"
+            touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
 
         else
 
@@ -92,14 +96,31 @@ function bash_selector() {
 
 }
 
+function inventory_generator(){
+
+    # Checking if USE_ANSIBLE_VAULT is set to 1
+    # For some reaseon some Ansible commands cannot detect the vault file from an environment variable
+    if [[ "$USE_ANSIBLE_VAULT" == 1 ]]; then
+
+        ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$selected_folder")_hosts"
+
+    else
+
+        ansible-inventory --playbook-dir /srv/inventories --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$selected_folder")_hosts"
+
+    fi
+
+}
+
 if [ -z "${ZSH_VERSION}" ]; then
 
     bash_selector
+    ( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )
 
 elif [ -z "$BASH_VERSION" ]; then
 
     zsh_selector
-    exec zsh # This is done so tab completion works with the selected project
+    ( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )
 
 else
 
