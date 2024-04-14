@@ -13,4 +13,6 @@ fi
 
 # Installing or updating yarn npm packages
 # Using /dev/null because the --silent flag is not working for some reason anymore
-cd /srv/ && yarn > /dev/null
+(cd /srv/ && yarn install > /dev/null)
+
+echo -n -e "${C_RST}"
