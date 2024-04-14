@@ -10,6 +10,8 @@ su - builder -c '
 set -e # exit when any command fails
 export BUILDER_HOME=/home/builder
 
+# This sets the yarn version to stable (berry)
+(cd /srv && echo y | yarn set version stable )
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.cargo/env
 cd $HOME
