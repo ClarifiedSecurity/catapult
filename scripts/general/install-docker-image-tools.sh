@@ -16,9 +16,9 @@ else
 fi
 
 apt update
-apt install -y curl xz-utils # Reqired for Docker image creation
-apt install -y ca-certificates rsync iputils-ping jq sshpass git-lfs unzip # Required for general Ansible usage
-apt install -y iproute2 traceroute dnsutils netcat-openbsd vim # Extra development & debugging tools
+apt install -y curl xz-utils git git-lfs zsh # Reqired for Docker image creation
+apt install -y ca-certificates rsync iputils-ping jq sshpass sudo unzip # Required for general Ansible usage
+apt install -y iproute2 traceroute dnsutils netcat-openbsd nano # Extra development & debugging tools
 
 cd /tmp
 curl -s -O https://nodejs.org/download/release/$NODE_VERSION/node-$NODE_VERSION-$OS_PLATFORM.tar.xz
@@ -36,7 +36,7 @@ apt upgrade -y
 apt autoremove -y
 apt autoclean -y
 
-# Cleanup to keep the image size down
+# Cleanup to keep the layer size small
 rm -rf /var/lib/apt/lists/*
 rm -rf /var/cache/*
 rm -rf /tmp/*
