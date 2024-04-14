@@ -1,5 +1,5 @@
 # Must match the Python version in pyproject.toml
-FROM python:3.11.7-slim-bookworm
+FROM python:3.11.9-slim-bookworm
 
 # Timezone configuration from .makerc-vars
 ARG TZ
@@ -29,6 +29,8 @@ ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder /container/docker-entrypoint.sh /
 ADD --chown=builder:builder defaults/requirements.txt /srv/defaults/requirements.txt
 ADD --chown=builder:builder package.json /srv/package.json
+ADD --chown=builder:builder .yarnrc.yml /srv/.yarnrc.yml
+ADD --chown=builder:builder yarn.lock /srv/yarn.lock
 
 # Installing everything in two script to avoid creating multiple layers thus reducing the image size
 # Having 2 layers also keeps them small and easy to download and extract on low bandwidth connections
@@ -36,9 +38,9 @@ ADD --chown=builder:builder package.json /srv/package.json
 ADD --chown=builder:builder scripts/general/install-docker-image-tools.sh /tmp/install-docker-image-tools.sh
 RUN bash /tmp/install-docker-image-tools.sh
 
+USER builder
 ADD --chown=builder:builder scripts/general/install-docker-image-python.sh /tmp/install-docker-image-python.sh
 RUN bash /tmp/install-docker-image-python.sh
 
-USER builder
 WORKDIR /srv
 ENTRYPOINT ["/docker-entrypoint.sh"]
