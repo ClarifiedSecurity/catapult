@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
 set -e # exit when any command fails
-
-apt update
-apt install -y sudo git zsh # Reqired for Docker image creation
-apt install -y gcc # Reqired for compiling some Python packages
-
-su - builder -c '
-set -e # exit when any command fails
 export BUILDER_HOME=/home/builder
+
+sudo apt update
+sudo apt install -y  # Reqired for Docker image creation
+sudo apt install -y gcc # Reqired for compiling some Python packages
 
 # This sets the yarn version to stable (berry)
 (cd /srv && echo y | yarn set version stable )
+
+# Python virtual environment
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.cargo/env
 cd $HOME
@@ -31,20 +30,16 @@ $BUILDER_HOME/.fzf/install --key-bindings --completion --update-rc
 
 # NOTCUSTOM because custom requirements will be installed on first and they can be updated with rebuilding the image
 /srv/scripts/general/install-all-requirements.sh NOTCUSTOM
-'
 
-{
-	echo "source /home/builder/.default_aliases"
-	echo "source /home/builder/.custom_aliases"
-	echo "source /home/builder/.personal_aliases"
-} >> /etc/zsh/zshrc
+echo "source /home/builder/.default_aliases" | sudo tee -a /etc/zsh/zshrc
+echo "source /home/builder/.custom_aliases" | sudo tee -a /etc/zsh/zshrc
+echo "source /home/builder/.personal_aliases" | sudo tee -a /etc/zsh/zshrc
 
-apt remove -y gcc
-apt autoremove -y
-apt autoclean -y
+sudo apt remove -y gcc
+sudo apt autoremove -y
+sudo apt autoclean -y
 
-# Cleanup to keep the image size down
-rm -rf /var/lib/apt/lists/*
-rm -rf /var/cache/*
-rm -rf /tmp/*
-rm -rf /home/builder/.cache/*
+# Cleanup to keep the layer size small
+sudo rm -rf /var/lib/apt/lists/*
+sudo rm -rf /var/cache/*
+sudo rm -rf /tmp/*
