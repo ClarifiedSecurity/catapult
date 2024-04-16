@@ -20,6 +20,8 @@ done
 
 }
 
+echo -e "Checking for docker image updates..."
+
 # Chcking for docker image updates if ${MAKEVAR_CONTAINER_REGISTRY} is defined
 if [[ -z "${MAKEVAR_CONTAINER_REGISTRY}" ]]; then
 
