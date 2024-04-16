@@ -1,8 +1,8 @@
 #!make
 
--include .makerc-vars ### your personal values
--include .makerc-custom ### for your custom make functions
--include .makerc-personal ### for your own make functions
+-include .makerc-vars ### Universal make variables
+-include custom/makefiles/.makerc-custom ### Custom (team/org) make functions
+-include personal/.makerc-personal ### Your personalized make functions
 -include .makerc ### Default initialization file
 export
 

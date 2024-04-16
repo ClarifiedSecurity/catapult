@@ -31,10 +31,6 @@ $BUILDER_HOME/.fzf/install --key-bindings --completion --update-rc
 # NOTCUSTOM because custom requirements will be installed on first and they can be updated with rebuilding the image
 /srv/scripts/general/install-all-requirements.sh NOTCUSTOM
 
-echo "source /home/builder/.default_aliases" | sudo tee -a /etc/zsh/zshrc
-echo "source /home/builder/.custom_aliases" | sudo tee -a /etc/zsh/zshrc
-echo "source /home/builder/.personal_aliases" | sudo tee -a /etc/zsh/zshrc
-
 sudo apt remove -y gcc
 sudo apt autoremove -y
 sudo apt autoclean -y
