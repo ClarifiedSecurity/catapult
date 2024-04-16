@@ -1,8 +1,8 @@
 adal==1.2.7
-aiohttp==3.9.4
+aiohttp==3.9.5
 aiosignal==1.3.1
 ansible-compat==4.1.11
-ansible-core==2.16.5
+ansible-core==2.16.6
 ansible-lint==24.2.2
 ansible-pylibssh==1.1.0
 ansible-specdoc==0.0.14
@@ -27,7 +27,7 @@ azure-mgmt-apimanagement==4.0.1
 azure-mgmt-authorization==4.0.0
 azure-mgmt-automation==1.0.0
 azure-mgmt-batch==17.3.0
-azure-mgmt-cdn==13.0.0
+azure-mgmt-cdn==13.1.0
 azure-mgmt-compute==30.6.0
 azure-mgmt-containerinstance==10.1.0
 azure-mgmt-containerregistry==10.3.0
@@ -108,7 +108,7 @@ microsoft-kiota-abstractions==1.3.2
 microsoft-kiota-authentication-azure==1.0.0
 microsoft-kiota-http==1.3.1
 microsoft-kiota-serialization-form==0.1.0
-microsoft-kiota-serialization-json==1.1.0
+microsoft-kiota-serialization-json==1.2.0
 microsoft-kiota-serialization-multipart==0.1.0
 microsoft-kiota-serialization-text==1.0.0
 msal==1.27.0
@@ -185,5 +185,5 @@ wrapt==1.16.0
 xmltodict==0.13.0
 yamllint==1.35.1
 yarl==1.9.4
-yq==3.3.0
+yq==3.3.1
 zipp==3.18.1
