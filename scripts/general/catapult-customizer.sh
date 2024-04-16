@@ -34,27 +34,13 @@ if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE ]]; then
 
 else
 
-    echo -n -e ${C_YELLOW}
+    echo -n -e "${C_YELLOW}"
     echo -e "CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE variable found, not overwriting custom folder"
-    echo -n -e ${C_BLUE}
+    echo -n -e "${C_BLUE}"
 
 fi
 
-echo -n -e ${C_BLUE}
-
-# Copying custom .makerc files to project root if they are in the customizer repo
-if [[ -d "custom/makefiles" ]]; then
-    #for file in custom/makefiles/*; do
-        echo -e "Copying custom .makerc files to project root..."
-        cp -R custom/makefiles/. .
-fi
-
-# Copying custom aliases file from the customizer repo
-if [[ -f "custom/container/.custom_aliases" ]]; then
-    #for file in custom/makefiles/*; do
-        echo -e "Copying .custom_aliases for container..."
-        cp -f custom/container/.custom_aliases container/home/builder/.custom_aliases
-fi
+echo -n -e "${C_BLUE}"
 
 # Checking if custom start.yml if it exists
 if [ -f custom/start.yml ]; then
@@ -99,4 +85,4 @@ fi
 mkdir -p custom/docker-entrypoints
 mkdir -p custom/start-tasks
 
-echo -n -e ${C_RST}
+echo -n -e "${C_RST}"

@@ -17,9 +17,6 @@ services:
       - ${KEEPASS_KEY_PATH}:/home/builder/KPDB.key:ro
       - ${ROOT_DIR}/container/docker-entrypoint.sh:/docker-entrypoint.sh
       - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
-      - ${ROOT_DIR}/container/home/builder/.default_aliases:/home/builder/.default_aliases
-      - ${ROOT_DIR}/container/home/builder/.custom_aliases:/home/builder/.custom_aliases
-      - ${ROOT_DIR}/container/home/builder/.personal_aliases:/home/builder/.personal_aliases
       - ${ROOT_DIR}/container/home/builder/.history:/home/builder/.history
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
       - ${ROOT_DIR}/container/home/builder/.vault:/home/builder/.vault
