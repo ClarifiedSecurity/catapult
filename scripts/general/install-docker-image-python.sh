@@ -13,7 +13,7 @@ sudo apt install -y gcc # Reqired for compiling some Python packages
 # Python virtual environment
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.cargo/env
-cd $HOME
+cd "$HOME"
 rm -rf $HOME/.venv
 $HOME/.cargo/bin/uv venv
 source $HOME/.venv/bin/activate
@@ -28,8 +28,8 @@ ln -s "$BUILDER_HOME/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-the
 git clone https://github.com/junegunn/fzf.git $BUILDER_HOME/.fzf --depth 1
 $BUILDER_HOME/.fzf/install --key-bindings --completion --update-rc
 
-# NOTCUSTOM because custom requirements will be installed on first and they can be updated with rebuilding the image
-/srv/scripts/general/install-all-requirements.sh NOTCUSTOM
+# DEFAULT because extra requirements will be installed on first run and they can be updated with rebuilding the image
+/srv/scripts/general/install-requirements.sh DEFAULT
 
 sudo apt remove -y gcc
 sudo apt autoremove -y

@@ -7,7 +7,7 @@ if [[ ! -d "/srv/ansible" ]]; then
 
   echo -e "Running first-run requirements installer..."
   # shellcheck disable=SC1091
-  source scripts/general/install-all-requirements.sh CUSTOM
+  source scripts/general/install-requirements.sh EXTRA
 
 fi
 

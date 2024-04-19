@@ -16,11 +16,11 @@ alias update-computer="sudo apt autoclean -y && sudo apt autoremove -y && sudo a
 
 ### General ###
 
-alias ctp-install-all-requirements="/srv/scripts/general/install-all-requirements.sh ALL"
+alias ctp-install-all-requirements="/srv/scripts/general/install-requirements.sh ALL"
 
-alias ctp-install-custom-requirements="/srv/scripts/general/install-all-requirements.sh CUSTOM"
+alias ctp-install-extra-requirements="/srv/scripts/general/install-requirements.sh EXTRA"
 
-alias ctp-select-project="source /srv/scripts/entrypoints/99-select-inventory.sh"
+alias ctp-select-project="source /srv/scripts/general/select-inventory.sh"
 
 alias ctp-secrets-unlock="/srv/scripts/general/secrets-unlock.sh"
 
