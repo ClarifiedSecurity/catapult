@@ -80,11 +80,25 @@ else
 fi
 }
 
+_host_completion () {
+    working_folder="$(basename "$(pwd)")_hosts"
+
+    if compset -P '@'; then
+
+        _files
+
+    else
+
+        _ansible_hosts=( ${(f)"$(cat "/tmp/$working_folder")"} )
+        compadd -qS: -a _ansible_hosts
+
+    fi
+}
+
+
 # Set up tab completion for the ctp function
 # Based on https://clarifiedsecurity.github.io/catapult-docs/catapult/02-how-to-use/
 _{{ autocomplete.function_name }}() {
-    local working_folder
-    working_folder="$(basename "$(pwd)")_hosts"
 
     _arguments \\
         '1:command:->commands' \\
@@ -107,9 +121,6 @@ _{{ autocomplete.function_name }}() {
                     {% if entry.hosts_as_arguments %}
                     compset -P '*[,:](|[&!~])'
                     compset -S '[:,]*'
-                    typeset -ga _ansible_hosts
-
-                    _ansible_hosts=( ${(f)"$(cat "/tmp/$working_folder")"} )
                     {% endif %}
                     _arguments \\
                         '1:mode:((
@@ -118,7 +129,7 @@ _{{ autocomplete.function_name }}() {
                             {% endfor %}
                         {% if entry.hosts_as_arguments %}
                             ))' \\
-                        "*:option:compadd -qS: -a _ansible_hosts"
+                        "*:option:_host_completion"
                         {% else %}
                             ))'
                         {% endif %}
