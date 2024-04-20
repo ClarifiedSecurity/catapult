@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -e # exit when any command fails
-export BUILDER_HOME=/home/builder
 
 sudo apt update
 sudo apt install -y  # Reqired for Docker image creation
@@ -23,10 +22,10 @@ cd /srv
 # Shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 zsh
-git clone https://github.com/denysdovhan/spaceship-prompt.git "$BUILDER_HOME/.oh-my-zsh/custom/themes/spaceship-prompt" --depth=1
-ln -s "$BUILDER_HOME/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$BUILDER_HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
-git clone https://github.com/junegunn/fzf.git $BUILDER_HOME/.fzf --depth 1
-$BUILDER_HOME/.fzf/install --key-bindings --completion --update-rc
+git clone https://github.com/denysdovhan/spaceship-prompt.git "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt" --depth=1
+ln -s "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+git clone https://github.com/junegunn/fzf.git $HOME/.fzf --depth 1
+$HOME/.fzf/install --key-bindings --completion --update-rc
 
 # DEFAULT because extra requirements will be installed on first run and they can be updated with rebuilding the image
 /srv/scripts/general/install-requirements.sh DEFAULT
