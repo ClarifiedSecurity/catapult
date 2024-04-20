@@ -1,19 +1,7 @@
-name: Catapult Docker image builder
+name: Catapult staging Docker image builder
 
 on:
-  push:
-    branches:
-      - staging
-    paths:
-      - .github/workflows/docker-image_staging.yml
-      - Dockerfile
-      - scripts/general/install-docker-image**
-      - defaults/requirements.yml
-      - defaults/requirements.txt
-      - container/home/builder/**
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 jobs:
   build:

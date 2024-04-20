@@ -1,4 +1,4 @@
-name: Catapult Docker image builder
+name: Catapult latest Docker image builder
 
 on:
   push:
