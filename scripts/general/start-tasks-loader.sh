@@ -14,7 +14,7 @@ if ! [ -x "$(command -v docker)" ]; then
   echo -n -e "${C_RED}"
   echo -e "Docker not found did you run 'install.sh' first!"
   echo -n -e "${C_RST}"
-  exit 0
+  exit 1
 
 fi
 
