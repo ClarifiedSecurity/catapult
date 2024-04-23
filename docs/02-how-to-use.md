@@ -436,10 +436,10 @@ _Example usage:_
 ctp-rename-vm <inventory_hostname> -e old_vm_name=<old_name> -e new_vm_name=<new_name>
 ```
 
-- Renames the VM for the given inventory_hostname where the old name is the current value defined in
+- Renames the VM for the given inventory_hostname where the old name is the current value defined in the group or host vars
 
 ```zsh
-cpp-rename-vm <inventory_hostname> -e new_vm_name=<new_name>the group or host vars
+ctp-rename-vm <inventory_hostname> -e new_vm_name=<new_name>
 ```
 
 ### ctp-get-ip
