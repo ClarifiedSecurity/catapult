@@ -18,7 +18,7 @@ fi
 # Checking if completions file exists, if not then creating it
 if [[ ! -f "/home/builder/autocomplete.sh" ]]; then
 
-  echo -e "Creating completions file..."
+  echo -e "Generating completions..."
   /srv/scripts/general/autocomplete_generator.py
 
 fi
