@@ -159,7 +159,7 @@ _Example usage:_
 ctp host redeploy-until-configuration <inventory_hostname>
 ```
 
-### ctp-deploy-from-configuration
+### ctp host deploy-from-configuration
 
 Starts the play from `/srv/<project_name>/pre_vm_role part` of the playbook and runs until the end. This is a useful command during mass deploy when you have run the `ctp host deploy-until-configuration` first and then you want to configure the cloned machines. Should anything go wrong you can always revert to the snapshot and start again.
 
