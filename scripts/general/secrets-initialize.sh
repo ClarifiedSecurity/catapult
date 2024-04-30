@@ -49,7 +49,7 @@ encrypt_vault () {
   ansible-vault encrypt ~/.vault/vlt --encrypt-vault-id default
 
   echo -e "${C_YELLOW}"
-  echo -e "Catapult will now open the encrypted vault file for you to edit, using ${C_CYAN}$VAULT_EXAMPLE_FILE${C_YELLOW} as template"
+  echo -e "Catapult will now open the encrypted vault file for you to edit"
   echo -e "When you are done, use CTRL + X to exit and save"
   echo -e "You can edit your secrets later by running ${C_CYAN}ctp-secrets-edit${C_YELLOW}"
   echo -e "You can restart this process by deleting your vault from container/home/builder/.vault/vlt"
