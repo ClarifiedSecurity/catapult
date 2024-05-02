@@ -16,24 +16,10 @@ MAKEVAR_TZ :=UTC
 # Set to true to enable, false to disable
 MAKEVAR_ALLOW_HOST_SSH_ACCESS :=false
 
-# This is the path to your KeePass database file in your host
-# It will be mounted inside the catapult container
-# Use fullpath, you can get it with the command "readlink -f /path/to/file.kdbx"
-KEEPASS_DB_PATH :=
-
-# This is the path to your KeePass database key file in your host
-# It will be mounted inside the catapult container
-# Use fullpath, you can get it with the command "readlink -f /path/to/file.key"
-KEEPASS_KEY_PATH :=
-
-# This is the path inside your KeePass (https://keepassxc.org/) database.
-# It points to the entry where your LDAP username & password are.
-# These credentials will be used to authenticate to different services like Virtualization provider, Providentia, Vault etc.
-# Don't include the root folder in the path (usually named Passwords).
-# You can get the path by clicking on the entry and looking at the bottom of the KeePass window next to a key icon.
-# The correct path is usually everyting after the first /
-# Example: Catapult/Credentials where Catapult is the group name and Credentials is the entry in KeePass
-KEEPASS_DEPLOYER_CREDENTIALS_PATH :=
+# Deprecated values don't use. Catapult will ask for your input during make start
+KEEPASS_DB_PATH :=/tmp/catapult-deprecated
+KEEPASS_KEY_PATH :=/tmp/catapult-deprecated
+KEEPASS_DEPLOYER_CREDENTIALS_PATH :=DEPRECATED
 
 # REQUIRED_END (DO NOT REMOVE THIS LINE)
 
@@ -104,4 +90,4 @@ MAKEVAR_WEBHOOK_USERNAME :=Catapult
 MAKEVAR_WEBHOOK_CHANNEL :=
 
 # Set to true to use Ansible Vault for sensitive data, instead of KeePass
-MAKEVAR_USE_ANSIBLE_VAULT :=0
+MAKEVAR_USE_ANSIBLE_VAULT :=1
