@@ -17,4 +17,6 @@ CONTAINER_HOSTNAME :=${IMAGE_NAME}-${CONTAINER_USER_NAME}
 
 DISPLAY :=$(or ${DISPLAY},0.0 ) # Default for MacOS that doesn't have a DISPLAY en var
 
+MAKEVAR_USE_ANSIBLE_VAULT :=$(or ${MAKEVAR_USE_ANSIBLE_VAULT},0 ) # Default to not use ansible vault if not set in .makerc-vars
+
 BUILD_ARGS := --build-arg CONTAINER_USER_ID=${CONTAINER_USER_ID} --build-arg CONTAINER_GROUP_ID=${CONTAINER_GROUP_ID} --build-arg TZ=${MAKEVAR_TZ}
