@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ "$USE_ANSIBLE_VAULT" == 0 ]]; then
+if [[ "$USE_ANSIBLE_VAULT" == 0 ]] || [[ -z "$USE_ANSIBLE_VAULT" ]]; then
 
   # Check if KeePass is already open
   if [[ -S /tmp/ansible-keepass.sock ]]; then
