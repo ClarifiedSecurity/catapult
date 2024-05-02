@@ -12,7 +12,7 @@ ZSH_THEME="spaceship"
 setopt glob
 
 # Sourcing oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+. $ZSH/oh-my-zsh.sh
 
 # Including better history search
 if [ -f ~/.fzf.zsh ]; then
@@ -34,4 +34,6 @@ fi
 setopt noglob
 
 # Sourcing completions
-source /home/builder/autocomplete.sh
+if [ -f /home/builder/autocomplete.sh ]; then
+    . /home/builder/autocomplete.sh
+fi
