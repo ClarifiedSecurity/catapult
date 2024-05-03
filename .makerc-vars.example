@@ -16,11 +16,6 @@ MAKEVAR_TZ :=UTC
 # Set to true to enable, false to disable
 MAKEVAR_ALLOW_HOST_SSH_ACCESS :=false
 
-# Deprecated values don't use. Catapult will ask for your input during make start
-KEEPASS_DB_PATH :=/tmp/catapult-deprecated
-KEEPASS_KEY_PATH :=/tmp/catapult-deprecated
-KEEPASS_DEPLOYER_CREDENTIALS_PATH :=DEPRECATED
-
 # REQUIRED_END (DO NOT REMOVE THIS LINE)
 
 ######################
