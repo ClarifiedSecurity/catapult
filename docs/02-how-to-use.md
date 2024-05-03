@@ -7,7 +7,7 @@ Catapult's commands fall into two categories:
 
 ## Variables
 
-When running catapult for the first time it'll ask you to create a new Ansible Vault file and fill it out with your secrets. The secrets are used to connect to the hypervisors, cloud providers, and other services. Besides the required `deployer_username` & `deployer_password` here are some other variables that you might need when using Catapult with `nova.core` collection:
+When running catapult for the first time it'll ask you to create a new Ansible Vault file and fill it out with your secrets. The secrets are used to connect to the hypervisors, cloud providers, and other services. Besides the required `deployer_username` & `deployer_password` here are some other variables that you might need when using Catapult with [nova.core](https://github.com/ClarifiedSecurity/nova.core) collection:
 
 - `aws_access_key_id:` - AWS access key ID - can be generated from the AWS Identity and Access Management (IAM) console
 - `aws_access_key:` - AWS access key itself - can be generated from the AWS Identity and Access Management (IAM) console
