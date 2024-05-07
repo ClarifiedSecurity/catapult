@@ -69,9 +69,9 @@ autoload -U compinit; compinit
     {% for subcommand in entry.subcommands %}
     {% if loop_index == 1 and loop.index == 1 %}if{% else %}elif{% endif %} [[ "$command" = "{{ command }}" && $subcommand = "{{ subcommand.subcommand_name }}" ]]; then
         {% if use_vault %}
-        {{ subcommand.subcommand_to_execute }}
+        {{ subcommand.subcommand_to_execute | safe }}
         {% else %}
-        {{ subcommand.subcommand_to_execute | replace(" -e @~/.vault/vlt", "") }}
+        {{ subcommand.subcommand_to_execute | replace(" -e @~/.vault/vlt", "") | safe }}
         {% endif %}
     {% endfor %}
     {% endfor %}
@@ -144,7 +144,7 @@ compdef _{{ autocomplete.function_name }} {{ autocomplete.function_name }}
 """
 
 # Create a Jinja template object
-template = jinja2.Template(jinja_template, lstrip_blocks=True, trim_blocks=True)
+template = jinja2.Template(jinja_template, lstrip_blocks=True, trim_blocks=True, autoescape=True)
 
 # Define context variables
 context = {
