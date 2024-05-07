@@ -10,5 +10,5 @@ scripts/general/configure-docker.sh
 echo -n -e "${C_RST}"
 
 echo -n -e "${C_MAGENTA}"
-echo "Install finished successfully"
+echo "Preparations finished successfully"
 echo -n -e "${C_RST}"
