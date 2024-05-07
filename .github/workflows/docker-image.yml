@@ -1,7 +1,19 @@
-name: Catapult staging Docker image builder
+name: Catapult latest Docker image builder
 
 on:
-  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/docker-image.yml
+      - Dockerfile
+      - scripts/general/install-docker-image**
+      - defaults/requirements.yml
+      - defaults/requirements.txt
+      - container/home/builder/**
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
@@ -44,4 +56,6 @@ jobs:
           build-args: |
             VERSION=${{ env.IMAGE_VERSION }}
           push: true
-          tags: ghcr.io/clarifiedsecurity/catapult:staging
+          tags: |
+            ghcr.io/clarifiedsecurity/catapult:latest
+            ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
