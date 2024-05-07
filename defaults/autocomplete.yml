@@ -47,6 +47,9 @@ autocomplete:
         - subcommand_name: ip
           subcommand_description: Get the IP of the given inventory_hostname
           subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e pre_role=nova.core.get_ip -l "$@"
+        - subcommand_name: connect
+          subcommand_description: Connecting the given inventory_hostname over SSH
+          subcommand_to_execute: /srv/scripts/general/connect.sh "$@"
 
     - command: retry
       description: Commands for retrying failed machines
