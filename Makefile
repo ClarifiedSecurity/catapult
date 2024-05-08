@@ -36,20 +36,10 @@ build: customizations checks
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
 
-## run: Run the container
-.PHONY: run
-run:
-	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/run.sh
-
 ## stop: Stop the container
 .PHONY: stop
 stop:
 	@${MAKEVAR_SUDO_COMMAND} docker stop ${CONTAINER_NAME} || true
-
-## shell: Go into container shell via entrypoint
-.PHONY: shell
-shell:
-	@${MAKEVAR_SUDO_COMMAND} docker exec -it ${CONTAINER_NAME} ${CONTAINER_ENTRYPOINT}
 
 ## shell-raw: Bypass docker-entrypoint.sh and directly into shell
 .PHONY: shell-raw
@@ -66,9 +56,15 @@ clean:
 customizations:
 	@${ROOT_DIR}/scripts/general/catapult-customizer.sh
 
-## start: Removes any existing container, starts the container and runs shell
+## start: Starts the container (if not running) and enters the shell
 .PHONY: start
-start: project-banner customizations checks start-tasks run shell
+start:
+	@${ROOT_DIR}/scripts/general/start.sh
+
+## start: Restarts the container and enters the shell
+.PHONY: restart
+restart:
+	@${ROOT_DIR}/scripts/general/start.sh restart
 
 ## project-banner: Print project banner
 .PHONY: project-banner
