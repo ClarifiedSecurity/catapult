@@ -15,16 +15,10 @@ When running catapult for the first time it'll ask you to create a new Ansible V
 
 ## Enter the Catapult
 
-- Start the Catapult container and connect to it with:
+- Start the Catapult container if it does not exist and connect to it with. If an container exists it'll just enter it:
 
 ```sh
 make start
-```
-
-- Connect to an already started Catapult container with:
-
-```sh
-make shell
 ```
 
 ## Tips and tricks
