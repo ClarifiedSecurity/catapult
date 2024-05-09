@@ -21,6 +21,12 @@ When running catapult for the first time it'll ask you to create a new Ansible V
 make start
 ```
 
+- Remove > Create > Start the Catapult container and connect to it:
+
+```sh
+make restart
+```
+
 ## Tips and tricks
 
 - Use tab completion to get the list of available commands. For example, type `ctp ` and press tab to get the list of available commands.
