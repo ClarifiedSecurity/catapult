@@ -12,7 +12,7 @@ default_ansible_shell_type: sh
 default_ansible_become: true
 default_ansible_become_user: "{{ admin_account }}"
 
-# Defined here because MacOS does not have Python installed by default so it cannot gather facts
+# Defined here because MacOS does not have Python installed by default so facts cannot be gathered
 macos_has_python: false
 ansible_distribution: MacOSX
 ansible_os_family: Darwin

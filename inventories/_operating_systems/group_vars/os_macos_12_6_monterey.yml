@@ -1,5 +1,0 @@
-# Template created with packer
-# Used only to create project templates from
-base_vm_template: BASE_TEMPLATE_macos_12_6_monterey
-
-vm_template: catapult-template-macos-12-6-monterey
