@@ -12,7 +12,10 @@ REQUIREMENTS_FILES="requirements*.yml" # Requirements file catch-all variable
 # shellcheck disable=SC1091
 source "$HOME/.venv/bin/activate"
 
-echo -e "\033[32mGetting requirements from /srv/requirements folder...\033[0m"
+echo -n -e "${C_GREEN}"
+echo -e Getting requirements from /srv/requirements folder...
+echo -n -e "${C_RST}"
+
 cd /srv/requirements
 
 # Installing all requirements based on requirements*.yml files and also installes all Python requirements based on requirements.txt
@@ -22,22 +25,27 @@ install_all_requirements () {
 uv pip install -r /srv/defaults/requirements.txt
 
 # Looping over all requirements.yml files in the folder and running install on them
-for requirement_file in $REQUIREMENTS_FILES; do
+for REQUIREMENT_FILE in $REQUIREMENTS_FILES; do
+
+  echo -n -e "${C_YELLOW}"
 
   # Default requirements are installed in the ~/ansible folder under the project
-  if [[ $requirement_file == requirements.yml ]]; then
-    echo -e "\033[33mInstalling roles from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy role install -r $requirement_file --force --no-deps -p ~/ansible
+  if [[ $REQUIREMENT_FILE == requirements.yml ]]; then
+    echo -e "Installing roles from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy role install -r "$REQUIREMENT_FILE" --force --no-deps -p ~/ansible
 
-    echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p ~/ansible --no-cache --clear-response-cache
+    echo -e "Installing collections from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy collection install -r "$REQUIREMENT_FILE" --force --no-deps -p ~/ansible --no-cache --clear-response-cache
   else
-    echo -e "\033[33mInstalling roles from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy role install -r $requirement_file --force --no-deps -p /srv/ansible
+    echo -e "Installing roles from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy role install -r "$REQUIREMENT_FILE" --force --no-deps -p /srv/ansible
 
-    echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p /srv/ansible --no-cache --clear-response-cache
+    echo -e "Installing collections from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy collection install -r "$REQUIREMENT_FILE" --force --no-deps -p /srv/ansible --no-cache --clear-response-cache
   fi
+
+  echo -n -e "${C_RST}"
+
 done
 }
 
@@ -45,16 +53,21 @@ done
 install_default_requirements () {
 
 # Looping over all requirements.yml files in the folder and running install on them
-for requirement_file in $REQUIREMENTS_FILES; do
+for REQUIREMENT_FILE in $REQUIREMENTS_FILES; do
+
+  echo -n -e "${C_YELLOW}"
 
   # Default requirements are installed in the ~/ansible folder under the project
-  if [[ $requirement_file == requirements.yml ]]; then
-    echo -e "\033[33mInstalling roles from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy role install -r $requirement_file --force --no-deps -p ~/ansible
+  if [[ $REQUIREMENT_FILE == requirements.yml ]]; then
+    echo -e "Installing roles from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy role install -r "$REQUIREMENT_FILE" --force --no-deps -p ~/ansible
 
-    echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p ~/ansible --no-cache --clear-response-cache
+    echo -e "Installing collections from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy collection install -r "$REQUIREMENT_FILE" --force --no-deps -p ~/ansible --no-cache --clear-response-cache
   fi
+
+  echo -n -e "${C_RST}"
+
 done
 }
 
@@ -62,16 +75,21 @@ done
 install_extra_requirements () {
 
 # Looping over all requirements.yml files in the folder and running install on them
-for requirement_file in $REQUIREMENTS_FILES; do
+for REQUIREMENT_FILE in $REQUIREMENTS_FILES; do
+
+  echo -n -e "${C_YELLOW}"
 
   # Default requirements are installed in the ~/ansible folder under the project
-  if [[ $requirement_file != requirements.yml ]]; then
-    echo -e "\033[33mInstalling roles from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy role install -r $requirement_file --force --no-deps -p /srv/ansible
+  if [[ $REQUIREMENT_FILE != requirements.yml ]]; then
+    echo -e "Installing roles from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy role install -r "$REQUIREMENT_FILE" --force --no-deps -p /srv/ansible
 
-    echo -e "\033[33mInstalling collections from $(readlink -f $requirement_file)\033[0m"
-    ansible-galaxy collection install -r $requirement_file --force --no-deps -p /srv/ansible --no-cache --clear-response-cache
+    echo -e "Installing collections from $(readlink -f $REQUIREMENT_FILE)"
+    ansible-galaxy collection install -r "$REQUIREMENT_FILE" --force --no-deps -p /srv/ansible --no-cache --clear-response-cache
   fi
+
+  echo -n -e "${C_RST}"
+
 done
 }
 
@@ -91,3 +109,7 @@ if [[ "$1" == 'EXTRA' ]]; then
   mkdir -p /srv/ansible
 
 fi
+
+cd /srv
+
+echo -n -e "${C_RST}"
