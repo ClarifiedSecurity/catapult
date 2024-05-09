@@ -70,3 +70,5 @@ else
   echo -n -e "${C_RST}"
 
 fi
+
+echo -n -e "${C_RST}"
