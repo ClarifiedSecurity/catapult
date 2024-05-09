@@ -6,8 +6,6 @@
 SOURCE_PATH=/path/to/source/roles/folder/
 DEST_PATH=/path/to/destination/roles/folder/
 
-cd /srv/
-
 rsync -avr \
 --exclude "roles/FILES.json" \
 --exclude "roles/MANIFEST.json" \

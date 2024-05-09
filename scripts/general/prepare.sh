@@ -7,8 +7,6 @@ source ./scripts/general/colors.sh
 
 scripts/general/configure-docker.sh
 
-echo -n -e "${C_RST}"
-
 echo -n -e "${C_MAGENTA}"
 echo "Preparations finished successfully"
 echo -n -e "${C_RST}"

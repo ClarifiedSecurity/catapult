@@ -220,7 +220,7 @@ else
   echo -e "${C_YELLOW}"
   echo -e There are no SSH keys in your ssh-agent.
   echo -e Some of the functinality will not work without SSH keys.
-  read -pr "Press ENTER to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
+  read -rp "Press ENTER to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
   echo -e "${C_RST}"
 
 fi
