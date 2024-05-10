@@ -49,7 +49,7 @@ autoload -U compinit; compinit
     fi
 
     if [[ "$command" = "" ]]; then
-        echo "ctp: (EXPERIMENTAL) Catapult command line tool for managing your project(s)."
+        echo "ctp: Catapult command line tool for managing your environment(s)."
         echo "Usage:"
         echo "  ctp <command> <subcommand> [options] "
         echo
