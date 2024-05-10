@@ -89,12 +89,19 @@ _host_completion () {
 
     else
 
-        _ansible_hosts=( ${(f)"$(cat "/tmp/$working_folder")"} )
-        compadd -qS: -a _ansible_hosts
+        if [[ -f "/tmp/$working_folder" ]]; then
+
+			_ansible_hosts=( ${(f)"$(cat "/tmp/$working_folder")"} )
+			compadd -M 'l:|=* r:|=*' -qS: -a _ansible_hosts
+
+        else
+
+			echo -e "Project inventory missing! Use \\x1b[96mctp project select\\x1b[0m to generate it."
+
+        fi
 
     fi
 }
-
 
 # Set up tab completion for the ctp function
 # Based on https://clarifiedsecurity.github.io/catapult-docs/catapult/02-how-to-use/
