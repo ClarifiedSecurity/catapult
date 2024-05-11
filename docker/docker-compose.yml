@@ -9,9 +9,6 @@ services:
     network_mode: host
     restart: no
     volumes:
-      # This is /tmp so other make customization commands will not overwrite the certificate symlinks
-      # docker-entrypoint.sh moves the certificates to the correct location
-      - ${ROOT_DIR}/custom/certificates:/tmp/ca-certificates
       - ${ROOT_DIR}/:/srv/
       - ${KEEPASS_DB_PATH}:/home/builder/KPDB.kbdx:ro
       - ${KEEPASS_KEY_PATH}:/home/builder/KPDB.key:ro
