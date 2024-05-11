@@ -27,10 +27,27 @@ if [ ! -f /tmp/first-run ]; then
     # Running connectivity checks
     /srv/scripts/general/connectivity-checks.sh
 
-    # Copying mounted certificates to the correct location and trusting them if they are present
-    if [ "$(ls -A /tmp/ca-certificates)" ]; then
+    # Trusting custom certificates if they are present
+    if [[ -d "/srv/custom/certificates" && "$(ls -A /srv/custom/certificates)" ]]; then
 
-      sudo rsync -ar /tmp/ca-certificates/ /usr/local/share/ca-certificates/ --ignore-existing
+      echo -e "${C_YELLOW}Trusting custom certificates...${C_RST}"
+      sudo rsync -ar /srv/custom/certificates/ /usr/local/share/ca-certificates/ --ignore-existing
+      touch /tmp/trust_extra_certificates
+
+    fi
+
+    # Trusting personal certificates if they are present
+    if [[ -d "/srv/personal/certificates" && "$(ls -A /srv/personal/certificates)" ]]; then
+
+      echo -e "${C_YELLOW}Trusting personal certificates...${C_RST}"
+      sudo rsync -ar /srv/personal/certificates/ /usr/local/share/ca-certificates/ --ignore-existing
+      touch /tmp/trust_extra_certificates
+
+    fi
+
+    # Updating certificates if needed
+    if [[ -f /tmp/trust_extra_certificates ]]; then
+
       sudo update-ca-certificates > /dev/null 2>/dev/null # To avoid false positive error rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
 
     fi
