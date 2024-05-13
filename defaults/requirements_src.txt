@@ -59,7 +59,7 @@ hvac
 jinja2
 jmespath
 linode-api4
-lxml==5.1.0 # 5.2.0 breaks XML modifications for PfSense & Opnsense
+lxml
 msgraph-sdk
 netaddr
 oauthlib
