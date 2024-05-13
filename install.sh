@@ -64,7 +64,7 @@ fi
 # MacOS
 if [[ $(uname) == "Darwin" ]]; then
     print "${C_MAGENTA}"
-    print_nl "Removing MacOS sudo requirement for Catapult..."
+    print_nl "Removing MacOS sudo requirement for Catapult on MacOS..."
     print_nl "${C_RST}"
 
     sed -i "" "s#MAKEVAR_SUDO_COMMAND.*#MAKEVAR_SUDO_COMMAND :=#" .makerc-vars
@@ -73,7 +73,7 @@ if [[ $(uname) == "Darwin" ]]; then
         print "${C_MAGENTA}"
         print_nl "Installing Homebrew..."
         print "${C_RST}"
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     }
 
     brew-packages-install() {
@@ -123,7 +123,7 @@ if [[ $(uname) == "Darwin" ]]; then
     select _ in "${options[@]}"; do
         case "$REPLY" in
             yes|y|1) brew-packages-install; break;;
-            no|n|2) read -rp $'\n'"Make sure $BREW_PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
+            no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
         esac
     done
 
