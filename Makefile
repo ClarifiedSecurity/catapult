@@ -61,7 +61,7 @@ customizations:
 start:
 	@${ROOT_DIR}/scripts/general/start.sh
 
-## start: Restarts the container and enters the shell
+## restart: Restarts the container and enters the shell
 .PHONY: restart
 restart:
 	@${ROOT_DIR}/scripts/general/start.sh restart
