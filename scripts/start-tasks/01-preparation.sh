@@ -107,7 +107,7 @@ done
 if [[ $MAKEVAR_USE_ANSIBLE_VAULT != 1 ]]; then
 
   echo -e "${C_YELLOW}"
-  echo -e "Using KeePassXC will be deprecated in the future and Catapult will use Ansible Vault instead."
+  echo -e "Using KeePassXC will be deprecated at ${C_RED}01.07.2024${C_YELLOW} and Catapult will use Ansible Vault instead."
   echo -e "In order to configure Ansible Vault, you need to modify ${C_CYAN}MAKEVAR_USE_ANSIBLE_VAULT :=1${C_YELLOW} in your ${C_CYAN}.makerc-vars${C_YELLOW} file."
   echo -e "Then run ${C_CYAN}make start${C_YELLOW} and follow the instructions for setting up Ansible Vault."
   read -rp $'\n'"Press ENTER to to skip it for now or Ctrl + C to cancel and set the variable in your .makerc-vars file."
