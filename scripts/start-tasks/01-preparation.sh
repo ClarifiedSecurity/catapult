@@ -16,6 +16,26 @@ touch ./personal/.makerc-personal
 
 echo -n -e "${C_RST}"
 
+# Checking for Docker version
+MINIMUM_DOCKER_MAJOR_VERSION="26"
+CURRENT_DOCKER_MAJOR_VERSION=$(docker --version | awk '{print $3}' | cut -d '.' -f 1)
+
+if [[ "$CURRENT_DOCKER_MAJOR_VERSION" -lt "$MINIMUM_DOCKER_MAJOR_VERSION" ]]; then
+
+    echo -n -e "${C_RED}"
+    echo
+    echo -e "Current Docker version $CURRENT_DOCKER_MAJOR_VERSION is too old!"
+    echo -e "Your can run ${C_CYAN}make prepare${C_RED} to install the latest Docker version for your OS."
+    echo
+    echo -n -e "${C_RST}"
+    exit 1
+
+else
+
+    echo -n
+
+fi
+
 # Checking if shell history file exists in legacy path and moving it to the new path
 if [ -r ./container/home/builder/.zsh_history ]
 then
@@ -39,31 +59,26 @@ fi
 # Checking if all of the required variables are present in .makerc-vars
 FILE_PATH=$example_vars_file
 
-# Array to store the variables
 variables=()
-
-# Flag to indicate if parsing is active
 parsing=false
 
-# Read the file line by line
+
 while IFS= read -r line; do
-  # Check if parsing is active
+
   if [ "$parsing" = true ]; then
-    # Check if the line matches the end delimiter
+
     if [[ "$line" == "# REQUIRED_END"* ]]; then
-      # Stop parsing
+
       parsing=false
     else
-      # Remove leading and trailing whitespace from the line
+
       line="${line#"${line%%[![:space:]]*}"}"
       line="${line%"${line##*[![:space:]]}"}"
 
-      # Exclude empty lines and lines starting with #
       if [ -n "$line" ] && [[ ! "$line" =~ ^# ]]; then
-        # Extract the content until the first space
+
         variable="${line%% *}"
 
-        # Add the variable to the array if the environment variable with the same name is empty
         if [ -z "${!variable}" ]; then
 
           variables+=("$variable")
@@ -72,15 +87,14 @@ while IFS= read -r line; do
       fi
     fi
   else
-    # Check if the line matches the start delimiter
+
     if [[ "$line" == "# REQUIRED_START"* ]]; then
-      # Start parsing
+
       parsing=true
     fi
   fi
 done < "$FILE_PATH"
 
-# Print the variables that are not set
 for variable in "${variables[@]}"; do
 
   echo -n -e "${C_RED}"
