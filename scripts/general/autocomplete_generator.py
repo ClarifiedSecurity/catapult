@@ -132,7 +132,7 @@ _{{ autocomplete.function_name }}() {
                     _arguments \\
                         '1:mode:((
                             {% for subcommand in entry.subcommands %}
-                            {{ subcommand.subcommand_name }}:"{{ subcommand.subcommand_description }}"
+                            {{ subcommand.subcommand_name }}:"{{ subcommand.subcommand_description | safe }}"
                             {% endfor %}
                         {% if entry.hosts_as_arguments %}
                             ))' \\
