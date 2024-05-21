@@ -15,7 +15,7 @@ When running catapult for the first time it'll ask you to create a new Ansible V
 
 ## Enter the Catapult
 
-- Start the Catapult container if it does not exist and connect to it with. If an container exists it'll just enter it:
+- Start the Catapult container if it does not exist and connect to it, if the container is running it'll just connect to it:
 
 ```sh
 make start
