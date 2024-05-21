@@ -17,9 +17,9 @@ if ${MAKEVAR_SUDO_COMMAND} docker ps -a | grep -q "${CONTAINER_NAME}"; then
 fi
 
 # Deleting Catapult image if it exists
-if ${MAKEVAR_SUDO_COMMAND} docker images | grep -q -E "${CONTAINER_REGISTRY}/${IMAGE_NAME}|${IMAGE_TAG}"; then
+if ${MAKEVAR_SUDO_COMMAND} docker images | grep -q -E "${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}|${MAKEVAR_IMAGE_TAG}"; then
 
-    echo -e "Deleting ${CONTAINER_REGISTRY}/${IMAGE_NAME} image..."
-    ${MAKEVAR_SUDO_COMMAND} docker rmi -f "${CONTAINER_REGISTRY}/${IMAGE_NAME}"
+    echo -e "Deleting ${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME} image..."
+    ${MAKEVAR_SUDO_COMMAND} docker rmi -f "${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}:${MAKEVAR_IMAGE_TAG}"
 
 fi
