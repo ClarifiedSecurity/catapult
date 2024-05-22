@@ -11,24 +11,8 @@
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#modules
     group/vmware: "{{ vmware_defaults | default(omit) }}"
 
-    # vmware.vmware_rest uses different format module defaults and doesn't have a group
-    # https://github.com/ansible-collections/vmware.vmware_rest/issues/361
-    vmware.vmware_rest.vcenter_network_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_guest_identity_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_guest_networking_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_guest_networking_interfaces_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_guest_operations_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_guest_power_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_guest_power: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_hardware_cdrom_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_hardware_cdrom: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_hardware_ethernet_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_hardware_ethernet: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_power: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_tools_info: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm_tools: "{{ vmware_rest_defaults | default(omit) }}"
-    vmware.vmware_rest.vcenter_vm: "{{ vmware_rest_defaults | default(omit) }}"
+    # Moduel defaults for https://docs.ansible.com/ansible/latest/collections/vmware/vmware_rest/index.html#plugins-in-vmware-vmware-rest
+    group/vmware.vmware_rest.vmware_rest: "{{ vmware_rest_defaults | default(omit) }}"
 
     # Module defaults for:
     # https://docs.ansible.com/ansible/latest/collections/amazon/aws/index.html#modules
