@@ -169,6 +169,9 @@ if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
 
       echo -n -e "${C_YELLOW}"
       echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
+      if [ "$LOCAL_BRANCH" == "main" ]; then
+      echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
+      fi
       echo -n -e "${C_RST}"
       catapult_update
 
@@ -176,6 +179,9 @@ if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
 
       echo -n -e "${C_YELLOW}"
       echo -e "Catapult version $REMOTE_VERSION is available, do you want to update?"
+      if [ "$LOCAL_BRANCH" == "main" ]; then
+      echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
+      fi
       echo -n -e "${C_RST}"
       options=(
         "yes"
