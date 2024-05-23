@@ -26,9 +26,6 @@ autocomplete:
         - subcommand_name: deploy-network
           subcommand_description: Runs ctp deploy and also includes networks configuration role
           subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e reconfigure_network=yes -l "$@"
-        - subcommand_name: deploy-fresh
-          subcommand_description: Runs deploy as if the machine does not exist
-          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e fresh_deploy=true -e manual_fresh_deploy=true -l "$@"
         - subcommand_name: remove
           subcommand_description: Destroys the existing VM
           subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=undeploy -l "$@"
