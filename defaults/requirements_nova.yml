@@ -1,8 +1,8 @@
 ---
-roles:
+roles: []
 
 collections:
-  - name: https://github.com/novateams/nova.core.git#/nova/core # https://github.com/novateams/nova.core
+  - name: https://github.com/ClarifiedSecurity/nova.core.git#/nova/core ### https://github.com/ClarifiedSecurity/nova.core/releases
     type: git
-    version: HEAD # Default version is latest but it can be locked to a specific tag - https://github.com/novateams/nova.core/tags
-    version_check_url: https://raw.githubusercontent.com/novateams/nova.core/main/nova/core/galaxy.yml
+    version: HEAD #### https://raw.githubusercontent.com/ClarifiedSecurity/nova.core/main/nova/core/galaxy.yml
+
