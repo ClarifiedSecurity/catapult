@@ -3,7 +3,8 @@
 echo -n -e "${C_GREEN}"
 
 REQUIREMENTS_FILE="/srv/requirements/requirements_nova.yml"
-REMOTE_URL=$(cat $REQUIREMENTS_FILE | grep "version_check_url:" | awk '{print $2}')
+REMOTE_VERSION_URL=$(cat $REQUIREMENTS_FILE | grep "####" | awk '{print $4}')
+REMOTE_RELEASES_URL=$(cat $REQUIREMENTS_FILE | grep "###" | awk '{print $5}')
 
 update_collection() {
 
@@ -18,14 +19,14 @@ then
   # Checking for shared roles version if MANIFEST.json exists
   if [[ -f "/srv/ansible/ansible_collections/nova/core/MANIFEST.json" ]]; then
 
-    galaxy_local_version=$(jq -r '.collection_info.version' /srv/ansible/ansible_collections/nova/core/MANIFEST.json)
+    GALAXY_LOCAL_VERSION=$(jq -r '.collection_info.version' /srv/ansible/ansible_collections/nova/core/MANIFEST.json)
 
   fi
 
-  galaxy_remote_version_row=$(curl "$REMOTE_URL" -s | grep "version:" | cut -d " " -f 2)
-  galaxy_remote_version=$(echo "$galaxy_remote_version_row" | cut -d: -f2 | xargs)
+  GALAXY_REMOTE_VERSION_ROW=$(curl "$REMOTE_VERSION_URL" -s | grep "version:" | cut -d " " -f 2)
+  GALAXY_REMOTE_VERSION=$(echo "$GALAXY_REMOTE_VERSION_ROW" | cut -d: -f2 | xargs)
 
-  if [[ "$galaxy_local_version" != "$galaxy_remote_version" ]]; then
+  if [[ "$GALAXY_LOCAL_VERSION" != "$GALAXY_REMOTE_VERSION" ]]; then
 
     if [ "$COLLECTIONS_AUTO_UPDATE" == 1 ]; then
 
@@ -34,10 +35,10 @@ then
     else
 
       echo -n -e "${C_YELLOW}"
-      echo -e "${C_YELLOW}Local nova.core collection version:${C_RST}" "$galaxy_local_version"
-      echo -e "${C_YELLOW}Remote nova.core collection version:${C_RST}" "$galaxy_remote_version"
-      echo -n -e "${C_YELLOW}"
-      echo -e "Remote nova.core collection differs from local"
+      echo -e "${C_YELLOW}Local nova.core collection version:${C_RST}" "$GALAXY_LOCAL_VERSION"
+      echo -e "${C_YELLOW}Remote nova.core collection version:${C_RST}" "$GALAXY_REMOTE_VERSION"
+      echo -e "${C_YELLOW}"
+      echo -e Changelog: "$REMOTE_RELEASES_URL/tag/v$GALAXY_REMOTE_VERSION"
       echo -e "Would you like to update now?"
       echo -n -e "${C_RST}"
       options=(
@@ -59,8 +60,8 @@ then
 
   fi
 
-  unset galaxy_local_version
-  unset galaxy_remote_version
+  unset GALAXY_LOCAL_VERSION
+  unset GALAXY_REMOTE_VERSION
 
 else
 
