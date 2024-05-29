@@ -51,7 +51,7 @@ encrypt_vault () {
   echo -e "${C_YELLOW}"
   echo -e "Catapult will now open the encrypted vault file for you to edit"
   echo -e "When you are done, use CTRL + X to exit and save"
-  echo -e "You can edit your secrets later by running ${C_CYAN}ctp-secrets-edit${C_YELLOW}"
+  echo -e "You can edit your secrets later by running ${C_CYAN}ctp secrets edit${C_YELLOW}"
   echo -e "You can restart this process by deleting your vault from container/home/builder/.vault/vlt"
   read -rp $'\n'"Press ENTER to continue or Ctrl + C to cancel"
   echo -e "${C_RST}"
