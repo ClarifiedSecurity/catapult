@@ -6,6 +6,60 @@ set -e # exit when any command fails
 source ./scripts/general/colors.sh
 
 ###########################
+# Docker restart function #
+###########################
+restart_docker() {
+
+  # This function is required when updating Docker version and the service has too many restarts
+
+  if [[ $(uname) == "Linux" ]]; then
+
+    echo -n -e "${C_MAGENTA}"
+
+      # shellcheck disable=SC2034
+      for i in {1..10}; do
+
+        if [[ $i == 1 ]]; then
+
+          sudo systemctl stop docker --quiet
+
+        fi
+
+        if [[ $(systemctl is-active docker) == "active" ]]; then
+
+            echo -e
+            break
+
+        else
+
+          set +e
+          echo -n -e "${C_MAGENTA}"
+          echo -e "Starting Docker $i..10..."
+          systemctl reset-failed docker # This is required when updating from an older Docker version
+          systemctl restart docker --quiet
+          sleep 10
+          echo -n -e "${C_RST}"
+          set -e
+
+        fi
+
+      done
+
+    if [[ $(systemctl is-active docker) != "active" ]]; then
+
+      echo -n -e "${C_RED}"
+      echo -e Error starting Docker service, restart your computer and run "${C_CYAN}make prepare${C_RED}" again
+      echo -e Check the docker.service logs if the issue remains.
+      echo -n -e "${C_RST}"
+      exit 1
+
+    fi
+
+  fi
+
+}
+
+###########################
 # Docker install function #
 ###########################
 install_docker(){
@@ -91,21 +145,19 @@ install_docker(){
 
       apt-get update
       apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
+      systemctl enable docker.service
 
     elif grep -q "arch" /etc/os-release; then
 
       pacman -S docker docker-compose docker-buildx --noconfirm
-      systemctl enable docker.service
-      systemctl start docker.service
       mkdir -p /etc/docker
-
+      systemctl enable docker.service
 
     elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
 
       dnf makecache
-      dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
+      dnf install -y --allowerasing docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
       systemctl enable docker.service
-      systemctl start docker.service
 
     fi
 
@@ -157,18 +209,11 @@ echo -e "Updating ${C_CYAN}$DAEMON_PATH${C_MAGENTA} with:"
 echo -e "$DOCKER_CONFIG" | jq
 echo -e
 
+# Checks that the file exists and is not empty
 if [[ ! -f $DAEMON_PATH ]] || [[ ! -s $DAEMON_PATH ]]; then
 
   echo "$DOCKER_CONFIG" | jq > "$DAEMON_PATH"
-
-  if [[ $(uname) == "Linux" ]]; then
-
-    echo -n -e "${C_MAGENTA}"
-    echo "Restarting Docker service..."
-    echo -n -e "${C_RST}"
-    systemctl restart docker
-
-  fi
+  restart_docker
 
 else
 
@@ -179,15 +224,7 @@ else
 
   if [[ $CURRENT_FILE_HASH != "$UPDATED_FILE_HASH" ]]; then
 
-    echo -n -e "${C_MAGENTA}"
-    echo "Restarting Docker service..."
-    echo -n -e "${C_RST}"
-
-    if [[ $(uname) == "Linux" ]]; then
-
-      systemctl restart docker
-
-    fi
+    restart_docker
 
   fi
 
