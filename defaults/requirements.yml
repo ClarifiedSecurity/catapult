@@ -25,7 +25,7 @@ collections:
   - name: ansible.windows
     version: 2.3.0
   - name: azure.azcollection
-    version: 2.3.0
+    version: 2.4.0
   - name: chocolatey.chocolatey
     version: 1.5.1
   - name: cisco.ios
