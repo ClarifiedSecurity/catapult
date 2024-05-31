@@ -27,6 +27,10 @@ make start
 make restart
 ```
 
+## Projects
+
+Catapult is designed to work with multiple projects. Each project has its own inventory, roles, and variables. The project is selected when the user enters the Catapult container. The project is selected based on the presence of the `.git` folder in the `/srv/inventories` project directory subfolder. If there is only one project the command will select it automatically. Refer to [catapult-project-example](https://github.com/ClarifiedSecurity/catapult-project-example) on how to structure your project.
+
 ## Tips and tricks
 
 - Use tab completion to get the list of available commands. For example, type `ctp ` and press tab to get the list of available commands.
