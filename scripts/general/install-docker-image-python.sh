@@ -19,11 +19,22 @@ source $HOME/.venv/bin/activate
 uv pip install -r /srv/defaults/requirements.txt
 cd /srv
 
-# Shell
+#########
+# Shell #
+#########
+
+# Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 zsh
 git clone https://github.com/denysdovhan/spaceship-prompt.git "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt" --depth=1
+
+# Spaceship prompt
 ln -s "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+mkdir -p ~/.config
+touch ~/.config/spaceship.zsh
+echo "SPACESHIP_VENV_SHOW=false" >> ~/.config/spaceship.zsh
+
+# FZF
 git clone https://github.com/junegunn/fzf.git $HOME/.fzf --depth 1
 $HOME/.fzf/install --key-bindings --completion --update-rc
 
