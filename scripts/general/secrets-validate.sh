@@ -15,6 +15,7 @@ else
 
     while [[ -n $(yamllint /tmp/vlt.yml -c ~/.vault/yamllint-config.yml) ]]; do
 
+        echo -e "Vault not matching to the YAML syntax rules - https://yamllint.readthedocs.io/en/stable/rules.html"
         echo -e "Please fix the following syntax errors in the vault:"
         yamllint /tmp/vlt.yml -c ~/.vault/yamllint-config.yml
         read -rp "Press ENTER to open and edit the vault or press Ctrl + C to cancel"
