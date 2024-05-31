@@ -16,6 +16,18 @@ touch ./personal/.makerc-personal
 
 echo -n -e "${C_RST}"
 
+# Checking if personal Docker Compose file exists and creating it if it doesn't
+if [[ -r docker/docker-compose-personal.yml ]]; then
+
+  cp docker/docker-compose-personal.yml personal/docker-compose-personal.yml
+  rm -f docker/docker-compose-personal.yml
+
+else
+
+  cp -n defaults/docker-compose-personal.yml personal/docker-compose-personal.yml
+
+fi
+
 # Checking for Docker version
 MINIMUM_DOCKER_MAJOR_VERSION="26"
 CURRENT_DOCKER_MAJOR_VERSION=$(docker --version | awk '{print $3}' | cut -d '.' -f 1)
