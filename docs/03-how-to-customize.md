@@ -11,7 +11,7 @@ There several ways to personalize Catapult:
 
 ### Personal Docker Compose file
 
-`docker/docker-compose-personal.yml` - This file is used to add to, or override the default configuration values defined in `docker/docker-compose.yml`. It can be used to add custom volumes, environment variables, or other settings that are specific to the user.
+`personal/docker-compose-personal.yml` - This file is used to add to, or override the default configuration values defined in `docker/docker-compose.yml`. It can be used to add custom volumes, environment variables, or other settings that are specific to the user.
 
 Potential use cases for this file include:
 

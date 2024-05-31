@@ -231,20 +231,4 @@ else
 
 fi
 
-# Checking if personal docker-compose file exists and creating it if it doesn't
-if ! [ -r docker/docker-compose-personal.yml  ]
-then
-
-  cp defaults/docker-compose-personal.yml docker/docker-compose-personal.yml
-
-fi
-
-# Removing legacy Poetry folder
-if [ -d poetry  ]
-then
-
-  rm -rf poetry
-
-fi
-
 echo -e -n "${C_RST}"
