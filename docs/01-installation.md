@@ -9,7 +9,7 @@ Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is 
 - Run the following commands to install and configure Catapult:
 
 ```sh
-git clone https://github.com/ClarifiedSecurity/catapult --depth 1 && \
+git clone https://github.com/ClarifiedSecurity/catapult && \
 cd catapult && \
 ./install.sh
 ```
