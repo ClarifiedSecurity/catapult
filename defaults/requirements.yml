@@ -23,7 +23,7 @@ collections:
   - name: ansible.utils
     version: 4.1.0
   - name: ansible.windows
-    version: 2.3.0
+    version: 2.4.0
   - name: azure.azcollection
     version: 2.4.0
   - name: chocolatey.chocolatey
