@@ -19,6 +19,8 @@ DISPLAY :=$(or ${DISPLAY},0.0 ) # Default for MacOS that doesn't have a DISPLAY 
 
 BUILD_ARGS := --build-arg CONTAINER_USER_ID=${CONTAINER_USER_ID} --build-arg CONTAINER_GROUP_ID=${CONTAINER_GROUP_ID} --build-arg TZ=${MAKEVAR_TZ}
 
+MAKEVAR_AUTO_UPDATE :=$(or ${MAKEVAR_AUTO_UPDATE},0)
+
 # Deprecated placeholders will be removed when Keepass for Catapult is fully deprecated
 KEEPASS_DB_PATH :=$(or ${KEEPASS_DB_PATH},/tmp/catapult-deprecated)
 KEEPASS_KEY_PATH :=$(or ${KEEPASS_KEY_PATH},/tmp/catapult-deprecated)

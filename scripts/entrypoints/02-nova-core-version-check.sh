@@ -28,7 +28,7 @@ then
 
   if [[ "$GALAXY_LOCAL_VERSION" != "$GALAXY_REMOTE_VERSION" ]]; then
 
-    if [ "$COLLECTIONS_AUTO_UPDATE" == 1 ]; then
+    if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
 
       update_collection
 
