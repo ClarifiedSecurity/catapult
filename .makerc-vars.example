@@ -48,7 +48,7 @@ MAKEVAR_IMAGE_TAG :=latest
 # Available options are main, staging, or a specific tag name listed here https://github.com/ClarifiedSecurity/catapult/tags
 MAKEVAR_CATAPULT_VERSION :=main
 
-# Automatically update Catapult and Docker image when new version is available
+# Automatically update Catapult, Docker image & custom Ansible collections when new versions are available
 # Set to 1 to enable, 0 to disable
 MAKEVAR_AUTO_UPDATE :=0
 
