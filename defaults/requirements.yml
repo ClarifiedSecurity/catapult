@@ -21,7 +21,7 @@ collections:
   - name: ansible.posix
     version: 1.5.2
   - name: ansible.utils
-    version: 4.1.0
+    version: 5.0.0
   - name: ansible.windows
     version: 2.4.0
   - name: azure.azcollection
