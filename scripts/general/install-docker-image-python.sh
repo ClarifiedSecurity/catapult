@@ -3,7 +3,6 @@
 set -e # exit when any command fails
 
 sudo apt update
-sudo apt install -y  # Reqired for Docker image creation
 sudo apt install -y gcc # Reqired for compiling some Python packages
 
 # This sets the yarn version to stable (berry)
