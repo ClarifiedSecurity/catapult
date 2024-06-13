@@ -2,13 +2,17 @@
 
 echo -n -e "${C_GREEN}"
 
-REQUIREMENTS_FILE="/srv/requirements/requirements_nova.yml"
-REMOTE_VERSION_URL=$(cat $REQUIREMENTS_FILE | grep "####" | awk '{print $4}')
-REMOTE_RELEASES_URL=$(cat $REQUIREMENTS_FILE | grep "###" | awk '{print $5}')
+COLLECTION_GIT_URL="https://github.com/ClarifiedSecurity/nova.core.git"
+COLLECTION_NAME="nova.core"
+REMOTE_VERSION_URL="https://raw.githubusercontent.com/ClarifiedSecurity/nova.core/$MAKEVAR_CATAPULT_VERSION/nova/core/galaxy.yml"
+REMOTE_RELEASES_URL="https://github.com/ClarifiedSecurity/nova.core/releases"
 
 update_collection() {
 
-  ansible-galaxy collection install -r $REQUIREMENTS_FILE --force -p /srv/ansible
+  echo -e "Cloning $COLLECTION_NAME collection..."
+  git clone $COLLECTION_GIT_URL --branch "$MAKEVAR_CATAPULT_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
+  ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible
+  rm -rf /tmp/$COLLECTION_NAME
 
 }
 
@@ -34,11 +38,15 @@ then
 
     else
 
-      echo -n -e "${C_YELLOW}"
+      echo -e "${C_YELLOW}"
       echo -e "${C_YELLOW}Local nova.core collection version:${C_RST}" "$GALAXY_LOCAL_VERSION"
       echo -e "${C_YELLOW}Remote nova.core collection version:${C_RST}" "$GALAXY_REMOTE_VERSION"
       echo -e "${C_YELLOW}"
-      echo -e Changelog: "$REMOTE_RELEASES_URL/tag/v$GALAXY_REMOTE_VERSION"
+      if [[ $MAKEVAR_CATAPULT_VERSION == "main" ]]; then
+
+        echo -e Changelog: "$REMOTE_RELEASES_URL/tag/v$GALAXY_REMOTE_VERSION"
+
+      fi
       echo -e "Would you like to update now?"
       echo -n -e "${C_RST}"
       options=(
