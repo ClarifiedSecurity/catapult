@@ -29,7 +29,7 @@ collections:
   - name: chocolatey.chocolatey
     version: 1.5.1
   - name: cisco.ios
-    version: 8.0.0
+    version: 9.0.0
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
