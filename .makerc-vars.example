@@ -28,6 +28,7 @@ MAKEVAR_SUDO_COMMAND :=sudo -E
 # This repo is used to store your customizations for Catapult
 # Make sure to follow the correct folder and file structure defined in the Catapult README under customization section
 # Example for SSH git@github.com:YourAccount/YourProject.git or HTTPS https://github.com/YourAccount/YourProject.git
+# Append -b barnch_name to the end of the URL to use a specific branch
 MAKEVAR_CATAPULT_CUSTOMIZER_REPO :=
 
 # This is the FQDN of docker registry that is hosting the Catapult container image

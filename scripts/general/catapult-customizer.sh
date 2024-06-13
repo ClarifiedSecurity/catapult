@@ -18,11 +18,15 @@ if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE ]]; then
 
     else
 
-        if git ls-remote "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" &> /dev/null; then
+        # Extracting git clone path from MAKEVAR_CATAPULT_CUSTOMIZER_REPO in case it contains a branch
+        CATAPULT_CUSTOMIZER_REPO=$(echo "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" | awk '{print $1}')
+
+        if git ls-remote "$CATAPULT_CUSTOMIZER_REPO" &> /dev/null; then
 
             rm -rf custom # Removing the custom directory if it exists
             echo -e "Cloning customizer repo..."
-            git clone "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" custom -q --depth 1
+            # shellcheck disable=SC2086
+            git clone $MAKEVAR_CATAPULT_CUSTOMIZER_REPO -q --depth 1 custom
             rm -rf custom/.git*
         else
 
