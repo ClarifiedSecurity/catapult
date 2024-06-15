@@ -87,7 +87,7 @@ if [[ -r custom/docker/docker-compose-extra.yml ]]; then
   elif [[ -r custom/docker/docker-compose-custom.yml ]]; then
 
     echo -e "Using extended docker-compose-custom.yml..."
-    cp defaults/docker-compose-custom.yml docker/docker-compose-custom.yml
+    cp custom/docker/docker-compose-custom.yml docker/docker-compose-custom.yml
     rm -f docker/docker-compose-extra.yml
 
   else
