@@ -9,7 +9,7 @@ echo -n -e "${C_BLUE}"
 
 # Cloninig and overwriting the customizations if env variable CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE is not
 # Set `export CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE=true` variable temporarily to prevent overwriting your local customizations during development and testing
-if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE ]]; then
+if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE && $MAKEVAR_FREEZE_UPDATE != 1 ]]; then
 
     # Cloning the customizer repo if it's set
     if [[ -z "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" ]]; then
@@ -38,9 +38,13 @@ if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE ]]; then
 
 else
 
-    echo -n -e "${C_YELLOW}"
-    echo -e "CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE variable found, not overwriting custom folder"
-    echo -n -e "${C_BLUE}"
+    if [[ -n $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE ]]; then
+
+        echo -n -e "${C_RED}"
+        echo -e "CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE variable is not set, overwriting custom folder"
+        echo -n -e "${C_BLUE}"
+
+    fi
 
 fi
 
