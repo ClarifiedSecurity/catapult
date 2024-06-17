@@ -9,7 +9,7 @@ REMOTE_RELEASES_URL="https://github.com/ClarifiedSecurity/nova.core/releases"
 
 update_collection() {
 
-  echo -e "Cloning $COLLECTION_NAME collection..."
+  echo -e "Downloading $COLLECTION_NAME collection..."
   git clone $COLLECTION_GIT_URL --branch "$MAKEVAR_CATAPULT_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
   ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible
   rm -rf /tmp/$COLLECTION_NAME
@@ -34,7 +34,9 @@ then
 
     if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
 
+      echo -n -e "${C_YELLOW}"
       update_collection
+      echo -n -e "${C_RST}"
 
     else
 
