@@ -40,52 +40,6 @@ then
 
 fi
 
-# Checking if .makerc-vars has all of the variables that are defined in .makerc-vars.example
-echo -e "Validating .makerc-vars..."
-new_vars=$(diff <( cat .makerc-vars | grep -v '^#' | grep '=' | cut -d '=' -f 1 |  sort  ) <(cat $example_vars_file | grep -v '^#' | grep '=' | cut -d '=' -f 1 |  sort ) | grep ">" | cut -d ">" -f 2)
-
-if [ ! -z "$new_vars" ]
-then
-echo -e "${C_RST}"
-echo -e "${C_CYAN}Found following variable(s) in ${C_YELLOW}$example_vars_file${C_CYAN} that are not present in your ${C_YELLOW}${ROOT_DIR}/.makerc-vars:${C_CYAN}"
-
-  for var in "${new_vars[@]}"
-  do
-      echo -e "${C_RED}"
-      stripped_var=$(echo "$var" | cut -d ' ' -f 2)
-      echo -e "$stripped_var"
-      echo -e "${C_RST}"
-      echo -n -e "${C_YELLOW}"
-      echo -e "Even if not used make sure they are present in .makerc-vars"
-      echo -e "You can copy the default values from $example_vars_file"
-      echo -e "${C_RST}"
-  done
-  exit 1
-fi
-
-# Looping thorugh .makerc-vars
-while IFS= read -r line; do
-
-    # Check if the line contains an equal sign (=) and either a single quote (') or double quotes (")
-    if [[ $line == *"="* ]] && { [[ $line == *"'"* ]] || [[ $line == *"\""* ]]; }; then
-
-        # Adding the error line to the array
-        error_variables+=("$line")
-
-    fi
-
-done < "${ROOT_DIR}/.makerc-vars"
-
-# Print the variables that are not set correctly
-for error_variable in "${error_variables[@]}"; do
-
-  echo -n -e "${C_RED}"
-  echo -e "$error_variable in ${ROOT_DIR}/.makerc-vars must not contain single or double quotes"
-  echo -n -e "${C_RST}"
-  exit 1
-
-done
-
 # Checking that MAKEVAR_SUDO_COMMAND for MacOS is empty
 if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
 
