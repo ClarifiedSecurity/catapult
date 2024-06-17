@@ -56,101 +56,111 @@ fi
 # Catapult version check #
 ##########################
 
-BRANCH="${MAKEVAR_CATAPULT_VERSION}"
-LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
-# Checking for user is in the correct branch
-if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
+  BRANCH="${MAKEVAR_CATAPULT_VERSION}"
+  LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-  echo -n -e "${C_YELLOW}"
-  echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to switch branch?"
-  echo -n -e "${C_RST}"
-  options=(
-    "yes"
-    "no"
-  )
+  # Checking for user is in the correct branch
+  if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
 
-  # shellcheck disable=SC2034
-  select option in "${options[@]}"; do
-      case "$REPLY" in
-          yes|y|1) git switch "$BRANCH"; break;;
-          no|n|2) echo -e "Not changing branch"; break;;
-      esac
-  done
+    echo -n -e "${C_YELLOW}"
+    echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to switch branch?"
+    echo -n -e "${C_RST}"
+    options=(
+      "yes"
+      "no"
+    )
 
-fi
-
-# Checking if github.com is reachable
-if ! curl github.com --connect-timeout 2 -s > /dev/null; then
-  echo -n -e "${C_YELLOW}"
-  echo -e "Cannot check for Catapult version!"
-  echo -e "GitHub is not reachable"
-  echo -n -e "${C_RST}"
-  exit 0;
-fi
-
-# Catalpult update function
-catapult_update () {
-
-  if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
-
-    git pull
-
-  else
-
-    git fetch origin "$BRANCH:$BRANCH"
-    echo -e "${C_YELLOW}"
-    echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch, make sure to rebase your ${C_CYAN}$LOCAL_BRANCH${C_YELLOW} branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
-    echo -e "${C_RST}"
+    # shellcheck disable=SC2034
+    select option in "${options[@]}"; do
+        case "$REPLY" in
+            yes|y|1) git switch "$BRANCH"; break;;
+            no|n|2) echo -e "Not changing branch"; break;;
+        esac
+    done
 
   fi
 
-}
+  # Checking if github.com is reachable
+  if ! curl github.com --connect-timeout 2 -s > /dev/null; then
+    echo -n -e "${C_YELLOW}"
+    echo -e "Cannot check for Catapult version!"
+    echo -e "GitHub is not reachable"
+    echo -n -e "${C_RST}"
+    exit 0;
+  fi
 
-# Checking if the latest remote version is different than the current local version
-# Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
-REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
-LOCAL_VERSION=$(git archive "$BRANCH" version.yml | tar xO | cut -d ' ' -f 2)
+  # Catalpult update function
+  catapult_update () {
 
-# Checking if remote version is diffrent than local version
-if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
+    if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
 
-    echo -e -n
-
-  else
-
-    if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
-
-      echo -n -e "${C_YELLOW}"
-      echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
-      if [ "$LOCAL_BRANCH" == "main" ]; then
-      echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
-      fi
-      echo -n -e "${C_RST}"
-      catapult_update
+      git pull
 
     else
 
-      echo -n -e "${C_YELLOW}"
-      echo -e "Catapult version $REMOTE_VERSION is available, do you want to update?"
-      if [ "$LOCAL_BRANCH" == "main" ]; then
-      echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
-      fi
-      echo -n -e "${C_RST}"
-      options=(
-        "yes"
-        "no"
-      )
-
-      # shellcheck disable=SC2034
-      select option in "${options[@]}"; do
-          case "$REPLY" in
-              yes|y|1) catapult_update; break;;
-              no|n|2) echo -e "Not updating Catapult"; break;;
-          esac
-      done
+      git fetch origin "$BRANCH:$BRANCH"
+      echo -e "${C_YELLOW}"
+      echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch, make sure to rebase your ${C_CYAN}$LOCAL_BRANCH${C_YELLOW} branch with: ${C_CYAN}git rebase -i origin/$BRANCH"
+      echo -e "${C_RST}"
 
     fi
+
+  }
+
+  # Checking if the latest remote version is different than the current local version
+  # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
+  REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
+  LOCAL_VERSION=$(git archive "$BRANCH" version.yml | tar xO | cut -d ' ' -f 2)
+
+  # Checking if remote version is diffrent than local version
+  if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
+
+      echo -e -n
+
+    else
+
+      if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
+
+        echo -n -e "${C_YELLOW}"
+        echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
+        if [ "$LOCAL_BRANCH" == "main" ]; then
+        echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
+        fi
+        echo -n -e "${C_RST}"
+        catapult_update
+
+      else
+
+        echo -n -e "${C_YELLOW}"
+        echo -e "Catapult version $REMOTE_VERSION is available, do you want to update?"
+        if [ "$LOCAL_BRANCH" == "main" ]; then
+        echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
+        fi
+        echo -n -e "${C_RST}"
+        options=(
+          "yes"
+          "no"
+        )
+
+        # shellcheck disable=SC2034
+        select option in "${options[@]}"; do
+            case "$REPLY" in
+                yes|y|1) catapult_update; break;;
+                no|n|2) echo -e "Not updating Catapult"; break;;
+            esac
+        done
+
+      fi
+
+  fi
+
+else
+
+  echo -n -e "${C_YELLOW}"
+  echo -e "MAKEVAR_FREEZE_UPDATE set to 1, not offering Catapult component updates"
+  echo -n -e "${C_RST}"
 
 fi
 
