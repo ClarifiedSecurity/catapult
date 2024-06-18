@@ -4,9 +4,6 @@ import yaml
 import jinja2
 import os
 
-# For some reason, some Ansible commands cannot detect the vault file from an environment variable
-use_vault = os.environ.get('USE_ANSIBLE_VAULT') == '1'
-
 # Setting autocomplete.yml path variables
 autocomplete_default_src_path = '/srv/defaults/autocomplete.yml'
 autocomplete_custom_src_path = '/srv/custom/autocomplete.yml'
@@ -68,11 +65,7 @@ autoload -U compinit; compinit
     {% set loop_index = loop.index %}
     {% for subcommand in entry.subcommands %}
     {% if loop_index == 1 and loop.index == 1 %}if{% else %}elif{% endif %} [[ "$command" = "{{ command }}" && $subcommand = "{{ subcommand.subcommand_name }}" ]]; then
-        {% if use_vault %}
-        {{ subcommand.subcommand_to_execute | safe }}
-        {% else %}
-        {{ subcommand.subcommand_to_execute | replace(" -e @~/.vault/vlt", "") | safe }}
-        {% endif %}
+    {{ subcommand.subcommand_to_execute | safe }}
     {% endfor %}
     {% endfor %}
 else
@@ -155,8 +148,7 @@ template = jinja2.Template(jinja_template, lstrip_blocks=True, trim_blocks=True,
 
 # Define context variables
 context = {
-    'autocomplete': data['autocomplete'],
-    'use_vault': use_vault  # Pass use_vault variable to the template context
+    'autocomplete': data['autocomplete']
 }
 
 # Render template with data

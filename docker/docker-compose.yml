@@ -10,8 +10,6 @@ services:
     restart: no
     volumes:
       - ${ROOT_DIR}/:/srv/
-      - ${KEEPASS_DB_PATH}:/home/builder/KPDB.kbdx:ro
-      - ${KEEPASS_KEY_PATH}:/home/builder/KPDB.key:ro
       - ${ROOT_DIR}/container/docker-entrypoint.sh:/docker-entrypoint.sh
       - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
       - ${ROOT_DIR}/container/home/builder/.history:/home/builder/.history
@@ -26,12 +24,6 @@ services:
       CONTAINER_USER_ID: ${CONTAINER_USER_ID}
       CONTAINER_USER_NAME: ${CONTAINER_USER_NAME}
       DISPLAY: ${DISPLAY}
-      EMAIL: ${MAKEVAR_EMAIL}
-      KEEPASS_AWS_ACCESS_KEY: ${KEEPASS_AWS_ACCESS_KEY}
-      KEEPASS_AZURE_SERVICE_PRINCIPAL: ${KEEPASS_AZURE_SERVICE_PRINCIPAL}
-      KEEPASS_DEPLOYER_CREDENTIALS_PATH: ${KEEPASS_DEPLOYER_CREDENTIALS_PATH}
-      KEEPASS_LINODE_API_TOKEN: ${KEEPASS_LINODE_API_TOKEN}
-      KEEPASS_SSH_KEYPAIR: ${KEEPASS_SSH_KEYPAIR}
       MAKEVAR_AUTO_UPDATE: ${MAKEVAR_AUTO_UPDATE}
       MAKEVAR_CATAPULT_VERSION: ${MAKEVAR_CATAPULT_VERSION}
       MAKEVAR_FREEZE_UPDATE: ${MAKEVAR_FREEZE_UPDATE}
@@ -41,7 +33,6 @@ services:
       SLACK_WEBHOOK_URL: ${MAKEVAR_WEBHOOK_URL}
       SSH_AUTH_SOCK: /ssh-agent
       TZ: ${MAKEVAR_TZ}
-      USE_ANSIBLE_VAULT: ${MAKEVAR_USE_ANSIBLE_VAULT}
       USER: ${CONTAINER_USER_NAME}
     extra_hosts:
       - host.docker.internal:host-gateway

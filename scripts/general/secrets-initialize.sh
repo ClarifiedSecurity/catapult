@@ -69,13 +69,9 @@ if [[ ! -f ~/.vault/vlt ]]; then
 
 fi
 
-# Preparing the Ansible vault if it's enabled
-if [[ "$USE_ANSIBLE_VAULT" == 1 ]]; then
+# Preparing the Ansible vault
+if ! grep -q "ANSIBLE_VAULT;" ~/.vault/vlt ; then
 
-  if ! grep -q "ANSIBLE_VAULT;" ~/.vault/vlt ; then
-
-    encrypt_vault
-
-  fi
+  encrypt_vault
 
 fi

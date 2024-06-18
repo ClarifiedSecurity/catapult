@@ -19,16 +19,11 @@ RUN groupadd builder -g ${CONTAINER_GROUP_ID} && useradd -u ${CONTAINER_USER_ID}
 
 ADD --chown=builder:builder /container/home/builder/.default_aliases /home/builder/.default_aliases
 ADD --chown=builder:builder /container/home/builder/.ssh /home/builder/.ssh
-ADD --chown=builder:builder /container/home/builder/kpsock.py /home/builder/kpsock.py
-ADD --chown=builder:builder /container/home/builder/keepass-decrypt-check.py /home/builder/keepass-decrypt-check.py
-ADD --chown=builder:builder plugins /srv/plugins
-ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
-ADD --chown=builder:builder /requirements /srv/requirements
 ADD --chown=builder:builder /scripts /srv/scripts
-ADD --chown=builder:builder /container/docker-entrypoint.sh /
+ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
 ADD --chown=builder:builder defaults/requirements.txt /srv/defaults/requirements.txt
+ADD --chown=builder:builder defaults/requirements.yml /srv/defaults/requirements.yml
 ADD --chown=builder:builder package.json /srv/package.json
-ADD --chown=builder:builder .yarnrc.yml /srv/.yarnrc.yml
 ADD --chown=builder:builder yarn.lock /srv/yarn.lock
 
 # Installing everything in two script to avoid creating multiple layers thus reducing the image size

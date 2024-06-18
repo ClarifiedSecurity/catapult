@@ -16,8 +16,6 @@ cd catapult && \
 
 - You can run `./install.sh` multiple times until it finishes without errors.
 
-If you didn't configure Keepass automatically during the installation then fill out missing vars in `.makerc-vars`. **Read the comments for each variable for more information.** All of the `KEEPASS_*` variables are case sensitive.
-
 ### Windows Subsystem for Linux
 
 Log in interactively (over RDP or locally) to your Windows machine with an account that has **admin** rights and run the following commands in PowerShell. The first login needs to be with an **admin** account because the WSL installation needs to be done with admin rights. After the first installation you can use a non-admin account to log in.
