@@ -83,7 +83,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
   fi
 
   # Checking if github.com is reachable
-  if ! curl github.com --connect-timeout 2 -s > /dev/null; then
+  if ! curl github.com --connect-timeout 5 -s > /dev/null; then
     echo -n -e "${C_YELLOW}"
     echo -e "Cannot check for Catapult version!"
     echo -e "GitHub is not reachable"

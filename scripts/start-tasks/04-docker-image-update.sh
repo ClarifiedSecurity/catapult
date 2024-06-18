@@ -39,7 +39,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
   fi
 
   # Checking if ${MAKEVAR_CONTAINER_REGISTRY} is reachable
-  if curl ghcr.io --connect-timeout 2 -s > /dev/null
+  if curl ghcr.io --connect-timeout 5 -s > /dev/null
   then
 
       echo -n -e
