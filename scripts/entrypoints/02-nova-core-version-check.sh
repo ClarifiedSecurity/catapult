@@ -19,7 +19,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
   }
 
   echo -e "Checking for nova.core updates..."
-  if curl github.com --connect-timeout 2 -s > /dev/null
+  if curl github.com --connect-timeout 5 -s > /dev/null
   then
 
     # Checking for shared roles version if MANIFEST.json exists
