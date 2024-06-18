@@ -68,5 +68,3 @@ MAKEVAR_WEBHOOK_USERNAME :=Catapult
 # Use channelname for sending notifications to a channel or @username for sending to a notifications user
 MAKEVAR_WEBHOOK_CHANNEL :=
 
-# Set to true to use Ansible Vault for sensitive data, instead of KeePass
-MAKEVAR_USE_ANSIBLE_VAULT :=1

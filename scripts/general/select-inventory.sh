@@ -98,17 +98,8 @@ function bash_selector() {
 
 function inventory_generator(){
 
-    # Checking if USE_ANSIBLE_VAULT is set to 1
-    # For some reaseon some Ansible commands cannot detect the vault file from an environment variable
-    if [[ "$USE_ANSIBLE_VAULT" == 1 ]]; then
-
-        ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$selected_folder")_hosts"
-
-    else
-
-        ansible-inventory --playbook-dir /srv/inventories --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$selected_folder")_hosts"
-
-    fi
+  # For some reaseon some Ansible commands cannot detect the vault file from an environment variable
+  ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$selected_folder")_hosts"
 
 }
 

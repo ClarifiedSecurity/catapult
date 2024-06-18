@@ -73,7 +73,6 @@ passlib
 polling
 prettytable
 psycopg2-binary
-pykeepass
 pyopenssl
 pyvmomi
 pywinrm

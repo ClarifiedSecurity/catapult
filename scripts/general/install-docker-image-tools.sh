@@ -21,7 +21,7 @@ apt install -y ca-certificates rsync iputils-ping jq sshpass sudo unzip # Requir
 apt install -y iproute2 traceroute dnsutils netcat-openbsd nano # Extra development & debugging tools
 
 cd /tmp
-curl -s -O https://nodejs.org/download/release/$NODE_VERSION/node-$NODE_VERSION-$OS_PLATFORM.tar.xz
+curl -O https://nodejs.org/download/release/$NODE_VERSION/node-$NODE_VERSION-$OS_PLATFORM.tar.xz
 mkdir -p /usr/local/lib/nodejs
 tar -xJvf node-$NODE_VERSION-$OS_PLATFORM.tar.xz -C /usr/local/lib/nodejs
 
