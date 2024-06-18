@@ -1,6 +1,0 @@
----
-# Template created with packer
-# Used only to create project templates from
-base_vm_template: BASE_TEMPLATE_win10_21H1_x86
-
-vm_template: catapult-template-win10-21H1-x86
