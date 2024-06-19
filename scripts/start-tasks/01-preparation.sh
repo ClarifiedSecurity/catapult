@@ -22,7 +22,7 @@ if [[ -r docker/docker-compose-personal.yml ]]; then
   cp docker/docker-compose-personal.yml personal/docker-compose-personal.yml
   rm -f docker/docker-compose-personal.yml
 
-else
+elif [[ ! -r personal/docker-compose-personal.yml ]]; then
 
   cp -n defaults/docker-compose-personal.yml personal/docker-compose-personal.yml
 
