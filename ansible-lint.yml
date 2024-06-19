@@ -2,6 +2,7 @@
 # You can use this file to run ansible-lint inside the container against roles with:
 # ansible-lint --fix -c /srv/ansible-lint.yml /path/to/role
 skip_list: # https://ansible-lint.readthedocs.io/rules/
-  - name[template]
   - meta-no-info
+  - name[template]
   - role-name[path]
+  - yaml[line-length]
