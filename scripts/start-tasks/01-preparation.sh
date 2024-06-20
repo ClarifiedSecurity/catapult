@@ -24,7 +24,7 @@ if [[ -r docker/docker-compose-personal.yml ]]; then
 
 elif [[ ! -r personal/docker-compose-personal.yml ]]; then
 
-  cp -n defaults/docker-compose-personal.yml personal/docker-compose-personal.yml
+  cp defaults/docker-compose-personal.yml personal/docker-compose-personal.yml
 
 fi
 
