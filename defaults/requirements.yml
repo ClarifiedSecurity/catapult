@@ -72,7 +72,7 @@ collections:
     type: git
     version: 3.0.1
   - name: vyos.vyos
-    version: 4.1.0
+    version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
     type: git
     version: HEAD
