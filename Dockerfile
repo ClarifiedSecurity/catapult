@@ -1,6 +1,5 @@
 FROM python:3.11.9-slim-bookworm
 
-# Timezone configuration from .makerc-vars
 ARG TZ
 ENV TZ=$TZ
 RUN ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone

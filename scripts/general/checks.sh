@@ -15,11 +15,12 @@ echo -e -n "${C_CYAN}"
 if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
 
   echo -e "${C_RED}"
-  echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in ${C_YELLOW}${ROOT_DIR}/.makerc-vars${C_RED}"
-  echo -e "sudo is not usually required on MacOS, so MAKEVAR_SUDO_COMMAND should be empty"
+  echo -e "You are using MacOS, but MAKEVAR_SUDO_COMMAND is not empty in .makerc-personal"
+  echo -e "Make sure ${C_CYAN}MAKEVAR_SUDO_COMMAND :=${C_RED} is set in ${C_CYAN}${ROOT_DIR}/personal/.makerc-personal${C_RED} file"
 
-  read -pr "Press ENTER to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
-  echo -e "${C_CYAN}"
+  echo
+  read -rp "Press ENTER to continue, or Ctrl + C to cancel and set the correct MAKEVAR_SUDO_COMMAND value..."
+  echo -e "${C_RST}"
 
 fi
 

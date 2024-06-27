@@ -1,8 +1,6 @@
-######################
-# Required variables #
-######################
-
-# REQUIRED_START (DO NOT REMOVE THIS LINE)
+# This is the default configuration file for Catapult
+# If you want to change any of the values for yourself define them in the personal/.makerc-personal file
+# If you want to change any of the values for your organization/team/project follow the How to customize Catapult section in https://clarifiedsecurity.github.io/catapult-docs/catapult/03-how-to-customize/#customization
 
 # Docker compose project name
 # This needs to be unique if you are running multiple Catapult container instances on the same host
@@ -15,12 +13,6 @@ MAKEVAR_TZ :=UTC
 # This required when configuring your host machine with Catapult or configuring VMs that are running on your host machine's VMware Workstation
 # Set to true to enable, false to disable
 MAKEVAR_ALLOW_HOST_SSH_ACCESS :=false
-
-# REQUIRED_END (DO NOT REMOVE THIS LINE)
-
-######################
-# Optional variables #
-######################
 
 # If you are not using sudo you can leave this empty, MacOS for an example
 MAKEVAR_SUDO_COMMAND :=sudo -E
@@ -67,4 +59,3 @@ MAKEVAR_WEBHOOK_USERNAME :=Catapult
 # This is the channel that will be used to send notifications to Slack or Mattermost
 # Use channelname for sending notifications to a channel or @username for sending to a notifications user
 MAKEVAR_WEBHOOK_CHANNEL :=
-

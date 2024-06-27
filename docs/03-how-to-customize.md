@@ -31,7 +31,7 @@ Potential use cases for this file include:
 
 ### Personal makefile configuration
 
-`personal/.makerc-personal` - This file is used to add custom makefile variables that are specific to the user.
+`personal/.makerc-personal` - This file is used to add custom makefile variables that are specific to the user. Refer to the `.makerc-vars` file for available options.
 
 Potential use cases for this file include:
 
@@ -43,4 +43,4 @@ Potential use cases for this file include:
 
 ## Customization
 
-To customize Catapult for your team or organization, a separate git project needs to be created that contains all of the required files. Then users need to be pointed that project using the `MAKEVAR_CATAPULT_CUSTOMIZER_REPO` variable in their `.makerc-vars` file. For a full list of available options, see the example [Catapult Customizer](https://github.com/ClarifiedSecurity/catapult-customizer) repo.
+To customize Catapult for your team or organization, a separate git project needs to be created that contains all of the required files. Then users need to be pointed that project using the `MAKEVAR_CATAPULT_CUSTOMIZER_REPO` variable in their `personal/.makerc-personal` file. For a full list of available options, see the example [Catapult Customizer](https://github.com/ClarifiedSecurity/catapult-customizer) repo.

@@ -1,6 +1,6 @@
 #!make
 
--include .makerc-vars ### Universal make variables
+-include .makerc-vars ### Default make variables
 -include custom/makefiles/.makerc-custom ### Custom (team/org) make functions
 -include personal/.makerc-personal ### Your personalized make functions
 -include .makerc ### Default initialization file
