@@ -7,38 +7,9 @@ source ./scripts/general/colors.sh
 
 echo -e -n "${C_CYAN}"
 
-#########################
-# .make-vars validation #
-#########################
-
-# This needs to be first, because if any of the variables are not set correctly, next tasks might fail
-
-# Checking if custom .makerc-vars.example exists and using it if it does
-if [ -r custom/.makerc-vars.example  ]
-then
-
-    example_vars_file=custom/.makerc-vars.example
-
-  else
-
-    example_vars_file=.makerc-vars.example
-
-fi
-
-# Checking if .makerc-vars exists
-if ! [ -r .makerc-vars  ]
-then
-
-  echo -e "${C_RED}"
-  echo -e ".makerc-vars does not exist."
-  echo -n -e "${C_YELLOW}"
-  echo -e "You can create it with ${C_BLUE}cp $example_vars_file .makerc-vars${C_YELLOW} command."
-  echo -e "If you are using custom .makerc-vars it exists in $(pwd)/.makerc-vars folder."
-  echo -e "Make sure to fill out the required variables in .makerc-vars"
-  echo -e "${C_RST}"
-  exit 1
-
-fi
+######################
+# Sudo command check #
+######################
 
 # Checking that MAKEVAR_SUDO_COMMAND for MacOS is empty
 if [[ "$(uname)" == "Darwin" && -n "${MAKEVAR_SUDO_COMMAND+x}" && -n "$MAKEVAR_SUDO_COMMAND" ]]; then
