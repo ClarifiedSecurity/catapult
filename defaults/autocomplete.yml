@@ -158,12 +158,9 @@ autocomplete:
         - subcommand_name: disable-debugging
           subcommand_description: Disables debugging mode stdout
           subcommand_to_execute: unset ANSIBLE_CALLBACKS_ENABLED && unset ANSIBLE_SHOW_PER_HOST_START && echo 'Debugging disabled'
-        - subcommand_name: default-requirements
+        - subcommand_name: reinstall-default-collections
           subcommand_description: Updates default roles and collections, overwriting the existing ones
-          subcommand_to_execute: /srv/scripts/general/install-requirements.sh DEFAULT
-        - subcommand_name: custom-requirements
-          subcommand_description: Updates extra added roles and collections, overwriting the existing ones
-          subcommand_to_execute: /srv/scripts/general/install-requirements.sh EXTRA
-        - subcommand_name: all-requirements
-          subcommand_description: Updates all collections, overwriting the existing ones
-          subcommand_to_execute: /srv/scripts/general/install-requirements.sh
+          subcommand_to_execute: /srv/scripts/general/install-collections.sh
+        - subcommand_name: update-nova
+          subcommand_description: Checks for nova.core collection updates
+          subcommand_to_execute: /srv/scripts/entrypoints/02-nova-core-version-check.sh

@@ -37,8 +37,8 @@ echo "SPACESHIP_VENV_SHOW=false" >> ~/.config/spaceship.zsh
 git clone https://github.com/junegunn/fzf.git $HOME/.fzf --depth 1
 $HOME/.fzf/install --key-bindings --completion --update-rc
 
-# DEFAULT because extra requirements will be installed on first run and they can be updated with rebuilding the image
-/srv/scripts/general/install-requirements.sh DEFAULT
+# Installing Ansible roles & collections
+/srv/scripts/general/install-collections.sh
 
 sudo apt remove -y gcc
 sudo apt autoremove -y

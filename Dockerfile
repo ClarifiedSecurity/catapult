@@ -1,10 +1,9 @@
-# Must match the Python version in pyproject.toml
 FROM python:3.11.9-slim-bookworm
 
 # Timezone configuration from .makerc-vars
 ARG TZ
-ENV TZ=${MAKEVAR_TZ}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV TZ=$TZ
+RUN ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone
 
 ARG CONTAINER_USER_ID
 ARG CONTAINER_GROUP_ID
@@ -17,6 +16,8 @@ RUN mkdir -p /etc/sudoers.d
 RUN echo "builder     ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder
 RUN groupadd builder -g ${CONTAINER_GROUP_ID} && useradd -u ${CONTAINER_USER_ID} -g builder -m -d /home/builder -s /bin/bash -c "Builder user" builder
 
+ADD --chown=builder:builder .yarnrc.yml /srv/.yarnrc.yml
+ADD --chown=builder:builder /container/docker-entrypoint.sh /
 ADD --chown=builder:builder /container/home/builder/.default_aliases /home/builder/.default_aliases
 ADD --chown=builder:builder /container/home/builder/.ssh /home/builder/.ssh
 ADD --chown=builder:builder /scripts /srv/scripts
