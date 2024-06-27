@@ -14,51 +14,14 @@ if [ $EUID -eq 0 ]; then
     echo -e "${C_RST}"
 fi
 
-makerc-vars-creator() {
-    # Checking if .makerc-vars already exists and asking for an overwrite
-    if [ -f .makerc-vars ]; then
-        print_nl "${C_RED}"
-        print_nl "$(pwd)/.makerc-vars already exists, do you want to overwrite it with $(pwd)/.makerc-vars.example?"
-        print_nl "${C_YELLOW}"
+# Creating default .makerc-vars file if it doesn't exist
+if [[ ! -f .makerc-vars ]]; then
 
-        options=(
-            "Yes"
-            "No"
-        )
-        select _ in "${options[@]}"; do
-            case "$REPLY" in
-                yes|y|1) cp -f .makerc-vars.example .makerc-vars; break;;
-                no|n|2) print_nl "Not overwriting .makerc-vars"$'\n'; break;;
-            esac
-        done
+  print "${C_MAGENTA}"
+  echo -e "Creating default .makerc-vars file"
+  print "${C_RST}"
+  cp .makerc-vars.example .makerc-vars
 
-        print "${C_RST}"
-    else
-        cp -f .makerc-vars.example .makerc-vars
-    fi
-}
-
-if [ ! -f .makerc-vars ]; then
-    print_nl "${C_RED}"
-    print_nl "$(pwd)/.makerc-vars not found"
-    print_nl "${C_YELLOW}"
-    print_nl "Do you want to create your .makerc-vars file from the $(pwd)/.makerc-vars.example file?"
-    print_nl
-
-    options=(
-        "Yes"
-        "No, I'm using custom .makerc-vars"
-    )
-    select _ in "${options[@]}"; do
-        case "$REPLY" in
-            yes|y|1) makerc-vars-creator; break;;
-            no|n|2) read -rp $'\n'"Make sure your $(pwd)/.makerc-vars exists and press any key to continue"$'\n'; break;;
-        esac
-    done
-
-    print "$C_RST"
-else
-    makerc-vars-creator
 fi
 
 # MacOS
@@ -67,7 +30,18 @@ if [[ $(uname) == "Darwin" ]]; then
     print_nl "Removing MacOS sudo requirement for Catapult on MacOS..."
     print_nl "${C_RST}"
 
-    sed -i "" "s#MAKEVAR_SUDO_COMMAND.*#MAKEVAR_SUDO_COMMAND :=#" .makerc-vars
+    mkdir -p personal
+    touch personal/.makerc-personal
+
+    if grep -q "MAKEVAR_SUDO_COMMAND" personal/.makerc-personal; then
+
+      sed -i "" "s#MAKEVAR_SUDO_COMMAND.*#MAKEVAR_SUDO_COMMAND :=#" personal/.makerc-personal
+
+    else
+
+      echo "MAKEVAR_SUDO_COMMAND :=" >> personal/.makerc-personal
+
+    fi
 
     brew-install() {
         print "${C_MAGENTA}"

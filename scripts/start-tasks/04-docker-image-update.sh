@@ -28,16 +28,6 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
   echo -e "Checking for docker image updates..."
 
-  # Chcking for docker image updates if ${MAKEVAR_CONTAINER_REGISTRY} is defined
-  if [[ -z "${MAKEVAR_CONTAINER_REGISTRY}" ]]; then
-
-    echo -n -e "${C_RED}"
-    echo -e "Cannot check for docker image version, MAKEVAR_CONTAINER_REGISTRY is not defined in .makerc-vars!"
-    echo -n -e "${C_CYAN}"
-    exit 0
-
-  fi
-
   # Checking if ${MAKEVAR_CONTAINER_REGISTRY} is reachable
   if curl ghcr.io --connect-timeout 5 -s > /dev/null
   then
