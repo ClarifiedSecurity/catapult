@@ -64,19 +64,6 @@ if [ -f custom/start.yml ]; then
 
 fi
 
-# Copying requirements files to the correct location
-mkdir -p requirements
-rm -f requirements/*
-cp -R defaults/requirements*.yml requirements
-
-# Copying custom roles & collection requirements if they exist
-if [ -d custom/requirements ]; then
-
-    echo -e "Copying custom requirements files to requirements folder..."
-    cp -R custom/requirements/. requirements
-
-fi
-
 # Copying custom Docker compose file extension if it exists
 if [[ -r custom/docker/docker-compose-extra.yml ]]; then
 

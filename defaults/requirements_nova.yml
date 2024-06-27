@@ -1,7 +1,0 @@
----
-roles: []
-
-collections:
-  - name: https://github.com/ClarifiedSecurity/nova.core.git#/nova/core ### https://github.com/ClarifiedSecurity/nova.core/releases
-    type: git
-    version: HEAD #### https://raw.githubusercontent.com/ClarifiedSecurity/nova.core/main/nova/core/galaxy.yml
