@@ -7,3 +7,6 @@ rules:
   comments:
     ignore: |
       *
+  empty-lines:
+    ignore: |
+      *
