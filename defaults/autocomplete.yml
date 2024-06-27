@@ -164,3 +164,6 @@ autocomplete:
         - subcommand_name: update-nova
           subcommand_description: Checks for nova.core collection updates
           subcommand_to_execute: /srv/scripts/entrypoints/02-nova-core-version-check.sh
+        - subcommand_name: update-venv
+          subcommand_description: Updates Python virtual environment packages
+          subcommand_to_execute: /srv/scripts/general/update-venv.sh
