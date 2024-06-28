@@ -36,10 +36,10 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
   else
 
-      echo -n -e ${C_RED}
+      echo -n -e "${C_RED}"
       echo -e "Cannot check for docker image version!"
       echo -e "${MAKEVAR_CONTAINER_REGISTRY} is not reachable"
-      echo -n -e ${C_CYAN}
+      echo -n -e "${C_CYAN}"
       exit 0;
 
   fi
@@ -66,15 +66,8 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
       # Checking if local image exists and pulling if not
       if [[ -z "$(${MAKEVAR_SUDO_COMMAND} docker images -q "${IMAGE_FULL}")" ]]; then
 
-        echo -n -e "${C_YELLOW}"
-        echo -e "Local ${IMAGE_FULL} docker image not found"
-        echo -e "Would you like to pull it now?"
-        echo -n -e "${C_CYAN}"
-        options=(
-            "yes"
-            "no"
-        )
-        docker_pull
+        # Doing nothing because Docker will pull the image if it doesn't exist
+        echo -n
 
       else
 
@@ -82,20 +75,19 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
         local_image_sha256=$(${MAKEVAR_SUDO_COMMAND} docker inspect "${IMAGE_FULL}" -f '{{.Id}}')
 
         # Checking if local image sha256 is present in the remote image manifest
-        if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker manifest inspect "${IMAGE_FULL}" -v | grep "$local_image_sha256") ]]; then
+        if ! ${MAKEVAR_SUDO_COMMAND} docker manifest inspect "${IMAGE_FULL}" -v | grep -q "$local_image_sha256"; then
 
-          if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
+          if [[ "$MAKEVAR_AUTO_UPDATE" == 1 ]]; then
 
             echo -n -e "${C_YELLOW}"
-            echo -e "New ${IMAGE_FULL} docker image is available"
-            echo -e "Updating now..."
+            echo -e "Updating Capatult image..."
             echo -n -e "${C_CYAN}"
             ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
 
           else
 
             echo -n -e "${C_YELLOW}"
-            echo -e "New ${IMAGE_FULL} docker image is available"
+            echo -e "New ${IMAGE_FULL} Docker image is available"
             echo -e "Would you like to update now?"
             echo -n -e "${C_CYAN}"
 
@@ -115,3 +107,5 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
   fi
 
 fi
+
+echo -n -e "${C_RST}"
