@@ -7,6 +7,25 @@ source ./scripts/general/colors.sh
 
 echo -e -n "${C_CYAN}"
 
+##########################
+# .makerc-vars migration #
+##########################
+
+# Checking if .makerc-vars is already created from the example
+if ! grep -q "TEMPLOOKUPFLAG" "${ROOT_DIR}/.makerc-vars"; then
+
+  echo
+  echo -e -n "${C_YELLOW}"
+  echo -e "Using ${C_MAGENTA}${ROOT_DIR}/.makerc-vars${C_YELLOW} file for personal configurations will be deprecated at 01.08.2024. Please move anything you need to ${C_CYAN}${ROOT_DIR}/personal/.makerc-personal${C_YELLOW} file."
+  echo -e "If you are don't know if you need to move anything, you can leave the ${C_CYAN}${ROOT_DIR}/personal/.makerc-personal${C_YELLOW} as it is. Catapult will notify you for any missing variables."
+  echo -e "As a last step create a new ${C_MAGENTA}${ROOT_DIR}/.makerc-vars${C_YELLOW} from ${C_BLUE}${ROOT_DIR}/.makerc-vars.example${C_YELLOW} file."
+
+  echo
+  read -rp "Press ENTER to continue, or Ctrl + C to cancel and make the modifications..."
+  echo -e "${C_RST}"
+
+fi
+
 ######################
 # Sudo command check #
 ######################

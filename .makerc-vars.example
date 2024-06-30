@@ -59,3 +59,5 @@ MAKEVAR_WEBHOOK_USERNAME :=Catapult
 # This is the channel that will be used to send notifications to Slack or Mattermost
 # Use channelname for sending notifications to a channel or @username for sending to a notifications user
 MAKEVAR_WEBHOOK_CHANNEL :=
+
+# TEMPLOOKUPFLAG
