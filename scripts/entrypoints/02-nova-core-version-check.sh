@@ -2,10 +2,11 @@
 
 echo -n -e "${C_GREEN}"
 
-COLLECTION_GIT_URL="https://github.com/ClarifiedSecurity/nova.core.git"
+REPO_OWNER="${NOVA_CORE_REPO_OWNER:-ClarifiedSecurity}" # Set env var NOVA_CORE_REPO_OWNER="yourforkrepo" to override default nova.core repo owner
+COLLECTION_GIT_URL="https://github.com/$REPO_OWNER/nova.core.git"
 COLLECTION_NAME="nova.core"
-REMOTE_VERSION_URL="https://raw.githubusercontent.com/ClarifiedSecurity/nova.core/$MAKEVAR_CATAPULT_VERSION/nova/core/galaxy.yml"
-REMOTE_RELEASES_URL="https://github.com/ClarifiedSecurity/nova.core/releases"
+REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$MAKEVAR_CATAPULT_VERSION/nova/core/galaxy.yml"
+REMOTE_RELEASES_URL="https://github.com/$REPO_OWNER/nova.core/releases"
 
 if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
