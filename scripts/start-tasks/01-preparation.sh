@@ -9,10 +9,8 @@ echo -n -e "${C_CYAN}"
 
 # Creating required files and folders to avoid errors
 mkdir -p ./container/home/builder/.history
-mkdir -p ./personal
 mkdir -p ./personal/certificates
 touch ./personal/.personal_aliases
-touch ./personal/.makerc-personal
 
 echo -n -e "${C_RST}"
 
