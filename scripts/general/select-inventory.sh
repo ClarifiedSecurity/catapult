@@ -1,11 +1,40 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-echo -e "${C_RST}"
-SEARCH_DIR=/srv/inventories
+echo -n -e "${C_RST}"
+
+SEARCH_DIR="/srv/inventories"
 SEARCH_FOLDER=".git"
-FOLDERS=($(find $SEARCH_DIR -name $SEARCH_FOLDER -printf '%h\n' | sort))
+# shellcheck disable=SC2207
+FOLDERS=($(find "$SEARCH_DIR" -type d -name "$SEARCH_FOLDER" -exec dirname {} \; | sort))
 
-#----------------------------------------End of variables, start of script----------------------------------------#
+#--------------------End of variables, start of script--------------------#
+
+# This project checks if the current project has a scripts/catapult-project-customizer.sh file.
+# If present then sources it with load parameter on entering the project and with unload parameter on exiting the project.
+function project_customization_loader() {
+
+    if [ -f "$(pwd)/scripts/catapult-project-customizer.sh" ]; then
+
+        echo -n -e "${C_GREEN}"
+        echo -e "Unloading $(basename "$(pwd)") project customizer..."
+        echo -n -e "${C_RST}"
+        # shellcheck disable=SC1091
+        source "$(pwd)/scripts/catapult-project-customizer.sh" unload
+
+    fi
+
+    if [ -f "$selected_folder/scripts/catapult-project-customizer.sh" ]; then
+
+        echo -n -e "${C_GREEN}"
+        echo -e "Loading $(basename "$selected_folder") project customizer..."
+        echo -n -e "${C_RST}"
+
+        # shellcheck disable=SC1091
+        source "$selected_folder/scripts/catapult-project-customizer.sh" load
+
+    fi
+
+}
 
 # Function to select inventory when using zsh
 function zsh_selector() {
@@ -32,6 +61,7 @@ function zsh_selector() {
 
             selected_folder=${FOLDERS[choice]}
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+            project_customization_loader
             # shellcheck disable=SC2164
             cd "$selected_folder"
             touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
@@ -77,6 +107,7 @@ function bash_selector() {
 
             selected_folder=${FOLDERS[choice-1]}
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+            project_customization_loader
             # shellcheck disable=SC2164
             cd "$selected_folder"
             touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
