@@ -3,4 +3,4 @@
 # Used only to create project templates from
 base_vm_template: BASE_TEMPLATE_win11_21H2
 
-vm_template: catapult-template-win11-21H2
+vm_template: catapult-template-win11-21h2
