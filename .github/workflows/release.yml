@@ -1,0 +1,42 @@
+---
+name: Creating new tag & release
+
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  tag_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloning the repository repo...
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Creating a tag and a release
+        run: |
+          VERSION_FILE="version.yml"
+
+          VERSION=$(cat $VERSION_FILE | grep "version:" | cut -d " " -f 2)
+
+          TAG_NAME="v$VERSION"
+          echo "LATEST_TAG=$TAG_NAME" >> $GITHUB_ENV
+
+          # Tagging and pushing the change
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+
+          # Creating temp changelog file
+          git log --pretty=format:"- %s" $(git describe --tags --abbrev=0 HEAD^^)..HEAD > CHANGELOG.md
+
+      - name: Releasing a new version...
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.LATEST_TAG }}
+          bodyFile: CHANGELOG.md
