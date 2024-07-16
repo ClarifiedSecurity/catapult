@@ -42,6 +42,7 @@ function zsh_selector() {
 
         selected_folder=${FOLDERS[1]}
         echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+        project_customization_loader
         cd "$selected_folder" || exit
 
     elif [ ${#FOLDERS[@]} -gt 0 ]; then
@@ -88,6 +89,7 @@ function bash_selector() {
 
         selected_folder=${FOLDERS[0]}
         echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+        project_customization_loader
         cd "$selected_folder" || exit
 
     elif [ ${#FOLDERS[@]} -gt 0 ]; then
