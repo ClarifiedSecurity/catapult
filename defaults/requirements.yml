@@ -73,6 +73,6 @@ collections:
     version: 3.0.1
   - name: vyos.vyos
     version: 5.0.0
-  - name: https://github.com/vmware/ansible-for-nsxt.git
+  - name: https://github.com/ClarifiedSecurity/ansible-for-nsxt.git # A temporary fork of the official collection until https://github.com/vmware/ansible-for-nsxt/pull/509 is merged
     type: git
-    version: HEAD
+    version: latest
