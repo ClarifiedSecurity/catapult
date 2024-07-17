@@ -18,7 +18,7 @@ fi
 apt update
 apt install -y curl xz-utils git git-lfs zsh # Reqired for Docker image creation
 apt install -y ca-certificates rsync iputils-ping jq sshpass sudo unzip # Required for general Ansible usage
-apt install -y iproute2 traceroute dnsutils netcat-openbsd nano # Extra development & debugging tools
+apt install -y iproute2 traceroute dnsutils netcat-openbsd nano procps # Extra development & debugging tools
 
 cd /tmp
 curl -O https://nodejs.org/download/release/$NODE_VERSION/node-$NODE_VERSION-$OS_PLATFORM.tar.xz

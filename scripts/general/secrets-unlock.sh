@@ -3,9 +3,6 @@
 # shellcheck disable=SC1091
 source /srv/scripts/general/secrets-initialize.sh
 
-export CATAPULT_VAULT_PATH="-e @~/.vault/vlt"
-export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault/unlock-vault.sh
-
 if [ ! -f /var/tmp/vlt_pf ]; then
 
   # Initialize a variable for the exit status of the ansible-vault command

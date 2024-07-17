@@ -36,14 +36,15 @@ function project_customization_loader() {
 
 }
 
-# Function to select inventory when using zsh
-function zsh_selector() {
+# Function to select inventory
+function inventory_selector() {
     if [ ${#FOLDERS[@]} -eq 1 ]; then
 
         selected_folder=${FOLDERS[1]}
         echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
         project_customization_loader
-        cd "$selected_folder" || exit
+        # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
+        cd "$selected_folder" > /dev/null 2>/dev/null || exit
 
     elif [ ${#FOLDERS[@]} -gt 0 ]; then
 
@@ -64,60 +65,15 @@ function zsh_selector() {
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
             project_customization_loader
             # shellcheck disable=SC2164
-            cd "$selected_folder"
+            # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
+            cd "$selected_folder" > /dev/null 2>/dev/null
             touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
 
         else
 
             echo "Invalid selection."
-            cd /srv || exit
-
-        fi
-
-    else
-
-        echo "No projects found."
-
-    fi
-
-}
-
-# Function to select inventory when using bash
-function bash_selector() {
-
-    if [ ${#FOLDERS[@]} -eq 1 ]; then
-
-        selected_folder=${FOLDERS[0]}
-        echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-        project_customization_loader
-        cd "$selected_folder" || exit
-
-    elif [ ${#FOLDERS[@]} -gt 0 ]; then
-
-        for i in "${!FOLDERS[@]}"; do
-
-            folder_name=$(basename "${FOLDERS[i]}")
-            echo -e "$((i+1)). ${C_GREEN}$folder_name${C_RST}"
-
-        done
-
-        echo -n "Select project: "
-        read -r choice
-        choice=$((choice))
-
-        if (($choice >= 1 && choice <= ${#FOLDERS[@]})); then
-
-            selected_folder=${FOLDERS[choice-1]}
-            echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
-            project_customization_loader
-            # shellcheck disable=SC2164
-            cd "$selected_folder"
-            touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
-
-        else
-
-            echo "Invalid selection."
-            cd /srv || exit
+            # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
+            cd /srv > /dev/null 2>/dev/null || exit
 
         fi
 
@@ -136,18 +92,5 @@ function inventory_generator(){
 
 }
 
-if [ -z "${ZSH_VERSION}" ]; then
-
-    bash_selector
-    ( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )
-
-elif [ -z "$BASH_VERSION" ]; then
-
-    zsh_selector
-    ( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )
-
-else
-
-  echo "Unknown shell"
-
-fi
+inventory_selector
+( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )

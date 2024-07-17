@@ -5,20 +5,22 @@ set -e # exit when any command fails
 sudo apt update
 sudo apt install -y gcc # Reqired for compiling some Python packages
 
-# This sets the yarn version to stable (berry)
-(cd /srv && echo y | yarn set version stable )
+# This sets the yarn version to stable (berry) and installs the packages
+cd /srv
+echo "y" | yarn set version stable
+echo "y" | yarn install
 
 # Python virtual environment
+pushd "$HOME" || exit
 curl -LsSf https://astral.sh/uv/install.sh | sh
 # shellcheck disable=SC1091
 source "$HOME/.cargo/env"
-cd "$HOME"
-rm -rf $HOME/.venv
+rm -rf "$HOME/.venv"
 "$HOME/.cargo/bin/uv" venv
 # shellcheck disable=SC1091
 source "$HOME/.venv/bin/activate"
 uv pip install -r /srv/defaults/requirements.txt
-cd /srv
+popd || exit
 
 #########
 # Shell #
