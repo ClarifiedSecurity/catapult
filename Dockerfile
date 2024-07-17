@@ -36,5 +36,8 @@ USER builder
 ADD --chown=builder:builder scripts/general/install-docker-image-python.sh /tmp/install-docker-image-python.sh
 RUN bash /tmp/install-docker-image-python.sh
 
+ADD --chown=builder:builder scripts/general/install-docker-image-collections.sh /tmp/install-docker-image-collections.sh
+RUN bash /tmp/install-docker-image-collections.sh
+
 WORKDIR /srv
 ENTRYPOINT ["/docker-entrypoint.sh"]
