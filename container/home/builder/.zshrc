@@ -28,7 +28,9 @@ if [ -f /srv/custom/container/.custom_aliases ]; then
 fi
 
 # Including personal aliases
-. /srv/personal/.personal_aliases
+if [ -f /srv/personal/.personal_aliases ]; then
+    . /srv/personal/.personal_aliases
+fi
 
 # Disabling globbing so extra quotes are not required when using Ansible patterns where * is used
 setopt noglob
