@@ -3,9 +3,10 @@
 echo -n -e "${C_GREEN}"
 
 REPO_OWNER="${NOVA_CORE_REPO_OWNER:-ClarifiedSecurity}" # Set env var NOVA_CORE_REPO_OWNER="yourforkrepo" to override default nova.core repo owner
+REPO_VERSION="${MAKEVAR_CATAPULT_VERSION:-main}"
 COLLECTION_GIT_URL="https://github.com/$REPO_OWNER/nova.core.git"
 COLLECTION_NAME="nova.core"
-REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$MAKEVAR_CATAPULT_VERSION/nova/core/galaxy.yml"
+REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
 REMOTE_RELEASES_URL="https://github.com/$REPO_OWNER/nova.core/releases"
 
 if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
@@ -13,7 +14,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
   update_collection() {
 
     echo -e "Downloading $COLLECTION_NAME collection..."
-    git clone $COLLECTION_GIT_URL --branch "$MAKEVAR_CATAPULT_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
+    git clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
     ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible
     rm -rf /tmp/$COLLECTION_NAME
 
@@ -47,7 +48,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
         echo -e "${C_YELLOW}Local nova.core collection version:${C_RST}" "$GALAXY_LOCAL_VERSION"
         echo -e "${C_YELLOW}Remote nova.core collection version:${C_RST}" "$GALAXY_REMOTE_VERSION"
         echo -e "${C_YELLOW}"
-        if [[ $MAKEVAR_CATAPULT_VERSION == "main" ]]; then
+        if [[ $REPO_VERSION == "main" ]]; then
 
           echo -e Changelog: "$REMOTE_RELEASES_URL/tag/v$GALAXY_REMOTE_VERSION"
 
