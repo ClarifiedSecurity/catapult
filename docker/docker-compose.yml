@@ -10,7 +10,6 @@ services:
     restart: no
     volumes:
       - ${ROOT_DIR}/:/srv/
-      - ${ROOT_DIR}/container/docker-entrypoint.sh:/docker-entrypoint.sh
       - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
       - ${ROOT_DIR}/container/home/builder/.history:/home/builder/.history
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc

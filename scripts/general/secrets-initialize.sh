@@ -45,7 +45,6 @@ encrypt_vault () {
 
   fi
 
-  export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault/unlock-vault.sh
   ansible-vault encrypt ~/.vault/vlt --encrypt-vault-id default
 
   echo -e "${C_YELLOW}"
@@ -65,7 +64,6 @@ if [[ ! -f ~/.vault/vlt ]]; then
 
   touch ~/.vault/vlt
   chmod 600 ~/.vault/vlt
-  echo "ansible_vault_used: false" > ~/.vault/vlt
 
 fi
 

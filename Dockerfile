@@ -18,7 +18,6 @@ RUN groupadd builder -g ${CONTAINER_GROUP_ID} && useradd -u ${CONTAINER_USER_ID}
 RUN chown -R builder:builder /srv
 
 ADD --chown=builder:builder .yarnrc.yml /srv/.yarnrc.yml
-ADD --chown=builder:builder /container/docker-entrypoint.sh /
 ADD --chown=builder:builder /container/home/builder/.default_aliases /srv/container/home/builder/.default_aliases
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
@@ -28,9 +27,10 @@ ADD --chown=builder:builder package.json /srv/package.json
 ADD --chown=builder:builder yarn.lock /srv/yarn.lock
 
 # Files that need to be present when using the image in CI pipelines
-ADD --chown=builder:builder /inventories /srv/inventories
+ADD --chown=builder:builder inventories/_operating_systems /srv/inventories/_operating_systems
 ADD --chown=builder:builder defaults/autocomplete.yml /srv/defaults/autocomplete.yml
 ADD --chown=builder:builder defaults/start.yml /srv/inventories/start.yml
+ADD --chown=builder:builder container/home/builder/.vault/unlock-vault.sh /home/builder/.vault/unlock-vault.sh
 
 # Installing everything in separate scripts to avoid creating multiple layers thus reducing the image size
 # Having separate layers also keeps them small and easier to download and extract on low bandwidth connections
@@ -48,4 +48,4 @@ ADD --chown=builder:builder scripts/general/install-docker-image-collections.sh 
 RUN bash /tmp/install-docker-image-collections.sh
 
 WORKDIR /srv
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["zsh"]
