@@ -15,7 +15,12 @@ if [ "$CATAPULT_SKIP_ENTRYPOINT" != 1 ]; then
   source "$HOME/.venv/bin/activate"
 
   # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
-  sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
+  # Using if statement to avoid errors when it's not present for CI pipelines for an example
+  if [ -d /ssh-agent ]; then
+
+    sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
+
+  fi
 
   # Secrets unlocker script
   # Can also be used with ctp secrets unlock
