@@ -7,8 +7,8 @@ source ./scripts/general/colors.sh
 
 # Check if script is run with sudo
 if [ $EUID -eq 0 ]; then
-    print_nl "${C_RED}"
-    print_nl "Don't run this script with sudo, it will ask for sudo password when needed."
+    echo -e "${C_RED}"
+    echo -e "Don't run this script with sudo, it will ask for sudo password when needed."
 
     read -rp $'\n'"Press Ctrl + C to cancel or Press ENTER to continue..."
     echo -e "${C_RST}"
@@ -17,9 +17,9 @@ fi
 # Creating default .makerc-vars file if it doesn't exist
 if [[ ! -f .makerc-vars ]]; then
 
-  print "${C_MAGENTA}"
+  echo -n -e "${C_MAGENTA}"
   echo -e "Creating default .makerc-vars file"
-  print "${C_RST}"
+  echo -n -e "${C_RST}"
   cp .makerc-vars.example .makerc-vars
 
 fi
@@ -27,9 +27,9 @@ fi
 # Creating .makerc-personal file if it doesn't exist
 if [[ ! -f personal/.makerc-personal ]]; then
 
-  print "${C_MAGENTA}"
+  echo -n -e "${C_MAGENTA}"
   echo -e "Creating personal/.makerc-personal file"
-  print "${C_RST}"
+  echo -n -e "${C_RST}"
   mkdir -p personal
   touch personal/.makerc-personal
 
@@ -38,9 +38,9 @@ fi
 # MacOS
 if [[ $(uname) == "Darwin" ]]; then
 
-  print "${C_MAGENTA}"
-  print_nl "Removing MacOS sudo requirement for Catapult on MacOS..."
-  print_nl "${C_RST}"
+  echo -n -e "${C_MAGENTA}"
+  echo -e "Removing MacOS sudo requirement for Catapult on MacOS..."
+  echo -e "${C_RST}"
 
   if grep -q "MAKEVAR_SUDO_COMMAND" personal/.makerc-personal; then
 
@@ -54,9 +54,9 @@ if [[ $(uname) == "Darwin" ]]; then
 
   brew-install() {
 
-    print "${C_MAGENTA}"
-    print_nl "Installing Homebrew..."
-    print "${C_RST}"
+    echo -n -e "${C_MAGENTA}"
+    echo -e "Installing Homebrew..."
+    echo -n -e "${C_RST}"
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   }
@@ -65,19 +65,19 @@ if [[ $(uname) == "Darwin" ]]; then
 
     if [[ -x "$(command -v brew)" ]]; then
 
-      print "${C_MAGENTA}"
-      print_nl "Installing MacOS packages with homebrew..."
-      print "${C_RST}"
+      echo -n -e "${C_MAGENTA}"
+      echo -e "Installing MacOS packages with homebrew..."
+      echo -n -e "${C_RST}"
 
       # shellcheck disable=SC2086
       brew install $PACKAGES
 
     else
 
-      print "${C_RED}"
-      print_nl "Homebrew not installed, cannot install:"
-      print_nl "$PACKAGES"
-      print "${C_RST}"
+      echo -n -e "${C_RED}"
+      echo -e "Homebrew not installed, cannot install:"
+      echo -e "$PACKAGES"
+      echo -n -e "${C_RST}"
       exit 0
 
     fi
@@ -86,8 +86,8 @@ if [[ $(uname) == "Darwin" ]]; then
 
   PACKAGES="git git-lfs make jq curl md5sha1sum"
 
-  print "${C_YELLOW}"
-  print_nl "Installing homebrew?"
+  echo -n -e "${C_YELLOW}"
+  echo -e "Installing homebrew?"
   echo
 
   options=(
@@ -102,9 +102,9 @@ if [[ $(uname) == "Darwin" ]]; then
     esac
   done
 
-  print "${C_YELLOW}"
-  print_nl "Installing following packages with homebrew:"
-  print_nl "$PACKAGES"
+  echo -n -e "${C_YELLOW}"
+  echo -e "Installing following packages with homebrew:"
+  echo -e "$PACKAGES"
   echo
 
   options=(
@@ -118,7 +118,7 @@ if [[ $(uname) == "Darwin" ]]; then
     esac
   done
 
-    print_nl "${C_RST}"
+    echo -e "${C_RST}"
 
 fi
 
@@ -127,9 +127,9 @@ if [[ $(uname) == "Linux" ]]; then
 
   if ! [ -x "$(command -v sudo)" ]; then
 
-    print_nl "${C_RED}"
-    print_nl "sudo is not installed, install it and run this script again."
-    print_nl "${C_RST}"
+    echo -e "${C_RED}"
+    echo -e "sudo is not installed, install it and run this script again."
+    echo -e "${C_RST}"
     exit 0
 
   fi
@@ -141,9 +141,9 @@ if [[ $(uname) == "Linux" ]]; then
 
     debian-packages-install() {
 
-      print "${C_MAGENTA}"
-      print_nl "Installing required deb packages..."
-      print "${C_RST}"
+      echo -n -e "${C_MAGENTA}"
+      echo -e "Installing required deb packages..."
+      echo -n -e "${C_RST}"
 
       sudo -E apt-get update
       # shellcheck disable=SC2068,SC2086
@@ -155,9 +155,9 @@ if [[ $(uname) == "Linux" ]]; then
 
     }
 
-    print_nl "${C_YELLOW}"
-    print_nl "Installing following packages:"
-    print_nl "$PACKAGES"
+    echo -e "${C_YELLOW}"
+    echo -e "Installing following packages:"
+    echo -e "$PACKAGES"
     echo
 
     options=(
@@ -178,19 +178,19 @@ if [[ $(uname) == "Linux" ]]; then
 
     arch-packages-install() {
 
-      print "${C_MAGENTA}"
-      print_nl "Installing required pacman packages..."
-      print "${C_RST}"
+      echo -n -e "${C_MAGENTA}"
+      echo -e "Installing required pacman packages..."
+      echo -n -e "${C_RST}"
 
       # shellcheck disable=SC2086
       sudo -E pacman -S $PACKAGES --noconfirm
 
     }
 
-    print_nl "${C_YELLOW}"
-    print_nl "Installing following packages:"
-    print_nl "$PACKAGES"
-    print_nl
+    echo -e "${C_YELLOW}"
+    echo -e "Installing following packages:"
+    echo -e "$PACKAGES"
+    echo -e
 
     options=(
         "Yes"
@@ -210,9 +210,9 @@ if [[ $(uname) == "Linux" ]]; then
 
     rhel-packages-install() {
 
-      print "${C_MAGENTA}"
-      print_nl "Installing required rhel packages..."
-      print "${C_RST}"
+      echo -n -e "${C_MAGENTA}"
+      echo -e "Installing required rhel packages..."
+      echo -n -e "${C_RST}"
 
       sudo -E dnf makecache
       # shellcheck disable=SC2086
@@ -220,9 +220,9 @@ if [[ $(uname) == "Linux" ]]; then
 
     }
 
-    print_nl "${C_YELLOW}"
-    print_nl "Installing following packages:"
-    print_nl "$PACKAGES"
+    echo -e "${C_YELLOW}"
+    echo -e "Installing following packages:"
+    echo -e "$PACKAGES"
     echo
 
     options=(
@@ -242,24 +242,24 @@ if [[ $(uname) == "Linux" ]]; then
       PACKAGES="git git-lfs make jq curl sudo gpg ssh"
       PACKAGES_LFS="git lfs install"
 
-      print_nl "${C_RED}"
-      print_nl "You are using unsupported or untested (Linux) operating system. Catapult may still work if you configure it manually"
-      print_nl
-      print_nl "You'll need to follow these steps:"
-      print_nl
-      print_nl "1) Install following packages: ${C_YELLOW}$PACKAGES${C_RED}"
-      print_nl "2) Initialize git LFS with: ${C_YELLOW}$PACKAGES_LFS${C_RED}"
-      print_nl
+      echo -e "${C_RED}"
+      echo -e "You are using unsupported or untested (Linux) operating system. Catapult may still work if you configure it manually"
+      echo -e
+      echo -e "You'll need to follow these steps:"
+      echo -e
+      echo -e "1) Install following packages: ${C_YELLOW}$PACKAGES${C_RED}"
+      echo -e "2) Initialize git LFS with: ${C_YELLOW}$PACKAGES_LFS${C_RED}"
+      echo -e
       read -rp $'\n'"Once you have installed the required packages press any key to continue..."$'\n'
   fi
 
-  print_nl "${C_RST}"
+  echo -e "${C_RST}"
 
 fi
 
-print "${C_MAGENTA}"
+echo -n -e "${C_MAGENTA}"
 echo "Configuring githooks & LFS..."
-print "${C_RST}"
+echo -n -e "${C_RST}"
 
 touch ~/.gitconfig
 git config core.hooksPath .githooks

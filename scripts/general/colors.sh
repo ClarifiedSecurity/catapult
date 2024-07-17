@@ -15,19 +15,3 @@ export CB_MAGENTA="\x1b[95;1m"
 export CB_CYAN="\x1b[96;1m"
 export CB_WHITE="\x1b[97;1m"
 export C_RST="\x1b[0m"
-
-print_nl() {
-	echo -e "$@"
-}
-
-print() {
-	echo -ne "$@"
-}
-
-error_nl() {
-	echo -e "$@" >&2
-}
-
-error() {
-	echo -ne "$@" >&2
-}
