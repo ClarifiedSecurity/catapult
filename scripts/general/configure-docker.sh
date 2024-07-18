@@ -236,17 +236,25 @@ echo -e "${C_YELLOW}"
 echo -e "Installing and configuring the latest Docker version?"
 echo -e
 
-options=(
-  "Yes (recommended)."
-  "No, I'll manage my Docker version and configuration myself (for advanced users)."
-)
+if [ -n "$CATAPULT_AUTOINSTALL" ]; then
 
-# shellcheck disable=SC2034
-select option in "${options[@]}"; do
-    case "$REPLY" in
-        yes|y|1) install_docker; break;;
-        no|n|2) echo -e "Not installing and configuring Docker"; break;;
-    esac
-done
+  install_docker
+
+else
+
+  options=(
+    "Yes (recommended)."
+    "No, I'll manage my Docker version and configuration myself (for advanced users)."
+  )
+
+  # shellcheck disable=SC2034
+  select option in "${options[@]}"; do
+      case "$REPLY" in
+          yes|y|1) install_docker; break;;
+          no|n|2) echo -e "Not installing and configuring Docker"; break;;
+      esac
+  done
+
+fi
 
 echo -n -e "${C_RST}"

@@ -5,6 +5,13 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
+if [ "$1" == "AUTOINSTALL" ]; then
+
+  export CATAPULT_AUTOINSTALL=true
+  export MAKEVAR_AUTO_UPDATE=1
+
+fi
+
 # Check if script is run with sudo
 if [ $EUID -eq 0 ]; then
     echo -e "${C_RED}"
@@ -12,6 +19,12 @@ if [ $EUID -eq 0 ]; then
 
     read -rp $'\n'"Press Ctrl + C to cancel or Press ENTER to continue..."
     echo -e "${C_RST}"
+
+else
+
+  # This is to ask sudo password only once at the beginning of the script
+  sudo -SE echo -n ""
+
 fi
 
 # Creating default .makerc-vars file if it doesn't exist
@@ -58,6 +71,9 @@ if [[ $(uname) == "Darwin" ]]; then
     echo -e "Installing Homebrew..."
     echo -n -e "${C_RST}"
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # shellcheck disable=SC2016
+    (echo; echo 'eval "$(/usr/local/bin/brew shellenv)"') >> ~/.zprofile
+    eval "$(/usr/local/bin/brew shellenv)"
 
   }
 
@@ -90,33 +106,42 @@ if [[ $(uname) == "Darwin" ]]; then
   echo -e "Installing homebrew?"
   echo
 
-  options=(
+  if [ -n "$CATAPULT_AUTOINSTALL" ]; then
+
+    brew-install
+    brew-packages-install
+
+  else
+
+    options=(
+        "Yes"
+        "No"
+    )
+
+    select _ in "${options[@]}"; do
+      case "$REPLY" in
+        yes|y|1) brew-install; break;;
+        no|n|2) read -rp $'\n'"If you don't install homebrew you'll need to install Docker manually - Press ENTER to continue"$'\n'; break;;
+      esac
+    done
+
+    echo -n -e "${C_YELLOW}"
+    echo -e "Installing following packages with homebrew:"
+    echo -e "$PACKAGES"
+    echo
+
+    options=(
       "Yes"
-      "No"
-  )
+      "No, I'll install these packages myself"
+    )
+    select _ in "${options[@]}"; do
+      case "$REPLY" in
+        yes|y|1) brew-packages-install; break;;
+        no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
+      esac
+    done
 
-  select _ in "${options[@]}"; do
-    case "$REPLY" in
-      yes|y|1) brew-install; break;;
-      no|n|2) read -rp $'\n'"If you don't install homebrew you'll need to install Docker manually - Press ENTER to continue"$'\n'; break;;
-    esac
-  done
-
-  echo -n -e "${C_YELLOW}"
-  echo -e "Installing following packages with homebrew:"
-  echo -e "$PACKAGES"
-  echo
-
-  options=(
-    "Yes"
-    "No, I'll install these packages myself"
-  )
-  select _ in "${options[@]}"; do
-    case "$REPLY" in
-      yes|y|1) brew-packages-install; break;;
-      no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
-    esac
-  done
+  fi
 
     echo -e "${C_RST}"
 
@@ -160,17 +185,25 @@ if [[ $(uname) == "Linux" ]]; then
     echo -e "$PACKAGES"
     echo
 
-    options=(
-      "Yes"
-      "No, I'll install these packages myself"
-    )
+    if [ -n "$CATAPULT_AUTOINSTALL" ]; then
 
-    select _ in "${options[@]}"; do
-      case "$REPLY" in
-        yes|y|1) debian-packages-install; break;;
-        no|n|2) read -rp $'\n'"Make sure ${PACKAGES} are installed - Press ENTER to continue"$'\n'; break;;
-      esac
-    done
+      debian-packages-install
+
+    else
+
+      options=(
+        "Yes"
+        "No, I'll install these packages myself"
+      )
+
+      select _ in "${options[@]}"; do
+        case "$REPLY" in
+          yes|y|1) debian-packages-install; break;;
+          no|n|2) read -rp $'\n'"Make sure ${PACKAGES} are installed - Press ENTER to continue"$'\n'; break;;
+        esac
+      done
+
+    fi
 
   # Arch
   elif grep -q "arch" /etc/os-release; then
@@ -192,16 +225,24 @@ if [[ $(uname) == "Linux" ]]; then
     echo -e "$PACKAGES"
     echo -e
 
-    options=(
-        "Yes"
-        "No, I'll install these packages myself"
-    )
-    select _ in "${options[@]}"; do
-      case "$REPLY" in
-        yes|y|1) arch-packages-install; break;;
-        no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
-      esac
-    done
+    if [ -n "$CATAPULT_AUTOINSTALL" ]; then
+
+      arch-packages-install
+
+    else
+
+      options=(
+          "Yes"
+          "No, I'll install these packages myself"
+      )
+      select _ in "${options[@]}"; do
+        case "$REPLY" in
+          yes|y|1) arch-packages-install; break;;
+          no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
+        esac
+      done
+
+    fi
 
   # RedHat based OS
   elif grep -q "rhel" /etc/os-release; then
@@ -225,17 +266,25 @@ if [[ $(uname) == "Linux" ]]; then
     echo -e "$PACKAGES"
     echo
 
-    options=(
-        "Yes"
-        "No, I'll install these packages myself"
-    )
+    if [ -n "$CATAPULT_AUTOINSTALL" ]; then
 
-    select _ in "${options[@]}"; do
-      case "$REPLY" in
-        yes|y|1) rhel-packages-install; break;;
-        no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
-      esac
-    done
+      rhel-packages-install
+
+    else
+
+      options=(
+          "Yes"
+          "No, I'll install these packages myself"
+      )
+
+      select _ in "${options[@]}"; do
+        case "$REPLY" in
+          yes|y|1) rhel-packages-install; break;;
+          no|n|2) read -rp $'\n'"Make sure $PACKAGES are installed - Press ENTER to continue"$'\n'; break;;
+        esac
+      done
+
+    fi
 
   # Other
   else

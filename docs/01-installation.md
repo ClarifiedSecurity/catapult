@@ -15,6 +15,8 @@ cd catapult && \
 ```
 
 - You can run `./install.sh` multiple times until it finishes without errors.
+- You can also add use `./install.sh AUTOINSTALL` for unattended installation.
+- For Linux that requires sudo password or MacOS you can use this command for unattended installation: `echo "YourPassword" | ./install.sh AUTOINSTALL` Leave a space before the command to prevent it from being saved in the shell history.
 
 ### Windows Subsystem for Linux
 
