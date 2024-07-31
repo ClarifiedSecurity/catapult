@@ -78,5 +78,5 @@ if [ -f /srv/personal/.personal_aliases ]; then
     . /srv/personal/.personal_aliases
 fi
 
-# Disabling globbing so extra quotes are not required when using Ansible patterns where * is used
-setopt noglob
+setopt noglob # Disabling globbing so extra quotes are not required when using Ansible patterns where * is used
+setopt NO_BANG_HIST # Disabling history expansion with ! to avoid issues with Ansible commands
