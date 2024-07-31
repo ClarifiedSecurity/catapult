@@ -17,8 +17,56 @@ setopt glob
 # Path to your oh-my-zsh installation.
 export ZSH="/home/builder/.oh-my-zsh"
 
-# Theme
-export ZSH_THEME="spaceship"
+# Load the vcs_info function for Git branch info
+autoload -Uz vcs_info
+
+# Track command start time with milliseconds
+preexec() {
+    cmd_start_time=$(date +%s)
+}
+
+# Update vcs_info and calculate command execution time
+precmd() {
+    # Update the vcs_info
+    vcs_info
+
+    # Calculate the elapsed time if the command start time is set
+    if [[ -n $cmd_start_time ]]; then
+        cmd_end_time=$(date +%s)
+
+        # Calculate the difference in milliseconds
+        difference=$((cmd_end_time - cmd_start_time))
+
+        # Convert the difference to hours, minutes and seconds
+        hours=$(( difference / 3600 ))
+        minutes=$(( (difference % 3600) / 60 ))
+        seconds=$(( difference % 60 ))
+
+        # Format the elapsed time
+        elapsed_time="${hours}h ${minutes}m ${seconds}s"
+
+        unset cmd_start_time
+
+    else
+        elapsed_time=""
+    fi
+
+    # Checking if local branch is behind the remote
+    BEHIND=$(command git rev-list --count HEAD..${git_branch}@{upstream} 2>/dev/null)
+    if (( $BEHIND )); then
+        git_status="⇣"
+    else
+        git_status=""
+    fi
+
+}
+
+# Set the format for vcs_info (this determines how the Git branch is displayed)
+zstyle ':vcs_info:git:*' formats ' (%b)'
+
+# Define the prompt, including hostname, current directory, Git branch, and command time
+PROMPT='%F{green}%m %F{blue}%1~%F{yellow}${vcs_info_msg_0_}%F{red}${git_status} %F{cyan}${elapsed_time}%f
+%F{red}➜%f '
 
 # Sourcing oh-my-zsh
 . $ZSH/oh-my-zsh.sh
