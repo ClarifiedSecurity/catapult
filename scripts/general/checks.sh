@@ -24,6 +24,11 @@ if ! grep -q "TEMPLOOKUPFLAG" "${ROOT_DIR}/.makerc-vars"; then
   read -rp "Press ENTER to continue, or Ctrl + C to cancel and make the modifications..."
   echo -e "${C_RST}"
 
+else
+
+  rm -f "${ROOT_DIR}/.makerc-personal"
+  rm -f "${ROOT_DIR}/.makerc-custom"
+
 fi
 
 ######################
