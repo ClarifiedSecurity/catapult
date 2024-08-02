@@ -28,7 +28,7 @@
   roles:
     - role: nova.core.deploy_vars # Including deployment variables
 
-    # Define -e pre_vm=role_name with the deploy alias to run the role and stop the play, the role must be able to run on localhost
+    # Add -e pre_vm=role_name to the deploy command to run the role and stop the play, the role must be able to run on localhost
     - role: nova.core.customization_pre_role
       when: pre_role is defined
 
@@ -40,13 +40,13 @@
         - not role_only_wp # wp means with pre/post_vm_role
         - not deploy_mode == 'undeploy' # No need to save secrets when undeploying
 
-    - role: nova.core.machine_operations # Creating (usually a virtual machine)
+    - role: nova.core.machine_operations # Creating a VM
 
     - role: nova.core.configure_networking # Configuring VM networking
 
     - role: nova.core.connection # Setting correct network connection parameters
 
-    # Define -e single_role=role_name with the deploy alias run the role and stop the play, useful for testing/development
+    # Add -e single_role=role_name to the deploy command run the role and stop the play, useful for testing/development of a single role
     - role: nova.core.customization_single_role
       become: "{{ default_ansible_become | default(omit) }}"
       become_user: "{{ default_ansible_become_user | default(omit) }}"
@@ -68,7 +68,6 @@
       become: "{{ default_ansible_become | default(omit) }}"
       become_user: "{{ default_ansible_become_user | default(omit) }}"
       when:
-        - "'zone_local' not in group_names" # To avoid configuration for your own laptop
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
