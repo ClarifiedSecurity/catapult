@@ -89,6 +89,7 @@ function inventory_generator(){
 
   # For some reaseon some Ansible commands cannot detect the vault file from an environment variable
   ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$selected_folder")_hosts"
+  git fetch > /dev/null 2>&1 # Fetching the latest changes from the remote repository
 
 }
 
