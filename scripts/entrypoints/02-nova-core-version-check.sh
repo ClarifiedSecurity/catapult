@@ -3,7 +3,7 @@
 echo -n -e "${C_GREEN}"
 
 REPO_OWNER="${NOVA_CORE_REPO_OWNER:-ClarifiedSecurity}" # Set env var NOVA_CORE_REPO_OWNER="yourforkrepo" to override default nova.core repo owner
-REPO_VERSION="${MAKEVAR_CATAPULT_VERSION:-main}"
+REPO_VERSION="${NOVA_CORE_VERSION:-${MAKEVAR_CATAPULT_VERSION:-main}}"
 COLLECTION_GIT_URL="https://github.com/$REPO_OWNER/nova.core.git"
 COLLECTION_NAME="nova.core"
 REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
