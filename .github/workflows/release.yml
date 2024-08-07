@@ -54,6 +54,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/clarifiedsecurity/catapult:latest
+            ghcr.io/clarifiedsecurity/catapult:main
             ghcr.io/clarifiedsecurity/catapult:${{ env.IMAGE_VERSION }}
             ghcr.io/clarifiedsecurity/catapult:v${{ env.IMAGE_VERSION }}
 
