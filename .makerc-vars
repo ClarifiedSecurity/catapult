@@ -32,9 +32,9 @@ MAKEVAR_CONTAINER_REGISTRY :=ghcr.io
 # This is the name of the Catapult container image that will be used
 MAKEVAR_IMAGE_NAME :=clarifiedsecurity/catapult
 
-# This is Catapult branch or tag that will be used to pull the version of Catapult from the repository
-# This also applies to the Docker image, nova.core collection and can be used for private Ansible collections
-# Available options are main or staging
+# This is Catapult tag that will be used to pull the version of Catapult from the repository
+# This also applies to the Docker image
+# Available options are main, staging or a specific relase from https://github.com/ClarifiedSecurity/catapult/releases
 MAKEVAR_CATAPULT_VERSION :=main
 
 # Automatically update Catapult, Docker image & custom Ansible collections when new versions are available
