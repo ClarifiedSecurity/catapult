@@ -27,16 +27,6 @@ else
 
 fi
 
-# Creating default .makerc-vars file if it doesn't exist
-if [[ ! -f .makerc-vars ]]; then
-
-  echo -n -e "${C_MAGENTA}"
-  echo -e "Creating default .makerc-vars file"
-  echo -n -e "${C_RST}"
-  cp .makerc-vars.example .makerc-vars
-
-fi
-
 # Creating .makerc-personal file if it doesn't exist
 if [[ ! -f personal/.makerc-personal ]]; then
 
