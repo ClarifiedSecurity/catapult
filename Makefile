@@ -70,3 +70,8 @@ restart:
 .PHONY: project-banner
 project-banner:
 	@echo ${LOGO} | base64 -d
+
+## print-env: Prints environment variables for debbuging
+.PHONY: project-env
+print-env:
+	@env | sort
