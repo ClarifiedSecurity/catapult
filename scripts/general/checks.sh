@@ -68,7 +68,8 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
     if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
 
-      git pull --rebase
+      git fetch origin "$BRANCH"
+      git reset --hard "origin/$BRANCH"
 
     else
 
