@@ -5,7 +5,7 @@ echo -n -e "${C_RST}"
 SEARCH_DIR="/srv/inventories"
 SEARCH_FOLDER=".git"
 # shellcheck disable=SC2207
-FOLDERS=($(find "$SEARCH_DIR" -type d -name "$SEARCH_FOLDER" -exec dirname {} \; | sort))
+FOLDERS=($(find -L "$SEARCH_DIR" \( -type d -o -type l \) -name "$SEARCH_FOLDER" -exec dirname {} \; | sort))
 
 #--------------------End of variables, start of script--------------------#
 
