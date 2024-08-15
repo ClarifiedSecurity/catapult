@@ -52,7 +52,7 @@ collections:
   - name: community.postgresql
     version: 3.4.1
   - name: community.routeros
-    version: 2.17.0
+    version: 2.18.0
   - name: community.vmware
     version: 4.4.0
   - name: community.windows
