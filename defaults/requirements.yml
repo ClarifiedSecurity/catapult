@@ -69,11 +69,12 @@ collections:
     version: 2.2.2
   - name: paloaltonetworks.panos
     version: 2.19.1
-  - name: https://github.com/ansible-collections/vmware.vmware_rest.git
-    type: git
-    version: 3.0.1
+  - name: vmware.vmware_rest
+    version: 4.0.0
   - name: vyos.vyos
     version: 5.0.0
-  - name: https://github.com/ClarifiedSecurity/ansible-for-nsxt.git # A temporary fork of the official collection until https://github.com/vmware/ansible-for-nsxt/pull/509 is merged
+
+  # A temporary fork of the official collection until https://github.com/vmware/ansible-for-nsxt/pull/509 is merged
+  - name: https://github.com/ClarifiedSecurity/ansible-for-nsxt.git
     type: git
     version: latest
