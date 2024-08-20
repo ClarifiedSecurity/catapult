@@ -7,7 +7,7 @@ source ./scripts/general/colors.sh
 
 scripts/general/configure-docker.sh
 
-echo -n -e "${C_MAGENTA}"
+echo -n -e "${C_GREEN}"
 echo -e "Preparations finished successfully"
-echo -e "Run ${C_CYAN}make start${C_MAGENTA} to start and configure Catapult"
+echo -e "Run ${C_CYAN}make start${C_GREEN} to start and configure Catapult"
 echo -n -e "${C_RST}"

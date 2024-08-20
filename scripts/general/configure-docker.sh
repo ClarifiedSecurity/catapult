@@ -14,8 +14,6 @@ restart_docker() {
 
   if [[ $(uname) == "Linux" ]]; then
 
-    echo -n -e "${C_MAGENTA}"
-
       # shellcheck disable=SC2034
       for i in {1..10}; do
 
@@ -33,7 +31,7 @@ restart_docker() {
         else
 
           set +e
-          echo -n -e "${C_MAGENTA}"
+          echo -n -e "${C_YELLOW}"
           echo -e "Starting Docker $i..10..."
           systemctl reset-failed docker # This is required when updating from an older Docker version
           systemctl restart docker --quiet
@@ -76,7 +74,7 @@ install_docker(){
 
         if grep -q "ID=ubuntu" /etc/os-release; then
 
-          echo -n -e "${C_MAGENTA}"
+          echo -n -e "${C_YELLOW}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
           echo -n -e "${C_RST}"
 
@@ -87,7 +85,7 @@ install_docker(){
 
         elif grep -q "ID=kali" /etc/os-release; then
 
-          echo -n -e "${C_MAGENTA}"
+          echo -n -e "${C_YELLOW}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
           echo -n -e "${C_RST}"
 
@@ -98,7 +96,7 @@ install_docker(){
 
         elif grep -q "ID=debian" /etc/os-release; then
 
-          echo -n -e "${C_MAGENTA}"
+          echo -n -e "${C_YELLOW}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
           echo -n -e "${C_RST}"
 
@@ -113,13 +111,13 @@ install_docker(){
 
     elif grep -q "arch" /etc/os-release; then
 
-      echo -n -e "${C_MAGENTA}"
+      echo -n -e "${C_YELLOW}"
       echo "Docker will be installed with pacman..."
       echo -n -e "${C_RST}"
 
     elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
 
-      echo -n -e "${C_MAGENTA}"
+      echo -n -e "${C_YELLOW}"
       echo "Adding Docker repo for RedHat..."
       echo -n -e "${C_RST}"
 
@@ -204,8 +202,8 @@ DOCKER_CONFIG=$(cat <<EOF
 EOF
 )
 
-echo -e "${C_MAGENTA}"
-echo -e "Updating ${C_CYAN}$DAEMON_PATH${C_MAGENTA} with:"
+echo -e "${C_YELLOW}"
+echo -e "Updating ${C_CYAN}$DAEMON_PATH${C_YELLOW} with:"
 echo -e "$DOCKER_CONFIG" | jq
 echo -e
 
@@ -232,7 +230,7 @@ fi
 
 }
 
-echo -e "${C_YELLOW}"
+echo -e "${C_GREEN}"
 echo -e "Installing and configuring the latest Docker version?"
 echo -e
 

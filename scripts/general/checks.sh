@@ -36,8 +36,8 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
   # Checking for user is in the correct branch
   if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
 
-    echo -n -e "${C_YELLOW}"
-    echo -e "You are not in the ${C_CYAN}$BRANCH${C_YELLOW} branch. Do you want to switch branch?"
+    echo -n -e "${C_GREEN}"
+    echo -e "You are not in the ${C_CYAN}$BRANCH${C_GREEN} branch. Do you want to switch branch?"
     echo -n -e "${C_RST}"
     options=(
       "yes"
@@ -56,7 +56,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
   # Checking if github.com is reachable
   if ! curl github.com --connect-timeout 5 -s > /dev/null; then
-    echo -n -e "${C_YELLOW}"
+    echo -n -e "${C_RED}"
     echo -e "Cannot check for Catapult version!"
     echo -e "GitHub is not reachable"
     echo -n -e "${C_RST}"
