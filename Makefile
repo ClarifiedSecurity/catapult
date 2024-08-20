@@ -11,7 +11,6 @@ export
 ## help: List all available make targets with descriptions
 .PHONY: help
 help: project-banner
-	@echo "${C_YELLOW}[*] ${C_WHITE}usage: ${C_MAGENTA}make ${C_CYAN}<target>${C_RST}"
 	@echo
 	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':' | sort
 
