@@ -70,6 +70,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
       git fetch origin "$BRANCH"
       git reset --hard "origin/$BRANCH"
+      make start
 
     else
 
