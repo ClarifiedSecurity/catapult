@@ -22,7 +22,7 @@ fi
 
 if ${MAKEVAR_SUDO_COMMAND} docker ps --format "{{ .Names }}" | grep -q "$CONTAINER_NAME"; then
 
-  echo -n -e "${C_YELLOW}"
+  echo -n -e "${C_GREEN}"
   echo -e "Connecting to running ${CONTAINER_NAME} container..."
   ${MAKEVAR_SUDO_COMMAND} docker exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
   echo -n -e "${C_RST}"
