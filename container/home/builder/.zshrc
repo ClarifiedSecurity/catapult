@@ -94,7 +94,7 @@ fi
 # Checking if completions file exists, if not then creating it
 if [ -f "/home/builder/autocomplete.sh" ]; then
 
-    echo -n -e "${C_GREEN}"
+    echo -n -e "${C_YELLOW}"
     echo -e "Sourcing completions..."
     . /home/builder/autocomplete.sh
     echo -n -e "${C_RST}"

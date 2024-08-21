@@ -81,10 +81,10 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
     fi
 
-    echo -e -n "${C_CYAN}"
+    echo -e -n "${C_YELLOW}"
     echo -e "Updating Catapult Docker image..."
-    ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
     echo -e -n "${C_RST}"
+    ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
 
   }
 
