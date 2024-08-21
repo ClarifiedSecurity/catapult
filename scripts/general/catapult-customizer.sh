@@ -65,26 +65,11 @@ if [ -f custom/start.yml ]; then
 fi
 
 # Copying custom Docker compose file extension if it exists
-if [[ -r custom/docker/docker-compose-extra.yml ]]; then
-
-    echo -e "Using extended docker-compose-extra.yml..."
-    echo -n -e "${C_MAGENTA}"
-    echo -e "WARNING docker-compose-extra.yml file name will be deprecated."
-    echo -e "Rename it to docker-compose-custom.yml in your $MAKEVAR_CATAPULT_CUSTOMIZER_REPO project!"
-    echo -n -e "${C_BLUE}"
-    cp custom/docker/docker-compose-extra.yml docker/docker-compose-custom.yml
-    rm -f docker/docker-compose-extra.yml
-
-  elif [[ -r custom/docker/docker-compose-custom.yml ]]; then
-
+if [[ -r custom/docker/docker-compose-custom.yml ]]; then
     echo -e "Using extended docker-compose-custom.yml..."
     cp custom/docker/docker-compose-custom.yml docker/docker-compose-custom.yml
-    rm -f docker/docker-compose-extra.yml
-
-  else
-
+else
     cp defaults/docker-compose-custom.yml docker/docker-compose-custom.yml
-
 fi
 
 # Creating required folder to prevent errors

@@ -14,7 +14,7 @@ core.*
 /container/home/builder/.ssh/known_hosts**
 /custom/**
 /personal/**
-/docker/docker-compose-*
+/docker/docker-compose-custom.yml
 /roles
 /roles_core
 ansible/**
