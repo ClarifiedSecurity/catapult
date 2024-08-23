@@ -15,6 +15,9 @@ CONTAINER_ENTRYPOINT :=zsh
 CONTAINER_NAME :=${CONTAINER_PROJECT_NAME}-${CONTAINER_USER_NAME}
 CONTAINER_HOSTNAME :=${IMAGE_NAME}-${CONTAINER_USER_NAME}
 
-DISPLAY :=$(or ${DISPLAY},0.0 ) # Default for MacOS that doesn't have a DISPLAY en var
+# Default for MacOS that doesn't have a DISPLAY env var
+DISPLAY :=$(or ${DISPLAY},0.0 )
+# Default for MacOS that doesn't have a XDG_SESSION_TYPE env var
+XDG_SESSION_TYPE :=$(or ${XDG_SESSION_TYPE},wayland )
 
 BUILD_ARGS := --build-arg CONTAINER_USER_ID=${CONTAINER_USER_ID} --build-arg CONTAINER_GROUP_ID=${CONTAINER_GROUP_ID} --build-arg TZ=${MAKEVAR_TZ}
