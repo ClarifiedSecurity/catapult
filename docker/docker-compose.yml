@@ -32,6 +32,7 @@ services:
       SSH_AUTH_SOCK: /ssh-agent
       TZ: ${MAKEVAR_TZ}
       USER: ${CONTAINER_USER_NAME}
+      XDG_SESSION_TYPE: ${XDG_SESSION_TYPE}
     extra_hosts:
       - host.docker.internal:host-gateway
       - ${CONTAINER_NAME}:127.0.1.1

@@ -3,7 +3,7 @@
 # If you want to change any of the values for your organization/team/project follow the How to customize Catapult section in https://clarifiedsecurity.github.io/catapult-docs/catapult/03-how-to-customize/#customization
 
 # Docker compose project name
-# This needs to be unique if you are running multiple Catapult container instances on the same host
+# This needs to be unique when running multiple Catapults on the same host
 MAKEVAR_COMPOSE_PROJECT_NAME :=Catapult
 
 # Timezone for container's /etc/timezone
