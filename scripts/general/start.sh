@@ -7,6 +7,15 @@ source ./scripts/general/colors.sh
 
 make project-banner --no-print-directory
 
+if [[ $1 == "stop" ]]; then
+
+    echo -n -e "${C_YELLOW}"
+    echo -e Removing existing "${CONTAINER_NAME} container..."
+    ${MAKEVAR_SUDO_COMMAND} docker rm -f "${CONTAINER_NAME}" >/dev/null
+    echo -n -e "${C_RST}"
+    exit 0
+fi
+
 if [[ $1 == "restart" ]]; then
 
   if ${MAKEVAR_SUDO_COMMAND} docker ps --format "{{ .Names }}" | grep -q "$CONTAINER_NAME"; then
