@@ -38,7 +38,7 @@ build: customizations checks
 ## stop: Stop the container
 .PHONY: stop
 stop:
-	@${MAKEVAR_SUDO_COMMAND} docker stop ${CONTAINER_NAME} || true
+	@${ROOT_DIR}/scripts/general/start.sh stop
 
 ## shell-raw: Bypass docker-entrypoint.sh and directly into shell
 .PHONY: shell-raw
