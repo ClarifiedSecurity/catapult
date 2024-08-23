@@ -46,7 +46,7 @@ collections:
   - name: community.library_inventory_filtering_v1 # Required for community.docker
     version: 1.0.1
   - name: community.mysql
-    version: 3.9.0
+    version: 3.10.0
   - name: community.network
     version: 5.0.3
   - name: community.postgresql
