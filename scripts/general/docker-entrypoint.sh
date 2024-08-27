@@ -6,14 +6,6 @@ echo -n -e "${C_GREEN}"
 # If so then skipping a bunch of steps for faster start
 if [ ! -f /tmp/first-run ]; then
 
-    # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
-    # Using if statement to avoid errors when it's not present for CI pipelines for an example
-    if [ -d /ssh-agent ]; then
-
-      sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
-
-    fi
-
     # Running connectivity checks
     if ping -c 1 1.1.1.1 &> /dev/null; then
 
@@ -67,6 +59,11 @@ if [ ! -f /tmp/first-run ]; then
       sudo update-ca-certificates > /dev/null 2>/dev/null # To avoid false positive error rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
 
     fi
+
+    # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
+    # Creating the file to avoid errors when it's not present for CI pipelines for an example
+    touch /ssh-agent
+    sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
 
     DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES="/srv/custom/docker-entrypoints/*.sh"
     for custom_entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES; do
