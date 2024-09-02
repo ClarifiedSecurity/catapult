@@ -18,7 +18,7 @@ collections:
     type: git
     version: 8.1.0
   - name: ansible.netcommon
-    version: 7.0.0
+    version: 7.1.0
   - name: ansible.posix
     version: 1.5.4
   - name: ansible.utils
