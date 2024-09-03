@@ -20,7 +20,7 @@ if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE && $MAKEVAR_FREEZE_UPDATE != 1 ]
         if git ls-remote "$CATAPULT_CUSTOMIZER_REPO" &> /dev/null; then
             rm -rf custom # Removing the custom directory if it exists
             echo -n -e "${C_YELLOW}"
-            echo -e "Cloning customizer repo..."
+            echo -e "Cloning customizer repo ${C_CYAN}${MAKEVAR_CATAPULT_CUSTOMIZER_VERSION}${C_YELLOW} version..."
             echo -n -e "${C_RST}"
             # shellcheck disable=SC2086
             git clone $MAKEVAR_CATAPULT_CUSTOMIZER_REPO -q --depth 1 custom
