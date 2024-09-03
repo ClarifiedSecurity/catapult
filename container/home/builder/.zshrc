@@ -113,15 +113,15 @@ fi
 # shellcheck disable=SC1091
 . /srv/scripts/general/select-inventory.sh
 
-# Including default aliases
+# Including default zsh aliases and functions
 . /srv/container/home/builder/.default_aliases
 
-# Including custom aliases if they exist
+# Including custom zsh aliases and functions if they exist
 if [ -f /srv/custom/container/.custom_aliases ]; then
     . /srv/custom/container/.custom_aliases
 fi
 
-# Including personal aliases
+# Including personal zsh aliases and functions if they exist
 if [ -f /srv/personal/.personal_aliases ]; then
     . /srv/personal/.personal_aliases
 fi
