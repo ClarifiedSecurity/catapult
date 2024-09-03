@@ -61,7 +61,20 @@ else
 
   fi
 
-  ${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/docker/docker-compose-custom.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
+  # Also using custom Docker compose file if it exists
+  if [[ -r custom/docker/docker-compose-custom.yml ]]; then
+
+      echo -n -e "${C_YELLOW}"
+      echo -e "Including docker-compose-custom.yml..."
+      echo -n -e "${C_RST}"
+      ${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/docker/docker-compose-custom.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
+
+  else
+
+      ${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
+
+  fi
+
   ${MAKEVAR_SUDO_COMMAND} docker exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
 
 fi

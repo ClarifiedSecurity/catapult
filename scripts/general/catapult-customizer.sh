@@ -47,14 +47,6 @@ if [ -f custom/start.yml ]; then
     cp -R defaults/start.yml inventories/start.yml
 fi
 
-# Copying custom Docker compose file extension if it exists
-if [[ -r custom/docker/docker-compose-custom.yml ]]; then
-    echo -e "Using extended docker-compose-custom.yml..."
-    cp custom/docker/docker-compose-custom.yml docker/docker-compose-custom.yml
-else
-    cp defaults/docker-compose-custom.yml docker/docker-compose-custom.yml
-fi
-
 # Creating required folder to prevent errors
 mkdir -p custom/docker-entrypoints
 mkdir -p custom/start-tasks
