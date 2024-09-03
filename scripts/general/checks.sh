@@ -85,12 +85,9 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
     echo -e "Updating Catapult Docker image..."
     echo -e -n "${C_RST}"
     ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
-
     echo -e "${C_GREEN}"
     echo -e "Catapult updated to version $REMOTE_VERSION"
     echo -e "${C_RST}"
-    make restart
-    exit 0 # Exiting the script after update to avoid running update again after exiting the container
 
   }
 
