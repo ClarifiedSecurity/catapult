@@ -62,7 +62,7 @@ if [ ! -f /tmp/first-run ]; then
 
     # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
     # Creating the file to avoid errors when it's not present for CI pipelines for an example
-    touch /ssh-agent
+    sudo touch /ssh-agent
     sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
 
     DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES="/srv/custom/docker-entrypoints/*.sh"
