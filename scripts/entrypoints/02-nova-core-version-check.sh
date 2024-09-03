@@ -3,7 +3,7 @@
 echo -n -e "${C_GREEN}"
 
 REPO_OWNER="${NOVA_CORE_REPO_OWNER:-ClarifiedSecurity}" # Set env var NOVA_CORE_REPO_OWNER="yourforkrepo" to override default nova.core repo owner
-REPO_VERSION="${NOVA_CORE_VERSION:-${MAKEVAR_CATAPULT_VERSION:-main}}"
+REPO_VERSION="${MAKEVAR_NOVA_CORE_VERSION:-${MAKEVAR_CATAPULT_VERSION:-main}}"
 COLLECTION_GIT_URL="https://github.com/$REPO_OWNER/nova.core.git"
 COLLECTION_NAME="nova.core"
 REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
@@ -14,7 +14,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
   update_collection() {
 
     echo -e "Installing $COLLECTION_NAME collection..."
-    git clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
+    git -c advice.detachedHead=false clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
     ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible > /dev/null
     rm -rf /tmp/$COLLECTION_NAME
 
