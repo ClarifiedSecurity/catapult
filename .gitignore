@@ -8,8 +8,6 @@ core.*
 **/__pycache__/**
 /.idea
 /container/home/builder/.vault/vlt**
-/container/home/builder/.custom_aliases
-/container/home/builder/.personal_aliases
 /container/home/builder/.ssh/config.d/
 /container/home/builder/.ssh/known_hosts**
 /custom/**
