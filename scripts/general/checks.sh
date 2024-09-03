@@ -47,7 +47,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
     # shellcheck disable=SC2034
     select option in "${options[@]}"; do
         case "$REPLY" in
-            yes|y|1) git switch "$BRANCH"; break;;
+            yes|y|1) git switch "$BRANCH" --detach; break;;
             no|n|2) echo -e "Not changing branch"; break;;
         esac
     done
