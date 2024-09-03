@@ -20,6 +20,10 @@ DISPLAY :=$(or ${DISPLAY},0.0 )
 
 # Default for MacOS that doesn't have a XDG_SESSION_TYPE env var
 XDG_SESSION_TYPE :=$(or ${XDG_SESSION_TYPE},wayland )
+# This is the version of the Catapult customizer repo when used
+# By default, it is the same as the Catapult version
+# When it doesn't match the Catapult version name, make sure to set this to the correct version in personal/.makerc-personal
+MAKEVAR_CATAPULT_CUSTOMIZER_VERSION=${MAKEVAR_CATAPULT_VERSION}
 
 # This is the version of the nova.core collection that will be used.
 # By default, it is the same as the Catapult version
