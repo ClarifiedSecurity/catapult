@@ -69,7 +69,8 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
     if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
 
       git fetch
-      git reset --hard "origin/$BRANCH"
+      git reset --hard "origin/$BRANCH" # Resetting the branch to the latest commit
+      git clean --force -d # Cleaning the branch from any untracked files
 
     else
 
