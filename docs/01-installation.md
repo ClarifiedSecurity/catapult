@@ -1,6 +1,6 @@
 # Installation
 
-Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. Recommended host OS is Ubuntu 22.04 LTS. For Windows follow the [Windows Subsystem for Linux](#windows-subsystem-for-linux) section to pre-configure WSL and then return to [Quickstart](#quickstart).
+Catapult can run in `Linux`, `Windows (WSL)` or `MacOS`. For Windows follow the [Windows Subsystem for Linux](#windows-subsystem-for-linux) section to pre-configure WSL and then return to [Quickstart](#quickstart).
 
 ## Quickstart
 
@@ -16,11 +16,11 @@ cd catapult && \
 
 - You can run `./install.sh` multiple times until it finishes without errors.
 - You can also add use `./install.sh AUTOINSTALL` for unattended installation.
-- For Linux that requires sudo password or MacOS you can use this command for unattended installation: `echo "YourPassword" | ./install.sh AUTOINSTALL` Leave a space before the command to prevent it from being saved in the shell history.
+- For Linux that requires sudo password or MacOS you can use this command for unattended installation: `echo "YourSudoPassword" | ./install.sh AUTOINSTALL` Leave a space before the command to prevent it from being saved in the shell history.
 
 ### Windows Subsystem for Linux
 
-Log in interactively (over RDP or locally) to your Windows machine with an account that has **admin** rights and run the following commands in PowerShell. The first login needs to be with an **admin** account because the WSL installation needs to be done with admin rights. After the first installation you can use a non-admin account to log in.
+Log in interactively (over RDP or locally) to your Windows machine with an account that is in the **Administrators** group and run the following commands in PowerShell. The first login needs to be with an administrative account because the WSL installation needs to be done with admin rights. After the first installation you can use a non-admin account to log in.
 
 ```powershell
 Enable-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online -NoRestart
