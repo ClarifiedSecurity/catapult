@@ -5,4 +5,4 @@ skip_list: # https://ansible-lint.readthedocs.io/rules/
   - meta-no-info
   - name[template]
   - role-name[path]
-  - yaml[line-length]
+  - var-naming[no-role-prefix]
