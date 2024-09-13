@@ -21,7 +21,7 @@ checks:
 
 ## prepare: Run checks and install project requirements
 .PHONY: prepare
-prepare: customizations checks
+prepare: checks
 	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/prepare.sh
 
 ## start-tasks: Runs requires configurations tasks before starting the container
@@ -31,7 +31,8 @@ start-tasks: checks
 
 ## build: Run checks and then build container image
 .PHONY: build
-build: customizations checks
+build: checks
+	@make customizations --no-print-directory
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
 
