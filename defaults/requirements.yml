@@ -68,7 +68,7 @@ collections:
   - name: microsoft.sql
     version: 2.2.2
   - name: paloaltonetworks.panos
-    version: 2.19.1
+    version: 2.21.1
   - name: vmware.vmware_rest
     version: 4.0.1
   - name: vyos.vyos
