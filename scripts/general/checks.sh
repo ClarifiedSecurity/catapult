@@ -87,6 +87,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
     ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
     echo -e "${C_GREEN}"
     echo -e "Catapult updated to version $REMOTE_VERSION"
+    export CATAPULT_UPDATED=1 # Exporting the variable to be used in the next steps
     echo -e "${C_RST}"
 
   }
