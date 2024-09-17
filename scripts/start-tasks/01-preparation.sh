@@ -5,14 +5,10 @@ set -e
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
-echo -n -e "${C_CYAN}"
-
 # Creating required files and folders to avoid errors
 mkdir -p ./container/home/builder/.history
 mkdir -p ./personal/certificates
 touch ./personal/.personal_aliases
-
-echo -n -e "${C_RST}"
 
 # Checking if personal Docker Compose file exists and creating it if it doesn't
 if [[ -r docker/docker-compose-personal.yml ]]; then
@@ -46,5 +42,3 @@ else
     echo -n
 
 fi
-
-echo -n -e "${C_RST}"
