@@ -46,7 +46,7 @@ restart_docker() {
     if [[ $(systemctl is-active docker) != "active" ]]; then
 
       echo -n -e "${C_RED}"
-      echo -e Error starting Docker service, restart your computer and run "${C_CYAN}make prepare${C_RED}" again
+      echo -e Error starting Docker service, restart your computer and run "${C_CYAN}./install.sh${C_RED}" again
       echo -e Check the docker.service logs if the issue remains.
       echo -n -e "${C_RST}"
       exit 1
@@ -234,7 +234,8 @@ echo -e "${C_GREEN}"
 echo -e "Installing and configuring the latest Docker version?"
 echo -e
 
-if [ -n "$CATAPULT_AUTOINSTALL" ]; then
+# $1 == true comes from install.sh AUTOINSTALL parameter
+if [[ $1 == true ]]; then
 
   install_docker
 

@@ -7,8 +7,12 @@ source ./scripts/general/colors.sh
 
 if [ "$1" == "AUTOINSTALL" ]; then
 
-  export CATAPULT_AUTOINSTALL=true
-  export MAKEVAR_AUTO_UPDATE=1
+    export CATAPULT_AUTOINSTALL=true
+    export MAKEVAR_AUTO_UPDATE=1
+
+else
+
+    export CATAPULT_AUTOINSTALL=false
 
 fi
 
@@ -83,7 +87,7 @@ if [[ $(uname) == "Darwin" ]]; then
     echo -e "Installing homebrew?"
     echo
 
-    if [ -n "$CATAPULT_AUTOINSTALL" ]; then
+    if [[ "$CATAPULT_AUTOINSTALL" == true ]]; then
 
         brew-install
         brew-packages-install
@@ -167,7 +171,7 @@ if [[ $(uname) == "Linux" ]]; then
     echo -e "$PACKAGES"
     echo
 
-    if [ -n "$CATAPULT_AUTOINSTALL" ]; then
+    if [[ "$CATAPULT_AUTOINSTALL" == true ]]; then
 
       debian-packages-install
 
@@ -209,7 +213,7 @@ if [[ $(uname) == "Linux" ]]; then
         echo -e "$PACKAGES"
         echo -e
 
-        if [ -n "$CATAPULT_AUTOINSTALL" ]; then
+        if [[ "$CATAPULT_AUTOINSTALL" == true ]]; then
 
             arch-packages-install
 
@@ -252,7 +256,7 @@ if [[ $(uname) == "Linux" ]]; then
         echo -e "$PACKAGES"
         echo
 
-        if [ -n "$CATAPULT_AUTOINSTALL" ]; then
+        if [[ "$CATAPULT_AUTOINSTALL" == true ]]; then
         rhel-packages-install
         else
             options=(
@@ -300,4 +304,24 @@ touch ~/.gitconfig
 git config core.hooksPath .githooks
 git lfs install
 
-make prepare
+# Creating required folder to prevent errors
+mkdir -p custom/docker-entrypoints
+mkdir -p custom/start-tasks
+
+
+if [[ $(uname) == "Darwin" ]]; then
+
+    # Installing Docker without sudo for MacOS
+    scripts/general/configure-docker.sh $CATAPULT_AUTOINSTALL
+
+else
+
+    # Installing Docker with sudo for non-MacOS
+    sudo scripts/general/configure-docker.sh $CATAPULT_AUTOINSTALL
+
+fi
+
+echo -n -e "${C_GREEN}"
+echo -e "Preparations finished successfully"
+echo -e "Run ${C_CYAN}make start${C_GREEN} to start and configure Catapult"
+echo -n -e "${C_RST}"

@@ -32,7 +32,7 @@ if [[ "$CURRENT_DOCKER_MAJOR_VERSION" -lt "$MINIMUM_DOCKER_MAJOR_VERSION" ]]; th
     echo
     echo -e "Current Docker version $CURRENT_DOCKER_MAJOR_VERSION is too old!"
     echo -e "Minimum required Docker version is $MINIMUM_DOCKER_MAJOR_VERSION"
-    echo -e "Your can run ${C_CYAN}make prepare${C_RED} to install the latest Docker version for your OS."
+    echo -e "Your can run ${C_CYAN}./install.sh${C_RED} to install the latest Docker version for your OS."
     echo
     echo -n -e "${C_RST}"
     exit 1
