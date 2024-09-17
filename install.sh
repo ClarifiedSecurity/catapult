@@ -304,11 +304,6 @@ touch ~/.gitconfig
 git config core.hooksPath .githooks
 git lfs install
 
-# Creating required folder to prevent errors
-mkdir -p custom/docker-entrypoints
-mkdir -p custom/start-tasks
-
-
 if [[ $(uname) == "Darwin" ]]; then
 
     # Installing Docker without sudo for MacOS

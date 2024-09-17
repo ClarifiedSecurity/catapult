@@ -42,62 +42,67 @@ else
     # Running customizer
     "${ROOT_DIR}/scripts/general/catapult-customizer.sh"
 
-  # Running checks
-  "${ROOT_DIR}/scripts/general/checks.sh"
+    # Running checks
+    "${ROOT_DIR}/scripts/general/checks.sh"
 
-  # Running start tasks loader
-  START_TASKS_FILES="scripts/start-tasks/*.sh"
-  CUSTOM_START_TASKS_FILES="custom/start-tasks/*.sh"
+    # Running start tasks loader
+    START_TASKS_FILES="scripts/start-tasks/*.sh"
+    CUSTOM_START_TASKS_FILES="custom/start-tasks/*.sh"
 
-  for custom_startfile in $CUSTOM_START_TASKS_FILES; do
-    if [ -f "$custom_startfile" ]; then
-      # Comment in the echo line below for better debugging
-      # echo -e "\n Processing custom $custom_startfile...\n"
-      $custom_startfile
+    # Loading custom start tasks if they are present
+    if [[ -d "custom/start-tasks" ]]; then
+
+        for custom_startfile in $CUSTOM_START_TASKS_FILES; do
+        if [ -f "$custom_startfile" ]; then
+            # Comment in the echo line below for better debugging
+            # echo -e "\n Processing custom $custom_startfile...\n"
+            $custom_startfile
+        fi
+        done
+
     fi
-  done
 
-  for startfile in $START_TASKS_FILES; do
-    if [ -f "$startfile" ]; then
-      # Comment in the echo line below for better debugging
-      # echo -e "\n Processing $startfile...\n"
-      $startfile
+    for startfile in $START_TASKS_FILES; do
+        if [ -f "$startfile" ]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n Processing $startfile...\n"
+        $startfile
+        fi
+    done
+
+    if [[ $(uname) == "Darwin" ]]; then
+
+        echo -n -e "${C_YELLOW}"
+        echo "Setting correct SSH_AUTH_SOCK for MacOS..."
+        export HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+        echo -n -e "${C_RST}"
+
     fi
-  done
 
-  if [[ $(uname) == "Darwin" ]]; then
+    if [[ $(uname) == "Linux" ]]; then
 
-    echo -n -e "${C_YELLOW}"
-    echo "Setting correct SSH_AUTH_SOCK for MacOS..."
-    export HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
-    echo -n -e "${C_RST}"
+        echo -n -e "${C_YELLOW}"
+        echo "Setting correct SSH_AUTH_SOCK for Linux..."
+        export HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
+        echo -n -e "${C_RST}"
 
-  fi
+    fi
 
-  if [[ $(uname) == "Linux" ]]; then
+    # Also using custom Docker compose file if it exists
+    if [[ -r custom/docker/docker-compose-custom.yml ]]; then
 
-    echo -n -e "${C_YELLOW}"
-    echo "Setting correct SSH_AUTH_SOCK for Linux..."
-    export HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
-    echo -n -e "${C_RST}"
+        echo -n -e "${C_YELLOW}"
+        echo -e "Including docker-compose-custom.yml..."
+        echo -n -e "${C_RST}"
+        ${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/docker/docker-compose-custom.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
 
-  fi
+    else
 
-  # Also using custom Docker compose file if it exists
-  if [[ -r custom/docker/docker-compose-custom.yml ]]; then
+        ${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
 
-      echo -n -e "${C_YELLOW}"
-      echo -e "Including docker-compose-custom.yml..."
-      echo -n -e "${C_RST}"
-      ${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/docker/docker-compose-custom.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
+    fi
 
-  else
-
-      ${MAKEVAR_SUDO_COMMAND} docker compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
-
-  fi
-
-  ${MAKEVAR_SUDO_COMMAND} docker exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
+    ${MAKEVAR_SUDO_COMMAND} docker exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
 
 fi
 

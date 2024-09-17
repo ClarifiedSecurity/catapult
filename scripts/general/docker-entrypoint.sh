@@ -65,15 +65,20 @@ if [ ! -f /tmp/first-run ]; then
     sudo touch /ssh-agent
     sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
 
-    DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES="/srv/custom/docker-entrypoints/*.sh"
-    for custom_entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES; do
-      if [ -f "$custom_entrypoint" ]; then
-        # Comment in the echo line below for better debugging
-        # echo -e "\n Processing $custom_entrypoint...\n"
-        # shellcheck disable=SC1090
-        source "$custom_entrypoint"
-      fi
-    done
+    # Loading custom docker entrypoints if they are present
+    if [[ -d "/srv/custom/docker-entrypoints" ]]; then
+
+        DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES="/srv/custom/docker-entrypoints/*.sh"
+        for custom_entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_CUSTOM_FILES; do
+            if [ -f "$custom_entrypoint" ]; then
+            # Comment in the echo line below for better debugging
+            # echo -e "\n Processing $custom_entrypoint...\n"
+            # shellcheck disable=SC1090
+            source "$custom_entrypoint"
+            fi
+        done
+
+    fi
 
     DOCKER_CONTAINER_ENTRYPOINT_FILES="/srv/scripts/entrypoints/*.sh"
     for entrypoint in $DOCKER_CONTAINER_ENTRYPOINT_FILES; do
