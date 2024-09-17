@@ -5,7 +5,8 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
-make project-banner --no-print-directory
+# Printing logo
+echo "${LOGO}" | base64 -d
 
 if [[ $1 == "stop" ]]; then
 

@@ -10,7 +10,8 @@ export
 
 ## help: List all available make targets with descriptions
 .PHONY: help
-help: project-banner
+help:
+	@echo ${LOGO} | base64 -d
 	@echo
 	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':' | sort
 
@@ -21,7 +22,7 @@ build:
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
 
-## stop: Stop the container
+## stop: Stop and remove the container
 .PHONY: stop
 stop:
 	@${ROOT_DIR}/scripts/general/start.sh stop
@@ -36,7 +37,7 @@ shell-raw:
 clean:
 	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/cleanup.sh
 
-## customizations: Clone and configure Catapult customizations
+## customizations: Clone and configure Catapult customizations (if they are configured)
 .PHONY: customizations
 customizations:
 	@${ROOT_DIR}/scripts/general/catapult-customizer.sh
@@ -51,12 +52,7 @@ start:
 restart:
 	@${ROOT_DIR}/scripts/general/start.sh restart
 
-## project-banner: Print project banner
-.PHONY: project-banner
-project-banner:
-	@echo ${LOGO} | base64 -d
-
-## print-env: Prints environment variables for debbuging
-.PHONY: project-env
-print-env:
+## print-variables: Prints environment variables for debbuging
+.PHONY: print-variables
+print-variables:
 	@env | sort
