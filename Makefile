@@ -8,46 +8,41 @@ export
 
 .DEFAULT_GOAL := help
 
-## help: List all available make targets with descriptions
+## help: List all available make commands with descriptions
 .PHONY: help
 help:
 	@echo ${LOGO} | base64 -d
 	@echo
-	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':' | sort
+	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':'
 
-## build: Run checks and then build container image
+## start: Start Catapult (if not running) and enter it
+.PHONY: start
+start:
+	@${ROOT_DIR}/scripts/general/start.sh
+
+## restart: Restarts Catapult and enters it
+.PHONY: restart
+restart:
+	@${ROOT_DIR}/scripts/general/start.sh restart
+
+## stop: Stop and remove Catapult container
+.PHONY: stop
+stop:
+	@${ROOT_DIR}/scripts/general/start.sh stop
+
+## clean: Stop and remove Catapult container and Docker image
+.PHONY: clean
+clean:
+	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/cleanup.sh
+
+## build: Build Catapult image locally
 .PHONY: build
 build:
 	@bash ${ROOT_DIR}/scripts/general/checks.sh
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
 
-## stop: Stop and remove the container
-.PHONY: stop
-stop:
-	@${ROOT_DIR}/scripts/general/start.sh stop
-
-## shell-raw: Bypass docker-entrypoint.sh and directly into shell
-.PHONY: shell-raw
-shell-raw:
-	${MAKEVAR_SUDO_COMMAND} docker exec -it ${CONTAINER_NAME} zsh
-
-## clean: Stop and delete the container and the image
-.PHONY: clean
-clean:
-	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/cleanup.sh
-
-## start: Starts the container (if not running) and enters the shell
-.PHONY: start
-start:
-	@${ROOT_DIR}/scripts/general/start.sh
-
-## restart: Restarts the container and enters the shell
-.PHONY: restart
-restart:
-	@${ROOT_DIR}/scripts/general/start.sh restart
-
-## print-variables: Prints environment variables for debbuging
+## print-variables: Print environment variables (for debbuging)
 .PHONY: print-variables
 print-variables:
 	@env | sort
