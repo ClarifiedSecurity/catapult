@@ -19,15 +19,9 @@ help: project-banner
 checks:
 	@bash ${ROOT_DIR}/scripts/general/checks.sh
 
-## start-tasks: Runs requires configurations tasks before starting the container
-# .PHONY: start-tasks
-start-tasks: checks
-	@${ROOT_DIR}/scripts/general/start-tasks-loader.sh
-
 ## build: Run checks and then build container image
 .PHONY: build
 build: checks
-	@make customizations --no-print-directory
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
 
