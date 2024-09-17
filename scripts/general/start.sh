@@ -40,8 +40,29 @@ else
 
   echo -n -e "${C_YELLOW}"
   make customizations --no-print-directory
-  make start-tasks --no-print-directory
-  echo -n -e "${C_RST}"
+
+  # Running checks
+  "${ROOT_DIR}/scripts/general/checks.sh"
+
+  # Running start tasks loader
+  START_TASKS_FILES="scripts/start-tasks/*.sh"
+  CUSTOM_START_TASKS_FILES="custom/start-tasks/*.sh"
+
+  for custom_startfile in $CUSTOM_START_TASKS_FILES; do
+    if [ -f "$custom_startfile" ]; then
+      # Comment in the echo line below for better debugging
+      # echo -e "\n Processing custom $custom_startfile...\n"
+      $custom_startfile
+    fi
+  done
+
+  for startfile in $START_TASKS_FILES; do
+    if [ -f "$startfile" ]; then
+      # Comment in the echo line below for better debugging
+      # echo -e "\n Processing $startfile...\n"
+      $startfile
+    fi
+  done
 
   if [[ $(uname) == "Darwin" ]]; then
 
