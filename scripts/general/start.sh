@@ -38,7 +38,6 @@ if ${MAKEVAR_SUDO_COMMAND} docker ps --format "{{ .Names }}" | grep -q "$CONTAIN
 
 else
 
-  echo -n -e "${C_YELLOW}"
   make customizations --no-print-directory
 
   # Running checks

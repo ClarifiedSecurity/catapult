@@ -14,14 +14,10 @@ help: project-banner
 	@echo
 	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':' | sort
 
-## checks: Running different checks before starting the container
-.PHONY: checks
-checks:
-	@bash ${ROOT_DIR}/scripts/general/checks.sh
-
 ## build: Run checks and then build container image
 .PHONY: build
-build: checks
+build:
+	@bash ${ROOT_DIR}/scripts/general/checks.sh
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
 
