@@ -15,9 +15,6 @@ jobs:
       - name: Pulling Catapult repository...
         uses: actions/checkout@v4
 
-      - name: Preparing image build...
-        run: make customizations
-
       - name: Logging into to GitHub Container Registry...
         uses: docker/login-action@v3
         with:
