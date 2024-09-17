@@ -47,8 +47,4 @@ if [ -f custom/start.yml ]; then
     cp -R defaults/start.yml inventories/start.yml
 fi
 
-# Creating required folder to prevent errors
-mkdir -p custom/docker-entrypoints
-mkdir -p custom/start-tasks
-
 echo -n -e "${C_RST}"

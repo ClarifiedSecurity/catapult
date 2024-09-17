@@ -19,11 +19,6 @@ help: project-banner
 checks:
 	@bash ${ROOT_DIR}/scripts/general/checks.sh
 
-## prepare: Run checks and install project requirements
-.PHONY: prepare
-prepare: checks
-	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/prepare.sh
-
 ## start-tasks: Runs requires configurations tasks before starting the container
 # .PHONY: start-tasks
 start-tasks: checks
