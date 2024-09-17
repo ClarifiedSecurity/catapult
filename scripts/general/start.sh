@@ -43,7 +43,18 @@ else
     "${ROOT_DIR}/scripts/general/catapult-customizer.sh"
 
     # Running checks
-    "${ROOT_DIR}/scripts/general/checks.sh"
+    # shellcheck disable=SC1091
+    . "${ROOT_DIR}/scripts/general/checks.sh"
+
+    # This is to prevent errors from changed files from updating
+    if [[ $CATAPULT_UPDATED == 1 ]]; then
+
+        echo -n -e "${C_GREEN}"
+        echo -e "Run ${C_CYAN}make start${C_YELLOW} again to start the container..."
+        echo -n -e "${C_RST}"
+        exit 0
+
+    fi
 
     # Running start tasks loader
     START_TASKS_FILES="scripts/start-tasks/*.sh"
