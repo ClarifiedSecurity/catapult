@@ -37,11 +37,6 @@ shell-raw:
 clean:
 	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/cleanup.sh
 
-## customizations: Clone and configure Catapult customizations (if they are configured)
-.PHONY: customizations
-customizations:
-	@${ROOT_DIR}/scripts/general/catapult-customizer.sh
-
 ## start: Starts the container (if not running) and enters the shell
 .PHONY: start
 start:

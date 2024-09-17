@@ -39,7 +39,8 @@ if ${MAKEVAR_SUDO_COMMAND} docker ps --format "{{ .Names }}" | grep -q "$CONTAIN
 
 else
 
-  make customizations --no-print-directory
+    # Running customizer
+    "${ROOT_DIR}/scripts/general/catapult-customizer.sh"
 
   # Running checks
   "${ROOT_DIR}/scripts/general/checks.sh"
