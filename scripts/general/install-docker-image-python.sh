@@ -29,7 +29,6 @@ popd || exit
 # Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 zsh
-git clone https://github.com/denysdovhan/spaceship-prompt.git "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt" --depth=1
 
 # FZF
 git clone https://github.com/junegunn/fzf.git "$HOME/.fzf" --depth 1
