@@ -5,6 +5,32 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
+# Checking if Docker is installed
+if ! [ -x "$(command -v docker)" ]; then
+  echo -n -e "${C_RED}"
+  echo -e "Docker not found did you run ${C_CYAN}./install.sh${C_RED} first!"
+  echo -n -e "${C_RST}"
+  exit 1
+
+fi
+
+# Checking for minimum Docker version
+MINIMUM_DOCKER_MAJOR_VERSION="27"
+CURRENT_DOCKER_MAJOR_VERSION=$(docker --version | awk '{print $3}' | cut -d '.' -f 1)
+
+if [[ "$CURRENT_DOCKER_MAJOR_VERSION" -lt "$MINIMUM_DOCKER_MAJOR_VERSION" ]]; then
+
+    echo -n -e "${C_RED}"
+    echo
+    echo -e "Current Docker major version ${C_CYAN}$CURRENT_DOCKER_MAJOR_VERSION${C_RED} is too old!"
+    echo -e "Minimum required Docker major version is ${C_CYAN}$MINIMUM_DOCKER_MAJOR_VERSION${C_RED}"
+    echo -e "Your can run ${C_CYAN}./install.sh${C_RED} to install the latest Docker version for your OS."
+    echo
+    echo -n -e "${C_RST}"
+    exit 1
+
+fi
+
 # Printing logo
 echo "${LOGO}" | base64 -d
 
