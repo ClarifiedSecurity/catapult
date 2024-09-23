@@ -23,6 +23,11 @@ MAKEVAR_SUDO_COMMAND :=sudo -E
 # Append -b barnch_name to the end of the URL to use a specific branch
 MAKEVAR_CATAPULT_CUSTOMIZER_REPO :=
 
+# This is the version of the Catapult customizer repo when used
+# By default, it is the same as the Catapult version
+# When it doesn't match the Catapult version name, make sure to set this to the correct version in personal/.makerc-personal
+MAKEVAR_CATAPULT_CUSTOMIZER_VERSION=${MAKEVAR_CATAPULT_VERSION}
+
 # This is the FQDN of docker registry that is hosting the Catapult container image
 # This can be the place where the CI/CD pipelines build your custom Catapult image or your own private registry proxy
 # Set the value to the registry machine's FQDN
@@ -36,6 +41,12 @@ MAKEVAR_IMAGE_NAME :=clarifiedsecurity/catapult
 # This also applies to the Docker image
 # Available options are main, staging or a specific relase from https://github.com/ClarifiedSecurity/catapult/releases
 MAKEVAR_CATAPULT_VERSION :=main
+
+# This is the version of the nova.core collection that will be used.
+# By default, it is the same as the Catapult version
+# When NOT using staging or main as Catault version, make sure to set this to the correct nova.core version from:
+# https://github.com/ClarifiedSecurity/nova.core/releases
+MAKEVAR_NOVA_CORE_VERSION=${MAKEVAR_CATAPULT_VERSION}
 
 # Automatically update Catapult, Docker image & custom Ansible collections when new versions are available
 # Set to 1 to enable, 0 to disable
