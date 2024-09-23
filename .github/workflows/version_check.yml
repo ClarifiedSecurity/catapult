@@ -1,8 +1,11 @@
 ---
-name: Comparing PR version with the latest version
+name: Comparing PR version with the main version
 
 on:
-  pull_request:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
     branches:
       - main
 
@@ -20,6 +23,13 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+          path: pr
+
+      - name: Cloning Catapult main repository...
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: main
 
       - name: Comparing PR version with main...
         run: |
@@ -30,10 +40,28 @@ jobs:
           export C_RST="\x1b[0m"
 
           VERSION_FILE="version.yml"
-          REMOTE_VERSION_URL="https://raw.githubusercontent.com/ClarifiedSecurity/catapult/main/version.yml"
 
-          PR_VERSION=$(cat $VERSION_FILE | grep "version:" | cut -d " " -f 2)
-          CURRENT_VERSION=$(curl "$REMOTE_VERSION_URL" -s | grep "version:" | cut -d " " -f 2)
+          if [[ -e "pr/$VERSION_FILE" ]]; then
+
+            PR_VERSION=$(cat pr/$VERSION_FILE | grep "version:" | cut -d " " -f 2)
+
+          else
+
+            echo "pr/$VERSION_FILE does not exist."
+            exit 1
+
+          fi
+
+          if [[ -e "main/$VERSION_FILE" ]]; then
+
+            CURRENT_VERSION=$(cat main/$VERSION_FILE | grep "version:" | cut -d " " -f 2)
+
+          else
+
+            echo "main/$VERSION_FILE does not exist."
+            exit 1
+
+          fi
 
           echo -n -e "${C_YELLOW}"
           echo -e "Pull Request Version - $PR_VERSION"
