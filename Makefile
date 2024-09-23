@@ -35,7 +35,7 @@ stop:
 clean:
 	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/cleanup.sh
 
-## build: Build Catapult image locally
+## build: Build Catapult image locally (development & testing)
 .PHONY: build
 build:
 	@bash ${ROOT_DIR}/scripts/general/checks.sh
