@@ -9,6 +9,7 @@ source ./scripts/general/colors.sh
 mkdir -p ./container/home/builder/.history
 mkdir -p ./personal/certificates
 touch ./personal/.personal_aliases
+touch "$HOME/.gitconfig"
 
 # Checking if personal Docker Compose file exists and creating it if it doesn't
 if [[ -r docker/docker-compose-personal.yml ]]; then
