@@ -9,11 +9,12 @@ services:
     network_mode: host
     restart: no
     volumes:
-      - ${ROOT_DIR}/:/srv/
-      - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
-      - ${ROOT_DIR}/container/home/builder/.history:/home/builder/.history
+      - $HOME/.gitconfig:/home/builder/.gitconfig
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
       - ${ROOT_DIR}/container/home/builder/.vault:/home/builder/.vault
+      - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
+      - ${ROOT_DIR}/container/home/builder/.history:/home/builder/.history
+      - ${ROOT_DIR}/:/srv/
       - ${HOST_SSH_AUTH_SOCK}:/ssh-agent
     environment:
       ALLOW_HOST_SSH_ACCESS: ${MAKEVAR_ALLOW_HOST_SSH_ACCESS}
