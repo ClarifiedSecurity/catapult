@@ -4,8 +4,7 @@
 source /srv/scripts/general/colors.sh
 
 rm -rf "$HOME/.venv"
-# shellcheck disable=SC2164
-pushd "$HOME"; "$HOME/.cargo/bin/uv" venv; popd
+pushd "$HOME" || exit ; "$HOME/.cargo/bin/uv" venv ; popd || exit
 source "$HOME/.venv/bin/activate"
 "$HOME/.cargo/bin/uv" pip install -r /srv/defaults/requirements_src.txt
 uv pip freeze > /srv/defaults/requirements.txt
