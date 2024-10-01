@@ -12,12 +12,7 @@ touch ./personal/.personal_aliases
 touch "$HOME/.gitconfig"
 
 # Checking if personal Docker Compose file exists and creating it if it doesn't
-if [[ -r docker/docker-compose-personal.yml ]]; then
-
-  cp docker/docker-compose-personal.yml personal/docker-compose-personal.yml
-  rm -f docker/docker-compose-personal.yml
-
-elif [[ ! -r personal/docker-compose-personal.yml ]]; then
+if [[ ! -r personal/docker-compose-personal.yml ]]; then
 
   cp defaults/docker-compose-personal.yml personal/docker-compose-personal.yml
 
