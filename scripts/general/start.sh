@@ -38,8 +38,8 @@ if [[ $1 == "stop" ]]; then
 
     echo -n -e "${C_YELLOW}"
     echo -e Removing existing "${CONTAINER_NAME} container..."
-    ${MAKEVAR_SUDO_COMMAND} docker rm -f "${CONTAINER_NAME}" >/dev/null
     echo -n -e "${C_RST}"
+    ${MAKEVAR_SUDO_COMMAND} docker rm -f "${CONTAINER_NAME}" >/dev/null
     exit 0
 fi
 
