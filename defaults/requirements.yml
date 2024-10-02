@@ -28,7 +28,7 @@ collections:
   - name: azure.azcollection
     version: 2.7.0
   - name: chocolatey.chocolatey
-    version: 1.5.2
+    version: 1.5.3
   - name: cisco.ios
     version: 9.0.2
   - name: cloud.common
