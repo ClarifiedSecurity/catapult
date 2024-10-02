@@ -161,6 +161,9 @@ autocomplete:
         - subcommand_name: select
           subcommand_description: Lists all available projects under /srv/inventories and allows you to select one
           subcommand_to_execute: source /srv/scripts/general/select-inventory.sh
+        - subcommand_name: update-inventory
+          subcommand_description: Updates the tab-completable inventory for currently selected project
+          subcommand_to_execute: source /srv/scripts/general/generate-inventory-completion.sh
 
     - command: dev
       description: Commands for Catapult developers

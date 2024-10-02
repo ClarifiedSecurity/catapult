@@ -1,5 +1,5 @@
 ---
-- name: Hurling boulders...
+- name: Hurling boulders... # noqa: var-naming[non-string]
   hosts: all
   serial: "{{ playbook_serial_number | default('100%') }}"
   gather_facts: false
