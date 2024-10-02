@@ -3,7 +3,7 @@
 Catapult's commands fall into two categories:
 
 - External commands - All commands that start with `make` are external commands and are used to manage the Catapult container itself.
-- Internal commands - All commands that start with `ctp ` are internal commands and are used when the user is inside the Catapult container.
+- Internal commands - All commands that start with `ctp` are internal commands and are used when the user is inside the Catapult container.
 
 ## Variables
 
@@ -11,7 +11,7 @@ When running catapult for the first time it'll ask you to create a new Ansible V
 
 - `aws_access_key_id:` - AWS access key ID - can be generated from the AWS Identity and Access Management (IAM) console
 - `aws_access_key:` - AWS access key itself - can be generated from the AWS Identity and Access Management (IAM) console
-- `linode_api_token:` - Linode API token - can be generated from the Linode Cloud Manager https://cloud.linode.com/profile/tokens
+- `linode_api_token:` - Linode API token - can be generated from the [Linode Cloud Manager](https://cloud.linode.com/profile/tokens)
 
 ## Enter the Catapult
 
@@ -33,7 +33,7 @@ Catapult is designed to work with multiple projects. Each project has its own in
 
 ## Tips and tricks
 
-- Use tab completion to get the list of available commands. For example, type `ctp ` and press tab to get the list of available commands.
+- Use tab completion to get the list of available commands. For example, type `ctp` and press tab to get the list of available commands.
 - Use `Ctrl + R` to search through the command history and find the command you have used before. Fuzzy search is enabled so you can type parts of the commands or separate words that must be contained in the command.
 - Use arrow up after you have started typing the command to get the previous command that starts the same way. For example, if you have used `ctp host deploy` before you can use arrow up to get the previous `ctp host deploy` commands.
 
@@ -61,6 +61,14 @@ ctp secrets change-password
 
 ```zsh
 ctp project select
+```
+
+### ctp project update-inventory
+
+- Updates the tab-completable inventory cache.
+
+```zsh
+ctp project update-inventory
 ```
 
 ## Host commands

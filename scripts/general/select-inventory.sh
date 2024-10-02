@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-echo -n -e "${C_RST}"
+# shellcheck disable=SC1091
+source /srv/scripts/general/colors.sh
 
 SEARCH_DIR="/srv/inventories"
 SEARCH_FOLDER=".git"
@@ -65,15 +66,15 @@ function inventory_selector() {
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
             project_customization_loader
             # shellcheck disable=SC2164
-            # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
-            cd "$selected_folder" > /dev/null 2>/dev/null
+            cd "$selected_folder"
             touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
 
         else
 
-            echo "Invalid selection."
-            # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
-            cd /srv > /dev/null 2>/dev/null || exit
+            echo -n -e "${C_RED}"
+            echo "Invalid project selection."
+            echo -n -e "${C_RST}"
+            cd /srv || exit
 
         fi
 
@@ -85,13 +86,7 @@ function inventory_selector() {
 
 }
 
-function inventory_generator(){
-
-  # For some reaseon some Ansible commands cannot detect the vault file from an environment variable
-  ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$selected_folder")_hosts"
-
-}
-
 inventory_selector
-( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )
-git fetch > /dev/null 2>&1 # Fetching the latest changes from the remote repository
+
+# Including the inventory completion generator
+/srv/scripts/general/generate-inventory-completion.sh
