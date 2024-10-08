@@ -35,6 +35,11 @@ stop:
 clean:
 	@${MAKEVAR_SUDO_COMMAND} ${ROOT_DIR}/scripts/general/cleanup.sh
 
+## customizations: Pulls the latest Catapult customizations if they exist
+.PHONY: customizations
+customizations:
+	@${ROOT_DIR}/scripts/general/catapult-customizer.sh
+
 ## build: Build Catapult image locally (development & testing)
 .PHONY: build
 build:
