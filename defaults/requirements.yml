@@ -62,7 +62,7 @@ collections:
   - name: kubernetes.core
     version: 2.4.0
   - name: linode.cloud
-    version: 0.30.1
+    version: 0.31.2
   - name: microsoft.ad
     version: 1.7.1
   - name: microsoft.sql
