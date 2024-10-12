@@ -165,6 +165,20 @@ autocomplete:
           subcommand_description: Updates the tab-completable inventory for currently selected project
           subcommand_to_execute: source /srv/scripts/general/generate-inventory-completion.sh
 
+    - command: update
+      description: Commands for Catapult component updates
+      hosts_as_arguments: false
+      subcommands:
+        - subcommand_name: reinstall-default-collections
+          subcommand_description: Reinstalls (overwrites) default roles and collections
+          subcommand_to_execute: /srv/scripts/general/install-collections.sh
+        - subcommand_name: update-nova
+          subcommand_description: Checks for nova.core collection updates
+          subcommand_to_execute: /srv/scripts/entrypoints/02-nova-core-version-check.sh
+        - subcommand_name: update-venv
+          subcommand_description: Updates Python virtual environment packages
+          subcommand_to_execute: /srv/scripts/general/update-venv.sh
+
     - command: dev
       description: Commands for Catapult developers
       hosts_as_arguments: false
@@ -175,12 +189,3 @@ autocomplete:
         - subcommand_name: disable-timing
           subcommand_description: Disables timing for tasks
           subcommand_to_execute: unset ANSIBLE_CALLBACKS_ENABLED && echo 'Timing disabled'
-        - subcommand_name: reinstall-default-collections
-          subcommand_description: Updates default roles and collections, overwriting the existing ones
-          subcommand_to_execute: /srv/scripts/general/install-collections.sh
-        - subcommand_name: update-nova
-          subcommand_description: Checks for nova.core collection updates
-          subcommand_to_execute: /srv/scripts/entrypoints/02-nova-core-version-check.sh
-        - subcommand_name: update-venv
-          subcommand_description: Updates Python virtual environment packages
-          subcommand_to_execute: /srv/scripts/general/update-venv.sh

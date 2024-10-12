@@ -517,3 +517,55 @@ _Example usage:_
 ```zsh
 ctp vm suspend <inventory_hostname>
 ```
+
+## Update commands
+
+These commands will be used to manually check and update for Catapult components. These are mostly useful for people who are modifying or developing Catapult. For most users the `make restart` command is enough to restart, check and update the Catapult container and components.
+
+### reinstall-default-collections
+
+Reinstall the default collections that come with Catapult. This is useful when you have made changes to the collections and you want to revert them back to the default state.
+
+_Example usage:_
+
+```zsh
+ctp update reinstall-default-collections
+```
+
+### update-nova
+
+Update the `nova.core` collection to the latest version. This is useful when you want to update the `nova.core` collection to the latest version without restarting the Catapult container.
+
+_Example usage:_
+
+```zsh
+ctp update update-nova
+```
+
+### update-venv
+
+Update the Python virtual environment to the latest version. This is useful when you want to update the Python virtual environment to the latest version without restarting the Catapult container.
+
+## Development commands
+
+These commands are useful when developing or debugging Catapult.
+
+### enable-timing
+
+Enables timing for the Ansible playbook. This is useful when you want to see how long each task takes to run.
+
+_Example usage:_
+
+```zsh
+ctp dev enable-timing
+```
+
+### disable-timing
+
+Disables timing for the Ansible playbook. This is useful when you want to disable the timing for the Ansible playbook.
+
+_Example usage:_
+
+```zsh
+ctp dev disable-timing
+```
