@@ -5,6 +5,13 @@ Catapult's commands fall into two categories:
 - External commands - All commands that start with `make` are external commands and are used to manage the Catapult container itself.
 - Internal commands - All commands that start with `ctp` are internal commands and are used when the user is inside the Catapult container.
 
+Catapult has 2 modes for modifications:
+
+- Personalization - Where users can set their own preferences that will only affect them.
+- Customization - Where preferences are configured in a way that they apply to your team/organization etc.
+
+Follow the `# How to Personalization` & `# How to Customize` sections if you want to personalize or customize Catapult.
+
 ## Variables
 
 When running catapult for the first time it'll ask you to create a new Ansible Vault file and fill it out with your secrets. The secrets are used to connect to the hypervisors, cloud providers, and other services. Besides the required `deployer_username` & `deployer_password` here are some other variables that you might need when using Catapult with [nova.core](https://github.com/ClarifiedSecurity/nova.core) collection:
