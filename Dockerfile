@@ -47,5 +47,8 @@ ADD --chown=builder:builder container/home/builder/.zshrc /home/builder/.zshrc
 ADD --chown=builder:builder scripts/general/install-docker-image-collections.sh /tmp/install-docker-image-collections.sh
 RUN bash /tmp/install-docker-image-collections.sh
 
+# Setting the default editor to nano since it's easier to use for beginners
+ENV EDITOR=nano
+
 WORKDIR /srv
 ENTRYPOINT ["zsh"]
