@@ -7,7 +7,7 @@ if [ ! -f /var/tmp/vlt_pf ]; then
 
 else
 
-    EDITOR=nano ansible-vault edit ~/.vault/vlt
+    ansible-vault edit ~/.vault/vlt
     /srv/scripts/general/secrets-validate.sh
 
 fi
