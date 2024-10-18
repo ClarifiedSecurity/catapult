@@ -50,7 +50,7 @@ collections:
   - name: community.postgresql
     version: 3.6.1
   - name: community.routeros
-    version: 2.19.0
+    version: 2.20.0
   - name: community.vmware
     version: 4.4.0
   - name: community.windows
