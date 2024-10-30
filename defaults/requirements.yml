@@ -14,9 +14,10 @@ roles:
     version: 3.5.0
 
 collections:
-  - name: https://github.com/ClarifiedSecurity/amazon.aws.git # A temporary fork of the official collection to remove the annoying deprecation warnings
+  # A temporary fork of the official collection to remove the annoying deprecation warnings that come with each run
+  - name: https://github.com/ClarifiedSecurity/amazon.aws.git
     type: git
-    version: latest
+    version: 9.0.0-cs
   - name: ansible.netcommon
     version: 7.1.0
   - name: ansible.posix
@@ -34,7 +35,7 @@ collections:
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
-    version: 8.0.0
+    version: 9.0.0
   - name: community.crypto
     version: 2.22.3
   - name: community.docker
