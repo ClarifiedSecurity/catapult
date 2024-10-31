@@ -69,7 +69,7 @@ collections:
   - name: paloaltonetworks.panos
     version: 2.21.1
   - name: vmware.vmware_rest
-    version: 4.1.0
+    version: 4.2.0
   - name: vyos.vyos
     version: 5.0.0
 
