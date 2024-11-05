@@ -360,7 +360,7 @@ ctp vm rename <inventory_hostname> -e old_vm_name=<old_name> -e new_vm_name=<new
 ctp vm rename <inventory_hostname> -e new_vm_name=<new_name>
 ```
 
-### ctp vm snapshot
+### ctp vm snapshot-create
 
 Shuts down the VM, creates a snapshot and powers the VM back on.
 
@@ -369,13 +369,13 @@ _Example usage:_
 - Creates a snapshot of the VM for the given inventory_hostname with the default snapshot name
 
 ```zsh
-ctp vm snapshot <inventory_hostname>
+ctp vm snapshot-create <inventory_hostname>
 ```
 
 - Creates a snapshot of the VM for the given inventory_hostname with the given snapshot name
 
 ```zsh
-ctp vm snapshot <inventory_hostname> -e snapshot_name=<snapshot_name>
+ctp vm snapshot-create <inventory_hostname> -e snapshot_name=<snapshot_name>
 ```
 
 ### ctp vm snapshot-create-clean
@@ -405,13 +405,13 @@ _Example usage:_
 - Creates a live snapshot of the VM for the given inventory_hostname
 
 ```zsh
-ctp vm snapshot-live <inventory_hostname>
+ctp vm snapshot-create-live <inventory_hostname>
 ```
 
 - Creates a live snapshot of the VM for the given inventory_hostname with the given snapshot name
 
 ```zsh
-ctp vm snapshot-live <inventory_hostname> -e snapshot_name=<snapshot_name>
+ctp vm snapshot-create-live <inventory_hostname> -e snapshot_name=<snapshot_name>
 ```
 
 ### ctp vm snapshot-revert
