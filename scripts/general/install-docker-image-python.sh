@@ -14,9 +14,9 @@ echo "y" | yarn install
 pushd "$HOME" || exit
 curl -LsSf https://astral.sh/uv/install.sh | sh
 # shellcheck disable=SC1091
-source "$HOME/.cargo/env"
+source "$HOME/.local/bin/env"
 rm -rf "$HOME/.venv"
-"$HOME/.cargo/bin/uv" venv
+"$HOME/.local/bin/uv" venv
 # shellcheck disable=SC1091
 source "$HOME/.venv/bin/activate"
 uv pip install -r /srv/defaults/requirements.txt
