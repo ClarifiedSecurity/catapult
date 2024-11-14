@@ -65,7 +65,7 @@ collections:
   - name: microsoft.ad
     version: 1.7.1
   - name: microsoft.sql
-    version: 2.2.2
+    version: 2.2.3
   - name: paloaltonetworks.panos
     version: 2.21.3
   - name: vmware.vmware_rest
