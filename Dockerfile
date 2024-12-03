@@ -51,4 +51,3 @@ RUN bash /tmp/install-docker-image-collections.sh
 ENV EDITOR=nano
 
 WORKDIR /srv
-ENTRYPOINT ["zsh"]
