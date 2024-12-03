@@ -49,7 +49,7 @@ collections:
   - name: community.mysql
     version: 3.11.0
   - name: community.postgresql
-    version: 3.8.0
+    version: 3.9.0
   - name: community.routeros
     version: 3.0.0
   - name: community.vmware
