@@ -1,5 +1,5 @@
 aiohttp
-ansible-core==2.18.0
+ansible-core==2.18.1
 ansible-lint
 ansible-pylibssh
 ansible-specdoc
