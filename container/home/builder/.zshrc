@@ -76,20 +76,14 @@ if [ -f ~/.fzf.zsh ]; then
     . ~/.fzf.zsh
 fi
 
-# Set CATAPULT_SKIP_ENTRYPOINT=1 to skip the entrypoint
-# Useful when using the image in CI
-if [ "$CATAPULT_SKIP_ENTRYPOINT" != 1 ]; then
+# Secrets unlocker script
+# Can also be used with ctp secrets unlock
+# shellcheck disable=SC1091
+export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault/unlock-vault.sh
+bash /srv/scripts/general/secrets-unlock.sh
 
-    # Secrets unlocker script
-    # Can also be used with ctp secrets unlock
-    # shellcheck disable=SC1091
-    export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault/unlock-vault.sh
-    bash /srv/scripts/general/secrets-unlock.sh
-
-    # Initialization tasks and extra entrypoint(s) loader
-    bash /srv/scripts/general/docker-entrypoint.sh
-
-fi
+# Initialization tasks and extra entrypoint(s) loader
+bash /srv/scripts/general/docker-entrypoint.sh
 
 # Checking if completions file exists, if not then creating it
 if [ -f "/home/builder/autocomplete.sh" ]; then

@@ -20,7 +20,7 @@ MAKEVAR_SUDO_COMMAND :=sudo -E
 # This repo is used to store your customizations for Catapult
 # Make sure to follow the correct folder and file structure defined in the Catapult README under customization section
 # Example for SSH git@github.com:YourAccount/YourProject.git or HTTPS https://github.com/YourAccount/YourProject.git
-# Append -b barnch_name to the end of the URL to use a specific branch
+# Append -b branch_name to the end of the URL to use a specific branch
 MAKEVAR_CATAPULT_CUSTOMIZER_REPO :=
 
 # This is the version of the Catapult customizer repo when used
@@ -39,7 +39,7 @@ MAKEVAR_IMAGE_NAME :=clarifiedsecurity/catapult
 
 # This is Catapult tag that will be used to pull the version of Catapult from the repository
 # This also applies to the Docker image
-# Available options are main, staging or a specific relase from https://github.com/ClarifiedSecurity/catapult/releases
+# Available options are main, staging or a specific release from https://github.com/ClarifiedSecurity/catapult/releases
 MAKEVAR_CATAPULT_VERSION :=main
 
 # This is the version of the nova.core collection that will be used.
