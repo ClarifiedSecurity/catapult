@@ -47,7 +47,7 @@ build:
 	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
 	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
 
-## print-variables: Print environment variables (for debbuging)
+## print-variables: Print environment variables (for debugging)
 .PHONY: print-variables
 print-variables:
 	@env | sort

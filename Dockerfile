@@ -32,7 +32,7 @@ ADD --chown=builder:builder defaults/autocomplete.yml /srv/defaults/autocomplete
 ADD --chown=builder:builder defaults/start.yml /srv/inventories/start.yml
 ADD --chown=builder:builder container/home/builder/.vault/unlock-vault.sh /home/builder/.vault/unlock-vault.sh
 
-# Installing everything in separate scripts to avoid creating multiple layers thus reducing the image size
+# Installing everything in separate scripts to and multiple layers thus reducing the image size
 # Having separate layers also keeps them small and easier to download and extract on low bandwidth connections
 
 ADD --chown=builder:builder scripts/general/install-docker-image-tools.sh /tmp/install-docker-image-tools.sh
@@ -41,11 +41,17 @@ RUN bash /tmp/install-docker-image-tools.sh
 USER builder
 
 ADD --chown=builder:builder scripts/general/install-docker-image-python.sh /tmp/install-docker-image-python.sh
+ADD --chown=builder:builder scripts/general/cd_command_generator.py /tmp/cd_command_generator.py
 RUN bash /tmp/install-docker-image-python.sh
 ADD --chown=builder:builder container/home/builder/.zshrc /home/builder/.zshrc
 
 ADD --chown=builder:builder scripts/general/install-docker-image-collections.sh /tmp/install-docker-image-collections.sh
 RUN bash /tmp/install-docker-image-collections.sh
+
+# Adding required environment variables
+ENV PATH=/home/builder/.venv/bin:$PATH
+ENV VIRTUAL_ENV=/home/builder/.venv
+ENV ANSIBLE_VAULT_PASSWORD_FILE=/home/builder/.vault/unlock-vault.sh
 
 # Setting the default editor to nano since it's easier to use for beginners
 ENV EDITOR=nano
