@@ -8,7 +8,7 @@ import os
 autocomplete_default_src_path = '/srv/defaults/autocomplete.yml'
 autocomplete_custom_src_path = '/srv/custom/autocomplete.yml'
 autocomplete_personal_src_path = '/srv/personal/autocomplete.yml'
-autocomplete_script_path = '/home/builder/autocomplete.sh'
+autocomplete_script_path = '/home/builder/autocomplete.zsh'
 
 # Loading the default autocomplete file
 with open(autocomplete_default_src_path, 'r') as file:

@@ -2,11 +2,6 @@
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
-# Activating Python virtual environment
-export PATH=$HOME/.cargo/bin:$PATH
-# shellcheck disable=SC1091
-. "$HOME/.venv/bin/activate"
-
 # Keeping history in a separate mounted folder to avoid can't save history errors when exiting the container
 HISTFILE=/home/builder/.history/.zsh_history
 
@@ -76,21 +71,19 @@ if [ -f ~/.fzf.zsh ]; then
     . ~/.fzf.zsh
 fi
 
-# Secrets unlocker script
+# Secrets unlock script
 # Can also be used with ctp secrets unlock
-# shellcheck disable=SC1091
-export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault/unlock-vault.sh
 bash /srv/scripts/general/secrets-unlock.sh
 
 # Initialization tasks and extra entrypoint(s) loader
 bash /srv/scripts/general/docker-entrypoint.sh
 
 # Checking if completions file exists, if not then creating it
-if [ -f "/home/builder/autocomplete.sh" ]; then
+if [ -f "$HOME/autocomplete.zsh" ]; then
 
     echo -n -e "${C_YELLOW}"
     echo -e "Sourcing completions..."
-    . /home/builder/autocomplete.sh
+    . $HOME/autocomplete.zsh
     echo -n -e "${C_RST}"
 
 else
@@ -98,7 +91,7 @@ else
     echo -n -e "${C_YELLOW}"
     echo -e "Generating completions..."
     /srv/scripts/general/autocomplete_generator.py
-    . /home/builder/autocomplete.sh
+    . $HOME/autocomplete.zsh
     echo -n -e "${C_RST}"
 
 fi

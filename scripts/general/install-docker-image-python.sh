@@ -3,7 +3,7 @@
 set -e # exit when any command fails
 
 sudo apt update
-sudo apt install -y gcc # Reqired for compiling some Python packages
+sudo apt install -y gcc # Required for compiling some Python packages
 
 # This sets the yarn version to stable (berry) and installs the packages
 cd /srv
@@ -21,6 +21,9 @@ rm -rf "$HOME/.venv"
 source "$HOME/.venv/bin/activate"
 uv pip install -r /srv/defaults/requirements.txt
 popd || exit
+
+# Generating static ctp commands
+python3 /tmp/cd_command_generator.py
 
 #########
 # Shell #
@@ -42,3 +45,5 @@ sudo apt autoclean -y
 sudo rm -rf /var/lib/apt/lists/*
 sudo rm -rf /var/cache/*
 sudo rm -rf /tmp/*
+rm "$HOME/.bashrc"
+rm "$HOME/.zshrc"
