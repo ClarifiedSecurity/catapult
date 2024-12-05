@@ -169,8 +169,8 @@ autocomplete:
       description: Commands for Catapult component updates
       hosts_as_arguments: false
       subcommands:
-        - subcommand_name: reinstall-default-collections
-          subcommand_description: Reinstalls (overwrites) default roles and collections
+        - subcommand_name: builtin-collections
+          subcommand_description: Re-installs (overwrites) builtin roles and collections
           subcommand_to_execute: /srv/scripts/general/install-collections.sh
         - subcommand_name: nova
           subcommand_description: Checks for nova.core collection updates
