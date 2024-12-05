@@ -13,7 +13,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
   update_collection() {
 
-    echo -e "Installing $COLLECTION_NAME collection..."
+    echo -e "Installing $COLLECTION_NAME v$GALAXY_REMOTE_VERSION collection..."
     git -c advice.detachedHead=false clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
     ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible > /dev/null
     rm -rf /tmp/$COLLECTION_NAME
