@@ -22,9 +22,6 @@ source "$HOME/.venv/bin/activate"
 uv pip install -r /srv/defaults/requirements.txt
 popd || exit
 
-# Generating static ctp commands
-python3 /tmp/cd_command_generator.py
-
 #########
 # Shell #
 #########
