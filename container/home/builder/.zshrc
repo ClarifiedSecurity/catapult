@@ -113,8 +113,18 @@ if [ ! -f /tmp/first-run ]; then
     sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
 
 
-# Initialization tasks and extra entrypoint(s) loader
-bash /srv/scripts/general/docker-entrypoint.sh
+    # Loading personal docker entrypoints if they are present
+    if [[ -d "/srv/personal/docker-entrypoints" && "$(ls -A /srv/personal/docker-entrypoints)" ]]; then
+
+        for personal_entrypoint in /srv/personal/docker-entrypoints/*; do
+            if [ -f "$personal_entrypoint" ]; then
+            # Comment in the echo line below for better debugging
+            # echo -e "\n     Processing $personal_entrypoint...\n"
+            "$personal_entrypoint"
+            fi
+        done
+
+    fi
 
     # Loading custom docker entrypoints if they are present
     if [[ -d "/srv/custom/docker-entrypoints" && "$(ls -A /srv/custom/docker-entrypoints)" ]]; then
