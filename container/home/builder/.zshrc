@@ -138,8 +138,8 @@ if [[ ! -f /tmp/first-run ]]; then
     # Loading first-run custom docker entrypoints if they are present
     if [[ -d "/srv/custom/docker-entrypoints/first-run" && "$(ls -A /srv/custom/docker-entrypoints/first-run)" ]]; then
 
-        for custom_entrypoint in /srv/custom/docker-entrypoints/*; do
-            if [ -f "$custom_entrypoint" ]; then
+        for custom_entrypoint in /srv/custom/docker-entrypoints/first-run/*; do
+            if [[ -f $custom_entrypoint && $custom_entrypoint == *.sh ]]; then
             # Comment in the echo line below for better debugging
             # echo -e "\n     Processing $custom_entrypoint...\n"
             . $custom_entrypoint
@@ -148,9 +148,9 @@ if [[ ! -f /tmp/first-run ]]; then
 
     fi
 
-    # Loading default docker entrypoints
-    for entrypoint in /srv/scripts/entrypoints/*; do
-      if [ -f "$entrypoint" ]; then
+    # Loading first-run default docker entrypoints
+    for entrypoint in /srv/scripts/entrypoints/first-run/*; do
+      if [[ -f $entrypoint && $entrypoint == *.sh ]]; then
         # Comment in the echo line below for better debugging
         # echo -e "\n     Processing $entrypoint...\n"
         . $entrypoint
@@ -159,6 +159,49 @@ if [[ ! -f /tmp/first-run ]]; then
 
     # Creating first run file
     touch /tmp/first-run
+
+fi
+
+################################
+# EVERY RUN ENTRYPOINT SCRIPTS #
+################################
+
+# Loading every-run personal docker entrypoints if they are present
+if [[ -d "/srv/personal/docker-entrypoints/every-run" && "$(ls -A /srv/personal/docker-entrypoints/every-run)" ]]; then
+
+    for personal_entrypoint in /srv/personal/docker-entrypoints/every-run/*; do
+        if [[ -f $personal_entrypoint && $personal_entrypoint == *.sh ]]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n     Processing $personal_entrypoint...\n"
+        . $personal_entrypoint
+        fi
+    done
+
+fi
+
+# Loading every-run custom docker entrypoints if they are present
+if [[ -d "/srv/custom/docker-entrypoints/every-run" && "$(ls -A /srv/custom/docker-entrypoints/every-run)" ]]; then
+
+    for custom_entrypoint in /srv/custom/docker-entrypoints/every-run/*; do
+        if [[ -f $custom_entrypoint && $custom_entrypoint == *.sh ]]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n     Processing $custom_entrypoint...\n"
+        . $custom_entrypoint
+        fi
+    done
+
+fi
+
+# Loading every-run default docker entrypoints
+if [[ -d "/srv/scripts/entrypoints/every-run" && "$(ls -A /srv/scripts/entrypoints/every-run)" ]]; then
+
+    for entrypoint in /srv/scripts/entrypoints/every-run/*; do
+        if [[ -f $entrypoint && $entrypoint == *.sh ]]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n     Processing $entrypoint...\n"
+        . $entrypoint
+        fi
+    done
 
 fi
 
