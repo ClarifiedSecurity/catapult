@@ -17,6 +17,10 @@ The structure of the customization repo is as follows:
   - `first-run` - Contains scripts that will run only once when the container is started for the first time.
   - `every-run` - Contains scripts that will run every time the container is started. Useful for an example when setting up the environment variables for each user session.
 
+  :::info
+  `docker-entrypoints` only supports `*.sh` files that get sourced by `zsh` shell.
+  :::
+
 - `makefiles` - Contains custom .makerc\* files specific to your organization or project. Refer to the default [.makerc](https://github.com/ClarifiedSecurity/Catapult/blob/main/.makerc) file for examples and the [Makefile](https://github.com/ClarifiedSecurity/Catapult/blob/main/Makefile#L3-L5) for different types of makefiles that get loaded if they exists.
 
 - `scripts` - Contains custom scripts that can be used with the project. For example with `make` commands
