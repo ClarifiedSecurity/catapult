@@ -74,7 +74,8 @@ function inventory_selector() {
             echo -n -e "${C_RED}"
             echo "Invalid project selection."
             echo -n -e "${C_RST}"
-            cd /srv || exit
+            # shellcheck disable=SC2164
+            cd /srv
 
         fi
 
