@@ -41,17 +41,11 @@ RUN bash /tmp/install-docker-image-tools.sh
 USER builder
 
 ADD --chown=builder:builder scripts/general/install-docker-image-python.sh /tmp/install-docker-image-python.sh
-ADD --chown=builder:builder scripts/general/cd_command_generator.py /tmp/cd_command_generator.py
 RUN bash /tmp/install-docker-image-python.sh
 ADD --chown=builder:builder container/home/builder/.zshrc /home/builder/.zshrc
 
 ADD --chown=builder:builder scripts/general/install-docker-image-collections.sh /tmp/install-docker-image-collections.sh
 RUN bash /tmp/install-docker-image-collections.sh
-
-# Adding required environment variables
-ENV PATH=/home/builder/.venv/bin:$PATH
-ENV VIRTUAL_ENV=/home/builder/.venv
-ENV ANSIBLE_VAULT_PASSWORD_FILE=/home/builder/.vault/unlock-vault.sh
 
 # Setting the default editor to nano since it's easier to use for beginners
 ENV EDITOR=nano
