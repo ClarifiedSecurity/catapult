@@ -2,6 +2,11 @@
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
+# Activating Python virtual environment
+export PATH=$HOME/.cargo/bin:$PATH
+# shellcheck disable=SC1091
+. "$HOME/.venv/bin/activate"
+
 # Keeping history in a separate mounted folder to avoid can't save history errors when exiting the container
 HISTFILE=/home/builder/.history/.zsh_history
 
@@ -73,10 +78,78 @@ fi
 
 # Secrets unlock script
 # Can also be used with ctp secrets unlock
+export ANSIBLE_VAULT_PASSWORD_FILE=$HOME/.vault/unlock-vault.sh
 bash /srv/scripts/general/secrets-unlock.sh
+
+# Running first run tasks
+if [[ ! -f /tmp/first-run ]]; then
+
+    # Running IPv(4|6) connectivity check
+    /srv/scripts/general/check-connectivity.sh
+
+    # Trusting custom certificates if they are present
+    if [[ -d "/srv/custom/certificates" && "$(ls -A /srv/custom/certificates)" ]]; then
+
+      echo -e "${C_YELLOW}Trusting custom certificates...${C_RST}"
+      sudo rsync -ar /srv/custom/certificates/ /usr/local/share/ca-certificates/ --ignore-existing
+      touch /tmp/trust_extra_certificates
+
+    fi
+
+    # Trusting personal certificates if they are present
+    if [[ -d "/srv/personal/certificates" && "$(ls -A /srv/personal/certificates)" ]]; then
+
+      echo -e "${C_YELLOW}Trusting personal certificates...${C_RST}"
+      sudo rsync -ar /srv/personal/certificates/ /usr/local/share/ca-certificates/ --ignore-existing
+      touch /tmp/trust_extra_certificates
+
+    fi
+
+    # Updating certificates if needed
+    if [[ -f /tmp/trust_extra_certificates ]]; then
+
+      sudo update-ca-certificates > /dev/null 2>/dev/null # To avoid false positive error rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
+
+    fi
+
+    # Creating the file to avoid errors when it's not present for CI pipelines for an example
+    sudo touch /ssh-agent
+
+    # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
+    sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
+
 
 # Initialization tasks and extra entrypoint(s) loader
 bash /srv/scripts/general/docker-entrypoint.sh
+
+    # Loading custom docker entrypoints if they are present
+    if [[ -d "/srv/custom/docker-entrypoints" && "$(ls -A /srv/custom/docker-entrypoints)" ]]; then
+
+        for custom_entrypoint in /srv/custom/docker-entrypoints/*; do
+            if [ -f "$custom_entrypoint" ]; then
+            # Comment in the echo line below for better debugging
+            # echo -e "\n     Processing $custom_entrypoint...\n"
+            "$custom_entrypoint"
+            fi
+        done
+
+    fi
+
+    # Loading default docker entrypoints
+    for entrypoint in /srv/scripts/entrypoints/*; do
+      if [ -f "$entrypoint" ]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n     Processing $entrypoint...\n"
+        "$entrypoint"
+      fi
+    done
+
+    # Creating first run file
+    touch /tmp/first-run
+
+fi
+
+echo -n -e "${C_RST}"
 
 # Checking if completions file exists, if not then creating it
 if [ -f "$HOME/autocomplete.zsh" ]; then

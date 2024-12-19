@@ -15,7 +15,7 @@ encrypt_vault () {
       echo -n -e "${C_RST}"
 
       # Check if the passwords match
-      if [ "$VAULT_PASSWORD1" != "$VAULT_PASSWORD2" ]; then
+      if [[ "$VAULT_PASSWORD1" != "$VAULT_PASSWORD2" ]]; then
 
           echo -n -e "${C_RED}"
           echo "Passwords do not match, try again"
@@ -33,7 +33,7 @@ encrypt_vault () {
   done
 
   # Checking if custom start.yml if it exists
-  if [ -f /srv/custom/vault_example.yml ]; then
+  if [[ -f /srv/custom/vault_example.yml ]]; then
 
       VAULT_EXAMPLE_FILE=custom/vault_example.yml
       cp -R /srv/$VAULT_EXAMPLE_FILE ~/.vault/vlt
