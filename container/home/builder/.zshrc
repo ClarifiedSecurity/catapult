@@ -112,39 +112,42 @@ if [ ! -f /tmp/first-run ]; then
     # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
     sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
 
+    ################################
+    # FIRST RUN ENTRYPOINT SCRIPTS #
+    ################################
 
-    # Loading personal docker entrypoints if they are present
-    if [[ -d "/srv/personal/docker-entrypoints" && "$(ls -A /srv/personal/docker-entrypoints)" ]]; then
+    # Loading first-run personal docker entrypoints if they are present
+    if [[ -d "/srv/personal/docker-entrypoints/first-run" && "$(ls -A /srv/personal/docker-entrypoints/first-run)" ]]; then
 
-        for personal_entrypoint in /srv/personal/docker-entrypoints/*; do
-            if [ -f "$personal_entrypoint" ]; then
+        for personal_entrypoint in /srv/personal/docker-entrypoints/first-run*; do
+            if [[ -f $personal_entrypoint ]]; then
             # Comment in the echo line below for better debugging
             # echo -e "\n     Processing $personal_entrypoint...\n"
-            "$personal_entrypoint"
+            $personal_entrypoint
             fi
         done
 
     fi
 
-    # Loading custom docker entrypoints if they are present
-    if [[ -d "/srv/custom/docker-entrypoints" && "$(ls -A /srv/custom/docker-entrypoints)" ]]; then
+    # Loading first-run custom docker entrypoints if they are present
+    if [[ -d "/srv/custom/docker-entrypoints/first-run" && "$(ls -A /srv/custom/docker-entrypoints/first-run)" ]]; then
 
-        for custom_entrypoint in /srv/custom/docker-entrypoints/*; do
-            if [ -f "$custom_entrypoint" ]; then
+        for custom_entrypoint in /srv/custom/docker-entrypoints/first-run/*; do
+            if [[ -f $custom_entrypoint ]]; then
             # Comment in the echo line below for better debugging
             # echo -e "\n     Processing $custom_entrypoint...\n"
-            "$custom_entrypoint"
+            $custom_entrypoint
             fi
         done
 
     fi
 
-    # Loading default docker entrypoints
-    for entrypoint in /srv/scripts/entrypoints/*; do
-      if [ -f "$entrypoint" ]; then
+    # Loading first-run default docker entrypoints
+    for entrypoint in /srv/scripts/entrypoints/first-run/*; do
+      if [[ -f $entrypoint ]]; then
         # Comment in the echo line below for better debugging
         # echo -e "\n     Processing $entrypoint...\n"
-        "$entrypoint"
+        $entrypoint
       fi
     done
 
@@ -153,10 +156,53 @@ if [ ! -f /tmp/first-run ]; then
 
 fi
 
+################################
+# EVERY RUN ENTRYPOINT SCRIPTS #
+################################
+
+# Loading every-run personal docker entrypoints if they are present
+if [[ -d "/srv/personal/docker-entrypoints/every-run" && "$(ls -A /srv/personal/docker-entrypoints/every-run)" ]]; then
+
+    for personal_entrypoint in /srv/personal/docker-entrypoints/every-run/*; do
+        if [[ -f $personal_entrypoint ]]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n     Processing $personal_entrypoint...\n"
+        $personal_entrypoint
+        fi
+    done
+
+fi
+
+# Loading every-run custom docker entrypoints if they are present
+if [[ -d "/srv/custom/docker-entrypoints/every-run" && "$(ls -A /srv/custom/docker-entrypoints/every-run)" ]]; then
+
+    for custom_entrypoint in /srv/custom/docker-entrypoints/every-run/*; do
+        if [[ -f $custom_entrypoint ]]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n     Processing $custom_entrypoint...\n"
+        $custom_entrypoint
+        fi
+    done
+
+fi
+
+# Loading every-run default docker entrypoints
+if [[ -d "/srv/scripts/entrypoints/every-run" && "$(ls -A /srv/scripts/entrypoints/every-run)" ]]; then
+
+    for entrypoint in /srv/scripts/entrypoints/every-run/*; do
+        if [[ -f $entrypoint ]]; then
+        # Comment in the echo line below for better debugging
+        # echo -e "\n     Processing $entrypoint...\n"
+        $entrypoint
+        fi
+    done
+
+fi
+
 echo -n -e "${C_RST}"
 
 # Checking if completions file exists, if not then creating it
-if [ -f "$HOME/autocomplete.zsh" ]; then
+if [[ -f "$HOME/autocomplete.zsh" ]]; then
 
     echo -n -e "${C_YELLOW}"
     echo -e "Sourcing completions..."
@@ -181,12 +227,12 @@ fi
 . /srv/container/home/builder/.default_aliases
 
 # Including custom zsh aliases and functions if they exist
-if [ -f /srv/custom/container/.custom_aliases ]; then
+if [[ -f /srv/custom/container/.custom_aliases ]]; then
     . /srv/custom/container/.custom_aliases
 fi
 
 # Including personal zsh aliases and functions if they exist
-if [ -f /srv/personal/.personal_aliases ]; then
+if [[ -f /srv/personal/.personal_aliases ]]; then
     . /srv/personal/.personal_aliases
 fi
 

@@ -12,7 +12,6 @@ if [ -n "$SLACK_WEBHOOK_URL" ]; then
         unset ANSIBLE_CALLBACKS_ENABLED
         export ANSIBLE_CALLBACKS_ENABLED="$CFG_CALLBACKS,community.general.slack"
 
-
     # Checking if ANSIBLE_CALLBACKS_ENABLED env var exists
     elif [ -n "$ANSIBLE_CALLBACKS_ENABLED" ]; then
 

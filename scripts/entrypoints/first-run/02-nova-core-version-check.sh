@@ -36,7 +36,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
     if [[ "$GALAXY_LOCAL_VERSION" != "$GALAXY_REMOTE_VERSION" ]]; then
 
-      if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
+      if [[ "$MAKEVAR_AUTO_UPDATE" == 1 ]]; then
 
         echo -n -e "${C_YELLOW}"
         update_collection
