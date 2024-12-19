@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC1091
-source /srv/scripts/general/secrets-initialize.sh
+/srv/scripts/general/secrets-initialize.sh
 
-if [ ! -f /var/tmp/vlt_pf ]; then
+if [[ ! -f /var/tmp/vlt_pf ]]; then
 
   # Initialize a variable for the exit status of the ansible-vault command
   exit_status=1
 
   # Keep asking for the password until the correct one is entered
-  while [ $exit_status -ne 0 ]; do
+  while [[ $exit_status -ne 0 ]]; do
 
       echo -n -e "${C_YELLOW}"
       read -r -s -p "Please enter your encrypted secrets password: " VAULT_PASSWORD1
@@ -23,7 +23,7 @@ if [ ! -f /var/tmp/vlt_pf ]; then
       exit_status=$?
 
       # If the password is incorrect, print a message
-      if [ $exit_status -ne 0 ]; then
+      if [[ $exit_status -ne 0 ]]; then
 
           echo
           echo -e "You're almost there but your password seems to be incorrect, try again!"
