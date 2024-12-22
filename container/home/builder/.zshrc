@@ -129,7 +129,7 @@ if [[ ! -f /tmp/first-run ]]; then
             if [[ -f $personal_entrypoint && $personal_entrypoint == *.sh ]]; then
             # Comment in the echo line below for better debugging
             # echo -e "\n     Processing $personal_entrypoint...\n"
-            $personal_entrypoint
+            . $personal_entrypoint
             fi
         done
 
@@ -142,7 +142,7 @@ if [[ ! -f /tmp/first-run ]]; then
             if [ -f "$custom_entrypoint" ]; then
             # Comment in the echo line below for better debugging
             # echo -e "\n     Processing $custom_entrypoint...\n"
-            $custom_entrypoint
+            . $custom_entrypoint
             fi
         done
 
@@ -153,7 +153,7 @@ if [[ ! -f /tmp/first-run ]]; then
       if [ -f "$entrypoint" ]; then
         # Comment in the echo line below for better debugging
         # echo -e "\n     Processing $entrypoint...\n"
-        $entrypoint
+        . $entrypoint
       fi
     done
 

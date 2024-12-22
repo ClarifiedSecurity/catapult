@@ -9,10 +9,11 @@ COLLECTION_NAME="nova.core"
 REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
 REMOTE_RELEASES_URL="https://github.com/$REPO_OWNER/nova.core/releases"
 
-if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
+if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
   update_collection() {
 
+    echo -n -e "${C_YELLOW}"
     echo -e "Installing $COLLECTION_NAME ${C_CYAN}v$GALAXY_REMOTE_VERSION${C_YELLOW} collection..."
     git -c advice.detachedHead=false clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
     ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible > /dev/null
@@ -53,22 +54,34 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
           echo -e Changelog: "$REMOTE_RELEASES_URL/tag/v$GALAXY_REMOTE_VERSION"
 
         fi
-        echo -e "Would you like to update now?"
-        echo -n -e "${C_RST}"
-        options=(
-          "yes"
-          "no"
-        )
 
-        # shellcheck disable=SC2034
-        select option in "${options[@]}"; do
-        echo -n -e "${C_YELLOW}"
-            case "$REPLY" in
-                yes|y|1) update_collection; break;;
-                no|n|2) echo -e "Not updating now"; break;;
-            esac
-        echo -n -e "${C_RST}"
-        done
+        ask_confirm() {
+            while true; do
+                echo -n -e "${C_YELLOW}"
+                echo -n -e "Would you like to update now (y/n)?"
+                echo -e "${C_RST}"
+                read -r response
+                case $response in
+                [Yy]*|yes)
+                    update_collection
+                    break
+                    ;;
+                [Nn]*|no)
+                    echo -n -e "${C_YELLOW}"
+                    echo -e "Not updating now"
+                    echo -n -e "${C_RST}"
+                    break
+                    ;;
+                *)
+                    echo -n -e "${C_RED}"
+                    echo -e "Unknown response. Please answer yes or no."
+                    echo -n -e "${C_RST}"
+                    ;;
+                esac
+            done
+        }
+
+        ask_confirm
 
       fi
 
