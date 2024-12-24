@@ -2,7 +2,7 @@
 
 set -e # exit when any command fails
 
-NODE_VERSION=v23.2.0
+NODE_VERSION=v23.5.0
 
 # Detecting platform architecture
 if [[ "$(uname -m)" == "x86_64" ]]; then
