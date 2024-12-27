@@ -25,9 +25,9 @@ if [[ -d "$(pwd)/group_vars" ]]; then
 
 else
 
-    echo -n -e "${C_RED}"
+    echo -n -e "${C_YELLOW}"
     echo -e "Cannot generate tab-completable inventory!"
-    echo -e "No group_vars folder found in the current directory. Run ${C_CYAN}ctp project select${C_RED} to select a project first."
+    echo -e "No group_vars folder found in the current directory. Run ${C_CYAN}ctp project select${C_YELLOW} to select a project first."
     echo -n -e "${C_RST}"
 
 fi
