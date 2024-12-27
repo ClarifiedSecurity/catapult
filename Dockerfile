@@ -1,4 +1,4 @@
-FROM python:3.11.9-slim-bookworm
+FROM python:3.12.8-slim-bookworm
 
 ARG TZ
 ENV TZ=$TZ
