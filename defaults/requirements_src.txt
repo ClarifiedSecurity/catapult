@@ -72,6 +72,7 @@ paramiko
 passlib
 polling
 prettytable
+proxmoxer
 psycopg2-binary
 pyopenssl
 pyvmomi
