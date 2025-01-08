@@ -21,7 +21,7 @@ if [[ -d "$(pwd)/group_vars" ]]; then
     ( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )
 
     # Fetching the latest changes from the remote repository
-    ( git fetch > /dev/null 2>&1 2>&1 & disown >/dev/null 2>&1 )
+    ( GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git fetch > /dev/null 2>&1 2>&1 & disown >/dev/null 2>&1 )
 
 else
 
