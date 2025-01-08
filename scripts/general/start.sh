@@ -6,7 +6,7 @@ set -e # exit when any command fails
 source ./scripts/general/colors.sh
 
 # Checking if Docker is installed
-if ! [ -x "$(command -v docker)" ]; then
+if ! [[ -x "$(command -v docker)" ]]; then
   echo -n -e "${C_RED}"
   echo -e "Docker not found did you run ${C_CYAN}./install.sh${C_RED} first!"
   echo -n -e "${C_RST}"
