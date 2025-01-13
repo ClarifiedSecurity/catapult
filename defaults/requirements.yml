@@ -17,7 +17,7 @@ collections:
   # A temporary fork of the official collection to remove the annoying deprecation warnings that come with each run
   - name: https://github.com/ClarifiedSecurity/amazon.aws.git
     type: git
-    version: 9.1.0-cs
+    version: 9.1.1-cs
   - name: ansible.netcommon
     version: 7.1.0
   - name: ansible.posix
