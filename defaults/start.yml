@@ -1,8 +1,10 @@
 ---
 - name: Hurling boulders... # noqa: var-naming[non-string]
   hosts: all
-  serial: "{{ playbook_serial_number | default('100%') }}"
   gather_facts: false
+
+  # Using env var to set how many hosts to run in parallel, this way it's easier to control
+  serial: "{{ lookup('env', 'ANSIBLE_SERIAL') if lookup('env', 'ANSIBLE_SERIAL') | length > 0 else '100%' }}"
 
   pre_tasks:
     # - ansible.builtin.debug: msg="{{  }}" # Uncomment to debug variables
