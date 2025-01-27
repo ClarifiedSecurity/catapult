@@ -15,7 +15,6 @@ pushd "$HOME" || exit
 curl -LsSf https://astral.sh/uv/install.sh | sh
 # shellcheck disable=SC1091
 source "$HOME/.local/bin/env"
-rm -rf "$HOME/.venv"
 "$HOME/.local/bin/uv" venv
 # shellcheck disable=SC1091
 source "$HOME/.venv/bin/activate"
