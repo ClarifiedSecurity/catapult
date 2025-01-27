@@ -30,7 +30,7 @@ However you install your base templates make sure that they meet the following r
 
 - `python3` package needs to be installed for your distribution.
 
-- `open-vm-tools` package might need to be installed for your distribution depending on your virtualization platform.
+- `open-vm-tools/qemu agent/etc.` package might need to be installed for your distribution depending on your virtualization platform.
 
 ## Per-environment/project/datacenter etc. template requirements
 
