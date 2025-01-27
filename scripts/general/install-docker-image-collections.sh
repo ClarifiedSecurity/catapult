@@ -3,7 +3,7 @@
 set -e # exit when any command fails
 
 # shellcheck disable=SC1091
-source "$HOME/.venv/bin/activate"
+source "$HOME/catapult-venv/.venv/bin/activate"
 
 # Installing Ansible roles & collections
 /srv/scripts/general/install-collections.sh
