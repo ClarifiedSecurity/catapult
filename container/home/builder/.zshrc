@@ -3,9 +3,8 @@
 source /srv/scripts/general/colors.sh
 
 # Activating Python virtual environment
-export PATH=$HOME/.cargo/bin:$PATH
-# shellcheck disable=SC1091
-. "$HOME/.venv/bin/activate"
+source "$HOME/.local/bin/env"
+source "$HOME/catapult-venv/.venv/bin/activate"
 
 # Keeping history in a separate mounted folder to avoid can't save history errors when exiting the container
 HISTFILE=/home/builder/.history/.zsh_history

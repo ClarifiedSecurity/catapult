@@ -10,15 +10,21 @@ cd /srv
 echo "y" | yarn set version stable
 echo "y" | yarn install
 
-# Python virtual environment
-pushd "$HOME" || exit
+##############################
+# Python virtual environment #
+##############################
+
 curl -LsSf https://astral.sh/uv/install.sh | sh
 # shellcheck disable=SC1091
 source "$HOME/.local/bin/env"
-"$HOME/.local/bin/uv" venv
+
 # shellcheck disable=SC1091
-source "$HOME/.venv/bin/activate"
-uv pip install -r /srv/defaults/requirements.txt
+pushd "$HOME/catapult-venv" || exit
+uv sync
+# shellcheck disable=SC1091
+source "$HOME/catapult-venv/.venv/bin/activate"
+rm pyproject.toml
+rm uv.lock
 popd || exit
 
 #########

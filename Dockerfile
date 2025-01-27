@@ -21,7 +21,6 @@ ADD --chown=builder:builder .yarnrc.yml /srv/.yarnrc.yml
 ADD --chown=builder:builder /container/home/builder/.default_aliases /srv/container/home/builder/.default_aliases
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
-ADD --chown=builder:builder defaults/requirements.txt /srv/defaults/requirements.txt
 ADD --chown=builder:builder defaults/requirements.yml /srv/defaults/requirements.yml
 ADD --chown=builder:builder package.json /srv/package.json
 ADD --chown=builder:builder yarn.lock /srv/yarn.lock
@@ -41,6 +40,8 @@ RUN bash /tmp/install-docker-image-tools.sh
 USER builder
 
 ADD --chown=builder:builder scripts/general/install-docker-image-python.sh /tmp/install-docker-image-python.sh
+ADD --chown=builder:builder defaults/pyproject.toml /home/builder/catapult-venv/pyproject.toml
+ADD --chown=builder:builder defaults/uv.lock /home/builder/catapult-venv/uv.lock
 RUN bash /tmp/install-docker-image-python.sh
 ADD --chown=builder:builder container/home/builder/.zshrc /home/builder/.zshrc
 
