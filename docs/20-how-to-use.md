@@ -465,6 +465,8 @@ _Example usage:_
 ctp vm snapshot-rename <inventory_hostname> -e snapshot_name=existing_snapshot_name_to_rename -e new_snapshot_name=new_snapshot_name
 ```
 
+Refer to the [nova.core.snapshots](https://github.com/novateams/nova.core/tree/main/nova/core/roles/snapshots) role for more command line options.
+
 ### ctp vm poweron
 
 Power on VM
