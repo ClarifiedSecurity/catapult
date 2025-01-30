@@ -4,4 +4,6 @@ admin_account: admin
 
 # Network
 customization_method: routeros
-ansible_network_os: community.routeros.routeros # https://docs.ansible.com/ansible/latest/network/user_guide/network_best_practices_2.5.html#common-inventory-variables
+
+# https://docs.ansible.com/ansible/latest/network/user_guide/network_best_practices_2.5.html#common-inventory-variables
+ansible_network_os: community.routeros.routeros
