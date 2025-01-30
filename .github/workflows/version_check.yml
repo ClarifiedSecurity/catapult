@@ -1,0 +1,85 @@
+---
+name: Comparing PR version with the main version
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  version_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloning the repository pull request repo...
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          path: pr
+
+      - name: Cloning Catapult main repository...
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: main
+
+      - name: Comparing PR version with main...
+        run: |
+
+          export C_RED="\x1b[91m"
+          export C_GREEN="\x1b[92m"
+          export C_YELLOW="\x1b[93m"
+          export C_RST="\x1b[0m"
+
+          VERSION_FILE="version.yml"
+
+          if [[ -e "pr/$VERSION_FILE" ]]; then
+
+            PR_VERSION=$(cat pr/$VERSION_FILE | grep "version:" | cut -d " " -f 2)
+
+          else
+
+            echo "pr/$VERSION_FILE does not exist."
+            exit 1
+
+          fi
+
+          if [[ -e "main/$VERSION_FILE" ]]; then
+
+            CURRENT_VERSION=$(cat main/$VERSION_FILE | grep "version:" | cut -d " " -f 2)
+
+          else
+
+            echo "main/$VERSION_FILE does not exist."
+            exit 1
+
+          fi
+
+          echo -n -e "${C_YELLOW}"
+          echo -e "Pull Request Version - $PR_VERSION"
+          echo -e "Current Version - $CURRENT_VERSION"
+          echo -n -e "${C_RST}"
+
+          if dpkg --compare-versions $PR_VERSION le $CURRENT_VERSION; then
+
+            echo -n -e "${C_RED}"
+            echo -e "Pull request version $PR_VERSION is <= than current version $CURRENT_VERSION."
+            echo -e "Please update the version in $VERSION_FILE file."
+            echo -n -e "${C_RST}"
+            exit 1
+
+          else
+
+            echo -n -e "${C_GREEN}"
+            echo "Version has been updated moving on"
+            echo -n -e "${C_RST}"
+
+          fi

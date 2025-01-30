@@ -30,14 +30,31 @@ fi
 
 if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
 
-  BRANCH="${MAKEVAR_CATAPULT_VERSION}"
-  LOCAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+BRANCH="${MAKEVAR_CATAPULT_VERSION}"
+# This will get the current branch name or the tag
+LOCAL_BRANCH=$(git symbolic-ref -q --short HEAD || git describe --exact-match --tags)
+
+catapult_version_selector () {
+
+  # Checking if the current branch is main or staging
+  if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "staging" ]; then
+
+    git switch "$BRANCH"
+    git reset --hard "origin/$BRANCH"
+
+  else
+
+    git switch --detach "$BRANCH"
+
+  fi
+
+}
 
   # Checking for user is in the correct branch
   if [ "$LOCAL_BRANCH" != "$BRANCH" ]; then
 
     echo -n -e "${C_GREEN}"
-    echo -e "You are not in the ${C_CYAN}$BRANCH${C_GREEN} branch. Do you want to switch branch?"
+    echo -e "You are not in the ${C_CYAN}$BRANCH${C_GREEN} branch or tag. Do you want to switch to there now?"
     echo -n -e "${C_RST}"
     options=(
       "yes"
@@ -47,7 +64,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
     # shellcheck disable=SC2034
     select option in "${options[@]}"; do
         case "$REPLY" in
-            yes|y|1) git switch "$BRANCH" && git reset --hard "origin/$BRANCH"; break;;
+            yes|y|1) catapult_version_selector; break;;
             no|n|2) echo -e "Not changing branch"; break;;
         esac
     done
@@ -63,7 +80,7 @@ if [ "$MAKEVAR_FREEZE_UPDATE" != 1 ]; then
     exit 0;
   fi
 
-  # Catalpult update function
+  # Catapult update function
   catapult_update () {
 
     if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then

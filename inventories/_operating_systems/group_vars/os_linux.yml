@@ -2,6 +2,7 @@
 # Accounts
 admin_account: root
 template_username: "{{ admin_account }}"
+azure_template_username: azadmin # Azure Does not allow using the admin_account value
 
 # Connection
 default_connection_plugin: ssh
