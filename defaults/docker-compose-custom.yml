@@ -1,5 +1,5 @@
 ---
-# This is an example file how to extend Catault with your own organization's or project's docker-compose-custom.yml file.
+# This is an example file how to extend Catapult with your own organization's or project's docker-compose-custom.yml file.
 # This file will be merged with docker-compose.yml and will override any matching value from it.
 
 name: ${CONTAINER_PROJECT_NAME}
