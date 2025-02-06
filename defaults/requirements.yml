@@ -1,17 +1,9 @@
 ---
-roles:
-  - name: geerlingguy.apache
-    version: 3.3.0
-  - name: geerlingguy.composer
-    version: 1.9.2
-  - name: geerlingguy.mysql
-    version: 4.3.4
-  - name: geerlingguy.php
-    version: 5.0.1
-  - name: geerlingguy.php-versions
-    version: 6.0.1
-  - name: geerlingguy.postgresql
-    version: 3.5.0
+# List of default roles and collections that are built into the Catapult image
+# If you want to use something else you can use the following module to install them during deployment:
+# https://docs.ansible.com/ansible/latest/collections/community/general/ansible_galaxy_install_module.html
+
+roles: []
 
 collections:
   - name: amazon.aws
