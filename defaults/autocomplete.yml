@@ -135,7 +135,7 @@ autocomplete:
           subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt
             -e=deploy_mode=deploy -e=suspend=true -e pre_role=nova.core.powerstate -l "$@"
 
-        # Miscellanous
+        # Miscellaneous
         - subcommand_name: rename
           subcommand_description: Renames the VM with the given inventory_hostname
           subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e pre_role=nova.core.rename_vm -l "$@"
