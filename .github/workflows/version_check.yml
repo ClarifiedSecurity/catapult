@@ -1,5 +1,7 @@
 ---
 name: Comparing PR version with the main version
+permissions:
+  contents: read
 
 on:
   pull_request_target:
@@ -17,21 +19,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cloning the repository pull request repo...
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          path: pr
-
-      - name: Cloning Catapult main repository...
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          path: main
-
       - name: Comparing PR version with main...
+        env:
+          PR_VERSION_URL: "https://raw.githubusercontent.com/${{ github.event.pull_request.head.repo.full_name }}/${{ github.event.pull_request.head.ref }}/version.yml"
         run: |
 
           export C_RED="\x1b[91m"
@@ -39,28 +29,18 @@ jobs:
           export C_YELLOW="\x1b[93m"
           export C_RST="\x1b[0m"
 
-          VERSION_FILE="version.yml"
+          PR_VERSION=$(curl -s $PR_VERSION_URL | grep "version:" | cut -d " " -f 2)
 
-          if [[ -e "pr/$VERSION_FILE" ]]; then
+          CURRENT_VERSION_URL="https://raw.githubusercontent.com/${{ github.event.pull_request.base.repo.full_name }}/\
+          ${{ github.event.pull_request.base.ref }}/version.yml"
+          CURRENT_VERSION=$(curl -s $CURRENT_VERSION_URL | grep "version:" | cut -d " " -f 2)
 
-            PR_VERSION=$(cat pr/$VERSION_FILE | grep "version:" | cut -d " " -f 2)
-
-          else
-
-            echo "pr/$VERSION_FILE does not exist."
+          # Error if PR_VERSION is not found
+          if [ -z "$PR_VERSION" ]; then
+            echo -n -e "${C_RED}"
+            echo -e "Pull request version not found in $PR_VERSION_URL"
+            echo -n -e "${C_RST}"
             exit 1
-
-          fi
-
-          if [[ -e "main/$VERSION_FILE" ]]; then
-
-            CURRENT_VERSION=$(cat main/$VERSION_FILE | grep "version:" | cut -d " " -f 2)
-
-          else
-
-            echo "main/$VERSION_FILE does not exist."
-            exit 1
-
           fi
 
           echo -n -e "${C_YELLOW}"
