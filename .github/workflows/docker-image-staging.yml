@@ -16,20 +16,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Logging into to GitHub Container Registry...
-        uses: docker/login-action@v3
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Installing QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@4574d27a4764455b42196d70a065bc6853246a25 # v3.4.0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@f7ce87c1d6bead3e36075b2ce75da1f6cc28aaca # v3.9.0
 
       - name: Building Catapult image...
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v.6.13.0
         with:
           context: .
           platforms: linux/amd64,linux/arm64
