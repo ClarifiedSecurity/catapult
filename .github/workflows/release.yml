@@ -41,7 +41,7 @@ jobs:
           echo "IMAGE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Building Catapult image...
-        uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v.6.13.0
+        uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v6.13.0
         with:
           context: .
           platforms: linux/amd64,linux/arm64
