@@ -1,7 +1,7 @@
 ---
 name: Build, tag and release
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 on:
