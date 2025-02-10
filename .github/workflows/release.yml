@@ -1,5 +1,8 @@
 ---
 name: Build, tag and release
+permissions:
+  contents: read
+  packages: write
 
 on:
   push:
@@ -12,9 +15,6 @@ on:
 jobs:
   build_image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - name: Pulling Catapult repository...
