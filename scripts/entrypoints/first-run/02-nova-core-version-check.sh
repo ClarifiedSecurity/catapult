@@ -3,11 +3,26 @@
 echo -n -e "${C_GREEN}"
 
 REPO_OWNER="${NOVA_CORE_REPO_OWNER:-ClarifiedSecurity}" # Set env var NOVA_CORE_REPO_OWNER="yourforkrepo" to override default nova.core repo owner
-REPO_VERSION="${MAKEVAR_NOVA_CORE_VERSION:-${MAKEVAR_CATAPULT_VERSION:-main}}"
 COLLECTION_GIT_URL="https://github.com/$REPO_OWNER/nova.core.git"
 COLLECTION_NAME="nova.core"
-REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
 REMOTE_RELEASES_URL="https://github.com/$REPO_OWNER/nova.core/releases"
+
+# Using Catapult version if it's main or staging
+# Otherwise defaulting to main if no nova.core version is not main or staging
+if [[ "${MAKEVAR_CATAPULT_VERSION}" != "main" && "${MAKEVAR_CATAPULT_VERSION}" != "staging" ]]; then
+  if  [[ "${MAKEVAR_NOVA_CORE_VERSION}" != "main" && "${MAKEVAR_NOVA_CORE_VERSION}" != "staging" ]]; then
+
+    REPO_VERSION="${MAKEVAR_NOVA_CORE_VERSION}"
+
+  else
+
+    REPO_VERSION="main"
+
+  fi
+
+fi
+
+REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
 
 if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
