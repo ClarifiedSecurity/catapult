@@ -112,7 +112,7 @@ catapult_version_selector () {
       read -rp "Press any key to continue and build image locally, or Ctrl + C to cancel and change your user or user ID..."
       echo -e
       echo -e "${C_RST}"
-      make build
+      ${MAKEVAR_SUDO_COMMAND} "${ROOT_DIR}/scripts/general/build.sh"
 
     else
 
