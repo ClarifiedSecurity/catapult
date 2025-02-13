@@ -37,8 +37,9 @@ LOCAL_BRANCH=$(git symbolic-ref -q --short HEAD || git describe --exact-match --
 catapult_version_selector () {
 
   # Checking if the current branch is main or staging
-  if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "staging" ]; then
+  if [[ "$BRANCH" = "main" ]] || [[ "$BRANCH" = "staging" ]]; then
 
+    git reset --hard "origin/$BRANCH"
     git switch "$BRANCH"
     git reset --hard "origin/$BRANCH"
 
