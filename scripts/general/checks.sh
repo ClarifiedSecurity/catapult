@@ -82,9 +82,9 @@ catapult_version_selector () {
   fi
 
   # Catapult update function
-  catapult_update () {
+  catapult_code_update () {
 
-    if [ "$LOCAL_BRANCH" == "$BRANCH" ]; then
+    if [[ "$LOCAL_BRANCH" == "$BRANCH" ]]; then
 
       git fetch
       git reset --hard "origin/$BRANCH" # Resetting the branch to the latest commit
@@ -99,14 +99,33 @@ catapult_version_selector () {
 
     fi
 
-    echo -e -n "${C_YELLOW}"
-    echo -e "Updating Catapult Docker image..."
-    echo -e -n "${C_RST}"
-    ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
-    echo -e "${C_GREEN}"
-    echo -e "Catapult updated to version $REMOTE_VERSION"
-    export CATAPULT_UPDATED=1 # Exporting the variable to be used in the next steps
-    echo -e "${C_RST}"
+  }
+
+  catapult_image_update () {
+
+    # Checking if user id equals 1000 on Linux
+    if [[ "$(uname)" == "Linux" ]] && [[ "$(id -u)" -ne 1000 ]]; then
+
+      echo -e "${C_YELLOW}"
+      echo -e "Your user id is not 1000"
+      echo -e "For most stable results run Catapult from a user with an ID of 1000"
+      read -rp "Press any key to continue and build image locally, or Ctrl + C to cancel and change your user or user ID..."
+      echo -e
+      echo -e "${C_RST}"
+      make build
+
+    else
+
+      echo -e -n "${C_YELLOW}"
+      echo -e "Updating Catapult Docker image..."
+      echo -e -n "${C_RST}"
+      ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
+      echo -e "${C_GREEN}"
+      echo -e "Catapult updated to version $REMOTE_VERSION"
+      export CATAPULT_UPDATED=1 # Exporting the variable to be used in the next steps
+      echo -e "${C_RST}"
+
+    fi
 
   }
 
@@ -114,15 +133,12 @@ catapult_version_selector () {
   # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
   REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
   LOCAL_VERSION=$(git archive "$BRANCH" version.yml | tar xO | cut -d ' ' -f 2)
+  LOCAL_DOCKER_IMAGE_EXISTS=$(${MAKEVAR_SUDO_COMMAND} docker images -q "${IMAGE_FULL}")
 
-  # Checking if remote version is diffrent than local version
-  if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
+  # Checking if remote version is different than local version or if the docker image does not exist
+  if [[ "$LOCAL_VERSION" != "$REMOTE_VERSION" ]] || [[ -z "$LOCAL_DOCKER_IMAGE_EXISTS" ]]; then
 
-      echo -e -n
-
-    else
-
-      if [ "$MAKEVAR_AUTO_UPDATE" == 1 ]; then
+      if [[ "$MAKEVAR_AUTO_UPDATE" == 1 ]]; then
 
         echo -n -e "${C_YELLOW}"
         echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
@@ -130,9 +146,10 @@ catapult_version_selector () {
         echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
         fi
         echo -n -e "${C_RST}"
-        catapult_update
+        catapult_code_update
+        catapult_image_update
 
-      else
+      elif [[ "$LOCAL_VERSION" != "$REMOTE_VERSION" ]]; then
 
         echo -n -e "${C_YELLOW}"
         echo -e "Catapult version $REMOTE_VERSION is available, do you want to update?"
@@ -148,12 +165,22 @@ catapult_version_selector () {
         # shellcheck disable=SC2034
         select option in "${options[@]}"; do
             case "$REPLY" in
-                yes|y|1) catapult_update; break;;
+                yes|y|1) catapult_code_update; break;;
                 no|n|2) echo -e "Not updating Catapult"; break;;
             esac
         done
 
+        catapult_image_update
+
+      else
+
+        catapult_image_update
+
       fi
+
+    else
+
+      echo -e -n
 
   fi
 
@@ -190,7 +217,7 @@ else
 
   echo -e "${C_YELLOW}"
   echo -e There are no SSH keys in your ssh-agent.
-  echo -e Some of the functinality will not work without SSH keys.
+  echo -e Some of the functionality will not work without SSH keys.
   read -rp "Press ENTER to continue, or Ctrl + C to cancel and load ssh keys to your agent..."
   echo -e "${C_RST}"
 
