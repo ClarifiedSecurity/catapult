@@ -43,9 +43,7 @@ customizations:
 ## build: Build Catapult image locally (development & testing)
 .PHONY: build
 build:
-	@bash ${ROOT_DIR}/scripts/general/checks.sh
-	@${MAKEVAR_SUDO_COMMAND} docker buildx create --use --driver-opt network=host
-	@${MAKEVAR_SUDO_COMMAND} docker buildx build ${BUILD_ARGS} --network host --progress plain --tag ${IMAGE_FULL} . --load
+	@${ROOT_DIR}/scripts/general/build.sh
 
 ## print-variables: Print environment variables (for debugging)
 .PHONY: print-variables
