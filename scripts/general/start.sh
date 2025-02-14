@@ -14,6 +14,24 @@ if ! [[ -x "$(command -v docker)" ]]; then
 
 fi
 
+# Setting the DOCKER_HOST for Linux
+# This is to make sure rootful Docker is used
+if [[ $(uname) == "Linux" ]]; then
+
+    # Checking if MAKEVAR_DOCKER_SOCKET_PATH is not empty
+    # This is for setting non-default Docker socket path
+    if [[ -z "${MAKEVAR_DOCKER_SOCKET_PATH}" ]]; then
+
+        export DOCKER_HOST=unix:///var/run/docker.sock
+
+    else
+
+        export DOCKER_HOST=${MAKEVAR_DOCKER_SOCKET_PATH}
+
+    fi
+
+fi
+
 # Checking for minimum Docker version
 MINIMUM_DOCKER_MAJOR_VERSION="27"
 CURRENT_DOCKER_MAJOR_VERSION=$(docker --version | awk '{print $3}' | cut -d '.' -f 1)
@@ -39,7 +57,7 @@ if [[ $1 == "stop" ]]; then
     echo -n -e "${C_YELLOW}"
     echo -e Removing existing "${CONTAINER_NAME} container..."
     echo -n -e "${C_RST}"
-    ${MAKEVAR_SUDO_COMMAND} docker rm -f "${CONTAINER_NAME}" >/dev/null
+    DOCKER_HOST=unix:///var/run/docker.sock  rm -f "${CONTAINER_NAME}" >/dev/null
     exit 0
 fi
 
@@ -142,5 +160,7 @@ else
     ${MAKEVAR_SUDO_COMMAND} docker exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
 
 fi
+
+unset DOCKER_HOST
 
 echo -n -e "${C_RST}"
