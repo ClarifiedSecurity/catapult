@@ -7,7 +7,7 @@ REPO_VERSION="${MAKEVAR_NOVA_CORE_VERSION:-${MAKEVAR_CATAPULT_VERSION:-main}}"
 COLLECTION_GIT_URL="https://github.com/$REPO_OWNER/nova.core.git"
 COLLECTION_NAME="nova.core"
 REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
-REMOTE_RELEASES_URL="https://github.com/$REPO_OWNER/nova.core/releases"
+REMOTE_REPO_URL="https://github.com/$REPO_OWNER/nova.core"
 
 if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
@@ -32,56 +32,67 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
     fi
 
-    GALAXY_REMOTE_VERSION_ROW=$(curl "$REMOTE_VERSION_URL" -s | grep "version:" | cut -d " " -f 2)
-    GALAXY_REMOTE_VERSION=$(echo "$GALAXY_REMOTE_VERSION_ROW" | cut -d: -f2 | xargs)
+    GALAXY_REMOTE_VERSION=$(curl "$REMOTE_VERSION_URL" -s | grep "version:" | cut -d " " -f 2)
 
-    if [[ "$GALAXY_LOCAL_VERSION" != "$GALAXY_REMOTE_VERSION" ]]; then
+    if [[ -z "$GALAXY_REMOTE_VERSION" ]]; then
 
-      if [[ "$MAKEVAR_AUTO_UPDATE" == 1 ]]; then
+      echo -n -e "${C_RED}"
+      echo -e "Cannot find remote version of ${C_CYAN}$COLLECTION_NAME${C_RED} collection for branch/tag ${C_CYAN}$REPO_VERSION${C_RED}"
+      echo -e "Make sure that the branch/tag actually exists in ${C_CYAN}$REMOTE_REPO_URL${C_RED}"
+      echo -e "Then set the correct branch/tag with the ${C_CYAN}MAKEVAR_NOVA_CORE_VERSION${C_RED} variable"
+      echo -n -e "${C_RST}"
 
-        echo -n -e "${C_YELLOW}"
-        update_collection
-        echo -n -e "${C_RST}"
+    else
 
-      else
+      if [[ "$GALAXY_LOCAL_VERSION" != "$GALAXY_REMOTE_VERSION" ]]; then
 
-        echo -e "${C_YELLOW}"
-        echo -e "${C_YELLOW}Local nova.core collection version:${C_RST}" "$GALAXY_LOCAL_VERSION"
-        echo -e "${C_YELLOW}Remote nova.core collection version:${C_RST}" "$GALAXY_REMOTE_VERSION"
-        echo -e "${C_YELLOW}"
-        if [[ $REPO_VERSION == "main" ]]; then
+        if [[ "$MAKEVAR_AUTO_UPDATE" == 1 ]]; then
 
-          echo -e Changelog: "$REMOTE_RELEASES_URL/tag/v$GALAXY_REMOTE_VERSION"
+          echo -n -e "${C_YELLOW}"
+          update_collection
+          echo -n -e "${C_RST}"
+
+        else
+
+          echo -e "${C_YELLOW}"
+          echo -e "${C_YELLOW}Local nova.core collection version:${C_RST}" "$GALAXY_LOCAL_VERSION"
+          echo -e "${C_YELLOW}Remote nova.core collection version:${C_RST}" "$GALAXY_REMOTE_VERSION"
+          echo -e "${C_YELLOW}"
+          if [[ $REPO_VERSION == "main" ]]; then
+
+            echo -e Changelog: "$REMOTE_REPO_URL/releases/tag/v$GALAXY_REMOTE_VERSION"
+
+          fi
+
+          ask_confirm() {
+              while true; do
+                  echo -n -e "${C_YELLOW}"
+                  echo -n -e "Would you like to update now (y/n)?"
+                  echo -e "${C_RST}"
+                  read -r response
+                  case $response in
+                  [Yy]*|yes)
+                      update_collection
+                      break
+                      ;;
+                  [Nn]*|no)
+                      echo -n -e "${C_YELLOW}"
+                      echo -e "Not updating now"
+                      echo -n -e "${C_RST}"
+                      break
+                      ;;
+                  *)
+                      echo -n -e "${C_RED}"
+                      echo -e "Unknown response. Please answer yes or no."
+                      echo -n -e "${C_RST}"
+                      ;;
+                  esac
+              done
+          }
+
+          ask_confirm
 
         fi
-
-        ask_confirm() {
-            while true; do
-                echo -n -e "${C_YELLOW}"
-                echo -n -e "Would you like to update now (y/n)?"
-                echo -e "${C_RST}"
-                read -r response
-                case $response in
-                [Yy]*|yes)
-                    update_collection
-                    break
-                    ;;
-                [Nn]*|no)
-                    echo -n -e "${C_YELLOW}"
-                    echo -e "Not updating now"
-                    echo -n -e "${C_RST}"
-                    break
-                    ;;
-                *)
-                    echo -n -e "${C_RED}"
-                    echo -e "Unknown response. Please answer yes or no."
-                    echo -n -e "${C_RST}"
-                    ;;
-                esac
-            done
-        }
-
-        ask_confirm
 
       fi
 
