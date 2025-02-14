@@ -7,6 +7,24 @@ source ./scripts/general/colors.sh
 
 echo -e -n "${C_CYAN}"
 
+# Setting the DOCKER_HOST for Linux
+# This is to make sure rootful Docker is used
+if [[ $(uname) == "Linux" ]]; then
+
+    # Checking if MAKEVAR_DOCKER_SOCKET_PATH is not empty
+    # This is for setting non-default Docker socket path
+    if [[ -z "${MAKEVAR_DOCKER_SOCKET_PATH}" ]]; then
+
+        export DOCKER_HOST=unix:///var/run/docker.sock
+
+    else
+
+        export DOCKER_HOST=${MAKEVAR_DOCKER_SOCKET_PATH}
+
+    fi
+
+fi
+
 ######################
 # Sudo command check #
 ######################
@@ -165,14 +183,12 @@ catapult_version_selector () {
         # shellcheck disable=SC2034
         select option in "${options[@]}"; do
             case "$REPLY" in
-                yes|y|1) catapult_code_update; break;;
+                yes|y|1) catapult_code_update && catapult_image_update; break;;
                 no|n|2) echo -e "Not updating Catapult"; break;;
             esac
         done
 
-        catapult_image_update
-
-      else
+      elif [[ -z "$LOCAL_DOCKER_IMAGE_EXISTS" ]]; then
 
         catapult_image_update
 
@@ -222,5 +238,7 @@ else
   echo -e "${C_RST}"
 
 fi
+
+unset DOCKER_HOST
 
 echo -e -n "${C_RST}"
