@@ -183,7 +183,7 @@ install_docker(){
 
         # Launch Docker
         echo "Waiting until Docker engine is running..."
-        open --background --hide -a Docker
+        open --background --hide -a Docker --args --accept-license
         sleep 5
 
     done
