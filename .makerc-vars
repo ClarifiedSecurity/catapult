@@ -44,7 +44,7 @@ MAKEVAR_CATAPULT_VERSION :=main
 
 # This is the version of the nova.core collection that will be used.
 # By default, it is the same as the Catapult version
-# When NOT using staging or main as Catault version, make sure to set this to the correct nova.core version from:
+# When NOT using staging or main as Catapult version, make sure to set this to the correct nova.core version from:
 # https://github.com/ClarifiedSecurity/nova.core/releases
 MAKEVAR_NOVA_CORE_VERSION=${MAKEVAR_CATAPULT_VERSION}
 
