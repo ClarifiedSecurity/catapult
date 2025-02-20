@@ -8,8 +8,9 @@ if [[ "${CONTAINER_USER_ID}" != 1000 && "${MAKEVAR_HOST_OS}" == "Linux" ]]; then
     echo -e "Fixing file and folder permissions for non 1000 user..."
 
     # Vault
-    sudo -E chmod u=rwX,g=rwX,o= ~/.vault
-    sudo -E chown builder:"${CONTAINER_GROUP_ID}" ~/.vault
+    sudo -E chmod -R u=rwX,g=rwX,o= ~/.vault
+    sudo -E chown -R builder:"${CONTAINER_GROUP_ID}" ~/.vault
+    sudo -E chmod +x ~/.vault/unlock-vault.sh
 
     # Ansible Collections
     sudo -E mkdir -p /srv/ansible
@@ -18,13 +19,17 @@ if [[ "${CONTAINER_USER_ID}" != 1000 && "${MAKEVAR_HOST_OS}" == "Linux" ]]; then
     # SSH
     sudo -E chmod 600 /home/builder/.ssh/config
     sudo -E chown builder:"${CONTAINER_GROUP_ID}" ~/.ssh
+    if [[ -f ~/.ssh/known_hosts ]]; then
+        sudo -E chown builder:"${CONTAINER_GROUP_ID}" ~/.ssh/known_hosts*
+    fi
 
     # Shell History
-    sudo -E chown builder:"${CONTAINER_GROUP_ID}" ~/.history
+    sudo -E chmod -R u=rwX,g=rwX,o= ~/.history
+    sudo -E chown -R builder:"${CONTAINER_GROUP_ID}" ~/.history
 
     # Projects
-    sudo -E chmod u=rwX,g=rwX,o= /srv/inventories
-    sudo -E chown -R builder:"${CONTAINER_GROUP_ID}" /srv/inventories
+    sudo -E chmod -R u=rwX,g=rwX,o= /srv/inventories
+    sudo -E chown -R "${CONTAINER_USER_ID}":builder /srv/inventories
 
     # Personal certificates
     sudo -E mkdir -p /srv/personal/certificates
