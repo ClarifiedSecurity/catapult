@@ -2,6 +2,8 @@
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
+source /srv/scripts/general/file-permissions.sh
+
 # Activating Python virtual environment
 source "$HOME/.local/bin/env"
 source "$HOME/catapult-venv/.venv/bin/activate"
@@ -114,8 +116,10 @@ if [[ ! -f /tmp/first-run ]]; then
     # Creating the file to avoid errors when it's not present for CI pipelines for an example
     sudo touch /ssh-agent
 
-    # Making sure that /ssh-agent has the correct permissions, required mostly for MacOS
-    sudo chown -R "$(id -u)":"$(id -g)" /ssh-agent
+    # Making sure that /ssh-agent has the correct permissions
+    # Required mostly for MacOS and Linux with non 1000 user host
+    sudo chmod 775 /ssh-agent
+    sudo chown "${CONTAINER_USER_ID}":"$(id -g)" /ssh-agent
 
     ################################
     # FIRST RUN ENTRYPOINT SCRIPTS #

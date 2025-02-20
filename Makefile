@@ -45,7 +45,7 @@ clean:
 customizations:
 	@${ROOT_DIR}/scripts/general/catapult-customizer.sh
 
-## build: Build Catapult image locally (development & testing)
+## build: Build Catapult image locally (for development & testing)
 .PHONY: build
 build:
 	@${ROOT_DIR}/scripts/general/build.sh

@@ -316,9 +316,20 @@ else
 
 fi
 
+if [[ $(uname) == "Linux" ]]; then
+
+    # This is mostly required for non-default (002) umask machines and non-1000 user id machines
+    echo -ne "${C_YELLOW}"
+    echo -e "Setting correct permissions for Catapult folder..."
+    sudo -E chmod -R u=rwX,g=rwX,o=rX .
+    echo -ne "${C_RST}"
+
+fi
+
 # Print the message to the user
 make help
-echo -e "${C_GREEN}"
+
+echo -ne "${C_GREEN}"
 echo -e "Preparations finished successfully"
 echo -e "Run ${C_CYAN}make start${C_GREEN} to start and configure Catapult"
-echo -n -e "${C_RST}"
+echo -ne "${C_RST}"

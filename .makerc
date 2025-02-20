@@ -11,16 +11,21 @@ else
 endif
 
 IMAGE_FULL :=${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}:${IMAGE_TAG}
-
+MAKEVAR_HOST_OS :=$(shell uname)
 CONTAINER_PROJECT_NAME :=$(shell echo $(MAKEVAR_COMPOSE_PROJECT_NAME) | tr '[:upper:]' '[:lower:]')
 CONTAINER_USER_ID :=$(or ${CONTAINER_USER_ID},$(shell id -u) )
-CONTAINER_GROUP_ID :=$(or ${CONTAINER_GROUP_ID},$(shell id -g) )
+
+# Because default MacOS user group ID alredy exists in container
+ifeq (${MAKEVAR_HOST_OS}, Darwin)
+    CONTAINER_GROUP_ID :=$(or ${CONTAINER_GROUP_ID},$(shell id -u) )
+else
+    CONTAINER_GROUP_ID :=$(or ${CONTAINER_GROUP_ID},$(shell id -g) )
+endif
+
 CONTAINER_USER_NAME :=$(or ${CONTAINER_USER_NAME},${USER} )
 CONTAINER_GROUP_NAME :=$(or ${CONTAINER_GROUP_NAME},${USER} )
 CONTAINER_ENTRYPOINT :=zsh
 CONTAINER_NAME :=${CONTAINER_PROJECT_NAME}-${CONTAINER_USER_NAME}
-CONTAINER_HOSTNAME :=${IMAGE_NAME}-${CONTAINER_USER_NAME}
-
 # Default for MacOS that doesn't have a DISPLAY env var
 DISPLAY :=$(or ${DISPLAY},0.0 )
 

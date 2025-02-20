@@ -55,6 +55,4 @@ else
 
 fi
 
-unset DOCKER_HOST
-
 echo -e -n "${C_RST}"
