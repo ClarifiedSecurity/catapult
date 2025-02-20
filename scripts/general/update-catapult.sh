@@ -7,24 +7,6 @@ source ./scripts/general/colors.sh
 
 echo -e -n "${C_CYAN}"
 
-# Setting the DOCKER_HOST for Linux
-# This is to make sure rootful Docker is used
-if [[ $(uname) == "Linux" ]]; then
-
-    # Checking if MAKEVAR_DOCKER_SOCKET_PATH is not empty
-    # This is for setting non-default Docker socket path
-    if [[ -z "${MAKEVAR_DOCKER_SOCKET_PATH}" ]]; then
-
-        export DOCKER_HOST=unix:///var/run/docker.sock
-
-    else
-
-        export DOCKER_HOST=${MAKEVAR_DOCKER_SOCKET_PATH}
-
-    fi
-
-fi
-
 ##########################
 # Catapult version check #
 ##########################
@@ -88,10 +70,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
         echo -e -n "${C_YELLOW}"
         echo -e "Updating Catapult Docker image..."
         echo -e -n "${C_RST}"
-        ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
-        echo -e "${C_GREEN}"
-        echo -e "Catapult updated to version $REMOTE_VERSION"
-        echo -e "${C_RST}"
+        ${MAKEVAR_SUDO_COMMAND} docker --context default pull "${IMAGE_FULL}"
 
         if [[ "$LOCAL_BRANCH" == "$BRANCH" ]]; then
 
@@ -107,6 +86,10 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
             echo -e "${C_RST}"
 
         fi
+
+        echo -e "${C_GREEN}"
+        echo -e "Catapult updated to version $REMOTE_VERSION"
+        echo -e "${C_RST}"
 
         export CATAPULT_UPDATED=1 # Exporting the variable to be used in the make start
 
@@ -163,7 +146,5 @@ else
     echo -n -e "${C_RST}"
 
 fi
-
-unset DOCKER_HOST
 
 echo -e -n "${C_RST}"
