@@ -12,6 +12,13 @@ ENV CONTAINER_GROUP_ID=${CONTAINER_GROUP_ID:-1000}
 ENV ANSIBLE_CONFIG=/srv/ansible.cfg
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
+# Increasing UID_MAX & GID_MAX for cases when external identity provider is used for host accounts
+RUN sed -i 's/^UID_MAX[[:space:]]*[0-9]\+/UID_MAX        4294967295/' /etc/login.defs
+RUN sed -i 's/^GID_MAX[[:space:]]*[0-9]\+/GID_MAX        4294967295/' /etc/login.defs
+
+# Setting UMASK 002 for non-1000 host users
+RUN sed -i 's/^UMASK[[:space:]]*[0-9]\+/UMASK        002/' /etc/login.defs
+
 RUN mkdir -p /etc/sudoers.d
 RUN echo "builder     ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder
 RUN groupadd builder -g ${CONTAINER_GROUP_ID} && useradd -u ${CONTAINER_USER_ID} -g builder -m -d /home/builder -s /bin/bash -c "Builder user" builder
