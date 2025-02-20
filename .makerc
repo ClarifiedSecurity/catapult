@@ -28,3 +28,5 @@ DISPLAY :=$(or ${DISPLAY},0.0 )
 XDG_SESSION_TYPE :=$(or ${XDG_SESSION_TYPE},wayland )
 
 BUILD_ARGS := --build-arg CONTAINER_USER_ID=${CONTAINER_USER_ID} --build-arg CONTAINER_GROUP_ID=${CONTAINER_GROUP_ID} --build-arg TZ=${MAKEVAR_TZ}
+
+MAKEVAR_HOST_OS :=$(shell uname)
