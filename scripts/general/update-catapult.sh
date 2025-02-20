@@ -89,9 +89,6 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
         echo -e "Updating Catapult Docker image..."
         echo -e -n "${C_RST}"
         ${MAKEVAR_SUDO_COMMAND} docker pull "${IMAGE_FULL}"
-        echo -e "${C_GREEN}"
-        echo -e "Catapult updated to version $REMOTE_VERSION"
-        echo -e "${C_RST}"
 
         if [[ "$LOCAL_BRANCH" == "$BRANCH" ]]; then
 
@@ -107,6 +104,10 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
             echo -e "${C_RST}"
 
         fi
+
+        echo -e "${C_GREEN}"
+        echo -e "Catapult updated to version $REMOTE_VERSION"
+        echo -e "${C_RST}"
 
         export CATAPULT_UPDATED=1 # Exporting the variable to be used in the make start
 

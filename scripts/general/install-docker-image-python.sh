@@ -17,6 +17,7 @@ echo "y" | yarn install
 curl -LsSf https://astral.sh/uv/install.sh | sh
 # shellcheck disable=SC1091
 source "$HOME/.local/bin/env"
+
 # shellcheck disable=SC1091
 pushd "$HOME/catapult-venv" || exit
 uv sync
