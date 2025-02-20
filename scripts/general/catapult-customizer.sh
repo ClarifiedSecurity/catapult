@@ -40,10 +40,10 @@ fi
 # Checking if custom start.yml if it exists
 if [ -f custom/start.yml ]; then
     echo -e "Using custom start.yml..."
-    rm -f inventories/start.yml
+    ${MAKEVAR_SUDO_COMMAND} rm -f inventories/start.yml
     cp -R custom/start.yml inventories/start.yml
   else
-    rm -f inventories/start.yml
+    ${MAKEVAR_SUDO_COMMAND} rm -f inventories/start.yml
     cp -R defaults/start.yml inventories/start.yml
 fi
 

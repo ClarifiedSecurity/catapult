@@ -36,7 +36,7 @@ ADD --chown=builder:builder yarn.lock /srv/yarn.lock
 ADD --chown=builder:builder inventories/_operating_systems /srv/inventories/_operating_systems
 ADD --chown=builder:builder defaults/autocomplete.yml /srv/defaults/autocomplete.yml
 ADD --chown=builder:builder defaults/start.yml /srv/inventories/start.yml
-ADD --chown=builder:builder container/home/builder/.vault/unlock-vault.sh /home/builder/.vault/unlock-vault.sh
+ADD --chown=builder:builder --chmod=664 container/home/builder/.vault/unlock-vault.sh /home/builder/.vault/unlock-vault.sh
 
 # Installing everything in separate scripts to and multiple layers thus reducing the image size
 # Having separate layers also keeps them small and easier to download and extract on low bandwidth connections
@@ -48,9 +48,9 @@ USER builder
 
 ADD --chown=builder:builder scripts/general/install-docker-image-python.sh /tmp/install-docker-image-python.sh
 ADD --chown=builder:builder defaults/pyproject.toml /home/builder/catapult-venv/pyproject.toml
-ADD --chown=builder:builder defaults/uv.lock /home/builder/catapult-venv/uv.lock
+ADD --chown=builder:builder --chmod=664 defaults/uv.lock /home/builder/catapult-venv/uv.lock
 RUN bash /tmp/install-docker-image-python.sh
-ADD --chown=builder:builder container/home/builder/.zshrc /home/builder/.zshrc
+ADD --chown=builder:builder --chmod=664 container/home/builder/.zshrc /home/builder/.zshrc
 
 ADD --chown=builder:builder scripts/general/install-docker-image-collections.sh /tmp/install-docker-image-collections.sh
 RUN bash /tmp/install-docker-image-collections.sh
