@@ -89,6 +89,8 @@ else
     # Running checks
     # shellcheck disable=SC1091
     . "${ROOT_DIR}/scripts/general/checks.sh"
+    # shellcheck disable=SC1091
+    . "${ROOT_DIR}/scripts/general/update-catapult.sh"
 
     # This is to prevent errors from changed files from updating
     if [[ $CATAPULT_UPDATED == 1 ]]; then
