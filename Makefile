@@ -15,6 +15,11 @@ help:
 	@echo
 	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':'
 
+## update: Check for Catapult updates
+.PHONY: update
+update:
+	@${ROOT_DIR}/scripts/general/update-catapult.sh
+
 ## start: Start Catapult (if not running) and enter it
 .PHONY: start
 start:
