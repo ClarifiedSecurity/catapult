@@ -14,7 +14,7 @@ function inventory_generator(){
 if [[ -d "$(pwd)/group_vars" ]]; then
 
     echo -n -e "${C_YELLOW}"
-    echo -e "Generating tab-completable inventory for ${C_CYAN}$(basename "$(pwd)")${C_YELLOW}..."
+    echo -e "Generating tab-completable inventory for ${C_CYAN}$(basename "$(pwd)")${C_YELLOW} in the background..."
     echo -n -e "${C_RST}"
 
     # Generating tab-completable inventory file
