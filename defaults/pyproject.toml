@@ -2,10 +2,10 @@
 name = "catapult-venv"
 version = "1.0.0"
 description = "This a Python virtual environment for Catapult"
-requires-python = "==3.12.8"
+requires-python = ">=3.12"
 dependencies = [
     "aiohttp",
-    "ansible-core==2.18.1",
+    "ansible-core==2.18.3",
     "ansible-lint",
     "ansible-pylibssh",
     "ansible-specdoc",
