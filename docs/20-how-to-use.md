@@ -192,7 +192,7 @@ ctp host deploy-from-configuration <inventory_hostname>
 
 ### ctp host deploy-role
 
-Runs only the `/srv/<project_name>/vm/<role_name>` part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something. For an example only reconfiguring the user accounts of the machine by using single_role with `nova.core.accounts` role.
+Runs only the `/srv/<project_name>/vm/<role_name>` part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something. For an example only reconfiguring the user accounts of the machine by using `single_role` with `nova.core.accounts` role.
 
 _Example usage:_
 
