@@ -65,6 +65,10 @@ autoload -U compinit; compinit
     {% set loop_index = loop.index %}
     {% for subcommand in entry.subcommands %}
     {% if loop_index == 1 and loop.index == 1 %}if{% else %}elif{% endif %} [[ "$command" = "{{ command }}" && $subcommand = "{{ subcommand.subcommand_name }}" ]]; then
+    {% if subcommand.subcommand_name == "deploy-single-role" %}
+    local role="$1"
+    shift
+    {% endif %}
     {{ subcommand.subcommand_to_execute | safe }}
     {% endfor %}
     {% endfor %}
@@ -74,25 +78,31 @@ fi
 }
 
 _host_completion () {
-    working_folder="$(basename "$(pwd)")_hosts"
+    hosts_completion_file="$(basename "$(pwd)")_hosts"
 
     if compset -P '@'; then
-
         _files
-
     else
-
-        if [[ -f "/tmp/$working_folder" ]]; then
-
-			_ansible_hosts=( ${(f)"$(cat "/tmp/$working_folder")"} )
+        if [[ -f "/tmp/$hosts_completion_file" ]]; then
+			_ansible_hosts=( ${(f)"$(cat "/tmp/$hosts_completion_file")"} )
 			compadd -M 'l:|=* r:|=*' -qS: -a _ansible_hosts
-
         else
-
-			echo -e "Project inventory missing! Use \\x1b[96mctp project select\\x1b[0m to generate it."
-
+            echo -e "Project inventory missing! Use \\x1b[96mctp project select\\x1b[0m to generate it."
+            return
         fi
+    fi
 
+}
+
+_role_completion () {
+    roles_completion_file="$(basename "$(pwd)")_roles"
+
+    if [[ -f "/tmp/$roles_completion_file" ]]; then
+        _roles=( ${(f)"$(cat "/tmp/$roles_completion_file")"} )
+        compadd -M 'l:|=* r:|=*' -a _roles
+    else
+        echo -e "Tab completable role list missing! Use \\x1b[96mctp project select\\x1b[0m to generate it."
+        return
     fi
 }
 
@@ -118,21 +128,31 @@ _{{ autocomplete.function_name }}() {
             case $line[1] in
                 {% for entry in autocomplete.commands %}
                 {{ entry.command }})
-                    {% if entry.hosts_as_arguments %}
-                    compset -P '*[,:](|[&!~])'
-                    compset -S '[:,]*'
-                    {% endif %}
-                    _arguments \\
-                        '1:mode:((
-                            {% for subcommand in entry.subcommands %}
-                            {{ subcommand.subcommand_name }}:"{{ subcommand.subcommand_description | safe }}"
-                            {% endfor %}
-                        {% if entry.hosts_as_arguments %}
-                            ))' \\
-                        "*:option:_host_completion"
-                        {% else %}
-                            ))'
+                    {% if entry.command == "host" %}
+                    if [[ "$line[2]" == "deploy-single-role" ]]; then
+                        _arguments \\
+                            '2:role:_role_completion' \\
+                            "*:option:_host_completion"
+                    else
                         {% endif %}
+                        {% if entry.hosts_as_arguments %}
+                        compset -P '*[,:](|[&!~])'
+                        compset -S '[:,]*'
+                        {% endif %}
+                        _arguments \\
+                            '1:mode:((
+                                {% for subcommand in entry.subcommands %}
+                                {{ subcommand.subcommand_name }}:"{{ subcommand.subcommand_description | safe }}"
+                                {% endfor %}
+                            {% if entry.hosts_as_arguments %}
+                                ))' \\
+                            "*:option:_host_completion"
+                            {% else %}
+                                ))'
+                            {% endif %}
+                    {% if entry.command == "host" %}
+                    fi
+                    {% endif %}
                     ;;
                 {% endfor %}
             esac
