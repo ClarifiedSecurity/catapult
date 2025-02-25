@@ -23,6 +23,10 @@ autocomplete:
         - subcommand_name: deploy-role
           subcommand_description: Runs only the /srv/<project_name>/vm/<role_name> part of the playbook and then stops
           subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only=true -l "$@"
+        - subcommand_name: deploy-single-role
+          subcommand_description: Runs only the role defined as the fist tab-completable argument and then stops
+          subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt
+            -e=deploy_mode=deploy -e role_only=true -e single_role="$role" -l "$@"
         - subcommand_name: deploy-network
           subcommand_description: Runs ctp deploy and also includes networks configuration role
           subcommand_to_execute: ansible-playbook /srv/inventories/start.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e reconfigure_network=yes -l "$@"
