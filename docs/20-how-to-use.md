@@ -192,7 +192,7 @@ ctp host deploy-from-configuration <inventory_hostname>
 
 ### ctp host deploy-role
 
-Runs only the `/srv/<project_name>/vm/<role_name>` part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something. For an example only reconfiguring the user accounts of the machine by using `single_role` with `nova.core.accounts` role.
+Runs only the `/srv/<project_name>/vm/<role_name>` part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something.
 
 _Example usage:_
 
@@ -202,16 +202,16 @@ _Example usage:_
 ctp host deploy-role <inventory_hostname>
 ```
 
-- Looks for role under defined path and only runs that and stops
+### ctp host deploy-single-role
+
+Runs only the role defined as the first parameter and then stops. The role `role path or FQCN` is tab-completable based on installed collections and roles in the project.
+
+_Example usage:_
+
+- Run a specific role for a given inventory_hostname (or group) and the stops play
 
 ```zsh
-ctp host deploy-role <inventory_hostname> -e single_role=path/to/role
-```
-
-- Looks for role with the fully qualified role name (FQCN) in the installed collections and only runs that and stops
-
-```zsh
-ctp host deploy-role <inventory_hostname> -e single_role=<role.fqcn>
+ctp host deploy-single-role <role path or FQCN> <inventory_hostname>
 ```
 
 ### ctp host deploy-network
