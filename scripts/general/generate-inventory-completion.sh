@@ -2,12 +2,23 @@
 
 echo -n -e "${C_RST}"
 
-#set -x
-
 function inventory_generator(){
 
-    # For some reaseon some Ansible commands cannot detect the vault file from an environment variable
+    # For some reason some Ansible commands cannot detect the vault file from an environment variable
     ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$(pwd)")_hosts"
+
+    ############################################################################################
+    # Generating the tab-completable roles list based on local roles and installed collections #
+    ############################################################################################
+
+    # Finding all folders in the roles directory that contain main.yml and getting their relative path
+    PROJECT_ROLES="$(find roles -name main.yml -exec dirname {} \; | sed 's/\/[^\/]*$//' | sort | uniq)"
+
+    # Looking up all roles from installed collections and converting them to FQCN
+    INSTALLED_COLLECTION_ROLES="$(find /srv/ansible/ansible_collections -name main.yml -exec dirname {} \; | sed 's/\/[^\/]*$//' | awk -F'/ansible_collections/' '{print $2}' | sed 's|/roles/|.|; s|/|.|g' | sort | uniq)"
+
+    # Combining the two lists sorting items by name and saving to file
+    echo -e "${PROJECT_ROLES}\n${INSTALLED_COLLECTION_ROLES}" | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$(pwd)")_roles"
 
 }
 
