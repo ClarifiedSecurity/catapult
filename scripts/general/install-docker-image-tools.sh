@@ -2,7 +2,7 @@
 
 set -e # exit when any command fails
 
-NODE_VERSION=v23.6.1
+NODE_VERSION=v22.14.0
 
 # Detecting platform architecture
 if [[ "$(uname -m)" == "x86_64" ]]; then
@@ -21,7 +21,7 @@ apt install -y ca-certificates rsync iputils-ping jq sshpass sudo unzip zip # Re
 apt install -y vim iproute2 traceroute dnsutils netcat-openbsd nano procps p7zip-full # Extra development & debugging tools
 
 cd /tmp
-curl -O https://nodejs.org/download/release/$NODE_VERSION/node-$NODE_VERSION-$OS_PLATFORM.tar.xz
+curl -O https://nodejs.org/download/release/latest-v22.x/node-$NODE_VERSION-$OS_PLATFORM.tar.xz
 mkdir -p /usr/local/lib/nodejs
 tar -xJvf node-$NODE_VERSION-$OS_PLATFORM.tar.xz -C /usr/local/lib/nodejs
 
