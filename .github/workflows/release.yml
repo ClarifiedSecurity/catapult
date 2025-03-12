@@ -49,6 +49,10 @@ jobs:
           build-args: |
             VERSION=${{ env.IMAGE_VERSION }}
           push: true
+          annotations: |
+            org.opencontainers.image.description=Pre-built Docker image for Catapult
+            org.opencontainers.image.licenses=AGPL-3.0 license
+            org.opencontainers.image.source=https://github.com/ClarifiedSecurity/catapult
           tags: |
             ghcr.io/clarifiedsecurity/catapult:latest
             ghcr.io/clarifiedsecurity/catapult:main

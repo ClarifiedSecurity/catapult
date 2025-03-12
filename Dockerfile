@@ -1,5 +1,9 @@
 FROM python:3.12.8-slim-bookworm
 
+LABEL org.opencontainers.image.source=https://github.com/ClarifiedSecurity/catapult
+LABEL org.opencontainers.image.description="Pre-built Docker image for Catapult"
+LABEL org.opencontainers.image.licenses="AGPL-3.0 license"
+
 ARG TZ
 ENV TZ=$TZ
 RUN ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone
