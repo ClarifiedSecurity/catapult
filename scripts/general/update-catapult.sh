@@ -41,6 +41,12 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
         fi
 
+        echo -ne "${C_GREEN}"
+        echo -e "Successfully changed to the ${C_CYAN}$BRANCH${C_GREEN} branch or tag"
+        echo -e "Run ${C_CYAN}make start${C_YELLOW} again to start the container..."
+        echo -ne "${C_RST}"
+        exit 0
+
     }
 
     # Checking for user is in the correct branch
