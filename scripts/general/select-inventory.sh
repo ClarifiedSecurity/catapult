@@ -10,6 +10,34 @@ FOLDERS=($(find -L "$SEARCH_DIR" \( -type d -o -type l -o -type f \) -name "$SEA
 
 #--------------------End of variables, start of script--------------------#
 
+# This function copies the start.yml (playbook file) from /srv/inventories to the selected project folder
+# This is done so some of the Ansible's native functionality will work properly (playbook_dir var, project specific plugins, etc.)
+function playbook_copy() {
+
+    if grep -qxF "/playbook.yml" "$selected_folder/.gitignore"; then
+        echo -n
+    else
+        echo -ne "${C_YELLOW}"
+        echo -e "Adding playbook.yml to .gitignore..."
+        echo -e "Don't forget to commit the updated ${C_CYAN}.gitignore${C_YELLOW} file."
+        echo -e "\n/playbook.yml" >> "$selected_folder/.gitignore"
+        echo -ne "${C_RST}"
+    fi
+
+    echo -ne "${C_YELLOW}"
+    echo -e "Copying playbook file to ${C_CYAN}$(basename "$selected_folder")${C_YELLOW} project..."
+
+    # Checking if custom start.yml if it exists
+    if [[ -f /srv/custom/start.yml ]]; then
+        echo -e "Using custom playbook from Catapult Customizer..."
+        cp -f /srv/custom/start.yml "$selected_folder/playbook.yml" || echo -e "${C_RED}Failed to copy playbook file.${C_RST}"
+    else
+        cp -f /srv/defaults/start.yml "$selected_folder/playbook.yml" || echo -e "${C_RED}Failed to copy playbook file.${C_RST}"
+    fi
+
+    echo -ne "${C_RST}"
+}
+
 # This project checks if the current project has a scripts/catapult-project-customizer.sh file.
 # If present then sources it with load parameter on entering the project and with unload parameter on exiting the project.
 function project_customization_loader() {
@@ -43,9 +71,10 @@ function inventory_selector() {
 
         selected_folder=${FOLDERS[1]}
         echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+        playbook_copy
         project_customization_loader
-        # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
-        cd "$selected_folder" > /dev/null 2>/dev/null || exit
+        # shellcheck disable=SC2164
+        cd "$selected_folder"
 
     elif [ ${#FOLDERS[@]} -gt 0 ]; then
 
@@ -64,10 +93,11 @@ function inventory_selector() {
 
             selected_folder=${FOLDERS[choice]}
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
+            playbook_copy
             project_customization_loader
             # shellcheck disable=SC2164
             cd "$selected_folder"
-            touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion erros if the inventory_generator function fails
+            touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion errors if the inventory_generator function fails
 
         else
 
