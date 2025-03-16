@@ -1,4 +1,3 @@
-.DS_Store
 .githooks
 .vscode
 *.log
@@ -6,37 +5,21 @@
 *.swp
 **/__pycache__/**
 /.idea
+/.ansible
 /container/home/builder/.vault/vlt**
-/container/home/builder/.ssh/config.d/
 /container/home/builder/.ssh/known_hosts**
 /custom/**
 /personal/**
 /roles
 /roles_core
 ansible/**
-archives/
 container/home/builder/.*history
-download/
-exported_templates/**
 node_modules
-requirements/**
 sync-to-shared-roles.sh
-upload/
 # Since this list is parsed in order, the deny (!) needs to be after allow for the same folder
 /inventories/*
 !/inventories/_TEMPLATE_PROJECT
 !/inventories/_operating_systems
 
-
 # Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
-# Swap the comments on the following lines if you don't wish to use zero-installs
-# Documentation here: https://yarnpkg.com/features/zero-installs
-# !.yarn/cache
-.pnp.*
+/.yarn/**
