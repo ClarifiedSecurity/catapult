@@ -58,7 +58,7 @@ dependencies = [
     "azure-storage-blob",
     "boto3",
     "botocore",
-    "cryptography>=44.0.0", # Older versions have security vulnerabilities
+    "cryptography",
     "dnspython",
     "dpath",
     "hvac",
