@@ -32,14 +32,12 @@ ADD --chown=builder:builder .yarnrc.yml /srv/.yarnrc.yml
 ADD --chown=builder:builder /container/home/builder/.default_aliases /srv/container/home/builder/.default_aliases
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
-ADD --chown=builder:builder defaults/requirements.yml /srv/defaults/requirements.yml
+ADD --chown=builder:builder defaults /srv/defaults
 ADD --chown=builder:builder package.json /srv/package.json
 ADD --chown=builder:builder yarn.lock /srv/yarn.lock
 
 # Files that need to be present when using the image in CI pipelines
 ADD --chown=builder:builder inventories/_operating_systems /srv/inventories/_operating_systems
-ADD --chown=builder:builder defaults/autocomplete.yml /srv/defaults/autocomplete.yml
-ADD --chown=builder:builder defaults/start.yml /srv/inventories/start.yml
 ADD --chown=builder:builder container/home/builder/.vault/unlock-vault.sh /home/builder/.vault/unlock-vault.sh
 
 # Installing everything in separate scripts to and multiple layers thus reducing the image size
