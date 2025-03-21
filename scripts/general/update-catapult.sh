@@ -104,7 +104,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
     # Checking if the latest remote version is different than the current local version
     # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
     REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
-    LOCAL_VERSION=$(git archive "$BRANCH" version.yml | tar xO | cut -d ' ' -f 2)
+    LOCAL_VERSION=$(cat version.yml | cut -d ' ' -f 2)
 
     # Checking if remote version is different than local version or if the docker image does not exist
     if [[ "$LOCAL_VERSION" != "$REMOTE_VERSION" ]]; then
