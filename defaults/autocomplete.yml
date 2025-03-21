@@ -27,6 +27,10 @@ autocomplete:
           subcommand_description: Runs only the role defined as the fist tab-completable argument and then stops
           subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt
             -e=deploy_mode=deploy -e role_only=true -e single_role="$role" -l "$@"
+        - subcommand_name: deploy-pre-role
+          subcommand_description: Runs only the role defined as the fist tab-completable argument as pre_role and then stops
+          subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt
+            -e=deploy_mode=deploy -e role_only=true -e pre_role="$role" -l "$@"
         - subcommand_name: deploy-network
           subcommand_description: Runs ctp deploy and also includes networks configuration role
           subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e reconfigure_network=yes -l "$@"

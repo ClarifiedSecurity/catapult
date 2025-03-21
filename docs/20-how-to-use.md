@@ -204,7 +204,7 @@ ctp host deploy-role <inventory_hostname>
 
 ### ctp host deploy-single-role
 
-Runs only the role defined as the first parameter and then stops. The role `role path or FQCN` is tab-completable based on installed collections and roles in the project.
+Runs only the role defined as the first parameter and then stops. The role `role path or FQCN` is tab-completable based on installed collections and roles in the project. This is a useful command when you want to run a specific role for a given inventory_hostname (or group) and then stop the play.
 
 _Example usage:_
 
@@ -212,6 +212,18 @@ _Example usage:_
 
 ```zsh
 ctp host deploy-single-role <role path or FQCN> <inventory_hostname>
+```
+
+### ctp host deploy-pre-role
+
+Runs only the pre_role defined as the first parameter and then stops. The role `role path or FQCN` is tab-completable based on installed collections and roles in the project. This is a useful command when you want to run a specific role for a given inventory_hostname (or group) and then stop the play. The difference between `ctp host deploy-single-role` and `ctp host deploy-pre-role` is that the `ctp host deploy-pre-role` the the pre_role never connects to the target machine and runs the role from localhost. This is useful when interacting with the hypervisor, cloud provider or APIs.
+
+_Example usage:_
+
+- Run a specific role for a given inventory_hostname (or group) and the stops play
+
+```zsh
+ctp host deploy-pre-role <role path or FQCN> <inventory_hostname>
 ```
 
 ### ctp host deploy-network

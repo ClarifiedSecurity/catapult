@@ -65,7 +65,7 @@ autoload -U compinit; compinit
     {% set loop_index = loop.index %}
     {% for subcommand in entry.subcommands %}
     {% if loop_index == 1 and loop.index == 1 %}if{% else %}elif{% endif %} [[ "$command" = "{{ command }}" && $subcommand = "{{ subcommand.subcommand_name }}" ]]; then
-    {% if subcommand.subcommand_name == "deploy-single-role" %}
+    {% if subcommand.subcommand_name in ["deploy-single-role", "deploy-pre-role"] %}
     local role="$1"
     shift
     {% endif %}
@@ -129,7 +129,7 @@ _{{ autocomplete.function_name }}() {
                 {% for entry in autocomplete.commands %}
                 {{ entry.command }})
                     {% if entry.command == "host" %}
-                    if [[ "$line[2]" == "deploy-single-role" ]]; then
+                    if [[ "$line[2]" == "deploy-single-role" || "$line[2]" == "deploy-pre-role" ]]; then
                         _arguments \\
                             '2:role:_role_completion' \\
                             "*:option:_host_completion"
