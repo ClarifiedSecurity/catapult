@@ -43,7 +43,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
         echo -ne "${C_GREEN}"
         echo -e "Successfully changed to the ${C_CYAN}$BRANCH${C_GREEN} branch or tag"
-        echo -e "Run ${C_CYAN}make start${C_YELLOW} again to start the container..."
+        echo -e "Run ${C_CYAN}make start${C_GREEN} again to start the container..."
         echo -ne "${C_RST}"
         exit 0
 
@@ -73,10 +73,16 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
     # Catapult update function
     catapult_update () {
 
-        echo -e -n "${C_YELLOW}"
-        echo -e "Updating Catapult Docker image..."
-        echo -e -n "${C_RST}"
-        ${MAKEVAR_SUDO_COMMAND} docker --context default pull "${IMAGE_FULL}"
+        # Not pulling Catapult image if the user id is not 1000
+        # In that cas the image will be built later locally
+        if [[ "${CONTAINER_USER_ID}" == 1000 ]]; then
+
+            echo -e -n "${C_YELLOW}"
+            echo -e "Updating Catapult Docker image..."
+            echo -e -n "${C_RST}"
+            ${MAKEVAR_SUDO_COMMAND} docker --context default pull "${IMAGE_FULL}"
+
+        fi
 
         if [[ "$LOCAL_BRANCH" == "$BRANCH" ]]; then
 

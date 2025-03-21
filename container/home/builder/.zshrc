@@ -2,8 +2,6 @@
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
-source /srv/scripts/general/file-permissions.sh
-
 # Activating Python virtual environment
 source "$HOME/.local/bin/env"
 source "$HOME/catapult-venv/.venv/bin/activate"

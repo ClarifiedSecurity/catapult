@@ -7,10 +7,11 @@ source ./scripts/general/colors.sh
 
 # Checking if Docker is installed
 if ! [[ -x "$(command -v docker)" ]]; then
-  echo -n -e "${C_RED}"
-  echo -e "Docker not found did you run ${C_CYAN}./install.sh${C_RED} first!"
-  echo -n -e "${C_RST}"
-  exit 1
+
+    echo -n -e "${C_RED}"
+    echo -e "Docker not found did you run ${C_CYAN}./install.sh${C_RED} first!"
+    echo -n -e "${C_RST}"
+    exit 1
 
 fi
 
@@ -58,10 +59,10 @@ fi
 
 if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -q "$CONTAINER_NAME"; then
 
-  echo -n -e "${C_GREEN}"
-  echo -e "Connecting to running ${CONTAINER_NAME} container..."
-  ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
-  echo -n -e "${C_RST}"
+    echo -n -e "${C_GREEN}"
+    echo -e "Connecting to running ${CONTAINER_NAME} container..."
+    ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
+    echo -n -e "${C_RST}"
 
 else
 
@@ -78,7 +79,7 @@ else
     if [[ $CATAPULT_UPDATED == 1 ]]; then
 
         echo -n -e "${C_GREEN}"
-        echo -e "Run ${C_CYAN}make start${C_YELLOW} again to start the container..."
+        echo -e "Run ${C_CYAN}make start${C_GREEN} again to start the container..."
         echo -n -e "${C_RST}"
         exit 0
 
@@ -124,6 +125,23 @@ else
         echo "Setting correct SSH_AUTH_SOCK for Linux..."
         export HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
         echo -n -e "${C_RST}"
+
+        # If the user is not 1000 then the image will be built locally
+        if [[ "${CONTAINER_USER_ID}" != 1000 ]]; then
+
+            # Checking if the local Docker image already exists
+            if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker --context default images -q "${IMAGE_FULL}") ]]; then
+
+                echo -ne "${C_YELLOW}"
+                echo -e "Since the user is not 1000 (id -u), the Docker image will be built locally..."
+                echo -e "Building Catapult Docker image..."
+                echo -ne "${C_RST}"
+                # shellcheck disable=SC2086
+                ${ROOT_DIR}/scripts/general/build.sh
+
+            fi
+
+        fi
 
     fi
 

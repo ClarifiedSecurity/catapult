@@ -10,10 +10,16 @@ else
     IMAGE_TAG :=$(shell curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/${MAKEVAR_CATAPULT_VERSION}/version.yml" | cut -d ' ' -f 2)
 endif
 
-IMAGE_FULL :=${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}:${IMAGE_TAG}
+
 MAKEVAR_HOST_OS :=$(shell uname)
 CONTAINER_PROJECT_NAME :=$(shell echo $(MAKEVAR_COMPOSE_PROJECT_NAME) | tr '[:upper:]' '[:lower:]')
 CONTAINER_USER_ID :=$(or ${CONTAINER_USER_ID},$(shell id -u) )
+
+ifeq (${CONTAINER_USER_ID}, 1000)
+    IMAGE_FULL :=${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}:${IMAGE_TAG}
+else
+    IMAGE_FULL :=locally-built-catapult:${IMAGE_TAG}
+endif
 
 # Because default MacOS user group ID alredy exists in container
 ifeq (${MAKEVAR_HOST_OS}, Darwin)

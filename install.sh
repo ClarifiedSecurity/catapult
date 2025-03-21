@@ -316,16 +316,6 @@ else
 
 fi
 
-if [[ $(uname) == "Linux" ]]; then
-
-    # This is mostly required for non-default (002) umask machines and non-1000 user id machines
-    echo -ne "${C_YELLOW}"
-    echo -e "Setting correct permissions for Catapult folder..."
-    sudo -E chmod -R u=rwX,g=rwX,o=rX .
-    echo -ne "${C_RST}"
-
-fi
-
 # Print the message to the user
 make help
 
