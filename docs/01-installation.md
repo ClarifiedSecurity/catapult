@@ -46,4 +46,4 @@ When WSL is configured successfully then I'll show up in Windows Explorer as a n
 
 ## Caveats
 
-If you are using a Linux VM with a user ID that is not 1000 (you can check it with the `id` command) you need to build the Catapult Docker image yourself with the `make build` command.
+If you are using a Linux VM with a user ID that is not 1000 (you can check it with the `id` command) the Catapult Docker image will be built locally during each update. This means that the updates will just take a bit longer.
