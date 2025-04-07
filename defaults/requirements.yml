@@ -70,6 +70,8 @@ collections:
     version: 2.21.4
   - name: vmware.vmware_rest
     version: 4.7.0
+  - name: vmware.vmware
+    version: 1.11.0
   - name: vyos.vyos
     version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
