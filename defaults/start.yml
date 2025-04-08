@@ -13,6 +13,9 @@
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#modules
     group/vmware: "{{ vmware_defaults | default(omit) }}"
 
+    # Module defaults for https://docs.ansible.com/ansible/latest/collections/vmware/vmware/index.html
+    group/vmware.vmware.vmware: "{{ vmware_defaults | default(omit) }}"
+
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/vmware/vmware_rest/index.html#plugins-in-vmware-vmware-rest
     group/vmware.vmware_rest.vmware_rest: "{{ vmware_rest_defaults | default(omit) }}"
 
