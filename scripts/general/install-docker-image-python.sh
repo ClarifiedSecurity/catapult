@@ -39,7 +39,7 @@ zsh
 git clone https://github.com/junegunn/fzf.git "$HOME/.fzf" --depth 1
 "$HOME/.fzf/install" --key-bindings --completion --update-rc
 
-sudo apt remove -y gcc
+sudo apt purge -y gcc
 sudo apt autoremove -y
 sudo apt autoclean -y
 
