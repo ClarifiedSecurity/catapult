@@ -48,6 +48,7 @@ dependencies = [
     "azure-mgmt-recoveryservicesbackup",
     "azure-mgmt-redis",
     "azure-mgmt-resource",
+    "azure-mgmt-resourcehealth",
     "azure-mgmt-search",
     "azure-mgmt-servicebus",
     "azure-mgmt-sql",
@@ -69,6 +70,7 @@ dependencies = [
     "msgraph-sdk",
     "netaddr",
     "oauthlib",
+    "oras",
     "packaging",
     "pan-os-python",
     "pan-python",
@@ -90,5 +92,5 @@ dependencies = [
     "scp",
     "setuptools",
     "xmltodict",
-    "yq",
+    "yq"
 ]
