@@ -119,6 +119,9 @@ if [[ ! -f /tmp/first-run ]]; then
     sudo chmod 775 /ssh-agent
     sudo chown "${CONTAINER_USER_ID}":"$(id -g)" /ssh-agent
 
+    # Temporary task for fixing the permissions of the ssh folder
+    sudo chown "$(id -u)":"$(id -g)" ~/.ssh -R
+
     ################################
     # FIRST RUN ENTRYPOINT SCRIPTS #
     ################################
