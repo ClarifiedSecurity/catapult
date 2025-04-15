@@ -65,6 +65,7 @@ dependencies = [
     "hvac",
     "jinja2",
     "jmespath",
+    "kubernetes",
     "linode-api4",
     "lxml",
     "msgraph-sdk",
