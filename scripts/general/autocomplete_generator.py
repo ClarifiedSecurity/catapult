@@ -83,6 +83,10 @@ _host_completion () {
     if compset -P '@'; then
         _files
     else
+        # To handle Ansible pattern syntax
+        compset -P '*[,:](|[&!~])'
+        compset -S '[:,]*'
+
         if [[ -f "/tmp/$hosts_completion_file" ]]; then
 			_ansible_hosts=( ${(f)"$(cat "/tmp/$hosts_completion_file")"} )
 			compadd -M 'l:|=* r:|=*' -qS: -a _ansible_hosts
@@ -132,12 +136,8 @@ _{{ autocomplete.function_name }}() {
                     if [[ "$line[2]" == "deploy-single-role" || "$line[2]" == "deploy-pre-role" ]]; then
                         _arguments \\
                             '2:role:_role_completion' \\
-                            "*:option:_host_completion"
+                            "*:host:_host_completion"
                     else
-                        {% endif %}
-                        {% if entry.hosts_as_arguments %}
-                        compset -P '*[,:](|[&!~])'
-                        compset -S '[:,]*'
                         {% endif %}
                         _arguments \\
                             '1:mode:((
@@ -146,7 +146,7 @@ _{{ autocomplete.function_name }}() {
                                 {% endfor %}
                             {% if entry.hosts_as_arguments %}
                                 ))' \\
-                            "*:option:_host_completion"
+                            "*:host:_host_completion"
                             {% else %}
                                 ))'
                             {% endif %}
