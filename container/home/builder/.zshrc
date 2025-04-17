@@ -248,3 +248,6 @@ fi
 
 setopt noglob # Disabling globbing so extra quotes are not required when using Ansible patterns where * is used
 setopt NO_BANG_HIST # Disabling history expansion with ! to avoid issues with Ansible commands
+
+# Create a global alias for & so it's not treated as a background process runner
+alias -g '&'='\&'
