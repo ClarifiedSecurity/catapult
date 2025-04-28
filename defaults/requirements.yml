@@ -14,10 +14,8 @@ roles:
     version: 3.5.0
 
 collections:
-  # A temporary fork of the official collection to remove the annoying deprecation warnings that come with each run
-  - name: https://github.com/ClarifiedSecurity/amazon.aws.git
-    type: git
-    version: 9.4.0-cs
+  - name: amazon.aws
+    version: 9.5.0
   - name: ansible.netcommon
     version: 8.0.0
   - name: ansible.posix
@@ -25,7 +23,7 @@ collections:
   - name: ansible.utils
     version: 6.0.0
   - name: ansible.windows
-    version: 2.8.0
+    version: 3.0.0
   - name: azure.azcollection
     version: 3.3.1
   - name: chocolatey.chocolatey
@@ -35,11 +33,11 @@ collections:
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
-    version: 9.2.0
+    version: 9.3.0
   - name: community.crypto
-    version: 2.26.0
+    version: 2.26.1
   - name: community.docker
-    version: 4.5.2
+    version: 4.6.0
   - name: community.general
     version: 10.6.0
   - name: community.hashi_vault
@@ -49,13 +47,13 @@ collections:
   - name: community.mysql
     version: 3.13.0
   - name: community.postgresql
-    version: 3.14.0
+    version: 4.0.0
   - name: community.routeros
     version: 3.6.0
   - name: community.vmware
     version: 4.4.0
   - name: community.windows
-    version: 2.4.0
+    version: 3.0.0
   - name: fortinet.fortios
     version: 2.3.9
   - name: kubernetes.core
@@ -63,7 +61,7 @@ collections:
   - name: linode.cloud
     version: 0.37.1
   - name: microsoft.ad
-    version: 1.8.1
+    version: 1.9.0
   - name: microsoft.sql
     version: 2.2.3
   - name: paloaltonetworks.panos
@@ -71,7 +69,7 @@ collections:
   - name: vmware.vmware_rest
     version: 4.7.0
   - name: vmware.vmware
-    version: 1.11.0
+    version: 2.0.0
   - name: vyos.vyos
     version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
