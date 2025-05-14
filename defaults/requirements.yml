@@ -54,6 +54,8 @@ collections:
     version: 0.37.1
   - name: microsoft.ad
     version: 1.9.0
+  - name: microsoft.iis
+    version: 1.0.2
   - name: microsoft.sql
     version: 2.2.3
   - name: paloaltonetworks.panos
