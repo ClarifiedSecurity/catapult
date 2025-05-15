@@ -25,19 +25,19 @@ collections:
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
-    version: 9.3.0
+    version: 10.0.0
   - name: community.crypto
-    version: 2.26.1
+    version: 2.26.2
   - name: community.docker
     version: 4.6.0
   - name: community.general
-    version: 10.6.0
+    version: 10.7.0
   - name: community.hashi_vault
     version: 6.2.0
   - name: community.library_inventory_filtering_v1
     version: 1.1.1
   - name: community.mysql
-    version: 3.13.0
+    version: 3.14.0
   - name: community.postgresql
     version: 4.0.1
   - name: community.proxmox
@@ -53,7 +53,7 @@ collections:
   - name: kubernetes.core
     version: 5.1.0
   - name: linode.cloud
-    version: 0.37.1
+    version: 0.38.0
   - name: microsoft.ad
     version: 1.9.0
   - name: microsoft.iis
@@ -61,11 +61,11 @@ collections:
   - name: microsoft.sql
     version: 2.2.3
   - name: paloaltonetworks.panos
-    version: 2.21.4
+    version: 3.0.1
   - name: vmware.vmware_rest
     version: 4.7.0
   - name: vmware.vmware
-    version: 2.0.0
+    version: 2.0.1
   - name: vyos.vyos
     version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
