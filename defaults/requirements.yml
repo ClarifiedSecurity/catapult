@@ -7,7 +7,7 @@ roles: []
 
 collections:
   - name: amazon.aws
-    version: 9.5.0
+    version: 10.1.0
   - name: ansible.netcommon
     version: 8.0.0
   - name: ansible.posix
@@ -15,13 +15,13 @@ collections:
   - name: ansible.utils
     version: 6.0.0
   - name: ansible.windows
-    version: 3.0.0
+    version: 3.1.0
   - name: azure.azcollection
-    version: 3.3.1
+    version: 3.4.0
   - name: chocolatey.chocolatey
     version: 1.5.3
   - name: cisco.ios
-    version: 10.0.0
+    version: 10.1.0
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
@@ -39,23 +39,23 @@ collections:
   - name: community.mysql
     version: 3.14.0
   - name: community.postgresql
-    version: 4.0.1
+    version: 4.1.0
   - name: community.proxmox
-    version: 0.1.0
+    version: 1.0.0
   - name: community.routeros
-    version: 3.6.0
+    version: 3.7.0
   - name: community.vmware
     version: 4.4.0
   - name: community.windows
     version: 3.0.0
   - name: fortinet.fortios
-    version: 2.3.9
+    version: 2.4.0
   - name: kubernetes.core
     version: 5.1.0
   - name: linode.cloud
-    version: 0.38.0
+    version: 0.39.0
   - name: microsoft.ad
-    version: 1.9.0
+    version: 1.9.1
   - name: microsoft.iis
     version: 1.0.2
   - name: microsoft.sql
