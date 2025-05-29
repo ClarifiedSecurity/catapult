@@ -1,7 +1,0 @@
----
-# Template created with packer
-# Used only to create project templates from
-base_vm_template: BASE_TEMPLATE_proxmox_8_3
-
-# vCenter Template name
-vm_template: catapult-template-proxmox-8-3
