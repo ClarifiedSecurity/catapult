@@ -5,8 +5,10 @@ source /srv/scripts/general/colors.sh
 
 SEARCH_DIR="/srv/inventories"
 SEARCH_FOLDER=".git"
-# shellcheck disable=SC2207
-FOLDERS=($(find -L "$SEARCH_DIR" \( -type d -o -type l -o -type f \) -name "$SEARCH_FOLDER" -exec dirname {} \; | sort))
+FOLDERS=()
+while IFS= read -r line; do
+  FOLDERS+=("$line")
+done < <(find -L "$SEARCH_DIR" \( -type d -o -type l -o -type f \) -name "$SEARCH_FOLDER" -exec dirname {} \; | sort)
 
 #--------------------End of variables, start of script--------------------#
 
