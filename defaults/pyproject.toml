@@ -84,7 +84,7 @@ dependencies = [
     "proxmoxer",
     "psycopg2-binary",
     "pyopenssl",
-    "pyvmomi",
+    "pyvmomi<9", # community.vmware does not work with pyvmomi 9.x
     "pywinrm",
     "redis",
     "requests-credssp",
