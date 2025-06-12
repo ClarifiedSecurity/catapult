@@ -34,6 +34,7 @@
     # community.general.proxmox* modules
     # https://docs.ansible.com/ansible/latest/collections/community/general/index.html
     group/community.general.proxmox: "{{ proxmox_defaults | default(omit) }}"
+    group/community.proxmox.proxmox: "{{ proxmox_defaults | default(omit) }}"
 
   roles:
     - role: nova.core.deploy_vars # Including deployment variables
