@@ -1,5 +1,5 @@
 ---
-# Template created with packer
+# Template created with Packer or manually
 # Used only to create project templates from
 base_vm_template: BASE_TEMPLATE_winserver2019_gui
 
