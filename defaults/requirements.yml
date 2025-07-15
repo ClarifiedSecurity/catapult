@@ -11,13 +11,13 @@ collections:
   - name: ansible.netcommon
     version: 8.0.1
   - name: ansible.posix
-    version: 2.0.0
+    version: 2.1.0
   - name: ansible.utils
     version: 6.0.0
   - name: ansible.windows
-    version: 3.1.0
+    version: 3.2.0
   - name: azure.azcollection
-    version: 3.6.0
+    version: 3.7.0
   - name: chocolatey.chocolatey
     version: 1.5.3
   - name: cisco.ios
@@ -27,41 +27,41 @@ collections:
   - name: community.aws
     version: 10.0.0
   - name: community.crypto
-    version: 3.0.0
+    version: 3.0.3
   - name: community.docker
-    version: 4.6.1
+    version: 4.7.0
   - name: community.general
-    version: 11.1.0
+    version: 11.1.2
   - name: community.hashi_vault
-    version: 6.2.0
+    version: 7.0.0
   - name: community.library_inventory_filtering_v1
     version: 1.1.1
   - name: community.mysql
-    version: 3.14.0
+    version: 3.15.0
   - name: community.postgresql
     version: 4.1.0
   - name: community.proxmox
-    version: 1.1.0
+    version: 1.2.0
   - name: community.routeros
-    version: 3.8.0
+    version: 3.8.1
   - name: community.vmware
-    version: 4.4.0
+    version: 5.7.1
   - name: community.windows
-    version: 3.0.0
+    version: 3.0.1
   - name: fortinet.fortios
     version: 2.4.0
   - name: kubernetes.core
     version: 5.1.0
   - name: linode.cloud
-    version: 0.39.1
+    version: 0.40.0
   - name: microsoft.ad
-    version: 1.9.1
+    version: 1.9.2
   - name: microsoft.iis
-    version: 1.0.2
+    version: 1.0.3
   - name: microsoft.sql
-    version: 2.6.2
+    version: 2.6.3
   - name: paloaltonetworks.panos
-    version: 3.1.0
+    version: 3.1.1
   - name: vmware.vmware_rest
     version: 4.8.1
   - name: vmware.vmware
