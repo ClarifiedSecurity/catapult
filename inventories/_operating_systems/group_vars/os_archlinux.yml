@@ -4,3 +4,5 @@
 base_vm_template: BASE_TEMPLATE_archlinux
 
 vm_template: catapult-template-archlinux
+
+customization_method: networkd
