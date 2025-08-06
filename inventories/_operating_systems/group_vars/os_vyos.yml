@@ -7,4 +7,4 @@ customization_method: vyos
 ansible_network_os: vyos.vyos.vyos # https://docs.ansible.com/ansible/latest/network/user_guide/network_best_practices_2.5.html#common-inventory-variables
 
 # Become
-default_ansible_become_user: root # For some reason, this is required for VyOS although the account is vyos
+default_ansible_become_user: root
