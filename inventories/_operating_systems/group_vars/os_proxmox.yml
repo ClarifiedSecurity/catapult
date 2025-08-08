@@ -1,9 +1,3 @@
 ---
-# Template created with Packer or manually
-# Used only to create project templates from
-base_vm_template: BASE_TEMPLATE_proxmox
-
-# vCenter Template name
-vm_template: catapult-template-proxmox
-
+# Network configuration method
 customization_method: proxmox
