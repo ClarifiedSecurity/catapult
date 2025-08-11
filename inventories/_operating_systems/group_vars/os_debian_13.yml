@@ -1,0 +1,10 @@
+---
+# Template created with Packer or manually
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_debian13
+
+# vCenter Template name
+vm_template: catapult-template-debian13
+
+# Linode Image curl https://api.linode.com/v4/images | jq
+linode_image: linode/debian13
