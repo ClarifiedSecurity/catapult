@@ -1,0 +1,6 @@
+---
+# Template created with Packer or manually
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_opnsense_25_7
+
+vm_template: catapult-template-opnsense-25-7
