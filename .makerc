@@ -7,9 +7,8 @@ LOGO :=ICBfX19fXyAgICAgICBfX19fX19fICAgICAgIF9fX19fICBfICAgIF8gXyAgIF9fX19fX18KI
 ifeq (${MAKEVAR_CATAPULT_VERSION}, staging)
     IMAGE_TAG :=staging
 else
-    IMAGE_TAG :=$(shell curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/${MAKEVAR_CATAPULT_VERSION}/version.yml" | cut -d ' ' -f 2)
+    IMAGE_TAG :=$(shell cat version.yml | cut -d ' ' -f 2)
 endif
-
 
 MAKEVAR_HOST_OS :=$(shell uname)
 CONTAINER_PROJECT_NAME :=$(shell echo $(MAKEVAR_COMPOSE_PROJECT_NAME) | tr '[:upper:]' '[:lower:]')

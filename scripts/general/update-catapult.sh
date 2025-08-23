@@ -80,7 +80,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
             echo -e -n "${C_YELLOW}"
             echo -e "Updating Catapult Docker image..."
             echo -e -n "${C_RST}"
-            ${MAKEVAR_SUDO_COMMAND} docker --context default pull "${IMAGE_FULL}"
+            ${MAKEVAR_SUDO_COMMAND} docker --context default pull "${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}:${REMOTE_VERSION}"
 
         fi
 
