@@ -103,6 +103,23 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
         echo -e "Catapult updated to version $REMOTE_VERSION"
         echo -e "${C_RST}"
 
+        # Not pulling Catapult image if the user id is not 1000
+        # In that case the image will be built later locally
+        if [[ "${CONTAINER_USER_ID}" == 1000 ]]; then
+
+            if [[ ${MAKEVAR_CATAPULT_VERSION} == "staging" ]]; then
+                UPDATE_IMAGE_TAG=${MAKEVAR_CATAPULT_VERSION}
+            else
+                UPDATE_IMAGE_TAG=${REMOTE_VERSION}
+            fi
+
+            echo -e -n "${C_YELLOW}"
+            echo -e "Updating Catapult Docker image..."
+            echo -e -n "${C_RST}"
+            ${MAKEVAR_SUDO_COMMAND} docker --context default pull "${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}:${UPDATE_IMAGE_TAG}"
+
+        fi
+
         export CATAPULT_UPDATED=1 # Exporting the variable to be used in the make start
 
     }

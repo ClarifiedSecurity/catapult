@@ -151,11 +151,11 @@ else
         echo -n -e "${C_YELLOW}"
         echo -e "Including docker-compose-custom.yml..."
         echo -n -e "${C_RST}"
-        ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/custom/docker/docker-compose-custom.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
+        ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose -f "${ROOT_DIR}/defaults/docker-compose.yml" -f "${ROOT_DIR}/custom/docker/docker-compose-custom.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
 
     else
 
-        ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose -f "${ROOT_DIR}/docker/docker-compose.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
+        ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose -f "${ROOT_DIR}/defaults/docker-compose.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
 
     fi
 
