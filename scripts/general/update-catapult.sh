@@ -73,17 +73,6 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
     # Catapult update function
     catapult_update () {
 
-        # Not pulling Catapult image if the user id is not 1000
-        # In that cas the image will be built later locally
-        if [[ "${CONTAINER_USER_ID}" == 1000 ]]; then
-
-            echo -e -n "${C_YELLOW}"
-            echo -e "Updating Catapult Docker image..."
-            echo -e -n "${C_RST}"
-            ${MAKEVAR_SUDO_COMMAND} docker --context default pull "${MAKEVAR_CONTAINER_REGISTRY}/${MAKEVAR_IMAGE_NAME}:${REMOTE_VERSION}"
-
-        fi
-
         if [[ "$LOCAL_BRANCH" == "$BRANCH" ]]; then
 
             git fetch
