@@ -18,3 +18,7 @@ azure_vm_image:
   publisher: microsoftwindowsserver
   sku: 2022-datacenter-g2
   version: latest
+
+# OpenStack
+openstack_image: Windows Server 2022 GUI
+openstack_template_username: "{{ template_username }}"

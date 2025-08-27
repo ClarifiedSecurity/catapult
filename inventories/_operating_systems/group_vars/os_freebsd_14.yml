@@ -4,3 +4,7 @@ base_vm_template: BASE_TEMPLATE_freebsd14
 
 # Project/environment specific template created with Catapult with base_vm_template as source
 vm_template: catapult-template-freebsd14
+
+# OpenStack
+openstack_image: FreeBSD 14
+openstack_template_username: "{{ template_username }}"

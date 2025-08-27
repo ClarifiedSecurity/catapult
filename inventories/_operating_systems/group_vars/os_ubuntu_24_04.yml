@@ -22,3 +22,7 @@ azure_vm_image:
   publisher: canonical
   sku: server-gen1
   version: latest
+
+# OpenStack
+openstack_image: Ubuntu 24.04
+openstack_template_username: "{{ template_username }}"
