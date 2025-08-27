@@ -10,3 +10,7 @@ vm_template: catapult-template-winserver2022-gui
 ami_owner_id: "801119661308" # Owner account ID
 ami_name_search_string: Windows_Server-2022-English-Full-Base-* # AMI name
 aws_vm_size: t3.micro # Default when creating new instance manually
+
+# OpenStack
+openstack_image: Windows Server 2022 GUI
+openstack_template_username: Administrator

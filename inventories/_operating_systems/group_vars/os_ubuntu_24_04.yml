@@ -14,3 +14,7 @@ aws_vm_size: m5.large # Recommended by vendor
 
 # Linode Image curl https://api.linode.com/v4/images | jq
 linode_image: linode/ubuntu24.04
+
+# OpenStack
+openstack_image: Ubuntu 24.04
+openstack_template_username: ubuntu
