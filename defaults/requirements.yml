@@ -60,6 +60,8 @@ collections:
     version: 1.0.3
   - name: microsoft.sql
     version: 2.6.4
+  - name: openstack.cloud
+    version: 2.4.1
   - name: paloaltonetworks.panos
     version: 3.1.1
   - name: vmware.vmware_rest
