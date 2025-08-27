@@ -36,6 +36,10 @@
     group/community.general.proxmox: "{{ proxmox_defaults | default(omit) }}"
     group/community.proxmox.proxmox: "{{ proxmox_defaults | default(omit) }}"
 
+    # Module defaults for:
+    # https://opendev.org/openstack/ansible-collections-openstack
+    group/openstack.cloud.openstack: "{{ openstack_defaults | default(omit) }}"
+
   roles:
     - role: nova.core.deploy_vars # Including deployment variables
 
