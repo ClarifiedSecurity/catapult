@@ -58,7 +58,7 @@ autocomplete:
           subcommand_to_execute: /srv/scripts/general/connect.sh "$@"
         - subcommand_name: console
           subcommand_description: Open Ansible console for the given inventory_hostname
-          subcommand_to_execute: ansible-console -e @~/.vault/vlt -l "$@"
+          subcommand_to_execute: ansible-console -e @~/.vault/vlt "$@"
 
     - command: retry
       description: Commands for retrying failed machines
