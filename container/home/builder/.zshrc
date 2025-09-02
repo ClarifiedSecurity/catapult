@@ -21,7 +21,8 @@ autoload -Uz vcs_info
 
 # Track command start time with milliseconds
 preexec() {
-    cmd_start_time=$(date +%s)
+    # Use date with nanosecond precision and convert to milliseconds
+    cmd_start_time=$(date +%s%N)
 }
 
 # Update vcs_info and calculate command execution time
@@ -31,10 +32,14 @@ precmd() {
 
     # Calculate the elapsed time if the command start time is set
     if [[ -n $cmd_start_time ]]; then
-        cmd_end_time=$(date +%s)
+        cmd_end_time=$(date +%s%N)
 
-        # Calculate the difference in milliseconds
-        difference=$((cmd_end_time - cmd_start_time))
+        # Calculate the difference in nanoseconds, then convert to seconds
+        difference_ns=$((cmd_end_time - cmd_start_time))
+        difference=$((difference_ns / 1000000000)) # Convert nanoseconds to seconds
+
+        # Get milliseconds from nanoseconds
+        milliseconds=$(((difference_ns / 1000000) % 1000)) # 1,000,000 ns = 1 ms
 
         # Convert the difference to hours, minutes and seconds
         hours=$(( difference / 3600 ))
@@ -42,7 +47,7 @@ precmd() {
         seconds=$(( difference % 60 ))
 
         # Format the elapsed time
-        elapsed_time="${hours}h ${minutes}m ${seconds}s"
+        elapsed_time="${hours}h ${minutes}m ${seconds}s ${milliseconds}ms"
 
         unset cmd_start_time
 
