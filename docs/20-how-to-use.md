@@ -310,41 +310,41 @@ _Example usage:_
 ctp host console <inventory_hostname>
 ```
 
-## Deploy commands based on @start.retry file
+## Deploy commands based on @playbook.retry file
 
-Whenever a deploy fails a start.retry file is created under `/srv/inventories/<project_name>/start.retry`. Instead of going trough the logs to find what machines failed you can use the following commands to deploy only the failed machines. Keep in mind that only that latest fail is written into the start.retry file so when running multiple instances of Catapult (using `make shell` multiple times) and multiple deploys in parallel the latest fail will be written into the start.retry file.
+Whenever a deploy fails a playbook.retry file is created under `/srv/inventories/<project_name>/playbook.retry`. Instead of going trough the logs to find what machines failed you can use the following commands to deploy only the failed machines. Keep in mind that only that latest fail is written into the playbook.retry file so when running multiple instances of Catapult (using `make shell` multiple times) and multiple deploys in parallel the latest fail will be written into the playbook.retry file.
 
-- Runs `ctp host deploy` on failed machines based on start.retry file
+- Runs `ctp host deploy` on failed machines based on playbook.retry file
 
 ```zsh
 ctp retry deploy
 ```
 
-- Runs `ctp host redeploy` failed machines based on start.retry file
+- Runs `ctp host redeploy` failed machines based on playbook.retry file
 
 ```zsh
 ctp retry redeploy
 ```
 
-- Runs `ctp host deploy-until-configuration` on failed machines based on start.retry file
+- Runs `ctp host deploy-until-configuration` on failed machines based on playbook.retry file
 
 ```zsh
 ctp retry deploy-until-configuration
 ```
 
-- Runs `ctp host redeploy-until-configuration` on failed machines based on start.retry file
+- Runs `ctp host redeploy-until-configuration` on failed machines based on playbook.retry file
 
 ```zsh
 ctp retry redeploy-until-configuration
 ```
 
-- Runs `ctp host deploy-from-configuration` on failed machines based on start.retry file
+- Runs `ctp host deploy-from-configuration` on failed machines based on playbook.retry file
 
 ```zsh
 ctp retry deploy-from-configuration
 ```
 
-- Runs `ctp host deploy-role` on failed machines based on start.retry file
+- Runs `ctp host deploy-role` on failed machines based on playbook.retry file
 
 ```zsh
 ctp retry deploy-role
