@@ -4,3 +4,9 @@
 base_vm_template: BASE_TEMPLATE_winserver2022_gui
 
 vm_template: catapult-template-winserver2022-gui
+
+# AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
+# Can be found when launching a new instance in AWS console, navigating to instance AMI info
+ami_owner_id: "801119661308" # Owner account ID
+ami_name_search_string: Windows_Server-2022-English-Full-Base-* # AMI name
+aws_vm_size: t3.micro # Default when creating new instance manually
