@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e # exit when any command fails
 
@@ -278,15 +278,16 @@ if [[ $(uname) == "Linux" ]]; then
   #########
 
   else
+        OS_VERSION=$(grep "^ID=" /etc/os-release | cut -d "=" -f2)
         PACKAGES="git git-lfs make jq curl sudo gpg ssh"
         PACKAGES_LFS="git lfs install"
 
         echo -e "${C_RED}"
-        echo -e "You are using unsupported or untested (Linux) operating system. Catapult may still work if you configure it manually"
+        echo -e "You are using unsupported or untested (Linux) operating system - ${C_CYAN}${OS_VERSION}${C_RED}. Catapult may still work if you configure it manually"
         echo -e
         echo -e "You'll need to follow these steps:"
         echo -e
-        echo -e "1) Install following packages: ${C_YELLOW}$PACKAGES${C_RED}"
+        echo -e "1) Install following packages (The names might be different for your OS): ${C_YELLOW}$PACKAGES${C_RED}"
         echo -e "2) Initialize git LFS with: ${C_YELLOW}$PACKAGES_LFS${C_RED}"
         echo -e
         read -rp $'\n'"Once you have installed the required packages press any key to continue..."$'\n'

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e # exit when any command fails
 
@@ -125,12 +125,13 @@ install_docker(){
 
     else
 
+      OS_VERSION=$(grep "^ID=" /etc/os-release | cut -d "=" -f2)
       echo -n -e "${C_RED}"
-      echo -e "You are using unsupported or untested (Linux) operating system. Catapult may still work if you install Docker manually"
+      echo -e "You are using unsupported or untested (Linux) operating system - ${C_CYAN}${OS_VERSION}${C_RED}. Catapult may still work if you install Docker manually"
       echo -e "You'll need to follow these steps:"
       echo -e
       echo -e "1) Install ${C_YELLOW}Docker engine and Docker compose plugin${C_RED} for your OS from: ${C_YELLOW}https://docs.docker.com/engine/install${C_RED}"
-      echo -e "1.1) If you don't find your OS in the link above look around in the internet there might be guides available on how to install Docker for your OS"
+      echo -e "If you don't find your OS in the link above read the documentation for your OS there might be guides available on how to install Docker"
       echo -e
 
       read -rp "Once you have installed Docker & Docker compose plugin Press ENTER key to continue..."
@@ -202,29 +203,46 @@ DOCKER_CONFIG=$(cat <<EOF
 EOF
 )
 
-echo -e "${C_YELLOW}"
-echo -e "Updating ${C_CYAN}$DAEMON_PATH${C_YELLOW} with:"
-echo -e "$DOCKER_CONFIG" | jq
-echo -e
+DOCKER_DAEMON_DIR=$(dirname "$DAEMON_PATH")
 
-# Checks that the file exists and is not empty
-if [[ ! -f $DAEMON_PATH ]] || [[ ! -s $DAEMON_PATH ]]; then
+# Checking that the directory exists
+if [[ -d $DOCKER_DAEMON_DIR ]]; then
 
-  echo "$DOCKER_CONFIG" | jq > "$DAEMON_PATH"
-  restart_docker
+    echo -e "${C_YELLOW}"
+    echo -e "Updating ${C_CYAN}$DAEMON_PATH${C_YELLOW} with:"
+    echo -e "$DOCKER_CONFIG" | jq
+    echo -e
+
+    # Checks that the file exists and is not empty
+    if [[ ! -f $DAEMON_PATH ]] || [[ ! -s $DAEMON_PATH ]]; then
+
+        echo "$DOCKER_CONFIG" | jq > "$DAEMON_PATH"
+        restart_docker
+
+    else
+
+        CURRENT_FILE_HASH=$(sha1sum < "$DAEMON_PATH")
+        jq '. + {"experimental": true, "ip6tables": true}' "$DAEMON_PATH" > /tmp/daemon.json
+        mv /tmp/daemon.json "$DAEMON_PATH"
+        UPDATED_FILE_HASH=$(sha1sum < "$DAEMON_PATH")
+
+        if [[ $CURRENT_FILE_HASH != "$UPDATED_FILE_HASH" ]]; then
+
+            restart_docker
+
+        fi
+
+    fi
 
 else
 
-  CURRENT_FILE_HASH=$(sha1sum < "$DAEMON_PATH")
-  jq '. + {"experimental": true, "ip6tables": true}' "$DAEMON_PATH" > /tmp/daemon.json
-  mv /tmp/daemon.json "$DAEMON_PATH"
-  UPDATED_FILE_HASH=$(sha1sum < "$DAEMON_PATH")
+    echo -n -e "${C_RED}"
+    echo -e "The default Docker config folder does not exist, cannot update Docker daemon configuration"
+    echo -e "Set the following configuration manually for Docker daemon for your OS:"
+    echo -e "$DOCKER_CONFIG" | jq
 
-  if [[ $CURRENT_FILE_HASH != "$UPDATED_FILE_HASH" ]]; then
-
-    restart_docker
-
-  fi
+    read -rp "Press ENTER key to continue..."
+    echo -n -e "${C_RST}"
 
 fi
 

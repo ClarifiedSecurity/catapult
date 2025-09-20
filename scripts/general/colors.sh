@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export C_RED="\x1b[91m"
 export C_GREEN="\x1b[92m"
