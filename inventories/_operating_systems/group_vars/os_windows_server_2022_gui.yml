@@ -10,3 +10,12 @@ vm_template: catapult-template-winserver2022-gui
 ami_owner_id: "801119661308" # Owner account ID
 ami_name_search_string: Windows_Server-2022-English-Full-Base-* # AMI name
 aws_vm_size: t3.micro # Default when creating new instance manually
+
+# Azure
+azure_template_username: azureuser
+azure_vm_size: Standard_DS1_v2 # Recommended by vendor
+azure_vm_image:
+  offer: windowsserver
+  publisher: microsoftwindowsserver
+  sku: 2022-datacenter-g2
+  version: latest
