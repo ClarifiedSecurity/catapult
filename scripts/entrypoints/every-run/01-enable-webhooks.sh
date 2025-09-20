@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Checking that WEBHOOK_URL is not empty
 if [ -n "$SLACK_WEBHOOK_URL" ]; then

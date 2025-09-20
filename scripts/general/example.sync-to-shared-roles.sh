@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Script to sync the changes made in the custom collection to the correct git repo in your machine.
 # This is for useful for development purposes, because you can make changes and test them in your
