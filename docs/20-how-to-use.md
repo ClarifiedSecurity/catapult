@@ -12,13 +12,9 @@ Catapult has 2 modes for modifications:
 
 Follow the `# How to Personalization` & `# How to Customize` sections if you want to personalize or customize Catapult.
 
-## Variables
+## Secrets
 
-When running catapult for the first time it'll ask you to create a new Ansible Vault file and fill it out with your secrets. The secrets are used to connect to the hypervisors, cloud providers, and other services. Besides the required `deployer_username` & `deployer_password` here are some other variables that you might need when using Catapult with [nova.core](https://github.com/ClarifiedSecurity/nova.core) collection:
-
-- `aws_access_key_id:` - AWS access key ID - can be generated from the AWS Identity and Access Management (IAM) console
-- `aws_access_key:` - AWS access key itself - can be generated from the AWS Identity and Access Management (IAM) console
-- `linode_api_token:` - Linode API token - can be generated from the [Linode Cloud Manager](https://cloud.linode.com/profile/tokens)
+When running catapult for the first time it'll ask you to create a new Ansible Vault file and fill it out with your secrets. The secrets are used to connect to the hypervisors, cloud providers, and other services. Default keys are `deployer_username` & `deployer_password` these are usually your username and password for connecting [Providentia](https://github.com/ClarifiedSecurity/Providentia) and your hypervisor. When trying to deploy to cloud environments like AWS, Azure. etc. Catapult will tell you what secrets are missing and need to be added the the Vault.
 
 ## Enter the Catapult
 
@@ -36,7 +32,9 @@ make restart
 
 ## Projects
 
-Catapult is designed to work with multiple projects. Each project has its own inventory, roles, and variables. The project is selected when the user enters the Catapult container. The project is selected based on the presence of the `.git` folder in the `/srv/inventories` project directory subfolder. If there is only one project the command will select it automatically. Refer to [catapult-project-example](https://github.com/ClarifiedSecurity/catapult-project-example) on how to structure your project.
+Catapult is designed to work with multiple projects. Each project has its own inventory, roles, and variables. The project is selected when the user enters the Catapult container. The project is selected based on the presence of the `.git` folder in the `/srv/inventories` project directory subfolder. If there is only one project the command will select it automatically.
+
+Use [Catapult Project Example](https://github.com/ClarifiedSecurity/catapult-project-example) for a basic setup to get you started.
 
 ## Tips and tricks
 
