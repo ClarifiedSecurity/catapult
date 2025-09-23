@@ -95,6 +95,7 @@ dependencies = [
     "requests",
     "scp",
     "setuptools",
+    "vmware-vcenter",
     "xmltodict",
     "yq"
 ]
