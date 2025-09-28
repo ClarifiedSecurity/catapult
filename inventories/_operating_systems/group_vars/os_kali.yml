@@ -7,7 +7,7 @@ vm_template: catapult-template-kali
 
 # AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
 ami_owner_id: "679593333241"
-ami_name_search_string: kali-last-snapshot-amd64-2025.2*
+ami_name_search_string: kali-last-snapshot-amd64-*
 aws_template_username: kali
 aws_vm_size: t3.medium # Recommended by vendor
 

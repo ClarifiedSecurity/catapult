@@ -1,6 +1,0 @@
----
-# Template created with Packer or manually
-# Used only to create project templates from
-base_vm_template: BASE_TEMPLATE_kali2025_1
-
-vm_template: catapult-template-kali2025-1
