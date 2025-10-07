@@ -5,3 +5,9 @@ base_vm_template: BASE_TEMPLATE_debian11
 
 # vCenter Template name
 vm_template: catapult-template-debian11
+
+# AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
+ami_owner_id: "136693071363"
+ami_name_search_string: debian-11-*
+aws_template_username: admin
+aws_vm_size: t3.small
