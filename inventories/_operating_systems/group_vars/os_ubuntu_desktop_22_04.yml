@@ -14,5 +14,3 @@ aws_vm_size: m5.large # Recommended by vendor
 
 # Linode Image curl https://api.linode.com/v4/images
 linode_image: linode/ubuntu22.04
-
-netplan_renderer: NetworkManager

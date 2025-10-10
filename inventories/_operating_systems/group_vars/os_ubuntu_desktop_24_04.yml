@@ -6,8 +6,6 @@ base_vm_template: BASE_TEMPLATE_ubuntu_desktop2404
 # vCenter Template name
 vm_template: catapult-template-ubuntu-desktop2404
 
-netplan_renderer: NetworkManager
-
 # AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
 ami_owner_id: "099720109477"
 ami_name_search_string: ubuntu/images/hvm-ssd-gp3/ubuntu-noble*
