@@ -68,11 +68,11 @@ install_docker(){
 
     DAEMON_PATH=/etc/docker/daemon.json
 
-    if grep -q -E "ID=(kali|debian|ubuntu)" /etc/os-release; then
+    if grep -q -E "ID=(kali|debian|ubuntu|pop)" /etc/os-release; then
 
       if ! grep -q -r "download.docker.com" /etc/apt/sources.list.d/; then
 
-        if grep -q "ID=ubuntu" /etc/os-release; then
+        if grep -q -E "ID=(ubuntu|pop)" /etc/os-release; then
 
           echo -n -e "${C_YELLOW}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
@@ -140,7 +140,7 @@ install_docker(){
     fi
 
     # Installing Docker & required tools
-    if grep -q -E "ID=(kali|debian|ubuntu)" /etc/os-release; then
+    if grep -q -E "ID=(kali|debian|ubuntu|pop)" /etc/os-release; then
 
       apt-get update
       apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
