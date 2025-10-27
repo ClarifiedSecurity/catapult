@@ -168,7 +168,7 @@ install_docker(){
 
     if [[ -x "$(command -v brew)" ]]; then
 
-      brew install --cask docker
+      $(command -v brew) install --cask docker
 
     else
 

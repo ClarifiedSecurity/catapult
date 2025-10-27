@@ -59,9 +59,18 @@ if [[ $(uname) == "Darwin" ]]; then
         echo -e "Installing Homebrew..."
         echo -n -e "${C_RST}"
         NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        # shellcheck disable=SC2016
-        (echo; echo 'eval "$(/usr/local/bin/brew shellenv)"') >> ~/.zprofile
-        eval "$(/usr/local/bin/brew shellenv)"
+
+        if [[ -x "/usr/local/bin/brew" ]]; then
+            eval "$(/usr/local/bin/brew shellenv)" # Intel Macs
+        elif [[ -x "/opt/homebrew/bin/brew" ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)" # Apple Silicon Macs
+        else
+            echo -n -e "${C_RED}"
+            echo -e "Homebrew not found in default path after installation."
+            echo -e "Trying to locate Homebrew with $(command -v brew) later"
+            echo -n -e "${C_RST}"
+        fi
+
     }
 
     brew-packages-install() {
@@ -71,7 +80,7 @@ if [[ $(uname) == "Darwin" ]]; then
             echo -n -e "${C_RST}"
 
             # shellcheck disable=SC2086
-            brew install $PACKAGES
+            $(command -v brew) install $PACKAGES
         else
             echo -n -e "${C_RED}"
             echo -e "Homebrew not installed, cannot install:"
