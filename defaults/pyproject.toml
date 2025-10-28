@@ -9,6 +9,7 @@ dependencies = [
     "ansible-lint",
     "ansible-pylibssh",
     "ansible-specdoc",
+    "ara[server]",
     "azure-cli-core",
     "azure-common",
     "azure-containerregistry",
