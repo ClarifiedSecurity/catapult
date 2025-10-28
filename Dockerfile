@@ -1,4 +1,4 @@
-FROM python:3.12.12-slim-bookworm
+FROM python:3.12.12-slim-trixie
 
 LABEL org.opencontainers.image.source=https://github.com/ClarifiedSecurity/catapult
 LABEL org.opencontainers.image.description="Pre-built Docker image for Catapult"
