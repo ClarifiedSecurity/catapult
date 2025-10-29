@@ -66,3 +66,13 @@ MAKEVAR_WEBHOOK_USERNAME :=Catapult
 # This is the channel that will be used to send notifications to Slack or Mattermost
 # Use channelname for sending notifications to a channel or @username for sending to a notifications user
 MAKEVAR_WEBHOOK_CHANNEL :=
+
+# This will enable https://ara.recordsansible.org
+# ARA provides Ansible reporting by recording for playbooks. By default it will run a locally-only accessible webserver on http://127.0.0.1:8000
+# Alternatively Catapult customization or personalization can be used to send the data to another ARA server
+# ARA is nonpersistent and all data will be lost when the container is removed or recreated
+MAKEVAR_ARA_ENABLE :=0
+
+# This will make ARA server listen only on localhost addresses (127.0.0.1 and ::1)
+# Set to 0 to listen on all addresses. Careful as this may expose sensitive data outside of your host machine
+MAKEVAR_ARA_LOCALHOST_ONLY :=1

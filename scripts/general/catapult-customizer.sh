@@ -5,14 +5,12 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
-# Cloninig and overwriting the customizations if env variable CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE is not
+# Cloning and overwriting the customizations if env variable CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE is not
 # Set `export CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE=true` variable temporarily to prevent overwriting your local customizations during development and testing
-if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE && $MAKEVAR_FREEZE_UPDATE != 1 ]]; then
+if [[ -z ${CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE} && ${MAKEVAR_FREEZE_UPDATE} == 0 ]]; then
 
     # Cloning the customizer repo if it's set
-    if [[ -z "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" ]]; then
-        echo -n -e
-    else
+    if [[ -n "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" ]]; then
 
         # Extracting git clone path from MAKEVAR_CATAPULT_CUSTOMIZER_REPO in case it contains a branch
         CATAPULT_CUSTOMIZER_REPO=$(echo "${MAKEVAR_CATAPULT_CUSTOMIZER_REPO}" | awk '{print $1}')
@@ -26,7 +24,7 @@ if [[ -z $CATAPULT_CUSTOMIZER_REPO_NO_OVERWRITE && $MAKEVAR_FREEZE_UPDATE != 1 ]
             git clone $MAKEVAR_CATAPULT_CUSTOMIZER_REPO -b ${MAKEVAR_CATAPULT_CUSTOMIZER_VERSION} -q --depth 1 custom
             rm -rf custom/.git*
         else
-            echo -e "${C_RED}${MAKEVAR_CATAPULT_CUSTOMIZER_REPO} repository is not available.${C_RST}"
+            echo -e "${C_RED}${MAKEVAR_CATAPULT_CUSTOMIZER_REPO} repository is not available!${C_RST}"
         fi
     fi
 else

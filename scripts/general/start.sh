@@ -32,32 +32,70 @@ if [[ "$CURRENT_DOCKER_MAJOR_VERSION" -lt "$MINIMUM_DOCKER_MAJOR_VERSION" ]]; th
 
 fi
 
+# Setting correct SSH_AUTH_SOCK for MacOS and Linux
+if [[ $(uname) == "Darwin" ]]; then
+
+    echo -n -e "${C_YELLOW}"
+    echo "Setting correct SSH_AUTH_SOCK for MacOS..."
+    export HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+    echo -n -e "${C_RST}"
+
+fi
+
+if [[ $(uname) == "Linux" ]]; then
+
+    echo -n -e "${C_YELLOW}"
+    echo "Setting correct SSH_AUTH_SOCK for Linux..."
+    export HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
+    echo -n -e "${C_RST}"
+fi
+
+# Setting empty variables for if the custom compose file or ARA compose file is not used
+DEFAULT_COMPOSE_FILE="-f ${ROOT_DIR}/defaults/docker-compose.yml"
+PERSONAL_COMPOSE_FILE="-f ${ROOT_DIR}/personal/docker-compose-personal.yml"
+START_WITH_CUSTOM_COMPOSE=""
+START_WITH_ARA=""
+
+# Also using custom Docker compose file if it exists
+if [[ -r custom/docker/docker-compose-custom.yml ]]; then
+    START_WITH_CUSTOM_COMPOSE="-f ${ROOT_DIR}/custom/docker/docker-compose-custom.yml"
+fi
+
+if [[ "$MAKEVAR_ARA_ENABLE" == 1 ]]; then
+    START_WITH_ARA="-f ${ROOT_DIR}/defaults/docker-compose-ara.yml"
+fi
+
 # Printing logo
 echo "${LOGO}" | base64 -d
 
-if [[ $1 == "stop" ]]; then
+if [[ $1 == "stop" || $1 == "restart" ]]; then
 
     echo -n -e "${C_YELLOW}"
-    echo -e Removing existing "${CONTAINER_NAME} container..."
-    echo -n -e "${C_RST}"
-    ${MAKEVAR_SUDO_COMMAND} docker --context default rm -f "${CONTAINER_NAME}" >/dev/null
-    exit 0
-fi
-
-if [[ $1 == "restart" ]]; then
-
-  if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -q "$CONTAINER_NAME"; then
-
-    echo -n -e "${C_YELLOW}"
-    echo -e Removing existing "${CONTAINER_NAME} container..."
-    ${MAKEVAR_SUDO_COMMAND} docker --context default rm -f "${CONTAINER_NAME}" >/dev/null
+    echo -e Removing existing "${CONTAINER_NAME} container(s)..."
     echo -n -e "${C_RST}"
 
-  fi
+    # Looking up all containers in the project
+    # shellcheck disable=SC2086
+    COMPOSE_PROJECT_CONTAINERS=$(${MAKEVAR_SUDO_COMMAND} docker --context default compose \
+    ${DEFAULT_COMPOSE_FILE} \
+    ${START_WITH_ARA} \
+    ${START_WITH_CUSTOM_COMPOSE} \
+    ${PERSONAL_COMPOSE_FILE} \
+    ps --format "{{ .Names }}")
 
+    # Using grep to check if the container exists and removing it because it's considerably faster than docker compose down
+    for container in $COMPOSE_PROJECT_CONTAINERS; do
+        if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -qx "$container"; then
+            ${MAKEVAR_SUDO_COMMAND} docker --context default rm --force "$container" > /dev/null
+        fi
+    done
+
+    if [[ $1 == "stop" ]]; then
+        exit 0
+    fi
 fi
 
-if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -q "$CONTAINER_NAME"; then
+if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -qx "$CONTAINER_NAME"; then
 
     echo -n -e "${C_GREEN}"
     echo -e "Connecting to running ${CONTAINER_NAME} container..."
@@ -110,56 +148,27 @@ else
         fi
     done
 
-    if [[ $(uname) == "Darwin" ]]; then
-
-        echo -n -e "${C_YELLOW}"
-        echo "Setting correct SSH_AUTH_SOCK for MacOS..."
-        export HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
-        echo -n -e "${C_RST}"
-
-    fi
-
-    if [[ $(uname) == "Linux" ]]; then
-
-        echo -n -e "${C_YELLOW}"
-        echo "Setting correct SSH_AUTH_SOCK for Linux..."
-        export HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
-        echo -n -e "${C_RST}"
-
-        # If the user is not 1000 then the image will be built locally
-        if [[ "${CONTAINER_USER_ID}" != 1000 ]]; then
-
-            # Checking if the local Docker image already exists
-            if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker --context default images -q "${IMAGE_FULL}") ]]; then
-
-                echo -ne "${C_YELLOW}"
-                echo -e "Since the user is not 1000 (id -u), the Docker image will be built locally..."
-                echo -e "Building Catapult Docker image..."
-                echo -ne "${C_RST}"
-                # shellcheck disable=SC2086
-                ${ROOT_DIR}/scripts/general/build.sh
-
-            fi
-
+    if [[ $(uname) == "Linux" && "${CONTAINER_USER_ID}" != 1000 ]]; then
+        # Checking if the local Docker image already exists
+        if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker --context default images -q "${IMAGE_FULL}") ]]; then
+            echo -ne "${C_YELLOW}"
+            echo -e "Since the user is not 1000 (id -u), the Docker image will be built locally..."
+            echo -e "Building Catapult Docker image..."
+            echo -ne "${C_RST}"
+            # shellcheck disable=SC2086
+            ${ROOT_DIR}/scripts/general/build.sh
         fi
-
     fi
 
-    # Also using custom Docker compose file if it exists
-    if [[ -r custom/docker/docker-compose-custom.yml ]]; then
+    # shellcheck disable=SC2086
+    ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose \
+    ${DEFAULT_COMPOSE_FILE} \
+    ${START_WITH_ARA} \
+    ${START_WITH_CUSTOM_COMPOSE} \
+    ${PERSONAL_COMPOSE_FILE} \
+    up --detach --force-recreate --remove-orphans
 
-        echo -n -e "${C_YELLOW}"
-        echo -e "Including docker-compose-custom.yml..."
-        echo -n -e "${C_RST}"
-        ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose -f "${ROOT_DIR}/defaults/docker-compose.yml" -f "${ROOT_DIR}/custom/docker/docker-compose-custom.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
-
-    else
-
-        ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose -f "${ROOT_DIR}/defaults/docker-compose.yml" -f "${ROOT_DIR}/personal/docker-compose-personal.yml" up --detach --force-recreate --remove-orphans
-
-    fi
-
-    ${MAKEVAR_SUDO_COMMAND} docker --context default --context default exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
+    ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
 
 fi
 

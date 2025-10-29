@@ -40,3 +40,19 @@ DISPLAY :=$(or ${DISPLAY},0.0 )
 XDG_SESSION_TYPE :=$(or ${XDG_SESSION_TYPE},wayland )
 
 BUILD_ARGS := --build-arg CONTAINER_USER_ID=${CONTAINER_USER_ID} --build-arg CONTAINER_GROUP_ID=${CONTAINER_GROUP_ID} --build-arg TZ=${MAKEVAR_TZ}
+
+# Random generated secret key for ARA
+# It will be used as username and password for database connection
+MAKEVAR_ARA_SECRET_KEY :=$(shell openssl rand -hex 12)
+MAKEVAR_ARA_DATABASE_USERNAME :=${MAKEVAR_ARA_SECRET_KEY}
+MAKEVAR_ARA_DATABASE_PASSWORD :=${MAKEVAR_ARA_SECRET_KEY}
+
+ARA_RECORD_CONTROLLER_NAME :=$(or ${MAKEVAR_ARA_RECORD_CONTROLLER_NAME},${CONTAINER_NAME})
+ARA_RECORD_USER_NAME :=$(or ${MAKEVAR_ARA_RECORD_USER_NAME},${CONTAINER_USER_NAME})
+
+# Setting the bind addresses based on whether to listen on localhost only or all interfaces
+ifeq (${MAKEVAR_ARA_LOCALHOST_ONLY}, 1)
+    MAKEVAR_ARA_BIND_COMMAND =--bind [127.0.0.1]:8000 --bind [::1]:8000
+else
+    MAKEVAR_ARA_BIND_COMMAND =--bind [::]:8000
+endif

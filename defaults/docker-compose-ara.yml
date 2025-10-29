@@ -1,0 +1,50 @@
+---
+name: ${CONTAINER_PROJECT_NAME}
+services:
+  catapult-ara:
+    image: recordsansible/ara-api:latest
+    container_name: ${CONTAINER_NAME}-ara
+    hostname: ${CONTAINER_NAME}-ara
+    network_mode: host
+    restart: on-failure:5
+    environment:
+      ARA_ALLOWED_HOSTS: '["*"]' # Allowing all connections to web application MAKEVAR_ARA_LOCALHOST_ONLY can be used to restrict to localhost only
+
+      ARA_DATABASE_ENGINE: django.db.backends.postgresql
+      ARA_DATABASE_NAME: ara
+      ARA_DATABASE_USER: ${MAKEVAR_ARA_DATABASE_USERNAME} # Can be overridden with Catapult customization or personalization
+      ARA_DATABASE_PASSWORD: ${MAKEVAR_ARA_DATABASE_PASSWORD} # Can be overridden with Catapult customization or personalization
+      ARA_DATABASE_HOST: 127.0.0.1
+      ARA_DATABASE_PORT: 5432
+      ARA_DATABASE_CONN_MAX_AGE: 500
+
+    # Copied from the original Docker image with the customization method of defining listen address parameters
+    # The original config can be found with - sudo docker inspect recordsansible/ara-api:latest
+    command: bash -c "/usr/local/bin/ara-manage migrate && python3 -m gunicorn --workers=4 --access-logfile - ${MAKEVAR_ARA_BIND_COMMAND} ara.server.wsgi"
+    tmpfs:
+      - /opt/ara:size=8g
+    logging:
+      driver: json-file
+      options:
+        max-size: 250m
+        max-file: "1"
+
+  catapult-postgres:
+    image: postgres:17-alpine # 18 had a strange endless loop issue in /var/lib/postgresql/data folder
+    container_name: ${CONTAINER_NAME}-postgres
+    hostname: ${CONTAINER_NAME}-postgres
+    network_mode: host
+    restart: on-failure:5
+    environment:
+      POSTGRES_DB: ara
+      POSTGRES_USER: ${MAKEVAR_ARA_DATABASE_USERNAME} # Can be overridden with Catapult customization or personalization
+      POSTGRES_PASSWORD: ${MAKEVAR_ARA_DATABASE_PASSWORD} # Can be overridden with Catapult customization or personalization
+      PGDATA: /var/lib/postgresql/data/pgdata
+    command: postgres -c listen_addresses=localhost -c port=5432
+    tmpfs:
+      - /var/lib/postgresql/data:size=8g
+    logging:
+      driver: json-file
+      options:
+        max-size: 250m
+        max-file: "1"
