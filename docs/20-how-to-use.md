@@ -78,7 +78,7 @@ ctp project update-inventory
 
 ## Host commands
 
-Examples for the commands that are run against the inventory_hostname or group in Ansible. These commands usually interact with the target OS and the hypervisor. Use Ansible's documentation for [Advanced deploy patterns](https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html)
+Examples for the commands that are run against the inventory_hostname or group in Ansible. These commands usually interact with the target machines over SSH not the hypervisor or cloud provider APIs. For usage of advanced deploy patterns refer to examples under [ctp host list](#ctp-host-list) command. For more usage of advanced deploy patterns refer Ansible's documentation for [Advanced deploy patterns](https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html)
 
 ### ctp host list
 
@@ -102,6 +102,78 @@ ctp host list all
 
 ```zsh
 ctp host list <group_var>
+```
+
+#### Advanced deploy patterns
+
+When advanced deploy patterns then in **some cases** the limiter will need to be quoted to avoid the shell interpreting special characters like `|`, `&` etc. If unsure always quote the limiter with double quotes `""` or single quotes `''`.
+
+- Use a `,` or `:` delimiter to list multiple inventory_hostnames.
+
+```zsh
+ctp host list webserver01,webserver02,dbserver01
+```
+
+or
+
+```zsh
+ctp host list webserver01:webserver02:dbserver01
+```
+
+- Use a wildcard to match multiple inventory_hostnames.
+
+```zsh
+ctp host list webserver* # Every inventory_hostname that starts with webserver and followed by anything
+```
+
+```zsh
+ctp host list ws1_*_t01 # Every inventory_hostname that starts with ws1_ and ends with _t01
+```
+
+- Use a combination of hosts within a group. Note that when using `&` quotes `""` are required to avoid it being interpreted by the shell.
+
+```zsh
+ctp host list "os_linux:&ws*" # Match every inventory_hostname that is in os_linux group and starts with ws
+```
+
+```zsh
+ctp host list "os_linux:&zone_eu_west" # Match every inventory_hostname that is in os_linux group and zone_eu_west group
+```
+
+- Use a negation to exclude hosts from a group.
+
+```zsh
+ctp host list os_linux:!ws* # Match every inventory_hostname that is in os_linux group but exclude those that start with ws
+```
+
+```zsh
+ctp host list os_linux:!zone_eu_west # Match every inventory_hostname that is in os_linux group but exclude those that are in zone_eu_west group
+```
+
+- Use regex to match multiple zero-padded inventory_hostnames from 01-05. The ~ in front of the means use regular expression.
+
+```zsh
+ctp host list ~ws1-mil_01_t0[1-5]
+```
+
+```zsh
+ctp host list "os_linux:&zone_eu_west"
+```
+
+- Use range to match multiple inventory_hostnames. The range syntax is `[start:end]` where start is the starting index and end is the ending index (inclusive). The index starts from 0.
+
+```zsh
+ctp host list zone_eu_west[0:99] # Matches the first 100 inventory_hostnames in the zone_eu_west group
+```
+
+- Use regex to match multiple inventory_hostnames. The ~ in front of the means use regular expression.
+
+```zsh
+ctp host list ~ws1_t0[1-5] # Matches ws1_t01, ws1_t02, ws1_t03, ws1_t04, ws1_t05
+```
+
+```zsh
+ctp host list "~ws1_t([0-9][0-9]|100)$" # Matches ws1_t001 to ws1_t100
 ```
 
 ### ctp host vars

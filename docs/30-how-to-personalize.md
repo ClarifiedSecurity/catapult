@@ -30,6 +30,8 @@ Potential use cases for this file include:
 
 - Adding custom make commands that are specific to the user
 
+**Advanced users** can also take a look at the `.makerc` file to see how some variables are built and override them in their `personal/.makerc-personal` or `personal/docker-compose-personal.yml`
+
 ## Personal CLI commands
 
 `personal/autocomplete.yml` - This file is used to add custom autocomplete commands for `ctp` that are specific to the user. Refer to the default [autocomplete.yml](https://github.com/ClarifiedSecurity/catapult/blob/main/defaults/autocomplete.yml) as an example
@@ -39,7 +41,7 @@ Potential use cases for this file include:
 `personal/docker-entrypoints` - Contains custom docker-entrypoint scripts that will run inside the container during `make start`. Refer to default [entrypoint](https://github.com/ClarifiedSecurity/Catapult/tree/main/scripts/entrypoints) scripts for examples. The scripts are divided into two folders: `first-run` and `every-run`:
 
 - `first-run` - Contains scripts that will run only once when the container is started for the first time.
-- `every-run` - Contains scripts that will run every time the container is started. Useful for an example when setting up the environment variables for each user session.
+- `every-run` - Contains scripts that will run every time the running container is entered. Useful for an example when setting up the environment variables for each user session.
 
 :::info
 `docker-entrypoints` only supports `*.sh` files that get sourced by `zsh` shell.
