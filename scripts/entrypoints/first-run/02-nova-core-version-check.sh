@@ -15,7 +15,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
         echo -n -e "${C_YELLOW}"
         echo -e "Installing $COLLECTION_NAME ${C_CYAN}v$GALAXY_REMOTE_VERSION${C_YELLOW} collection..."
-        git -c advice.detachedHead=false clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
+        git -c advice.ignoredHook=false -c advice.detachedHead=false clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
         ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible > /dev/null
         rm -rf /tmp/$COLLECTION_NAME
 
