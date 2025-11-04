@@ -9,7 +9,7 @@
 
 # Catapult
 
-Catapult is a tool to build, deploy and (re)configure different types of environments, such as Cyber Exercises, Trainings, Labs or even Production environments. It is designed to be used by people with some experience with Ansible, but it's a force multiplier for experienced Ansible users. Catapult does the heavy lifting in dependency management, virtual machine creation or remote/cloud service configuration so the developer can focus on the actual content of the machine or service. Catapult supports VM creation and configuration on vSphere, Proxmox, AWS and Linode. Alternatively you can use Catapult to configure an already existing virtual or physical machines.
+Catapult is an infrastructure **development** tool to build, deploy and (re)configure different types of environments, such as Cyber Exercises, Trainings, Labs or even Production environments. It is designed to be used by people with some experience with Ansible, but it's a force multiplier for experienced Ansible users. Catapult does the heavy lifting in dependency management, virtual machine creation or remote/cloud service configuration so the developer can focus on the actual content of the machine or service. Catapult supports VM creation and configuration on vSphere, Proxmox, AWS, Azure and Linode. Alternatively you can also use Catapult to configure an already existing virtual or physical machines created by other means.
 
 Refer to [Catapult Docs](https://clarifiedsecurity.github.io/catapult-docs/catapult/01-installation/) for full documentation.
 
