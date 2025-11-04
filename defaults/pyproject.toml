@@ -5,7 +5,7 @@ description = "This a Python virtual environment for Catapult"
 requires-python = ">=3.12"
 dependencies = [
     "aiohttp",
-    "ansible-core==2.18.11",
+    "ansible-core==2.19.4",
     "ansible-lint",
     "ansible-pylibssh",
     "ansible-specdoc",

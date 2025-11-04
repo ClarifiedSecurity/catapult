@@ -45,7 +45,7 @@ collections:
   - name: community.routeros
     version: 3.14.0
   - name: community.vmware
-    version: 5.10.0
+    version: 6.1.0
   - name: community.windows
     version: 3.0.1
   - name: fortinet.fortios
