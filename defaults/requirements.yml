@@ -15,9 +15,9 @@ collections:
   - name: ansible.utils
     version: 6.0.0
   - name: ansible.windows
-    version: 3.2.0
+    version: 3.3.0
   - name: azure.azcollection
-    version: 3.8.0
+    version: 3.12.0
   - name: chocolatey.chocolatey
     version: 1.5.3
   - name: cisco.ios
@@ -29,9 +29,9 @@ collections:
   - name: community.crypto
     version: 3.0.5
   - name: community.docker
-    version: 5.0.0
+    version: 5.0.3
   - name: community.general
-    version: 12.0.0
+    version: 12.1.0
   - name: community.hashi_vault
     version: 7.1.0
   - name: community.library_inventory_filtering_v1
@@ -43,7 +43,7 @@ collections:
   - name: community.proxmox
     version: 1.3.0
   - name: community.routeros
-    version: 3.13.0
+    version: 3.14.0
   - name: community.vmware
     version: 5.10.0
   - name: community.windows
@@ -51,15 +51,15 @@ collections:
   - name: fortinet.fortios
     version: 2.4.2
   - name: kubernetes.core
-    version: 5.1.0
+    version: 6.2.0
   - name: linode.cloud
     version: 0.41.1
   - name: microsoft.ad
-    version: 1.9.2
+    version: 1.10.0
   - name: microsoft.iis
-    version: 1.0.3
+    version: 1.1.0
   - name: microsoft.sql
-    version: 2.6.4
+    version: 2.6.5
   - name: openstack.cloud
     version: 2.4.1
   - name: paloaltonetworks.panos
@@ -67,7 +67,7 @@ collections:
   - name: vmware.vmware_rest
     version: 4.9.0
   - name: vmware.vmware
-    version: 2.4.0
+    version: 2.5.0
   - name: vyos.vyos
     version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
