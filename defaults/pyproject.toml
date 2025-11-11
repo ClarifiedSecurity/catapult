@@ -22,7 +22,7 @@ dependencies = [
     "azure-mgmt-mysqlflexibleservers",
     "azure-mgmt-batch",
     "azure-mgmt-cdn",
-    "azure-mgmt-compute==33.0.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L11
+    "azure-mgmt-compute==33.0.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt
     "azure-mgmt-containerinstance",
     "azure-mgmt-containerregistry",
     "azure-mgmt-containerservice",
@@ -55,12 +55,13 @@ dependencies = [
     "azure-mgmt-search",
     "azure-mgmt-servicebus",
     "azure-mgmt-sql",
-    "azure-mgmt-storage==21.2.1", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L35
+    "azure-mgmt-storage",
     "azure-mgmt-trafficmanager",
     "azure-mgmt-web",
     "azure-nspkg",
     "azure-storage-blob",
     "boto3",
+    "bcrypt==4.3.0", # https://foss.heptapod.net/python-libs/passlib/-/issues/196
     "botocore",
     "cryptography",
     "dnspython",
