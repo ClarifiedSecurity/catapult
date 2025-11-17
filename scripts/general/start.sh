@@ -56,6 +56,13 @@ PERSONAL_COMPOSE_FILE="-f ${ROOT_DIR}/personal/docker-compose-personal.yml"
 START_WITH_CUSTOM_COMPOSE=""
 START_WITH_ARA=""
 
+# Checking if personal Docker Compose file exists and creating it if it doesn't
+if [[ ! -r personal/docker-compose-personal.yml ]]; then
+
+  cp defaults/docker-compose-personal.yml personal/docker-compose-personal.yml
+
+fi
+
 # Also using custom Docker compose file if it exists
 if [[ -r custom/docker/docker-compose-custom.yml ]]; then
     START_WITH_CUSTOM_COMPOSE="-f ${ROOT_DIR}/custom/docker/docker-compose-custom.yml"
