@@ -168,7 +168,7 @@ else
     fi
 
     # shellcheck disable=SC2086
-    ${MAKEVAR_SUDO_COMMAND} docker --context default --context default compose \
+    ${MAKEVAR_SUDO_COMMAND} docker --context default compose \
     ${DEFAULT_COMPOSE_FILE} \
     ${START_WITH_ARA} \
     ${START_WITH_CUSTOM_COMPOSE} \
