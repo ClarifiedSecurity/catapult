@@ -5,11 +5,6 @@ set -e # exit when any command fails
 sudo apt update
 sudo apt install -y gcc # Required for compiling some Python packages
 
-# This sets the yarn version to stable (berry) and installs the packages
-cd /srv
-echo "y" | yarn set version stable
-echo "y" | yarn install
-
 ##############################
 # Python virtual environment #
 ##############################
