@@ -28,13 +28,10 @@ RUN echo "builder     ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder
 RUN groupadd builder -g ${CONTAINER_GROUP_ID} && useradd -u ${CONTAINER_USER_ID} -g builder -m -d /home/builder -s /bin/bash -c "Builder user" builder
 RUN chown -R builder:builder /srv
 
-ADD --chown=builder:builder .yarnrc.yml /srv/.yarnrc.yml
 ADD --chown=builder:builder /container/home/builder/.default_aliases /srv/container/home/builder/.default_aliases
 ADD --chown=builder:builder /scripts /srv/scripts
 ADD --chown=builder:builder ansible.cfg /srv/ansible.cfg
 ADD --chown=builder:builder defaults /srv/defaults
-ADD --chown=builder:builder package.json /srv/package.json
-ADD --chown=builder:builder yarn.lock /srv/yarn.lock
 
 # Files that need to be present when using the image in CI pipelines
 ADD --chown=builder:builder inventories/_operating_systems /srv/inventories/_operating_systems
