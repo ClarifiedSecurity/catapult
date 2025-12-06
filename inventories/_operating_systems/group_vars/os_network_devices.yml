@@ -6,7 +6,3 @@ template_username: "{{ admin_account }}"
 customization_method: "{{ ansible_network_os }}"
 default_connection_plugin: ansible.netcommon.network_cli
 default_ansible_shell_type: sh
-
-# Become
-default_ansible_become: false
-default_ansible_become_user: "{{ admin_account }}"

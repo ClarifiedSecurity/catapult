@@ -13,6 +13,6 @@ default_connection_plugin: ssh
 default_ansible_shell_type: powershell
 ansible_shell_type: "{{ default_ansible_shell_type }}"
 
-# Become
+# Become overrides
 default_ansible_become: false
 default_ansible_become_user: "{{ ansible_user }}" # In case become is used it will use the same user as the connection user

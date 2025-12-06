@@ -6,5 +6,5 @@ admin_account: vyos
 customization_method: vyos
 ansible_network_os: vyos.vyos.vyos # https://docs.ansible.com/ansible/latest/network/user_guide/network_best_practices_2.5.html#common-inventory-variables
 
-# Become
+# Become overrides
 default_ansible_become_user: root
