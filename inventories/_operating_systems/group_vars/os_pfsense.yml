@@ -7,8 +7,7 @@ template_username: "{{ admin_account }}"
 default_connection_plugin: ssh
 default_ansible_shell_type: sh
 
-# Become
-default_ansible_become: true
+# Become overrides
 default_ansible_become_user: root
 
 # Network
