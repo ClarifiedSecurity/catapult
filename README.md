@@ -20,6 +20,8 @@ Catapult supports VM creation and configuration on:
 - vSphere
 - OpenStack (limited and experimental support)
 
+If Catapult does not support VM creation for a specific environment not listed above, you can write it yourself (as a separate Ansible role to include) directly into your project and still be able to use all of the other features of Catapult.
+
 Alternatively you can also use Catapult to configure an already existing virtual or physical machines created by other means.
 
 Refer to [Catapult Docs](https://clarifiedsecurity.github.io/catapult-docs/catapult/01-installation/) for full documentation.
