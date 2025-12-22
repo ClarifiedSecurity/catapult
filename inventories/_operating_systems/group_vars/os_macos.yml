@@ -13,8 +13,3 @@ template_username: "{{ admin_account }}"
 customization_method: macos
 default_connection_plugin: ssh
 default_ansible_shell_type: sh
-
-# Defined here because MacOS does not have Python installed by default
-# When set to false, Ansible will use raw module to configure the system
-# When set to true, Ansible will use normal modules
-macos_has_python: false
