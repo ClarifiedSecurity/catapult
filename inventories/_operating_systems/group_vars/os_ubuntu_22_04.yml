@@ -10,7 +10,7 @@ vm_template: catapult-template-ubuntu2204
 ami_owner_id: "099720109477"
 ami_name_search_string: ubuntu/images/hvm-ssd/ubuntu-jammy*
 aws_template_username: ubuntu
-aws_vm_size: m5.large # Recommended by vendor
+aws_vm_size: t3.small
 
 # Linode Image curl https://api.linode.com/v4/images
 linode_image: linode/ubuntu22.04
