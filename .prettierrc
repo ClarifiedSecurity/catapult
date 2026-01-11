@@ -8,16 +8,8 @@
   "singleQuote": false,
   "overrides": [
     {
-      "files": ".yaml",
-      "options": { "parser": "yaml" }
-    },
-    {
       "files": ".yml",
       "options": { "parser": "yaml" }
-    },
-    {
-      "files": ".vue",
-      "options": { "parser": "vue" }
     },
     {
       "files": ".md",
