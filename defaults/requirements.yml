@@ -7,13 +7,13 @@ roles: []
 
 collections:
   - name: amazon.aws
-    version: 10.1.2
+    version: 11.0.0
   - name: ansible.netcommon
-    version: 8.2.0
+    version: 8.2.1
   - name: ansible.posix
     version: 2.1.0
   - name: ansible.utils
-    version: 6.0.0
+    version: 6.0.1
   - name: ansible.windows
     version: 3.3.0
   - name: azure.azcollection
@@ -67,7 +67,7 @@ collections:
   - name: vmware.vmware_rest
     version: 4.9.0
   - name: vmware.vmware
-    version: 2.6.0
+    version: 2.7.0
   - name: vyos.vyos
     version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
