@@ -173,7 +173,7 @@ else
     ${START_WITH_ARA} \
     ${START_WITH_CUSTOM_COMPOSE} \
     ${PERSONAL_COMPOSE_FILE} \
-    up --detach --force-recreate --remove-orphans
+    up --detach --force-recreate --remove-orphans --no-build
 
     ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
 
