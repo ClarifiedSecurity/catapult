@@ -1,0 +1,17 @@
+---
+# Accounts
+admin_account: admin
+template_username: "{{ admin_account }}"
+
+# Connection
+default_connection_plugin: ansible.netcommon.httpapi
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: "{{ fortios_validate_certs | default(false) }}" # False since default FortiOS cert is self-signed
+
+# fortios_access_token is MANDATORY for API authentication and needs to be created beforehand in the FortiOS device
+ansible_httpapi_session_key:
+  access_token: "{{ fortios_access_token }}"
+
+# Network
+ansible_network_os: fortinet.fortios.fortios
+customization_method: fortios
