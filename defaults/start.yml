@@ -11,34 +11,38 @@
 
   module_defaults:
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#modules
-    group/vmware: "{{ vmware_defaults | default(omit) }}"
+    group/vmware: "{{ vmware_defaults | default('') }}"
 
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/vmware/vmware/index.html
-    group/vmware.vmware.vmware: "{{ vmware_defaults | default(omit) }}"
+    group/vmware.vmware.vmware: "{{ vmware_defaults | default('') }}"
 
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/vmware/vmware_rest/index.html#plugins-in-vmware-vmware-rest
-    group/vmware.vmware_rest.vmware_rest: "{{ vmware_rest_defaults | default(omit) }}"
+    group/vmware.vmware_rest.vmware_rest: "{{ vmware_rest_defaults | default('') }}"
 
     # Module defaults for:
     # https://docs.ansible.com/ansible/latest/collections/amazon/aws/index.html#modules
     # https://docs.ansible.com/ansible/latest/collections/community/aws/index.html#modules
-    group/aws: "{{ aws_defaults | default(omit) }}"
+    group/aws: "{{ aws_defaults | default('') }}"
 
     # Module defaults for:
     # https://docs.ansible.com/ansible/latest/collections/azure/azcollection/index.html#plugins-in-azure-azcollection
     # Refer to link below for different naming reason
     # https://github.com/ansible-collections/azure/issues/977
-    group/azure.azcollection.all: "{{ azure_defaults | default(omit) }}"
+    group/azure.azcollection.all: "{{ azure_defaults | default('') }}"
 
     # Module defaults for:
     # community.general.proxmox* modules
     # https://docs.ansible.com/ansible/latest/collections/community/general/index.html
-    group/community.general.proxmox: "{{ proxmox_defaults | default(omit) }}"
-    group/community.proxmox.proxmox: "{{ proxmox_defaults | default(omit) }}"
+    group/community.general.proxmox: "{{ proxmox_defaults | default('') }}"
+    group/community.proxmox.proxmox: "{{ proxmox_defaults | default('') }}"
 
     # Module defaults for:
     # https://opendev.org/openstack/ansible-collections-openstack
-    group/openstack.cloud.openstack: "{{ openstack_defaults | default(omit) }}"
+    group/openstack.cloud.openstack: "{{ openstack_defaults | default('') }}"
+
+    # Module defaults for:
+    # https://docs.ansible.com/projects/ansible/latest/collections/fortinet/fortios/index.html#plugins-in-fortinet-fortios
+    group/fortinet.fortios.fortios: "{{ fortios_defaults | default('') }}"
 
   roles:
     - role: nova.core.deploy_vars # Including deployment variables
