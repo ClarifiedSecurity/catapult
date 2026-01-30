@@ -9,7 +9,7 @@ collections:
   - name: amazon.aws
     version: 11.0.0
   - name: ansible.netcommon
-    version: 8.2.1
+    version: 8.4.0
   - name: ansible.posix
     version: 2.1.0
   - name: ansible.utils
@@ -25,11 +25,11 @@ collections:
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
-    version: 10.0.0
+    version: 11.0.0
   - name: community.crypto
-    version: 3.1.0
+    version: 3.1.1
   - name: community.docker
-    version: 5.0.5
+    version: 5.0.6
   - name: community.general
     version: 12.2.0
   - name: community.hashi_vault
@@ -51,7 +51,7 @@ collections:
   - name: fortinet.fortios
     version: 2.4.2
   - name: kubernetes.core
-    version: 6.2.0
+    version: 6.3.0
   - name: linode.cloud
     version: 0.43.0
   - name: microsoft.ad
@@ -59,13 +59,13 @@ collections:
   - name: microsoft.iis
     version: 1.1.0
   - name: microsoft.sql
-    version: 2.6.5
+    version: 2.6.6
   - name: openstack.cloud
     version: 2.4.1
   - name: paloaltonetworks.panos
     version: 3.2.0
   - name: vmware.vmware_rest
-    version: 4.9.0
+    version: 4.10.0
   - name: vmware.vmware
     version: 2.7.0
   - name: vyos.vyos
