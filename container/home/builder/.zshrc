@@ -7,14 +7,14 @@ source "$HOME/.local/bin/env"
 source "$HOME/catapult-venv/.venv/bin/activate"
 
 # Keeping history in a separate mounted folder to avoid can't save history errors when exiting the container
-HISTFILE=/home/builder/.history/.zsh_history
+HISTFILE=$HOME/.history/.zsh_history
 
 # Enabling globbing
 # This is required for next line to work correctly
 setopt glob
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/builder/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Load the vcs_info function for Git branch info
 autoload -Uz vcs_info
@@ -70,7 +70,7 @@ zstyle ':vcs_info:git:*' formats ' (%b)'
 
 # Define the prompt, including hostname, current directory, Git branch, and command time
 PROMPT='%F{green}%m %F{blue}%1~%F{yellow}${vcs_info_msg_0_}%F{red}${git_status} %F{cyan}${elapsed_time}%f
-%F{red}➜%f '
+%F{red}>%f '
 
 # Sourcing oh-my-zsh
 . $ZSH/oh-my-zsh.sh
