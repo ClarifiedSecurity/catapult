@@ -10,7 +10,7 @@ However you install your base templates make sure that they meet the following r
 
 ### Windows
 
-- Latest stable OpenSSH installed and running -- Catapult does all of its work over SSH. Don't use the built-in Windows SSH server it's versions are different per OS version and you will start getting random connection errors.
+- Latest OpenSSH installed and running -- Catapult does all of its work over SSH. Don't use the built-in Windows SSH server it's versions are different per OS version and you will start getting random connection errors.
 
 - `MaxAuthTries` set to `20` in `C:/ProgramData/ssh/sshd_config` -- A lot of users will have more than 6 keys in their SSH agent and the default `MaxAuthTries` of 6 will cause Catapult to fail to connect to the VM. The value must not be 20 but it most likely must be higher than 6.
 
@@ -30,8 +30,8 @@ However you install your base templates make sure that they meet the following r
 
 - `python3` package needs to be installed for your distribution.
 
-- `open-vm-tools/qemu agent/etc.` package might need to be installed for your distribution depending on your virtualization platform.
+- `open-vm-tools/qemu-guest-agent/etc.` package needs to be installed for your distribution depending on your virtualization platform.
 
 ## Per-environment/project/datacenter etc. template requirements
 
-We recommend applying the [template_os_configuration](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/template_os_configuration) to the specific project templates. It contains some prerequisites for different `nova.core` roles that you might otherwise need to install before using those roles.
+We recommend applying the [template_os_configuration](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/template_os_configuration) to the specific project templates. It contains some prerequisites for different `nova.core` roles that you might otherwise need to install before using those roles. If you already have a Catapult project then you can set `template: true` variable in your templates host/group_vars. Then during deploy Catapult will take a different deploy path and apply the `template_os_configuration` role and shut down the VM.
