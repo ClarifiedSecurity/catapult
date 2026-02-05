@@ -16,6 +16,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
         echo -n -e "${C_YELLOW}"
         echo -e "Installing $COLLECTION_NAME ${C_CYAN}v$GALAXY_REMOTE_VERSION${C_YELLOW} collection..."
         git -c advice.ignoredHook=false -c advice.detachedHead=false clone "$COLLECTION_GIT_URL" --branch "$REPO_VERSION" --depth 1 --quiet /tmp/$COLLECTION_NAME
+        git -C /tmp/$COLLECTION_NAME rev-parse --short HEAD > "/srv/ansible/${COLLECTION_NAME}_checksum"
         ansible-galaxy collection install /tmp/$COLLECTION_NAME/nova --force -p /srv/ansible > /dev/null
         rm -rf /tmp/$COLLECTION_NAME
 
@@ -24,14 +25,29 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
     echo -e "Checking for nova.core updates..."
     if curl github.com --connect-timeout 5 -s > /dev/null; then
 
-        # Checking for shared roles version if MANIFEST.json exists
-        if [[ -f "/srv/ansible/ansible_collections/nova/core/MANIFEST.json" ]]; then
+        if [[ "$REPO_VERSION" == "staging" ]]; then
 
-            GALAXY_LOCAL_VERSION=$(jq -r '.collection_info.version' /srv/ansible/ansible_collections/nova/core/MANIFEST.json)
+            # Checking for staging collection checksum
+            if [[ -f "/srv/ansible/${COLLECTION_NAME}_checksum" ]]; then
+
+                GALAXY_LOCAL_VERSION=$(cat "/srv/ansible/${COLLECTION_NAME}_checksum")
+
+            fi
+
+            GALAXY_REMOTE_VERSION=$(git ls-remote "$COLLECTION_GIT_URL" "refs/heads/$REPO_VERSION" | awk '{print $1}' | cut -c 1-7)
+
+        else
+
+            # Checking for collection version if MANIFEST.json exists
+            if [[ -f "/srv/ansible/ansible_collections/nova/core/MANIFEST.json" ]]; then
+
+                GALAXY_LOCAL_VERSION=$(jq -r '.collection_info.version' /srv/ansible/ansible_collections/nova/core/MANIFEST.json)
+
+            fi
+
+            GALAXY_REMOTE_VERSION=$(curl "$REMOTE_VERSION_URL" -s | grep "version:" | cut -d " " -f 2)
 
         fi
-
-        GALAXY_REMOTE_VERSION=$(curl "$REMOTE_VERSION_URL" -s | grep "version:" | cut -d " " -f 2)
 
         if [[ -z "$GALAXY_REMOTE_VERSION" ]]; then
 
