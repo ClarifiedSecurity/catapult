@@ -14,6 +14,9 @@ echo -e -n "${C_CYAN}"
 if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
     # Checking if github.com is reachable
+    echo -n -e "${C_YELLOW}"
+    echo -e "Checking if GitHub is reachable..."
+    echo -n -e "${C_RST}"
     if ! curl github.com --connect-timeout 5 -s > /dev/null; then
         echo -n -e "${C_RED}"
         echo -e "Cannot check for Catapult version!"
@@ -29,7 +32,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
     catapult_version_selector () {
 
         # Checking if the current branch is main or staging
-        if [[ "$BRANCH" = "main" ]] || [[ "$BRANCH" = "staging" ]]; then
+        if [[ "$BRANCH" == "main" ]] || [[ "$BRANCH" == "staging" ]]; then
 
             git reset --hard "origin/$BRANCH"
             git switch "$BRANCH"
@@ -113,12 +116,25 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
     }
 
-    # Checking if the latest remote version is different than the current local version
-    # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
-    REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
-    LOCAL_VERSION=$(cat version.yml | cut -d ' ' -f 2)
+    echo -n -e "${C_YELLOW}"
+    echo -e "Checking for Catapult updates..."
+    echo -n -e "${C_RST}"
+    if [[ "$BRANCH" == "staging" ]]; then
 
-    # Checking if remote version is different than local version or if the docker image does not exist
+        # Getting the local and remote commit hashes for the staging branch since version.yml is not updated there
+        git fetch origin --quiet
+        REMOTE_VERSION=$(git rev-parse --short "origin/$(git branch --show-current)")
+        LOCAL_VERSION=$(git rev-parse --short HEAD)
+
+    else
+
+        # Checking if the latest remote version is different than the current local version
+        # Using curl to get the latest version from raw file GitHub to avoid Github API rate limit
+        REMOTE_VERSION=$(curl --silent "https://raw.githubusercontent.com/ClarifiedSecurity/catapult/$BRANCH/version.yml" | cut -d ' ' -f 2)
+        LOCAL_VERSION=$(cat version.yml | cut -d ' ' -f 2)
+
+    fi
+
     if [[ "$LOCAL_VERSION" != "$REMOTE_VERSION" ]]; then
 
         if [[ "$MAKEVAR_AUTO_UPDATE" == 1 ]]; then
