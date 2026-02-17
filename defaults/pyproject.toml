@@ -50,7 +50,7 @@ dependencies = [
     "azure-mgmt-recoveryservices",
     "azure-mgmt-recoveryservicesbackup",
     "azure-mgmt-redis",
-    "azure-mgmt-resource",
+    "azure-mgmt-resource==23.2.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L46
     "azure-mgmt-resourcehealth",
     "azure-mgmt-search",
     "azure-mgmt-servicebus",
@@ -96,7 +96,7 @@ dependencies = [
     "requests-oauthlib",
     "requests",
     "scp",
-    "setuptools",
+    "setuptools==81.0.0", # Later versions of setuptools will break vSphere library installation
     "vmware-vcenter",
     "xmltodict",
     "yq"
