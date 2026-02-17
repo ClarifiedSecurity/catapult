@@ -21,7 +21,7 @@ collections:
   - name: chocolatey.chocolatey
     version: 1.5.3
   - name: cisco.ios
-    version: 11.2.0
+    version: 11.3.0
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
@@ -37,7 +37,7 @@ collections:
   - name: community.library_inventory_filtering_v1
     version: 1.1.5
   - name: community.mysql
-    version: 4.0.1
+    version: 4.1.0
   - name: community.postgresql
     version: 4.2.0
   - name: community.proxmox
