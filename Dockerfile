@@ -57,4 +57,8 @@ RUN bash /tmp/install-docker-image-collections.sh
 # Setting the default editor to nano since it's easier to use for beginners
 ENV EDITOR=nano
 
+# Setting locale
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
 WORKDIR /srv
