@@ -10,6 +10,7 @@ services:
     restart: no
     tmpfs:
       - /tmp
+      - /var/tmp
     volumes:
       - $HOME/.gitconfig:/home/builder/.gitconfig
       - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
