@@ -43,6 +43,14 @@ jobs:
             exit 1
           fi
 
+          # Error if CURRENT_VERSION is not found
+          if [ -z "$CURRENT_VERSION" ]; then
+            echo -n -e "${C_RED}"
+            echo -e "Current version not found in $CURRENT_VERSION_URL"
+            echo -n -e "${C_RST}"
+            exit 1
+          fi
+
           echo -n -e "${C_YELLOW}"
           echo -e "Pull Request Version - $PR_VERSION"
           echo -e "Current Version - $CURRENT_VERSION"
