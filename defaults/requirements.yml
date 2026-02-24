@@ -15,9 +15,9 @@ collections:
   - name: ansible.utils
     version: 6.0.1
   - name: ansible.windows
-    version: 3.3.0
+    version: 3.4.0
   - name: azure.azcollection
-    version: 3.13.0
+    version: 3.15.0
   - name: chocolatey.chocolatey
     version: 1.5.3
   - name: cisco.ios
@@ -31,7 +31,7 @@ collections:
   - name: community.docker
     version: 5.0.6
   - name: community.general
-    version: 12.2.0
+    version: 12.4.0
   - name: community.hashi_vault
     version: 7.1.0
   - name: community.library_inventory_filtering_v1
@@ -43,13 +43,13 @@ collections:
   - name: community.proxmox
     version: 1.5.0
   - name: community.routeros
-    version: 3.15.0
+    version: 3.17.0
   - name: community.vmware
     version: 6.1.0
   - name: community.windows
     version: 3.0.1
   - name: fortinet.fortios
-    version: 2.4.2
+    version: 2.5.0
   - name: kubernetes.core
     version: 6.3.0
   - name: linode.cloud
