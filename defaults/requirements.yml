@@ -17,7 +17,7 @@ collections:
   - name: ansible.windows
     version: 3.3.0
   - name: azure.azcollection
-    version: 3.13.0
+    version: 3.15.0
   - name: chocolatey.chocolatey
     version: 1.5.3
   - name: cisco.ios
@@ -31,7 +31,7 @@ collections:
   - name: community.docker
     version: 5.0.6
   - name: community.general
-    version: 12.2.0
+    version: 12.4.0
   - name: community.hashi_vault
     version: 7.1.0
   - name: community.library_inventory_filtering_v1
