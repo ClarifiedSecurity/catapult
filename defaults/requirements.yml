@@ -41,7 +41,7 @@ collections:
   - name: community.postgresql
     version: 4.2.0
   - name: community.proxmox
-    version: 1.5.0
+    version: 1.6.0
   - name: community.routeros
     version: 3.17.0
   - name: community.vmware
