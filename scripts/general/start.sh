@@ -35,10 +35,22 @@ fi
 # Setting correct SSH_AUTH_SOCK for MacOS and Linux
 if [[ $(uname) == "Darwin" ]]; then
 
-    echo -n -e "${C_YELLOW}"
-    echo "Setting correct SSH_AUTH_SOCK for MacOS..."
-    export HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
-    echo -n -e "${C_RST}"
+    # Checking of the SSH_AUTH_SOCK is some type of password manager
+    if [[ "$SSH_AUTH_SOCK" == */Library/Group* ]]; then
+
+        echo -n -e "${C_YELLOW}"
+        echo "Using SSH_AUTH_SOCK from environment variable for MacOS..."
+        export HOST_SSH_AUTH_SOCK="${SSH_AUTH_SOCK}"
+        echo -n -e "${C_RST}"
+
+    else
+
+        echo -n -e "${C_YELLOW}"
+        echo "Setting correct SSH_AUTH_SOCK for MacOS..."
+        export HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+        echo -n -e "${C_RST}"
+
+    fi
 
 fi
 
