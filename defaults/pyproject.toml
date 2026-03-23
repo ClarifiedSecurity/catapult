@@ -5,7 +5,7 @@ description = "This a Python virtual environment for Catapult"
 requires-python = ">=3.13"
 dependencies = [
     "aiohttp",
-    "ansible-core==2.19.7",
+    "ansible-core==2.19.8",
     "ansible-lint",
     "ansible-pylibssh",
     "ansible-specdoc",
@@ -48,7 +48,7 @@ dependencies = [
     "azure-mgmt-privatedns",
     "azure-mgmt-rdbms",
     "azure-mgmt-recoveryservices",
-    "azure-mgmt-recoveryservicesbackup",
+    "azure-mgmt-recoveryservicesbackup==9.1.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L44
     "azure-mgmt-redis",
     "azure-mgmt-resource==23.2.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L46
     "azure-mgmt-resourcehealth",
@@ -96,7 +96,7 @@ dependencies = [
     "requests-oauthlib",
     "requests",
     "scp",
-    "setuptools==81.0.0", # Later versions of setuptools will break vSphere library installation
+    "setuptools<82", # Later versions of setuptools will break vSphere library installation
     "vmware-vcenter",
     "xmltodict",
     "yq"
