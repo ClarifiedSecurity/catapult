@@ -9,17 +9,17 @@ collections:
   - name: amazon.aws
     version: 11.2.0
   - name: ansible.netcommon
-    version: 8.4.0
+    version: 8.5.0
   - name: ansible.posix
     version: 2.1.0
   - name: ansible.utils
-    version: 6.0.1
+    version: 6.0.2
   - name: ansible.windows
     version: 3.5.0
   - name: azure.azcollection
-    version: 3.15.0
+    version: 3.16.0
   - name: chocolatey.chocolatey
-    version: 1.5.3
+    version: 1.6.0
   - name: cisco.ios
     version: 11.3.0
   - name: cloud.common
@@ -29,9 +29,9 @@ collections:
   - name: community.crypto
     version: 3.1.1
   - name: community.docker
-    version: 5.0.6
+    version: 5.2.0
   - name: community.general
-    version: 12.4.0
+    version: 12.5.0
   - name: community.hashi_vault
     version: 7.1.0
   - name: community.library_inventory_filtering_v1
@@ -43,7 +43,7 @@ collections:
   - name: community.proxmox
     version: 1.6.0
   - name: community.routeros
-    version: 3.17.0
+    version: 3.19.0
   - name: community.vmware
     version: 6.1.0
   - name: community.windows
