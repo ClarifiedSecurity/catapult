@@ -1,0 +1,8 @@
+---
+# Latest tested version - VyOS Stream 2026.3
+
+# Template created with Packer or manually
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_vyos_stream
+
+vm_template: catapult-template-vyos-stream
