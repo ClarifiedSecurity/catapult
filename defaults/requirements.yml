@@ -51,7 +51,7 @@ collections:
   - name: fortinet.fortios
     version: 2.5.0
   - name: kubernetes.core
-    version: 6.3.0
+    version: 6.4.0
   - name: linode.cloud
     version: 0.43.0
   - name: microsoft.ad
