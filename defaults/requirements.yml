@@ -8,6 +8,8 @@ roles: []
 collections:
   - name: amazon.aws
     version: 11.2.0
+  - name: ansible.mysql
+    version: 5.0.0
   - name: ansible.netcommon
     version: 8.5.0
   - name: ansible.posix
@@ -36,8 +38,6 @@ collections:
     version: 7.1.0
   - name: community.library_inventory_filtering_v1
     version: 1.1.5
-  - name: community.mysql
-    version: 4.2.0
   - name: community.postgresql
     version: 4.2.0
   - name: community.proxmox
@@ -53,7 +53,7 @@ collections:
   - name: kubernetes.core
     version: 6.4.0
   - name: linode.cloud
-    version: 0.45.0
+    version: 0.46.0
   - name: microsoft.ad
     version: 1.10.0
   - name: microsoft.iis
