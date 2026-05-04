@@ -8,6 +8,8 @@ One great tool for template generation is [Packer](https://www.packer.io/). Pack
 
 However you install your base templates make sure that they meet the following requirements. These configurations need to be present for initial configuration to the VMs to work. After the initial configuration is done you can change these configurations to whatever you want.
 
+- We recommend removing all other user created during initial installation accounts except for builtin admin accounts like **Administrator/root/etc.**, this makes sure that the template is clean. It's much easier to add new accounts for per-environment/project/datacenter etc. templates later than start removing accounts that were left in the base template.
+
 ### Windows
 
 - Latest OpenSSH installed and running -- Catapult does all of its work over SSH. Don't use the built-in Windows SSH server it's versions are different per OS version and you will start getting random connection errors.
@@ -22,7 +24,7 @@ However you install your base templates make sure that they meet the following r
 
 - `MaxAuthTries` set to `20` in `/etc/ssh/sshd_config` -- Same as with Windows.
 
-- `PermitRootLogin` set to `yes` in `/etc/ssh/sshd_config` -- Catapult needs to be able to login as root to the VMs the first time. After that Catapult can be used to create new accounts and disable root login.
+- `PermitRootLogin` set to `yes` in `/etc/ssh/sshd_config` -- Catapult needs to be able to login as **root** to the VMs the first time. After that Catapult can be used to create new accounts and disable root login.
 
 - `PasswordAuthentication` set to `yes` in `/etc/ssh/sshd_config` -- It is usually set to yes for most Linux distributions but it's good to check.
 
