@@ -5,7 +5,7 @@ description = "This a Python virtual environment for Catapult"
 requires-python = ">=3.13"
 dependencies = [
     "aiohttp",
-    "ansible-core==2.19.9",
+    "ansible-core==2.20.6",
     "ansible-lint",
     "ansible-pylibssh",
     "ansible-specdoc",
@@ -19,7 +19,6 @@ dependencies = [
     "azure-mgmt-apimanagement",
     "azure-mgmt-authorization",
     "azure-mgmt-automation",
-    "azure-mgmt-mysqlflexibleservers",
     "azure-mgmt-batch",
     "azure-mgmt-cdn",
     "azure-mgmt-compute==33.0.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt
@@ -34,6 +33,7 @@ dependencies = [
     "azure-mgmt-dns",
     "azure-mgmt-eventhub",
     "azure-mgmt-hdinsight",
+    "azure-mgmt-hybridcompute",
     "azure-mgmt-iothub",
     "azure-mgmt-keyvault",
     "azure-mgmt-loganalytics",
@@ -41,6 +41,7 @@ dependencies = [
     "azure-mgmt-managementgroups",
     "azure-mgmt-marketplaceordering",
     "azure-mgmt-monitor",
+    "azure-mgmt-mysqlflexibleservers",
     "azure-mgmt-network",
     "azure-mgmt-notificationhubs",
     "azure-mgmt-nspkg",
@@ -60,8 +61,8 @@ dependencies = [
     "azure-mgmt-web",
     "azure-nspkg",
     "azure-storage-blob",
-    "boto3",
     "bcrypt==4.3.0", # https://foss.heptapod.net/python-libs/passlib/-/issues/196
+    "boto3",
     "botocore",
     "cryptography",
     "dnspython",
@@ -84,6 +85,7 @@ dependencies = [
     "panos-upgrade-assurance",
     "paramiko",
     "passlib",
+    "pexpect",
     "polling",
     "prettytable",
     "proxmoxer",
@@ -96,7 +98,7 @@ dependencies = [
     "requests-oauthlib",
     "requests",
     "scp",
-    "setuptools<82", # Later versions of setuptools will break vSphere library installation
+    "setuptools",
     "vmware-vcenter",
     "xmltodict",
     "yq"
