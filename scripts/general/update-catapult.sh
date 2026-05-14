@@ -58,16 +58,28 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
         echo -n -e "${C_GREEN}"
         echo -e "You are not in the ${C_CYAN}$BRANCH${C_GREEN} branch or tag. Do you want to switch to there now?"
         echo -n -e "${C_RST}"
-        options=(
-            "yes"
-            "no"
-        )
 
-        # shellcheck disable=SC2034
-        select option in "${options[@]}"; do
-            case "$REPLY" in
-                yes|y|1) catapult_version_selector; break;;
-                no|n|2) echo -e "Not changing branch"; break;;
+        while true; do
+            echo -n -e "${C_YELLOW}"
+            echo -n -e "Would you like to switch now (y/n)?"
+            echo -e "${C_RST}"
+            read -r response
+            case $response in
+            [Yy]*|yes)
+                catapult_version_selector
+                break
+                ;;
+            [Nn]*|no)
+                echo -n -e "${C_YELLOW}"
+                echo -e "Not changing branch"
+                echo -n -e "${C_RST}"
+                break
+                ;;
+            *)
+                echo -n -e "${C_RED}"
+                echo -e "Unknown response. Please answer yes or no."
+                echo -n -e "${C_RST}"
+                ;;
             esac
         done
 
@@ -149,23 +161,34 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
 
         else
 
-            echo -n -e "${C_YELLOW}"
-            echo -e "Catapult version $REMOTE_VERSION is available, do you want to update?"
+            echo -e "${C_YELLOW}"
+            echo -e "Catapult version ${C_CYAN}$REMOTE_VERSION${C_YELLOW} is available, do you want to update?"
             if [[ "$LOCAL_BRANCH" == "main" ]]; then
                 echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
             fi
             echo -n -e "${C_RST}"
 
-            options=(
-                "yes"
-                "no"
-            )
-
-            # shellcheck disable=SC2034
-            select option in "${options[@]}"; do
-                case "$REPLY" in
-                    yes|y|1) catapult_update; break;;
-                    no|n|2) echo -e "Not updating Catapult"; break;;
+            while true; do
+                echo -ne "${C_YELLOW}"
+                echo -e "Would you like to update now (y/n)?"
+                echo -ne "${C_RST}"
+                read -r response
+                case $response in
+                [Yy]*|yes)
+                    catapult_update
+                    break
+                    ;;
+                [Nn]*|no)
+                    echo -n -e "${C_YELLOW}"
+                    echo -e "Not updating Catapult"
+                    echo -n -e "${C_RST}"
+                    break
+                    ;;
+                *)
+                    echo -n -e "${C_RED}"
+                    echo -e "Unknown response. Please answer yes or no."
+                    echo -n -e "${C_RST}"
+                    ;;
                 esac
             done
 
