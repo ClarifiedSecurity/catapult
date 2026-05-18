@@ -8,6 +8,12 @@ services:
     hostname: ${CONTAINER_NAME}
     network_mode: host
     restart: no
+    pids_limit: 4096
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+      nproc: 65535
     tmpfs:
       - /tmp
       - /var/tmp
