@@ -5,5 +5,3 @@ template_username: "{{ admin_account }}"
 
 # Connection
 customization_method: bsd
-default_connection_plugin: ssh
-default_ansible_shell_type: sh
