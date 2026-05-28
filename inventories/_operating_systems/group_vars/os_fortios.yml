@@ -4,7 +4,7 @@ admin_account: admin
 template_username: "{{ admin_account }}"
 
 # Connection
-default_connection_plugin: ansible.netcommon.httpapi
+ansible_connection: ansible.netcommon.httpapi
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: "{{ fortios_validate_certs | default(false) }}" # False since default FortiOS cert is self-signed
 

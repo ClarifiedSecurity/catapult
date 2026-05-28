@@ -11,38 +11,38 @@
 
   module_defaults:
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#modules
-    group/vmware: "{{ vmware_defaults | default('') }}"
+    group/vmware: "{{ vmware_defaults | default({}) }}"
 
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/vmware/vmware/index.html
-    group/vmware.vmware.vmware: "{{ vmware_defaults | default('') }}"
+    group/vmware.vmware.vmware: "{{ vmware_defaults | default({}) }}"
 
     # Module defaults for https://docs.ansible.com/ansible/latest/collections/vmware/vmware_rest/index.html#plugins-in-vmware-vmware-rest
-    group/vmware.vmware_rest.vmware_rest: "{{ vmware_rest_defaults | default('') }}"
+    group/vmware.vmware_rest.vmware_rest: "{{ vmware_rest_defaults | default({}) }}"
 
     # Module defaults for:
     # https://docs.ansible.com/ansible/latest/collections/amazon/aws/index.html#modules
     # https://docs.ansible.com/ansible/latest/collections/community/aws/index.html#modules
-    group/aws: "{{ aws_defaults | default('') }}"
+    group/aws: "{{ aws_defaults | default({}) }}"
 
     # Module defaults for:
     # https://docs.ansible.com/ansible/latest/collections/azure/azcollection/index.html#plugins-in-azure-azcollection
     # Refer to link below for different naming reason
     # https://github.com/ansible-collections/azure/issues/977
-    group/azure.azcollection.all: "{{ azure_defaults | default('') }}"
+    group/azure.azcollection.all: "{{ azure_defaults | default({}) }}"
 
     # Module defaults for:
     # community.general.proxmox* modules
     # https://docs.ansible.com/ansible/latest/collections/community/general/index.html
-    group/community.general.proxmox: "{{ proxmox_defaults | default('') }}"
-    group/community.proxmox.proxmox: "{{ proxmox_defaults | default('') }}"
+    group/community.general.proxmox: "{{ proxmox_defaults | default({}) }}"
+    group/community.proxmox.proxmox: "{{ proxmox_defaults | default({}) }}"
 
     # Module defaults for:
     # https://opendev.org/openstack/ansible-collections-openstack
-    group/openstack.cloud.openstack: "{{ openstack_defaults | default('') }}"
+    group/openstack.cloud.openstack: "{{ openstack_defaults | default({}) }}"
 
     # Module defaults for:
     # https://docs.ansible.com/projects/ansible/latest/collections/fortinet/fortios/index.html#plugins-in-fortinet-fortios
-    group/fortinet.fortios.fortios: "{{ fortios_defaults | default('') }}"
+    group/fortinet.fortios.fortios: "{{ fortios_defaults | default({}) }}"
 
   roles:
     - role: nova.core.deploy_vars # Including deployment variables
@@ -68,46 +68,46 @@
     # Add -e single_role=role_name to the deploy command run the role and stop the play, useful for testing/development of a single role
     - role: nova.core.customization_single_role
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
       when: single_role is defined
 
     - role: nova.core.accounts # Creating required accounts
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
       when:
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
     - role: nova.core.template_os_configuration # Used for configuring project or env specific templates
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
       when: template
 
     - role: nova.core.os_configuration # Running OS specific configurations
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
       when:
         - not role_only # Only deploys configuration under roles/vm/role_name and stops
         - not role_only_wp # wp means with pre/post_vm_role
 
     - role: nova.core.customization_pre_vm_role # Including pre_customization role if it exists
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
       when:
         - not role_only
 
     - role: nova.core.customization # Including machine specific role if exists
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
 
     - role: nova.core.customization_post_vm_role # Including post_customization specific role if exists
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
       when:
         - not role_only
 
     - role: nova.core.finalize # Running final & cleanup tasks
       become: "{{ default_ansible_become | default(true) }}"
-      become_user: "{{ default_ansible_become_user | default(admin_account) }}"
+      become_user: "{{ default_ansible_become_user | default('root') }}"
 
     - role: nova.core.get_ip

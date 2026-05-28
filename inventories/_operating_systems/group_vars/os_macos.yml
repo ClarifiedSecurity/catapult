@@ -9,7 +9,5 @@ vm_template: catapult-template-macos
 admin_account: root
 template_username: "{{ admin_account }}"
 
-# Connection
+# Network
 customization_method: macos
-default_connection_plugin: ssh
-default_ansible_shell_type: sh
