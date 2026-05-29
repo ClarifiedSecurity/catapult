@@ -61,6 +61,7 @@ dependencies = [
     "azure-mgmt-web",
     "azure-nspkg",
     "azure-storage-blob",
+    "azure-storage-file-share",
     "bcrypt==4.3.0", # https://foss.heptapod.net/python-libs/passlib/-/issues/196
     "boto3",
     "botocore",
