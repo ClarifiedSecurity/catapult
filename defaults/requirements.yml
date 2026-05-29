@@ -19,7 +19,7 @@ collections:
   - name: ansible.windows
     version: 3.6.1
   - name: azure.azcollection
-    version: 3.18.0
+    version: 3.19.0
   - name: chocolatey.chocolatey
     version: 1.6.0
   - name: cisco.ios
