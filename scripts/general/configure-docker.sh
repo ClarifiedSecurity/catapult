@@ -115,13 +115,21 @@ install_docker(){
       echo "Docker will be installed with pacman..."
       echo -n -e "${C_RST}"
 
-    elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
+    elif grep -q rhel /etc/os-release; then
 
       echo -n -e "${C_YELLOW}"
       echo "Adding Docker repo for RedHat..."
       echo -n -e "${C_RST}"
 
-      dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+
+    elif grep -q 'ID=fedora' /etc/os-release; then
+
+      echo -n -e "${C_YELLOW}"
+      echo "Adding Docker repo for Fedora..."
+      echo -n -e "${C_RST}"
+
+      dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo --overwrite
 
     else
 
@@ -152,7 +160,7 @@ install_docker(){
       mkdir -p /etc/docker
       systemctl enable docker.service
 
-    elif grep -q 'ID_LIKE="rhel centos fedora"' /etc/os-release; then
+    elif grep -q -E "(rhel|fedora)" /etc/os-release; then
 
       dnf makecache
       dnf install -y --allowerasing docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin

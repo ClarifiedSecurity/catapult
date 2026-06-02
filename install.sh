@@ -246,7 +246,7 @@ if [[ $(uname) == "Linux" ]]; then
     # RedHat based OS #
     ###################
 
-    elif grep -q "rhel" /etc/os-release; then
+    elif grep -q -E "(rhel|fedora)" /etc/os-release; then
 
         PACKAGES="git git-lfs make jq curl sudo gpg openssh-server dnf-plugins-core"
 
