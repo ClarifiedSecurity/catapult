@@ -68,8 +68,12 @@ precmd() {
 # Set the format for vcs_info (this determines how the Git branch is displayed)
 zstyle ':vcs_info:git:*' formats ' (%b)'
 
-# Define the prompt, including hostname, current directory, Git branch, and command time
-PROMPT='%F{green}%m %F{blue}%1~%F{yellow}${vcs_info_msg_0_}%F{red}${git_status} %F{cyan}${elapsed_time}%f
+current_time() {
+    date +"%H:%M:%S"
+}
+
+# Hostname, current directory, Git branch, command finished time and and command execution time
+PROMPT='%F{green}%m %F{blue}%1~%F{yellow}${vcs_info_msg_0_}%F{red}${git_status} %F{magenta}$(current_time)%f %F{cyan}${elapsed_time}%f
 %F{red}>%f '
 
 # Sourcing oh-my-zsh
