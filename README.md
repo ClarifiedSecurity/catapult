@@ -35,7 +35,7 @@ If Catapult does not support VM creation for your needed environment, you can ei
 - Write it yourself (as a separate Ansible role to include) directly into your project and still be able to use all of the other features of Catapult.
 - Create the VM by other means and then use Catapult to configure the already existing virtual (or physical) machines.
 
-Refer to [Catapult Docs](https://clarifiedsecurity.github.io/catapult-docs/catapult/01-installation/) for full documentation.
+Refer to [Catapult Docs](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) for full documentation.
 
 ## TLDR (Quickstart)
 

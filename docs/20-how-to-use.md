@@ -10,7 +10,7 @@ Catapult has 2 modes for modifications:
 - Personalization - Where users can set their own preferences that will only affect them.
 - Customization - Where preferences are configured in a way that they apply to your team/organization etc.
 
-Follow the `# How to Personalization` & `# How to Customize` sections if you want to personalize or customize Catapult.
+Follow the [How to Personalization](https://clarifiedsecurity.github.io/catapult-docs/catapult/30-how-to-personalize.html) & [How to Customize](https://clarifiedsecurity.github.io/catapult-docs/catapult/40-how-to-customize.html) sections if you want to personalize or customize Catapult.
 
 ## Secrets
 
@@ -226,7 +226,7 @@ ctp host redeploy <inventory_hostname>
 
 ### ctp host deploy-until-configuration
 
-Deploys the machine, stops the play after os_configuration role and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp host deploy-from-configuration` to configure them in the correct order afterwards.
+Deploys the machine, stops the play after os_configuration in the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp host deploy-from-configuration` to configure them in the correct order afterwards.
 
 _Example usage:_
 
@@ -238,7 +238,7 @@ ctp host deploy-until-configuration <inventory_hostname>
 
 ### ctp host redeploy-until-configuration
 
-Redeploys the machine, stops the play after os_configuration role and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp host deploy-from-configuration` to configure them in the correct order afterwards.
+Redeploys the machine, stops the play after os_configuration in the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp host deploy-from-configuration` to configure them in the correct order afterwards.
 
 _Example usage:_
 
@@ -250,7 +250,7 @@ ctp host redeploy-until-configuration <inventory_hostname>
 
 ### ctp host deploy-from-configuration
 
-Starts the play from `/srv/<project_name>/pre_vm_role part` of the playbook and runs until the end. This is a useful command during mass deploy when you have run the `ctp host deploy-until-configuration` first and then you want to configure the cloned machines. Should anything go wrong you can always revert to the snapshot and start again.
+Starts the play from `/srv/<project_name>/pre_vm_role` of the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) of the playbook and runs until the end. This is a useful command during mass deploy when you have run the `ctp host deploy-until-configuration` first and then you want to configure the cloned machines. Should anything go wrong you can always revert to the snapshot and start again.
 
 _Example usage:_
 
@@ -262,7 +262,7 @@ ctp host deploy-from-configuration <inventory_hostname>
 
 ### ctp host deploy-role
 
-Runs only the `/srv/<project_name>/vm/<role_name>` part of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something.
+Runs only the `/srv/<project_name>/vm/<role_name>` part of the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something.
 
 _Example usage:_
 
