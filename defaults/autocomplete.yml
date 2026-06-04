@@ -14,9 +14,19 @@ autocomplete:
         - subcommand_name: deploy-until-configuration
           subcommand_description: Deploys the VM with the given inventory_hostname and creates a snapshot
           subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e just_clone=true -l "$@"
+        - subcommand_name: deploy-with-mid-snapshot
+          subcommand_description: Deploys the VM creating a mid-deployment snapshot for given inventory_hostname
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt
+            -e deploy_mode=deploy -e deploy_with_mid_snapshot=true -l "$@"
         - subcommand_name: redeploy-until-configuration
           subcommand_description: Destroys the existing VM and runs the ctp deploy-until-configuration command
           subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=redeploy -e just_clone=true -l "$@"
+        - subcommand_name: redeploy-with-mid-snapshot
+          subcommand_description: Redeploys the VM creating a mid-deployment snapshot for given inventory_hostname
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt
+            -e deploy_mode=redeploy -e deploy_with_mid_snapshot=true -l "$@"
         - subcommand_name: deploy-from-configuration
           subcommand_description: Starts the play from /srv/<project_name>/pre_vm_role part of the playbook and runs until the end
           subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only_wp=true -l "$@"

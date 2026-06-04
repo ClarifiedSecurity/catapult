@@ -224,6 +224,30 @@ _Example usage:_
 ctp host redeploy <inventory_hostname>
 ```
 
+### ctp host deploy-with-mid-snapshot
+
+Deploys the machine, creates a snapshot in the middle of the deployment and then continues with the deployment. You can then use the snapshot to quickly revert to the mid-deployment state instead of redeploying the machine from scratch. This is useful when you are developing the playbook and you want to quickly test the changes without having to wait for the full deployment process. The snapshot is created after the `os_configuration` in the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) of the playbook.
+
+_Example usage:_
+
+- Deploys the VM with the given inventory_hostname and creates a mid-deployment snapshot
+
+```zsh
+ctp host deploy-with-mid-snapshot <inventory_hostname>
+```
+
+### ctp host redeploy-with-mid-snapshot
+
+Destroys the existing VM and runs the the `ctp host deploy-with-mid-snapshot` command. This is useful when you want to redeploy the machine and create a mid-deployment snapshot to quickly revert to the mid-deployment state instead of redeploying the machine from scratch.
+
+_Example usage:_
+
+- Redeploys the VM with the given inventory_hostname and creates a mid-deployment snapshot
+
+```zsh
+ctp host redeploy-with-mid-snapshot <inventory_hostname>
+```
+
 ### ctp host deploy-until-configuration
 
 Deploys the machine, stops the play after os_configuration in the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp host deploy-from-configuration` to configure them in the correct order afterwards.
