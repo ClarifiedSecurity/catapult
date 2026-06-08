@@ -8,6 +8,7 @@
 /.ansible
 /container/home/builder/.vault/vlt**
 /container/home/builder/.ssh/known_hosts**
+/container/home/builder/.ssh/config**
 /custom/**
 /personal/**
 /roles

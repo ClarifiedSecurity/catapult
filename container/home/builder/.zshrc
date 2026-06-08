@@ -128,6 +128,11 @@ if [[ ! -f /tmp/first-run ]]; then
     sudo chmod 775 /ssh-agent
     sudo chown "${CONTAINER_USER_ID}":"$(id -g)" /ssh-agent
 
+    # Creating an empty ssh config file
+    if [[ ! -f ~/.ssh/config ]]; then
+        touch ~/.ssh/config
+    fi
+
     ################################
     # FIRST RUN ENTRYPOINT SCRIPTS #
     ################################
