@@ -40,31 +40,48 @@ function playbook_copy() {
     echo -ne "${C_RST}"
 }
 
+# This function checks if the inventory.ini or inventory.yml file exists in the selected project folder and if it does then moves it to inventory folder.
+# This is needed to migrate from static inventory file to dynamic inventory folder structure.
+# This function will be executed on every project selection to make sure the migration is done for all projects.
+function migrate_inventory() {
+
+    if [[ -d "$selected_folder/inventory" ]]; then
+        echo -ne
+    else
+        echo -e "${C_YELLOW}"
+        echo -e "Migrating ${C_CYAN}inventory.ini${C_YELLOW} and ${C_CYAN}inventory.yml${C_YELLOW} to ${C_CYAN}$selected_folder/inventory${C_YELLOW} folder..."
+        mkdir -p "$selected_folder/inventory"
+        if [[ -f "$selected_folder/inventory.ini" ]]; then
+            mv "$selected_folder/inventory.ini" "$selected_folder/inventory/inventory.ini"
+        fi
+        if [[ -f "$selected_folder/inventory.yml" ]]; then
+            mv "$selected_folder/inventory.yml" "$selected_folder/inventory/inventory.yml"
+        fi
+        echo -e "Don't forget to commit the changes to your repository."
+        echo -ne "${C_RST}"
+    fi
+    echo -ne "${C_RST}"
+}
+
 # This project checks if the current project has a scripts/catapult-project-customizer.sh file.
 # If present then sources it with load parameter on entering the project and with unload parameter on exiting the project.
 function project_customization_loader() {
 
-    if [ -f "$(pwd)/scripts/catapult-project-customizer.sh" ]; then
-
-        echo -n -e "${C_GREEN}"
+    if [[ -f "$(pwd)/scripts/catapult-project-customizer.sh" ]]; then
+        echo -e "${C_GREEN}"
         echo -e "Unloading $(basename "$(pwd)") project customizer..."
-        echo -n -e "${C_RST}"
+        echo -e "${C_RST}"
         # shellcheck disable=SC1091
         source "$(pwd)/scripts/catapult-project-customizer.sh" unload
-
     fi
 
-    if [ -f "$selected_folder/scripts/catapult-project-customizer.sh" ]; then
-
-        echo -n -e "${C_GREEN}"
+    if [[ -f "$selected_folder/scripts/catapult-project-customizer.sh" ]]; then
+        echo -e "${C_GREEN}"
         echo -e "Loading $(basename "$selected_folder") project customizer..."
-        echo -n -e "${C_RST}"
-
+        echo -e "${C_RST}"
         # shellcheck disable=SC1091
         source "$selected_folder/scripts/catapult-project-customizer.sh" load
-
     fi
-
 }
 
 # Function to select inventory
@@ -74,6 +91,7 @@ function inventory_selector() {
         selected_folder=${FOLDERS[1]}
         echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
         playbook_copy
+        migrate_inventory
         project_customization_loader
         # shellcheck disable=SC2164
         cd "$selected_folder"
@@ -96,6 +114,7 @@ function inventory_selector() {
             selected_folder=${FOLDERS[choice]}
             echo -e "Your project's path is: ${C_GREEN}$selected_folder${C_RST}"
             playbook_copy
+            migrate_inventory
             project_customization_loader
             # shellcheck disable=SC2164
             cd "$selected_folder"
