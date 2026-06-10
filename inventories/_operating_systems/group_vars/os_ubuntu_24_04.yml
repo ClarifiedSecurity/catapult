@@ -9,7 +9,6 @@ vm_template: catapult-template-ubuntu2404
 # AWS EC2 Image using owner ID & string lookup because machine IDs are different between regions
 ami_owner_id: "099720109477"
 ami_name_search_string: ubuntu/images/hvm-ssd-gp3/ubuntu-noble*
-aws_template_username: ubuntu
 aws_vm_size: t3.small
 
 # Linode Image curl https://api.linode.com/v4/images | jq
@@ -22,3 +21,10 @@ azure_vm_image:
   publisher: canonical
   sku: server-gen1
   version: latest
+
+# Google Cloud
+google_cloud_machine_type: e2-medium # Default when creating manually
+google_cloud_vm_image: # Values used to lookup the latest image name for the OS
+  path: projects/ubuntu-os-cloud/global/images
+  name: ubuntu-2404-noble-amd64
+  project: ubuntu-os-cloud

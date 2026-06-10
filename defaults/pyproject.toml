@@ -68,6 +68,7 @@ dependencies = [
     "cryptography",
     "dnspython",
     "dpath",
+    "google-auth",
     "hvac",
     "jinja2",
     "jmespath",

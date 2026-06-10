@@ -44,6 +44,10 @@
     # https://docs.ansible.com/projects/ansible/latest/collections/fortinet/fortios/index.html#plugins-in-fortinet-fortios
     group/fortinet.fortios.fortios: "{{ fortios_defaults | default({}) }}"
 
+    # Module defaults for:
+    # https://docs.ansible.com/projects/ansible/latest/collections/google/cloud/index.html#plugins-in-google-cloud
+    group/google.cloud.gcp: "{{ google_cloud_defaults | default({}) }}"
+
   roles:
     - role: nova.core.deploy_vars # Including deployment variables
 

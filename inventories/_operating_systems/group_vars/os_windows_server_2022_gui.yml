@@ -18,3 +18,10 @@ azure_vm_image:
   publisher: microsoftwindowsserver
   sku: 2022-datacenter-g2
   version: latest
+
+# Google Cloud
+google_cloud_machine_type: e2-medium # Default when creating manually
+google_cloud_vm_image: # Values used to lookup the latest image name for the OS
+  path: projects/windows-cloud/global/images
+  name: windows-server-2022-dc
+  project: windows-cloud

@@ -1,2 +1,4 @@
 ---
 customization_method: netplan
+
+aws_template_username: ubuntu

@@ -1,2 +1,4 @@
 ---
 customization_method: networkd
+
+aws_template_username: admin

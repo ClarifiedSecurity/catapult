@@ -50,6 +50,8 @@ collections:
     version: 3.2.0
   - name: fortinet.fortios
     version: 2.5.0
+  - name: google.cloud
+    version: 1.13.0
   - name: kubernetes.core
     version: 6.4.0
   - name: linode.cloud
