@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -n -e "${C_RST}"
+echo -ne "${C_RST}"
 
 function inventory_generator(){
 
@@ -23,22 +23,18 @@ function inventory_generator(){
 }
 
 if [[ -d "$(pwd)/group_vars" ]]; then
-
-    echo -n -e "${C_YELLOW}"
-    echo -e "Generating tab-completable inventory for ${C_CYAN}$(basename "$(pwd)")${C_YELLOW} in the background..."
-    echo -n -e "${C_RST}"
+    echo -ne "${C_GREEN}"
+    echo -e "Generating tab-completable inventory for ${C_CYAN}$(basename "$(pwd)")${C_GREEN} in the background..."
+    echo -ne "${C_RST}"
 
     # Generating tab-completable inventory file
     ( inventory_generator >/dev/null 2>&1 & disown >/dev/null 2>&1 )
 
     # Fetching the latest changes from the remote repository
-    ( GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git fetch > /dev/null 2>&1 2>&1 & disown >/dev/null 2>&1 )
-
+    ( GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git fetch > /dev/null 2>&1 & disown >/dev/null 2>&1 )
 else
-
-    echo -n -e "${C_YELLOW}"
+    echo -ne "${C_YELLOW}"
     echo -e "Cannot generate tab-completable inventory!"
     echo -e "No group_vars folder found in the current directory. Run ${C_CYAN}ctp project select${C_YELLOW} to select a project first."
-    echo -n -e "${C_RST}"
-
+    echo -ne "${C_RST}"
 fi

@@ -48,7 +48,7 @@ function migrate_inventory() {
     if [[ -d "$selected_folder/inventory" ]]; then
         echo -ne
     else
-        echo -e "${C_YELLOW}"
+        echo -ne "${C_YELLOW}"
         echo -e "Migrating ${C_CYAN}inventory.ini${C_YELLOW} and ${C_CYAN}inventory.yml${C_YELLOW} to ${C_CYAN}$selected_folder/inventory${C_YELLOW} folder..."
         mkdir -p "$selected_folder/inventory"
         if [[ -f "$selected_folder/inventory.ini" ]]; then
@@ -68,17 +68,17 @@ function migrate_inventory() {
 function project_customization_loader() {
 
     if [[ -f "$(pwd)/scripts/catapult-project-customizer.sh" ]]; then
-        echo -e "${C_GREEN}"
+        echo -ne "${C_YELLOW}"
         echo -e "Unloading $(basename "$(pwd)") project customizer..."
-        echo -e "${C_RST}"
+        echo -ne "${C_RST}"
         # shellcheck disable=SC1091
         source "$(pwd)/scripts/catapult-project-customizer.sh" unload
     fi
 
     if [[ -f "$selected_folder/scripts/catapult-project-customizer.sh" ]]; then
-        echo -e "${C_GREEN}"
+        echo -ne "${C_YELLOW}"
         echo -e "Loading $(basename "$selected_folder") project customizer..."
-        echo -e "${C_RST}"
+        echo -ne "${C_RST}"
         # shellcheck disable=SC1091
         source "$selected_folder/scripts/catapult-project-customizer.sh" load
     fi
@@ -122,9 +122,9 @@ function inventory_selector() {
 
         else
 
-            echo -n -e "${C_RED}"
+            echo -ne "${C_RED}"
             echo "Invalid project selection."
-            echo -n -e "${C_RST}"
+            echo -ne "${C_RST}"
             # shellcheck disable=SC2164
             cd /srv
 

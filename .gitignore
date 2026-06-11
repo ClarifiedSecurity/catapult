@@ -4,17 +4,18 @@
 *.retry
 *.swp
 **/__pycache__/**
-/.idea
 /.ansible
-/container/home/builder/.vault/vlt**
-/container/home/builder/.ssh/known_hosts**
+/.idea
 /container/home/builder/.ssh/config**
+/container/home/builder/.ssh/known_hosts**
+/container/home/builder/.vault/vlt**
 /custom/**
 /personal/**
 /roles
 /roles_core
 ansible/**
 container/home/builder/.*history
+defaults/.env
 node_modules
 sync-to-shared-roles.sh
 # Since this list is parsed in order, the deny (!) needs to be after allow for the same folder

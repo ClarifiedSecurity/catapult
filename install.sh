@@ -25,7 +25,7 @@ if [ $EUID -eq 0 ]; then
     echo -e "${C_RST}"
 else
     # This is to ask sudo password only once at the beginning of the script
-    sudo -SE echo -n ""
+    sudo -S echo -n ""
 fi
 
 # Creating .makerc-personal file if it doesn't exist
@@ -166,12 +166,12 @@ if [[ $(uname) == "Linux" ]]; then
             echo -e "Installing required deb packages..."
             echo -n -e "${C_RST}"
 
-            sudo -E apt-get update
+            sudo apt-get update
             # shellcheck disable=SC2068,SC2086
-            sudo -E apt-get install $PACKAGES -y
+            sudo apt-get install $PACKAGES -y
 
             if [ -n "$WSL_DISTRO_NAME" ]; then
-                sudo -E apt-get install keychain -y
+                sudo apt-get install keychain -y
             fi
         }
 
@@ -214,7 +214,7 @@ if [[ $(uname) == "Linux" ]]; then
             echo -n -e "${C_RST}"
 
             # shellcheck disable=SC2086
-            sudo -E pacman -S $PACKAGES --noconfirm
+            sudo pacman -S $PACKAGES --noconfirm
         }
 
         echo -e "${C_GREEN}"
@@ -255,9 +255,9 @@ if [[ $(uname) == "Linux" ]]; then
             echo -e "Installing required rhel packages..."
             echo -n -e "${C_RST}"
 
-            sudo -E dnf makecache
+            sudo dnf makecache
             # shellcheck disable=SC2086
-            sudo -E dnf install $PACKAGES -y
+            sudo dnf install $PACKAGES -y
         }
 
         echo -e "${C_GREEN}"

@@ -8,11 +8,11 @@ ARG TZ
 ENV TZ=$TZ
 RUN ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone
 
-ARG CONTAINER_USER_ID
-ARG CONTAINER_GROUP_ID
+ARG MAKEVAR_CONTAINER_USER_ID
+ARG MAKEVAR_CONTAINER_GROUP_ID
 
-ENV CONTAINER_USER_ID=${CONTAINER_USER_ID:-1000}
-ENV CONTAINER_GROUP_ID=${CONTAINER_GROUP_ID:-1000}
+ENV MAKEVAR_CONTAINER_USER_ID=${MAKEVAR_CONTAINER_USER_ID:-1000}
+ENV MAKEVAR_CONTAINER_GROUP_ID=${MAKEVAR_CONTAINER_GROUP_ID:-1000}
 ENV ANSIBLE_CONFIG=/srv/ansible.cfg
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
@@ -25,7 +25,7 @@ RUN sed -i 's/^UMASK[[:space:]]*[0-9]\+/UMASK        002/' /etc/login.defs
 
 RUN mkdir -p /etc/sudoers.d
 RUN echo "builder     ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder
-RUN groupadd builder -g ${CONTAINER_GROUP_ID} && useradd -u ${CONTAINER_USER_ID} -g builder -m -d /home/builder -s /bin/bash -c "Builder user" builder
+RUN groupadd builder -g ${MAKEVAR_CONTAINER_GROUP_ID} && useradd -u ${MAKEVAR_CONTAINER_USER_ID} -g builder -m -d /home/builder -s /bin/bash -c "Builder user" builder
 RUN chown -R builder:builder /srv
 
 ADD --chown=builder:builder /container/home/builder/.default_aliases /srv/container/home/builder/.default_aliases

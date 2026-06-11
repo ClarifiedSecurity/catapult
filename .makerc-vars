@@ -15,7 +15,7 @@ MAKEVAR_TZ :=UTC
 MAKEVAR_ALLOW_HOST_SSH_ACCESS :=false
 
 # If you are not using sudo you can leave this empty, MacOS for an example
-MAKEVAR_SUDO_COMMAND :=sudo -E
+MAKEVAR_SUDO_COMMAND :=sudo
 
 # This repo is used to store your customizations for Catapult
 # Make sure to follow the correct folder and file structure defined in the Catapult README under customization section

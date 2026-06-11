@@ -126,7 +126,7 @@ if [[ ! -f /tmp/first-run ]]; then
     # Making sure that /ssh-agent has the correct permissions
     # Required mostly for MacOS and Linux with non 1000 user host
     sudo chmod 775 /ssh-agent
-    sudo chown "${CONTAINER_USER_ID}":"$(id -g)" /ssh-agent
+    sudo chown "${MAKEVAR_HOST_USER_ID}":"$(id -g)" /ssh-agent
 
     # Creating an empty ssh config file
     if [[ ! -f ~/.ssh/config ]]; then

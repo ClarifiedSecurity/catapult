@@ -5,6 +5,16 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
+# Fixing personal Docker compose file service names
+if [[ -d "${MAKEVAR_ROOT_DIR}/personal" ]]; then
+    while IFS= read -r -d '' personal_file; do
+        if grep -q "\${CONTAINER_PROJECT_NAME}" "$personal_file"; then
+            sed -i.bak "s/\${CONTAINER_PROJECT_NAME}/\${MAKEVAR_CONTAINER_PROJECT_NAME}/g" "$personal_file"
+            rm -f "${personal_file}.bak"
+        fi
+    done < <(find "${MAKEVAR_ROOT_DIR}/personal" -type f -print0)
+fi
+
 # Checking if Docker is installed
 if ! [[ -x "$(command -v docker)" ]]; then
 
@@ -40,7 +50,7 @@ if [[ $(uname) == "Darwin" ]]; then
 
         echo -n -e "${C_YELLOW}"
         echo "Setting correct SSH_AUTH_SOCK for MacOS..."
-        export HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+        export MAKEVAR_HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
         echo -n -e "${C_RST}"
 
     # If not the default one then some type of password manager is likely being used, so we will just use the SSH_AUTH_SOCK from the environment variable
@@ -48,7 +58,7 @@ if [[ $(uname) == "Darwin" ]]; then
 
         echo -n -e "${C_YELLOW}"
         echo "Using SSH_AUTH_SOCK from environment variable for MacOS..."
-        export HOST_SSH_AUTH_SOCK="${SSH_AUTH_SOCK}"
+        export MAKEVAR_HOST_SSH_AUTH_SOCK="${SSH_AUTH_SOCK}"
         echo -n -e "${C_RST}"
 
     fi
@@ -59,13 +69,13 @@ if [[ $(uname) == "Linux" ]]; then
 
     echo -n -e "${C_YELLOW}"
     echo "Setting correct SSH_AUTH_SOCK for Linux..."
-    export HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
+    export MAKEVAR_HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
     echo -n -e "${C_RST}"
 fi
 
 # Setting empty variables for if the custom compose file or ARA compose file is not used
-DEFAULT_COMPOSE_FILE="-f ${ROOT_DIR}/defaults/docker-compose.yml"
-PERSONAL_COMPOSE_FILE="-f ${ROOT_DIR}/personal/docker-compose-personal.yml"
+DEFAULT_COMPOSE_FILE="-f ${MAKEVAR_ROOT_DIR}/defaults/docker-compose.yml"
+PERSONAL_COMPOSE_FILE="-f ${MAKEVAR_ROOT_DIR}/personal/docker-compose-personal.yml"
 START_WITH_CUSTOM_COMPOSE=""
 START_WITH_ARA=""
 
@@ -78,20 +88,24 @@ fi
 
 # Also using custom Docker compose file if it exists
 if [[ -r custom/docker/docker-compose-custom.yml ]]; then
-    START_WITH_CUSTOM_COMPOSE="-f ${ROOT_DIR}/custom/docker/docker-compose-custom.yml"
+    START_WITH_CUSTOM_COMPOSE="-f ${MAKEVAR_ROOT_DIR}/custom/docker/docker-compose-custom.yml"
 fi
 
 if [[ "$MAKEVAR_ARA_ENABLE" == 1 ]]; then
-    START_WITH_ARA="-f ${ROOT_DIR}/defaults/docker-compose-ara.yml"
+    START_WITH_ARA="-f ${MAKEVAR_ROOT_DIR}/defaults/docker-compose-ara.yml"
 fi
 
-# Printing logo
-echo "${LOGO}" | base64 -d
+# Printing MAKEVAR_LOGO
+echo "${MAKEVAR_LOGO}" | base64 -d
+
+# Saving all MAKEVAR_ env variables to defaults/.env for
+# Docker Compose to use as defaults and for the customizer to use as well
+env | grep ^MAKEVAR_ | sort > "${MAKEVAR_ROOT_DIR}/defaults/.env"
 
 if [[ $1 == "stop" || $1 == "restart" ]]; then
 
     echo -n -e "${C_YELLOW}"
-    echo -e Removing existing "${CONTAINER_NAME} container(s)..."
+    echo -e Removing existing "${MAKEVAR_CONTAINER_NAME} container(s)..."
     echo -n -e "${C_RST}"
 
     # Looking up all containers in the project
@@ -115,23 +129,23 @@ if [[ $1 == "stop" || $1 == "restart" ]]; then
     fi
 fi
 
-if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -qx "$CONTAINER_NAME"; then
+if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -qx "$MAKEVAR_CONTAINER_NAME"; then
 
     echo -n -e "${C_GREEN}"
-    echo -e "Connecting to running ${CONTAINER_NAME} container..."
-    ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
+    echo -e "Connecting to running ${MAKEVAR_CONTAINER_NAME} container..."
+    ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${MAKEVAR_CONTAINER_NAME}" "${MAKEVAR_CONTAINER_ENTRYPOINT}"
     echo -n -e "${C_RST}"
 
 else
 
     # Running customizer
-    "${ROOT_DIR}/scripts/general/catapult-customizer.sh"
+    "${MAKEVAR_ROOT_DIR}/scripts/general/catapult-customizer.sh"
 
     # Running checks
     # shellcheck disable=SC1091
-    . "${ROOT_DIR}/scripts/general/checks.sh"
+    . "${MAKEVAR_ROOT_DIR}/scripts/general/checks.sh"
     # shellcheck disable=SC1091
-    . "${ROOT_DIR}/scripts/general/update-catapult.sh"
+    . "${MAKEVAR_ROOT_DIR}/scripts/general/update-catapult.sh"
 
     # This is to prevent errors from changed files from updating
     if [[ $CATAPULT_UPDATED == 1 ]]; then
@@ -168,15 +182,15 @@ else
         fi
     done
 
-    if [[ $(uname) == "Linux" && "${CONTAINER_USER_ID}" != 1000 ]]; then
+    if [[ $(uname) == "Linux" && "${MAKEVAR_HOST_USER_ID}" != 1000 ]]; then
         # Checking if the local Docker image already exists
-        if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker --context default images -q "${IMAGE_FULL}") ]]; then
+        if [[ -z $(${MAKEVAR_SUDO_COMMAND} docker --context default images -q "${MAKEVAR_IMAGE_FULL}") ]]; then
             echo -ne "${C_YELLOW}"
             echo -e "Since the user is not 1000 (id -u), the Docker image will be built locally..."
             echo -e "Building Catapult Docker image..."
             echo -ne "${C_RST}"
             # shellcheck disable=SC2086
-            ${ROOT_DIR}/scripts/general/build.sh
+            ${MAKEVAR_ROOT_DIR}/scripts/general/build.sh
         fi
     fi
 
@@ -188,8 +202,11 @@ else
     ${PERSONAL_COMPOSE_FILE} \
     up --detach --force-recreate --remove-orphans --no-build
 
-    ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${CONTAINER_NAME}" "${CONTAINER_ENTRYPOINT}"
+    ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${MAKEVAR_CONTAINER_NAME}" "${MAKEVAR_CONTAINER_ENTRYPOINT}"
 
 fi
+
+# Remooving the .env file after the container has started
+rm -f "${MAKEVAR_ROOT_DIR}/defaults/.env"
 
 echo -n -e "${C_RST}"
