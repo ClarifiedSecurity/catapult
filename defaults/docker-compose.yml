@@ -1,11 +1,11 @@
 ---
-name: ${CONTAINER_PROJECT_NAME}
+name: ${MAKEVAR_CONTAINER_PROJECT_NAME}
 services:
   catapult:
     tty: true
-    image: ${IMAGE_FULL}
-    container_name: ${CONTAINER_NAME}
-    hostname: ${CONTAINER_NAME}
+    image: ${MAKEVAR_IMAGE_FULL}
+    container_name: ${MAKEVAR_CONTAINER_NAME}
+    hostname: ${MAKEVAR_CONTAINER_NAME}
     network_mode: host
     restart: no
     pids_limit: 4096
@@ -18,38 +18,33 @@ services:
       - /tmp
       - /var/tmp
     volumes:
-      - $HOME/.gitconfig:/home/builder/.gitconfig
-      - ${ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
-      - ${ROOT_DIR}/container/home/builder/.vault:/home/builder/.vault
-      - ${ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
-      - ${ROOT_DIR}/container/home/builder/.history:/home/builder/.history
-      - ${ROOT_DIR}/:/srv/
-      - ${HOST_SSH_AUTH_SOCK}:/ssh-agent
+      - ${MAKEVAR_HOST_USER_HOME}/.gitconfig:/home/builder/.gitconfig
+      - ${MAKEVAR_ROOT_DIR}/container/home/builder/.zshrc:/home/builder/.zshrc
+      - ${MAKEVAR_ROOT_DIR}/container/home/builder/.vault:/home/builder/.vault
+      - ${MAKEVAR_ROOT_DIR}/container/home/builder/.ssh/:/home/builder/.ssh/
+      - ${MAKEVAR_ROOT_DIR}/container/home/builder/.history:/home/builder/.history
+      - ${MAKEVAR_ROOT_DIR}/:/srv/
+      - ${MAKEVAR_HOST_SSH_AUTH_SOCK}:/ssh-agent
     environment:
       ALLOW_HOST_SSH_ACCESS: ${MAKEVAR_ALLOW_HOST_SSH_ACCESS}
       CATAPULT: 1 # This is used to check if the deployment is running in a Catapult container
-      CONTAINER_GROUP_ID: ${CONTAINER_GROUP_ID}
-      CONTAINER_GROUP_NAME: ${CONTAINER_GROUP_NAME}
-      CONTAINER_USER_ID: ${CONTAINER_USER_ID}
-      CONTAINER_USER_NAME: ${CONTAINER_USER_NAME}
-      DISPLAY: ${DISPLAY}
+      MAKEVAR_ARA_ENABLE: ${MAKEVAR_ARA_ENABLE}
       MAKEVAR_AUTO_UPDATE: ${MAKEVAR_AUTO_UPDATE}
       MAKEVAR_CATAPULT_VERSION: ${MAKEVAR_CATAPULT_VERSION}
-      MAKEVAR_ARA_ENABLE: ${MAKEVAR_ARA_ENABLE}
       MAKEVAR_FREEZE_UPDATE: ${MAKEVAR_FREEZE_UPDATE}
       MAKEVAR_HOST_OS: ${MAKEVAR_HOST_OS}
+      MAKEVAR_HOST_USERNAME: ${MAKEVAR_HOST_USERNAME}
       MAKEVAR_NOVA_CORE_VERSION: ${MAKEVAR_NOVA_CORE_VERSION}
       SLACK_CHANNEL: ${MAKEVAR_WEBHOOK_CHANNEL}
       SLACK_USERNAME: ${MAKEVAR_WEBHOOK_USERNAME}
       SLACK_WEBHOOK_URL: ${MAKEVAR_WEBHOOK_URL}
       SSH_AUTH_SOCK: /ssh-agent
       TZ: ${MAKEVAR_TZ}
-      USER: ${CONTAINER_USER_NAME}
-      XDG_SESSION_TYPE: ${XDG_SESSION_TYPE}
+      USER: ${MAKEVAR_HOST_USERNAME}
 
       # ARA Settings (If ARA is enabled)
-      ARA_RECORD_CONTROLLER_NAME: ${ARA_RECORD_CONTROLLER_NAME}
-      ARA_RECORD_USER_NAME: ${ARA_RECORD_USER_NAME}
+      MAKEVAR_ARA_RECORD_CONTROLLER_NAME: ${MAKEVAR_ARA_RECORD_CONTROLLER_NAME}
+      MAKEVAR_ARA_RECORD_USERNAME: ${MAKEVAR_ARA_RECORD_USERNAME}
       ARA_CALLBACK_THREADS: 4
       ARA_API_CLIENT: http
       ARA_API_SERVER: http://127.0.0.1:8000
@@ -63,7 +58,7 @@ services:
 
     extra_hosts:
       - host.docker.internal:host-gateway
-      - ${CONTAINER_NAME}:127.0.1.1
+      - ${MAKEVAR_CONTAINER_NAME}:127.0.1.1
     logging:
       driver: json-file
       options:
