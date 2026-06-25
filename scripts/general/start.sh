@@ -18,9 +18,9 @@ fi
 # Checking if Docker is installed
 if ! [[ -x "$(command -v docker)" ]]; then
 
-    echo -n -e "${C_RED}"
+    echo -ne "${C_RED}"
     echo -e "Docker not found did you run ${C_CYAN}./install.sh${C_RED} first!"
-    echo -n -e "${C_RST}"
+    echo -ne "${C_RST}"
     exit 1
 
 fi
@@ -31,13 +31,13 @@ CURRENT_DOCKER_MAJOR_VERSION=$(docker --version | awk '{print $3}' | cut -d '.' 
 
 if [[ "$CURRENT_DOCKER_MAJOR_VERSION" -lt "$MINIMUM_DOCKER_MAJOR_VERSION" ]]; then
 
-    echo -n -e "${C_RED}"
+    echo -ne "${C_RED}"
     echo
     echo -e "Current Docker major version ${C_CYAN}$CURRENT_DOCKER_MAJOR_VERSION${C_RED} is too old!"
     echo -e "Minimum required Docker major version is ${C_CYAN}$MINIMUM_DOCKER_MAJOR_VERSION${C_RED}"
     echo -e "Your can run ${C_CYAN}./install.sh${C_RED} to install the latest Docker version for your OS."
     echo
-    echo -n -e "${C_RST}"
+    echo -ne "${C_RST}"
     exit 1
 
 fi
@@ -48,18 +48,18 @@ if [[ $(uname) == "Darwin" ]]; then
     # Checking if SSH_AUTH_SOCK is the default MacOS socket in /private/tmp
     if [[ "$SSH_AUTH_SOCK" == */private/tmp/* ]]; then
 
-        echo -n -e "${C_YELLOW}"
+        echo -ne "${C_YELLOW}"
         echo "Setting correct SSH_AUTH_SOCK for MacOS..."
         export MAKEVAR_HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
-        echo -n -e "${C_RST}"
+        echo -ne "${C_RST}"
 
     # If not the default one then some type of password manager is likely being used, so we will just use the SSH_AUTH_SOCK from the environment variable
     else
 
-        echo -n -e "${C_YELLOW}"
+        echo -ne "${C_YELLOW}"
         echo "Using SSH_AUTH_SOCK from environment variable for MacOS..."
         export MAKEVAR_HOST_SSH_AUTH_SOCK="${SSH_AUTH_SOCK}"
-        echo -n -e "${C_RST}"
+        echo -ne "${C_RST}"
 
     fi
 
@@ -67,10 +67,10 @@ fi
 
 if [[ $(uname) == "Linux" ]]; then
 
-    echo -n -e "${C_YELLOW}"
+    echo -ne "${C_YELLOW}"
     echo "Setting correct SSH_AUTH_SOCK for Linux..."
     export MAKEVAR_HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
-    echo -n -e "${C_RST}"
+    echo -ne "${C_RST}"
 fi
 
 # Setting empty variables for if the custom compose file or ARA compose file is not used
@@ -104,9 +104,9 @@ env | grep ^MAKEVAR_ | sort > "${MAKEVAR_ROOT_DIR}/defaults/.env"
 
 if [[ $1 == "stop" || $1 == "restart" ]]; then
 
-    echo -n -e "${C_YELLOW}"
+    echo -ne "${C_YELLOW}"
     echo -e Removing existing "${MAKEVAR_CONTAINER_NAME} container(s)..."
-    echo -n -e "${C_RST}"
+    echo -ne "${C_RST}"
 
     # Looking up all containers in the project
     # shellcheck disable=SC2086
@@ -131,10 +131,10 @@ fi
 
 if ${MAKEVAR_SUDO_COMMAND} docker --context default ps --format "{{ .Names }}" | grep -qx "$MAKEVAR_CONTAINER_NAME"; then
 
-    echo -n -e "${C_GREEN}"
+    echo -ne "${C_GREEN}"
     echo -e "Connecting to running ${MAKEVAR_CONTAINER_NAME} container..."
     ${MAKEVAR_SUDO_COMMAND} docker --context default exec -it "${MAKEVAR_CONTAINER_NAME}" "${MAKEVAR_CONTAINER_ENTRYPOINT}"
-    echo -n -e "${C_RST}"
+    echo -ne "${C_RST}"
 
 else
 
@@ -150,9 +150,9 @@ else
     # This is to prevent errors from changed files from updating
     if [[ $CATAPULT_UPDATED == 1 ]]; then
 
-        echo -n -e "${C_GREEN}"
+        echo -ne "${C_GREEN}"
         echo -e "Run ${C_CYAN}make start${C_GREEN} again to start the container..."
-        echo -n -e "${C_RST}"
+        echo -ne "${C_RST}"
         exit 0
 
     fi
@@ -194,6 +194,16 @@ else
         fi
     fi
 
+    if [[ "${MAKEVAR_ARA_ENABLE}" == "1" && "${MAKEVAR_ARA_LOCALHOST_ONLY}" == "1" ]]; then
+        echo -ne "${C_YELLOW}"
+        echo -e "ARA is enabled, you can access the ARA web interface at: ${C_CYAN}http://localhost:8000${C_YELLOW}"
+        echo -ne "${C_RST}"
+    elif [[ "${MAKEVAR_ARA_ENABLE}" == "1" && "${MAKEVAR_ARA_LOCALHOST_ONLY}" == "0" ]]; then
+        echo -ne "${C_YELLOW}"
+        echo -e "ARA is enabled, you can access over port 8000 on the host machine's IP address"
+        echo -ne "${C_RST}"
+    fi
+
     # shellcheck disable=SC2086
     ${MAKEVAR_SUDO_COMMAND} docker --context default compose \
     ${DEFAULT_COMPOSE_FILE} \
@@ -206,7 +216,7 @@ else
 
 fi
 
-# Remooving the .env file after the container has started
+# Removing the .env file after the container has started
 rm -f "${MAKEVAR_ROOT_DIR}/defaults/.env"
 
-echo -n -e "${C_RST}"
+echo -ne "${C_RST}"

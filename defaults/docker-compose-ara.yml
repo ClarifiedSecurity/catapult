@@ -13,7 +13,7 @@ services:
   catapult-ara:
     <<: *defaults
     image: recordsansible/ara-api:latest
-    MAKEVAR_CONTAINER_NAME: ${MAKEVAR_CONTAINER_NAME}-ara
+    container_name: ${MAKEVAR_CONTAINER_NAME}-ara
     hostname: ${MAKEVAR_CONTAINER_NAME}-ara
     environment:
       ARA_ALLOWED_HOSTS: '["*"]' # Allowing all connections to web application MAKEVAR_ARA_LOCALHOST_ONLY can be used to restrict to localhost only
@@ -35,7 +35,7 @@ services:
   catapult-postgres:
     <<: *defaults
     image: postgres:18-alpine
-    MAKEVAR_CONTAINER_NAME: ${MAKEVAR_CONTAINER_NAME}-postgres
+    container_name: ${MAKEVAR_CONTAINER_NAME}-postgres
     hostname: ${MAKEVAR_CONTAINER_NAME}-postgres
     environment:
       POSTGRES_DB: ara

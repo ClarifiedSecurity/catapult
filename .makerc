@@ -36,11 +36,11 @@ MAKEVAR_BUILD_ARGS := --build-arg MAKEVAR_CONTAINER_USER_ID=${MAKEVAR_HOST_USER_
 
 # Random generated secret key for ARA
 # It will be used as username and password for database connection
+MAKEVAR_ARA_SECRET_KEY :=$(shell openssl rand -hex 12)
 MAKEVAR_ARA_DATABASE_PASSWORD :=${MAKEVAR_ARA_SECRET_KEY}
 MAKEVAR_ARA_DATABASE_USERNAME :=${MAKEVAR_ARA_SECRET_KEY}
 MAKEVAR_ARA_RECORD_CONTROLLER_NAME :=${MAKEVAR_CONTAINER_NAME}
 MAKEVAR_ARA_RECORD_USERNAME :=${MAKEVAR_HOST_USERNAME}
-MAKEVAR_ARA_SECRET_KEY :=$(shell openssl rand -hex 12)
 
 # Setting the bind addresses based on whether to listen on localhost only or all interfaces
 ifeq (${MAKEVAR_ARA_LOCALHOST_ONLY}, 1)
