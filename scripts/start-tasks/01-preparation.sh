@@ -8,5 +8,7 @@ source ./scripts/general/colors.sh
 # Creating required files and folders to avoid errors
 mkdir -p ./container/home/builder/.history
 mkdir -p ./personal/certificates
+mkdir -p ansible
+
 touch ./personal/.personal_aliases
 touch "$HOME/.gitconfig"
