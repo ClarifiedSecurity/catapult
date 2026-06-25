@@ -54,3 +54,5 @@ build:
 .PHONY: print-variables
 print-variables:
 	@env | grep ^MAKEVAR_ | sort
+	@docker --version
+	@ssh -V
