@@ -52,10 +52,10 @@ function migrate_inventory() {
         echo -e "Migrating ${C_CYAN}inventory.ini${C_YELLOW} and ${C_CYAN}inventory.yml${C_YELLOW} to ${C_CYAN}$selected_folder/inventory${C_YELLOW} folder..."
         mkdir -p "$selected_folder/inventory"
         if [[ -f "$selected_folder/inventory.ini" ]]; then
-            mv "$selected_folder/inventory.ini" "$selected_folder/inventory/inventory.ini"
+            mv "$selected_folder/inventory.ini" "$selected_folder/inventory/02_inventory.ini"
         fi
         if [[ -f "$selected_folder/inventory.yml" ]]; then
-            mv "$selected_folder/inventory.yml" "$selected_folder/inventory/inventory.yml"
+            mv "$selected_folder/inventory.yml" "$selected_folder/inventory/01_inventory.yml"
         fi
         echo -e "Don't forget to commit the changes to your repository."
         echo -ne "${C_RST}"
