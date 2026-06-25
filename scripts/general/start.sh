@@ -98,19 +98,21 @@ fi
 # Printing MAKEVAR_LOGO
 echo "${MAKEVAR_LOGO}" | base64 -d
 
-# Saving all MAKEVAR_ env variables to defaults/.env for
-# Docker Compose to use as defaults and for the customizer to use as well
-env | grep ^MAKEVAR_ | sort > "${MAKEVAR_ROOT_DIR}/defaults/.env"
+# Getting a list of all MAKEVAR_ environment variables to use with Docker Compose commands
+sudo_env=()
+while IFS= read -r makevar_env; do
+    sudo_env+=("$makevar_env")
+done < <(env | grep '^MAKEVAR_' | sort)
 
 if [[ $1 == "stop" || $1 == "restart" ]]; then
 
     echo -ne "${C_YELLOW}"
-    echo -e Removing existing "${MAKEVAR_CONTAINER_NAME} container(s)..."
+    echo -e "Removing existing ${MAKEVAR_CONTAINER_NAME} container(s)..."
     echo -ne "${C_RST}"
 
     # Looking up all containers in the project
     # shellcheck disable=SC2086
-    COMPOSE_PROJECT_CONTAINERS=$(${MAKEVAR_SUDO_COMMAND} docker --context default compose \
+    COMPOSE_PROJECT_CONTAINERS=$(${MAKEVAR_SUDO_COMMAND} env "${sudo_env[@]}" docker --context default compose \
     ${DEFAULT_COMPOSE_FILE} \
     ${START_WITH_ARA} \
     ${START_WITH_CUSTOM_COMPOSE} \
@@ -205,7 +207,7 @@ else
     fi
 
     # shellcheck disable=SC2086
-    ${MAKEVAR_SUDO_COMMAND} docker --context default compose \
+    ${MAKEVAR_SUDO_COMMAND} env "${sudo_env[@]}" docker --context default compose \
     ${DEFAULT_COMPOSE_FILE} \
     ${START_WITH_ARA} \
     ${START_WITH_CUSTOM_COMPOSE} \
