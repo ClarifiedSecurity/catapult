@@ -45,8 +45,8 @@ fi
 # Setting correct SSH_AUTH_SOCK for MacOS and Linux
 if [[ $(uname) == "Darwin" ]]; then
 
-    # Checking if SSH_AUTH_SOCK is the default MacOS socket in /private/tmp
-    if [[ "$SSH_AUTH_SOCK" == */private/tmp/* ]]; then
+    # Checking if SSH_AUTH_SOCK is the default MacOS socket
+    if [[ "$SSH_AUTH_SOCK" == */private/tmp/* || "$SSH_AUTH_SOCK" == /var/run/com.apple.launchd.*/Listeners ]]; then
 
         echo -ne "${C_YELLOW}"
         echo "Setting correct SSH_AUTH_SOCK for MacOS..."
