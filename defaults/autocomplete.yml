@@ -240,6 +240,6 @@ autocomplete:
           subcommand_to_execute: unset ANSIBLE_CALLBACKS_ENABLED && echo 'Timing disabled'
         - subcommand_name: reset-completion
           subcommand_description: Resets tab completion commands and regenerates them
-          subcommand_to_execute: rm ~/autocomplete.zsh
+          subcommand_to_execute: rm -f ~/autocomplete.zsh
             && /srv/scripts/general/autocomplete_generator.py
             && . $HOME/autocomplete.zsh
