@@ -3,7 +3,7 @@
 set -e # exit when any command fails
 
 sudo apt update
-sudo apt install -y gcc # Required for compiling some Python packages
+sudo apt install -y --no-install-recommends gcc # Required for compiling some Python packages
 
 ##############################
 # Python virtual environment #

@@ -10,7 +10,10 @@ setcap cap_net_raw+ep /bin/ping # Allow non-root users to use ping
 sed -i 's/^# *\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen # Uncomment the en_US.UTF-8 locale in the locale.gen file
 locale-gen # Generate UTF-8 locale
 
-apt upgrade -y
+# Installing Orchard
+curl -LsSf https://github.com/openai/orchard/releases/latest/download/orchard-linux-amd64 -o /usr/local/bin/orchard
+chmod +x /usr/local/bin/orchard
+
 apt autoremove -y
 apt autoclean -y
 
