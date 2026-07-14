@@ -2,3 +2,5 @@
 # Accounts
 admin_account: root
 template_username: "{{ admin_account }}"
+orchard_template_username: admin
+orchard_template_password: admin # Default value that comes with the pre-built images

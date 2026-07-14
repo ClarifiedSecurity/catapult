@@ -5,3 +5,6 @@ base_vm_template: BASE_TEMPLATE_fedora_server
 
 # vCenter Template name
 vm_template: catapult-template-fedora-server
+
+# Orchard image
+orchard_vm_image: ghcr.io/cirruslabs/fedora:latest

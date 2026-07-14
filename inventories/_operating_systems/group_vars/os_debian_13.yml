@@ -20,3 +20,6 @@ google_cloud_vm_image: # Values used to lookup the latest image name for the OS
   path: projects/debian-cloud/global/images
   name: debian-13-trixie
   project: debian-cloud
+
+# Orchard image
+orchard_vm_image: ghcr.io/cirruslabs/debian:trixie
