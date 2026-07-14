@@ -11,3 +11,8 @@ template_username: "{{ admin_account }}"
 
 # Network
 customization_method: macos
+
+# Orchard image
+orchard_vm_image: ghcr.io/cirruslabs/macos-tahoe-base:latest
+orchard_template_username: admin
+orchard_template_password: admin # Default value that comes with the pre-built images
