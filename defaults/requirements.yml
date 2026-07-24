@@ -11,7 +11,7 @@ collections:
   - name: ansible.mysql
     version: 5.2.0
   - name: ansible.netcommon
-    version: 8.6.0
+    version: 8.6.1
   - name: ansible.posix
     version: 2.2.2
   - name: ansible.utils
@@ -65,7 +65,7 @@ collections:
   - name: openstack.cloud
     version: 2.4.1
   - name: paloaltonetworks.panos
-    version: 3.4.0
+    version: 3.4.1
   - name: vmware.vmware_rest
     version: 4.11.0
   - name: vmware.vmware
