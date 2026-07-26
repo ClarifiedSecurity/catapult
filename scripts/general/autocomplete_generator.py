@@ -112,11 +112,12 @@ _host_completion () {
 			_ansible_hosts=( ${(f)"$(cat "/tmp/$hosts_completion_file")"} )
 			compadd -M 'l:|=* r:|=*' -qS: -a _ansible_hosts
         else
-            (( _ctp_completion_warned )) || {
+            if (( ! _ctp_completion_warned )); then
                 _ctp_completion_warned=1
-                echo -e "\nProject inventory missing! Use \\x1b[96mctp project select\\x1b[0m to generate it."
-            }
-            return
+                echo -ne "\nProject inventory missing! Wait until it's generated in the background or run \\x1b[96mctp project update-inventory\\x1b[0m to re-generate it manually."
+                zle -U $'\\C-g'
+            fi
+            return 1
         fi
     fi
 }
@@ -128,8 +129,12 @@ _role_completion () {
         _roles=( ${(f)"$(cat "/tmp/$roles_completion_file")"} )
         compadd -M 'l:|=* r:|=*' -a _roles
     else
-        echo -e "Tab completable role list missing! Use \\x1b[96mctp project select\\x1b[0m to generate it."
-        return
+        if (( ! _ctp_completion_warned )); then
+            _ctp_completion_warned=1
+            echo -ne "\nTab completable role list missing! Wait until it's generated in the background or run \\x1b[96mctp project update-inventory\\x1b[0m to re-generate it manually."
+            zle -U $'\\C-g'
+        fi
+        return 1
     fi
 }
 
