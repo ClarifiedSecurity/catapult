@@ -152,6 +152,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
         if [[ "$MAKEVAR_AUTO_UPDATE" == 1 ]]; then
 
             echo -n -e "${C_YELLOW}"
+            echo -e "Current Catapult version is $LOCAL_VERSION"
             echo -e "Catapult version $REMOTE_VERSION is available, updating automatically..."
             if [[ "$LOCAL_BRANCH" == "main" ]]; then
                 echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
@@ -162,6 +163,7 @@ if [[ "$MAKEVAR_FREEZE_UPDATE" != 1 ]]; then
         else
 
             echo -e "${C_YELLOW}"
+            echo -e "Current Catapult version is $LOCAL_VERSION"
             echo -e "Catapult version ${C_CYAN}$REMOTE_VERSION${C_YELLOW} is available, do you want to update?"
             if [[ "$LOCAL_BRANCH" == "main" ]]; then
                 echo -e "Changelog: https://github.com/ClarifiedSecurity/catapult/releases/tag/v$REMOTE_VERSION"
