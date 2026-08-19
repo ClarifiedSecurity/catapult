@@ -1,4 +1,10 @@
 ---
+# Template created with Packer or manually
+# Used only to create project templates from
+base_vm_template: BASE_TEMPLATE_panos
+
+vm_template: catapult-template-panos
+
 # Accounts
 admin_account: admin
 template_username: "{{ admin_account }}"
