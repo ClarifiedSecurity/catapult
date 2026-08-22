@@ -114,8 +114,9 @@ _host_completion () {
         else
             if (( ! _ctp_completion_warned )); then
                 _ctp_completion_warned=1
-                echo -ne "\nProject inventory missing! Wait until it's generated in the background or run \\x1b[96mctp project update-inventory\\x1b[0m to re-generate it manually."
-                zle -U $'\\C-g'
+                zle -I
+                print -P "Project inventory missing! Wait until it's generated in the background or run %F{cyan}ctp project update-inventory%f to re-generate it manually."
+                zle -R
             fi
             return 1
         fi
@@ -131,8 +132,9 @@ _role_completion () {
     else
         if (( ! _ctp_completion_warned )); then
             _ctp_completion_warned=1
-            echo -ne "\nTab completable role list missing! Wait until it's generated in the background or run \\x1b[96mctp project update-inventory\\x1b[0m to re-generate it manually."
-            zle -U $'\\C-g'
+            zle -I
+            print -P "Tab completable role list missing! Wait until it's generated in the background or run %F{cyan}ctp project update-inventory%f to re-generate it manually."
+            zle -R
         fi
         return 1
     fi
