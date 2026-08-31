@@ -17,6 +17,7 @@ dependencies = [
     "azure-identity",
     "azure-keyvault",
     "azure-mgmt-apimanagement",
+    "azure-mgmt-appcontainers",
     "azure-mgmt-authorization",
     "azure-mgmt-automation",
     "azure-mgmt-batch",
@@ -40,20 +41,20 @@ dependencies = [
     "azure-mgmt-keyvault",
     "azure-mgmt-loganalytics",
     "azure-mgmt-managedservices",
-    "azure-mgmt-managementgroups==1.1.0b2", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L36
+    "azure-mgmt-managementgroups==1.1.0b2", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt
     "azure-mgmt-marketplaceordering",
     "azure-mgmt-monitor",
     "azure-mgmt-mysqlflexibleservers",
-    "azure-mgmt-network==28.0.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L44
+    "azure-mgmt-network==28.0.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt
     "azure-mgmt-notificationhubs",
     "azure-mgmt-nspkg",
     "azure-mgmt-postgresqlflexibleservers",
     "azure-mgmt-privatedns",
     "azure-mgmt-rdbms",
     "azure-mgmt-recoveryservices",
-    "azure-mgmt-recoveryservicesbackup==9.1.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L44
+    "azure-mgmt-recoveryservicesbackup==9.1.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt
     "azure-mgmt-redis",
-    "azure-mgmt-resource==23.2.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt#L46
+    "azure-mgmt-resource==23.2.0", # https://github.com/ansible-collections/azure/blob/dev/requirements.txt
     "azure-mgmt-resourcehealth",
     "azure-mgmt-search",
     "azure-mgmt-servicebus",
@@ -67,7 +68,7 @@ dependencies = [
     "bcrypt==4.3.0", # https://foss.heptapod.net/python-libs/passlib/-/issues/196
     "boto3",
     "botocore",
-    "cryptography",
+    "cryptography>=50",
     "dnspython",
     "dpath",
     "google-auth",
@@ -93,6 +94,7 @@ dependencies = [
     "polling",
     "prettytable",
     "proxmoxer",
+    "psutil>=7", # Needed for Cryptography 50+  to build on MacOS
     "psycopg2-binary",
     "pyopenssl",
     "pyvmomi",
