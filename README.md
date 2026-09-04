@@ -26,6 +26,7 @@ Catapult supports VM creation and configuration on:
 - AWS EC2
 - Azure
 - Linode
+- Google Cloud
 - Proxmox
 - vSphere
 - OpenStack (limited and experimental support)
