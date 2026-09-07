@@ -42,6 +42,9 @@ if [[ "$CURRENT_DOCKER_MAJOR_VERSION" -lt "$MINIMUM_DOCKER_MAJOR_VERSION" ]]; th
 
 fi
 
+# Printing MAKEVAR_LOGO
+echo "${MAKEVAR_LOGO}" | base64 -d
+
 # Setting correct SSH_AUTH_SOCK for MacOS and Linux
 if [[ $(uname) == "Darwin" ]]; then
 
@@ -94,9 +97,6 @@ fi
 if [[ "$MAKEVAR_ARA_ENABLE" == 1 ]]; then
     START_WITH_ARA="-f ${MAKEVAR_ROOT_DIR}/defaults/docker-compose-ara.yml"
 fi
-
-# Printing MAKEVAR_LOGO
-echo "${MAKEVAR_LOGO}" | base64 -d
 
 # Getting a list of all MAKEVAR_ environment variables to use with Docker Compose commands
 sudo_env=()
