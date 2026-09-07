@@ -2,8 +2,10 @@
 
 echo -n -e "${C_GREEN}"
 
-REPO_OWNER="${MAKEVAR_NOVA_CORE_REPO_OWNER}"
-REPO_VERSION="${MAKEVAR_NOVA_CORE_VERSION}"
+# Default values are set so CD pipelines would need less configuration to run.
+REPO_OWNER="${MAKEVAR_NOVA_CORE_REPO_OWNER:-ClarifiedSecurity}"
+REPO_VERSION="${MAKEVAR_NOVA_CORE_VERSION:-${MAKEVAR_CATAPULT_VERSION:-main}}"
+
 COLLECTION_GIT_URL="https://github.com/$REPO_OWNER/nova.core.git"
 COLLECTION_NAME="nova.core"
 REMOTE_VERSION_URL="https://raw.githubusercontent.com/$REPO_OWNER/nova.core/$REPO_VERSION/nova/core/galaxy.yml"
