@@ -94,7 +94,7 @@ dependencies = [
     "polling",
     "prettytable",
     "proxmoxer",
-    "psutil>=7", # Needed for Cryptography 50+  to build on MacOS
+    "psutil>=7", # Needed for Cryptography 50+ to build on MacOS
     "psycopg2-binary",
     "pyopenssl",
     "pyvmomi",
