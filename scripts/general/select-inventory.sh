@@ -143,7 +143,7 @@ function inventory_selector() {
 
     else
 
-        echo "No projects found in /srv/inventories or project does not have .git folder."
+        echo "No projects found in /srv/inventories"
 
     fi
 
