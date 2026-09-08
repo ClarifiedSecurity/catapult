@@ -3,12 +3,23 @@
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
+# Inventory selection script for Catapult.
+# This script is used to select the inventory folder for the current project.
+# It will search for all inventory folders in /srv/inventories and
+# if any of them contains .yml, .yaml or .ini files then it will be added to the list of available projects.
 SEARCH_DIR="/srv/inventories"
-SEARCH_FOLDER=".git"
 FOLDERS=()
 while IFS= read -r line; do
   FOLDERS+=("$line")
-done < <(find -L "$SEARCH_DIR" \( -type d -o -type l -o -type f \) -name "$SEARCH_FOLDER" -exec dirname {} \; | sort)
+done < <(
+  find -L "$SEARCH_DIR" -type d -name "inventory" -exec sh -c '
+    for dir do
+      if find -L "$dir" -maxdepth 1 \( -name "*.yml" -o -name "*.yaml" -o -name "*.ini" \) -print -quit | grep -q .; then
+        printf "%s\n" "$(dirname "$dir")"
+      fi
+    done
+  ' sh {} + 2>/dev/null | sort -u
+)
 
 #--------------------End of variables, start of script--------------------#
 
