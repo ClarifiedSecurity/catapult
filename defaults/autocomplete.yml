@@ -98,6 +98,29 @@ autocomplete:
           subcommand_description: Run deploy-role on failed machines based on playbook.retry file
           subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only=true -l @playbook.retry "$@"
 
+    - command: network
+      description: Commands for provisioning environment networks
+      hosts_as_arguments: false
+      subcommands:
+        - subcommand_name: plan
+          subcommand_description: Shows Proxmox SDN zones, VNets and subnets that would be managed from Providentia
+          subcommand_to_execute:
+            ANSIBLE_STRATEGY=linear ANSIBLE_SERIAL=100% ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt
+            -e=deploy_mode=deploy -e pre_role=nova.core.proxmox_networks
+            -e proxmox_networks_mode=plan -e deploy_vars_get_vault_token=false "$@"
+        - subcommand_name: deploy
+          subcommand_description: Creates missing Proxmox SDN zones, VNets and subnets from Providentia
+          subcommand_to_execute:
+            ANSIBLE_STRATEGY=linear ANSIBLE_SERIAL=100% ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt
+            -e=deploy_mode=deploy -e pre_role=nova.core.proxmox_networks
+            -e proxmox_networks_mode=deploy -e deploy_vars_get_vault_token=false "$@"
+        - subcommand_name: sync
+          subcommand_description: Creates and updates Proxmox SDN zones, VNets and subnets from Providentia
+          subcommand_to_execute:
+            ANSIBLE_STRATEGY=linear ANSIBLE_SERIAL=100% ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt
+            -e=deploy_mode=deploy -e pre_role=nova.core.proxmox_networks
+            -e proxmox_networks_mode=sync -e deploy_vars_get_vault_token=false "$@"
+
     - command: vm
       description: Commands for configuring hosts on an hypervisor level
       hosts_as_arguments: true

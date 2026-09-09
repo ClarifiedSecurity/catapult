@@ -332,6 +332,35 @@ _Example usage:_
 ctp host deploy-network <inventory_hostname>
 ```
 
+### ctp network plan
+
+Shows the Proxmox SDN zones, VNets and subnets that Catapult would manage from
+the Providentia network definitions. This does not change Proxmox. The command
+runs once with Ansible's linear strategy regardless of the normal deployment
+strategy.
+
+```zsh
+ctp network plan
+```
+
+### ctp network deploy
+
+Creates missing Proxmox SDN zones, VNets and subnets from Providentia. Existing
+VNets are used as-is and are not updated by this command.
+
+```zsh
+ctp network deploy
+```
+
+### ctp network sync
+
+Creates missing Proxmox SDN resources and updates existing zones, VNets and
+subnets to match Providentia.
+
+```zsh
+ctp network sync
+```
+
 ### ctp host deploy-fresh
 
 Runs deploy as if the machine does not exist. This can be useful when deploy has failed before configuring accounts. Use this command to deploy the machine again as if it didn't exist and thus use the default values for the accounts.
