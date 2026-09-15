@@ -11,11 +11,11 @@ collections:
   - name: ansible.mysql
     version: 5.2.0
   - name: ansible.netcommon
-    version: 8.6.2
+    version: 8.7.1
   - name: ansible.posix
     version: 2.2.2
   - name: ansible.utils
-    version: 6.1.0
+    version: 6.1.1
   - name: ansible.windows
     version: 3.8.0
   - name: azure.azcollection
@@ -23,7 +23,7 @@ collections:
   - name: chocolatey.chocolatey
     version: 1.6.0
   - name: cisco.ios
-    version: 11.5.1
+    version: 11.6.0
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
@@ -40,12 +40,14 @@ collections:
     version: 1.1.5
   - name: community.postgresql
     version: 5.0.0
-  - name: community.proxmox
-    version: 2.0.0
+  # TEMP lock to hash since has a fix for https://github.com/ansible-collections/community.proxmox/issues/521
+  - name: https://github.com/ansible-collections/community.proxmox.git
+    version: b195b998a387aafea90d43116fb0c03eecee3a45
+    type: git
   - name: community.routeros
     version: 3.22.0
   - name: community.vmware
-    version: 6.4.0
+    version: 6.5.0
   - name: community.windows
     version: 3.3.0
   - name: fortinet.fortios
@@ -67,10 +69,9 @@ collections:
   - name: paloaltonetworks.panos
     version: 3.4.1
   - name: vmware.vmware_rest
-    version: 4.11.0
-  - name: https://github.com/ClarifiedSecurity/vmware.vmware.git
-    type: git
-    version: action_groups
+    version: 5.0.0
+  - name: vmware.vmware
+    version: 2.11.0
   - name: vyos.vyos
     version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
