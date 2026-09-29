@@ -19,7 +19,7 @@ collections:
   - name: ansible.windows
     version: 3.8.0
   - name: azure.azcollection
-    version: 4.0.0
+    version: 4.1.0
   - name: chocolatey.chocolatey
     version: 1.6.0
   - name: cisco.ios
@@ -27,23 +27,21 @@ collections:
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
-    version: 11.1.0
+    version: 11.2.0
   - name: community.crypto
-    version: 3.4.0
+    version: 3.5.0
   - name: community.docker
-    version: 5.3.0
+    version: 5.4.0
   - name: community.general
-    version: 13.4.0
+    version: 13.5.0
   - name: community.hashi_vault
     version: 7.1.0
   - name: community.library_inventory_filtering_v1
     version: 1.1.5
   - name: community.postgresql
     version: 5.0.0
-  # TEMP lock to hash since has a fix for https://github.com/ansible-collections/community.proxmox/issues/521
-  - name: https://github.com/ansible-collections/community.proxmox.git
-    version: b195b998a387aafea90d43116fb0c03eecee3a45
-    type: git
+  - name: community.proxmox
+    version: 2.1.0
   - name: community.routeros
     version: 3.22.0
   - name: community.vmware
@@ -53,7 +51,7 @@ collections:
   - name: fortinet.fortios
     version: 2.6.0
   - name: google.cloud
-    version: 1.13.0
+    version: 1.15.0
   - name: kubernetes.core
     version: 6.6.0
   - name: linode.cloud
