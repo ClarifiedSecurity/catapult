@@ -89,6 +89,9 @@ fi
 export ANSIBLE_VAULT_PASSWORD_FILE=$HOME/.vault/unlock-vault.sh
 bash /srv/scripts/general/secrets-unlock.sh
 
+# Creating SSH ControlPath directory
+mkdir -p /tmp/.ssh-control-path
+
 # Running first run tasks
 if [[ ! -f /tmp/first-run ]]; then
 
