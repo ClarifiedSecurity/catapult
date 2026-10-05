@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -n -e "${C_YELLOW}"
+echo -ne "${C_YELLOW}"
 
 cp ~/.vault/vlt /tmp/vlt.yml
 ansible-vault decrypt /tmp/vlt.yml
@@ -15,11 +15,14 @@ else
 
     while [[ -n $(yamllint /tmp/vlt.yml -c ~/.vault/yamllint-config.yml) ]]; do
 
-        echo -e "Vault not matching to the YAML syntax rules - https://yamllint.readthedocs.io/en/stable/rules.html"
-        echo -e "Please fix the following syntax errors in the vault:"
+        echo -e "The vault does not follow the YAML syntax rules."
+        echo -e "https://yamllint.readthedocs.io/en/stable/rules.html"
+        echo
+        echo -e "The messages below show what needs fixing and on which lines."
+        echo -e "Fix these issues before continuing."
         yamllint /tmp/vlt.yml -c ~/.vault/yamllint-config.yml
         read -rp "Press ENTER to open and edit the vault or press Ctrl + C to cancel"
-        nano /tmp/vlt.yml
+        ${EDITOR} /tmp/vlt.yml
 
     done
 
