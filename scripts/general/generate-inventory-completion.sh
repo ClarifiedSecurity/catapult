@@ -9,7 +9,28 @@ function inventory_generator(){
     mkdir -p "${COMPLETION_DIR}"
 
     # For some reason some Ansible commands cannot detect the vault file from an environment variable
-    ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$(pwd)")_hosts"
+    # The awk script walks the --graph tree (indentation = depth) and buffers each group until a host is found below it, so empty groups never get printed
+    ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | awk '
+        {
+            match($0, /^[ |-]*/)
+            name = substr($0, RLENGTH + 1)
+            depth = gsub(/\|/, "", $0)
+            if (substr(name, 1, 1) == "@") {
+                sub(/^@/, "", name)
+                sub(/:$/, "", name)
+                pending[depth] = name
+                printed[depth] = 0
+            } else {
+                for (d = 0; d < depth; d++) {
+                    if (pending[d] != "" && !printed[d]) {
+                        print pending[d]
+                        printed[d] = 1
+                    }
+                }
+                print name
+            }
+        }
+    ' | sort | uniq > "${COMPLETION_DIR}/$(basename "$(pwd)")_hosts"
 
     ############################################################################################
     # Generating the tab-completable roles list based on local roles and installed collections #
