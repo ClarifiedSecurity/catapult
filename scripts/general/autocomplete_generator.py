@@ -4,15 +4,14 @@ import yaml
 import jinja2
 import os
 
-
 def _zsh_dq_escape(s):
     return s.replace('\\', '\\\\').replace("'", "\\'").replace('\n', '\\n')
-
 
 autocomplete_default_src_path = '/srv/defaults/autocomplete.yml'
 autocomplete_custom_src_path = '/srv/custom/autocomplete.yml'
 autocomplete_personal_src_path = '/srv/personal/autocomplete.yml'
 autocomplete_script_path = '/home/builder/autocomplete.zsh'
+autocomplete_completion_dir = '/tmp/catapult_completion'
 
 with open(autocomplete_default_src_path, 'r') as file:
     data = yaml.safe_load(file)
@@ -108,8 +107,8 @@ _host_completion () {
         compset -P '*[,:](|[&!~])'
         compset -S '[:,]*'
 
-        if [[ -s "/tmp/$hosts_completion_file" ]]; then
-			_ansible_hosts=( ${(f)"$(cat "/tmp/$hosts_completion_file")"} )
+        if [[ -s "{{ autocomplete_completion_dir }}/$hosts_completion_file" ]]; then
+			_ansible_hosts=( ${(f)"$(cat "{{ autocomplete_completion_dir }}/$hosts_completion_file")"} )
 			compadd -M 'l:|=* r:|=*' -qS: -a _ansible_hosts
         else
             if (( ! _ctp_completion_warned )); then
@@ -126,8 +125,8 @@ _host_completion () {
 _role_completion () {
     roles_completion_file="$(basename "$(pwd)")_roles"
 
-    if [[ -f "/tmp/$roles_completion_file" ]]; then
-        _roles=( ${(f)"$(cat "/tmp/$roles_completion_file")"} )
+    if [[ -f "{{ autocomplete_completion_dir }}/$roles_completion_file" ]]; then
+        _roles=( ${(f)"$(cat "{{ autocomplete_completion_dir }}/$roles_completion_file")"} )
         compadd -M 'l:|=* r:|=*' -a _roles
     else
         if (( ! _ctp_completion_warned )); then
@@ -259,7 +258,7 @@ add-zsh-hook precmd _ctp_precmd_reset_warned
 
 template = jinja2.Template(jinja_template, lstrip_blocks=True, trim_blocks=True, autoescape=True)
 
-rendered_script = template.render(autocomplete=data['autocomplete'])
+rendered_script = template.render(autocomplete=data['autocomplete'], autocomplete_completion_dir=autocomplete_completion_dir)
 
 with open(autocomplete_script_path, 'w') as file:
     file.write(rendered_script)

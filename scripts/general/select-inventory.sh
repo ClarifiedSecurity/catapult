@@ -3,6 +3,10 @@
 # shellcheck disable=SC1091
 source /srv/scripts/general/colors.sh
 
+# Creating completion folder
+COMPLETION_DIR="/tmp/catapult_completion"
+mkdir -p "${COMPLETION_DIR}"
+
 # Inventory selection script for Catapult.
 # This script is used to select the inventory folder for the current project.
 # It will search for all inventory folders in /srv/inventories and
@@ -129,7 +133,7 @@ function inventory_selector() {
             project_customization_loader
             # shellcheck disable=SC2164
             cd "$selected_folder"
-            touch "/tmp/$(basename "$selected_folder")_hosts" # This is to avoid completion errors if the inventory_generator function fails
+            touch "${COMPLETION_DIR}/$(basename "$selected_folder")_hosts" # This is to avoid completion errors if the inventory_generator function fails
 
         else
 

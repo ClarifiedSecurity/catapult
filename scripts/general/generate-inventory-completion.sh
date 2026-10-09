@@ -4,6 +4,10 @@ echo -ne "${C_RST}"
 
 function inventory_generator(){
 
+    # Creating completion folder
+    COMPLETION_DIR="/tmp/catapult_completion"
+    mkdir -p "${COMPLETION_DIR}"
+
     # For some reason some Ansible commands cannot detect the vault file from an environment variable
     ansible-inventory --playbook-dir /srv/inventories -e @/home/builder/.vault/vlt --graph | sed 's/[|@:]*//g' | sed 's/--//g' | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$(pwd)")_hosts"
 
@@ -18,7 +22,7 @@ function inventory_generator(){
     INSTALLED_COLLECTION_ROLES="$(find /srv/ansible/ansible_collections -name main.yml -exec dirname {} \; | sed 's/\/[^\/]*$//' | awk -F'/ansible_collections/' '{print $2}' | sed 's|/roles/|.|; s|/|.|g' | sort | uniq)"
 
     # Combining the two lists sorting items by name and saving to file
-    echo -e "${PROJECT_ROLES}\n${INSTALLED_COLLECTION_ROLES}" | sed 's/^[ \t]*//' | sort | uniq > "/tmp/$(basename "$(pwd)")_roles"
+    echo -e "${PROJECT_ROLES}\n${INSTALLED_COLLECTION_ROLES}" | sed 's/^[ \t]*//' | sort | uniq > "${COMPLETION_DIR}/$(basename "$(pwd)")_roles"
 
 }
 
