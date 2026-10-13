@@ -7,7 +7,7 @@ roles: []
 
 collections:
   - name: amazon.aws
-    version: 11.4.0
+    version: 12.0.0
   - name: ansible.mysql
     version: 5.2.0
   - name: ansible.netcommon
@@ -27,7 +27,7 @@ collections:
   - name: cloud.common
     version: 3.0.0
   - name: community.aws
-    version: 11.2.0
+    version: 12.0.0
   - name: community.crypto
     version: 3.5.0
   - name: community.docker
@@ -55,7 +55,7 @@ collections:
   - name: kubernetes.core
     version: 6.6.0
   - name: linode.cloud
-    version: 0.50.0
+    version: 0.51.0
   - name: microsoft.ad
     version: 1.12.1
   - name: microsoft.iis
@@ -69,7 +69,7 @@ collections:
   - name: vmware.vmware_rest
     version: 5.0.0
   - name: vmware.vmware
-    version: 2.11.0
+    version: 2.12.0
   - name: vyos.vyos
     version: 5.0.0
   - name: https://github.com/vmware/ansible-for-nsxt.git
