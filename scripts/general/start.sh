@@ -5,76 +5,11 @@ set -e # exit when any command fails
 # shellcheck disable=SC1091
 source ./scripts/general/colors.sh
 
-# Fixing personal Docker compose file service names
-if [[ -d "${MAKEVAR_ROOT_DIR}/personal" ]]; then
-    while IFS= read -r -d '' personal_file; do
-        if grep -q "\${CONTAINER_PROJECT_NAME}" "$personal_file"; then
-            sed -i.bak "s/\${CONTAINER_PROJECT_NAME}/\${MAKEVAR_CONTAINER_PROJECT_NAME}/g" "$personal_file"
-            rm -f "${personal_file}.bak"
-        fi
-    done < <(find "${MAKEVAR_ROOT_DIR}/personal" -type f -print0)
-fi
-
-# Checking if Docker is installed
-if ! [[ -x "$(command -v docker)" ]]; then
-
-    echo -ne "${C_RED}"
-    echo -e "Docker not found did you run ${C_CYAN}./install.sh${C_RED} first!"
-    echo -ne "${C_RST}"
-    exit 1
-
-fi
-
-# Checking for minimum Docker version
-MINIMUM_DOCKER_MAJOR_VERSION="27"
-CURRENT_DOCKER_MAJOR_VERSION=$(docker --version | awk '{print $3}' | cut -d '.' -f 1)
-
-if [[ "$CURRENT_DOCKER_MAJOR_VERSION" -lt "$MINIMUM_DOCKER_MAJOR_VERSION" ]]; then
-
-    echo -ne "${C_RED}"
-    echo
-    echo -e "Current Docker major version ${C_CYAN}$CURRENT_DOCKER_MAJOR_VERSION${C_RED} is too old!"
-    echo -e "Minimum required Docker major version is ${C_CYAN}$MINIMUM_DOCKER_MAJOR_VERSION${C_RED}"
-    echo -e "Your can run ${C_CYAN}./install.sh${C_RED} to install the latest Docker version for your OS."
-    echo
-    echo -ne "${C_RST}"
-    exit 1
-
-fi
+# shellcheck disable=SC1091
+source "${MAKEVAR_ROOT_DIR}/scripts/general/checks.sh"
 
 # Printing MAKEVAR_LOGO
 echo "${MAKEVAR_LOGO}" | base64 -d
-
-# Setting correct SSH_AUTH_SOCK for MacOS and Linux
-if [[ $(uname) == "Darwin" ]]; then
-
-    # Checking if SSH_AUTH_SOCK is the default MacOS socket
-    if [[ "$SSH_AUTH_SOCK" == */private/tmp/* || "$SSH_AUTH_SOCK" == /var/run/com.apple.launchd.*/Listeners ]]; then
-
-        echo -ne "${C_YELLOW}"
-        echo "Setting correct SSH_AUTH_SOCK for MacOS..."
-        export MAKEVAR_HOST_SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
-        echo -ne "${C_RST}"
-
-    # If not the default one then some type of password manager is likely being used, so we will just use the SSH_AUTH_SOCK from the environment variable
-    else
-
-        echo -ne "${C_YELLOW}"
-        echo "Using SSH_AUTH_SOCK from environment variable for MacOS..."
-        export MAKEVAR_HOST_SSH_AUTH_SOCK="${SSH_AUTH_SOCK}"
-        echo -ne "${C_RST}"
-
-    fi
-
-fi
-
-if [[ $(uname) == "Linux" ]]; then
-
-    echo -ne "${C_YELLOW}"
-    echo "Setting correct SSH_AUTH_SOCK for Linux..."
-    export MAKEVAR_HOST_SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
-    echo -ne "${C_RST}"
-fi
 
 # Setting empty variables for if the custom compose file or ARA compose file is not used
 DEFAULT_COMPOSE_FILE="-f ${MAKEVAR_ROOT_DIR}/defaults/docker-compose.yml"
@@ -143,9 +78,6 @@ else
     # Running customizer
     "${MAKEVAR_ROOT_DIR}/scripts/general/catapult-customizer.sh"
 
-    # Running checks
-    # shellcheck disable=SC1091
-    . "${MAKEVAR_ROOT_DIR}/scripts/general/checks.sh"
     # shellcheck disable=SC1091
     . "${MAKEVAR_ROOT_DIR}/scripts/general/update-catapult.sh"
 
