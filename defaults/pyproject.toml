@@ -8,6 +8,7 @@ dependencies = [
     "ansible-core==2.21.5",
     "ansible-lint",
     "ansible-pylibssh",
+    "ansible-runner",
     "ansible-specdoc",
     "ara",
     "azure-cli-core",
