@@ -70,7 +70,8 @@ collections:
     version: 5.0.0
   - name: vmware.vmware
     version: 2.12.0
-  - name: vyos.vyos
-    version: 5.0.0
+  - name: https://github.com/ClarifiedSecurity/vyos.vyos.git
+    type: git
+    version: vyos_user_loop_fix
   - name: https://github.com/vmware/ansible-for-nsxt.git
     type: git
