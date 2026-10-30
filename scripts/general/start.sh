@@ -9,7 +9,8 @@ source ./scripts/general/colors.sh
 source "${MAKEVAR_ROOT_DIR}/scripts/general/checks.sh"
 
 # Printing MAKEVAR_LOGO
-echo "${MAKEVAR_LOGO}" | base64 -d
+printf '%b\n' "$(printf '%s' "${MAKEVAR_LOGO}" | base64 -d)"
+echo
 
 # Setting empty variables for if the custom compose file or ARA compose file is not used
 DEFAULT_COMPOSE_FILE="-f ${MAKEVAR_ROOT_DIR}/defaults/docker-compose.yml"
