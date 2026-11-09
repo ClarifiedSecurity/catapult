@@ -68,11 +68,14 @@ install_docker(){
 
     DAEMON_PATH=/etc/docker/daemon.json
 
-    if grep -q -E "ID=(kali|debian|ubuntu|pop)" /etc/os-release; then
+    # shellcheck disable=SC1091
+    . /etc/os-release
+
+    if [[ $ID == "ubuntu" || $ID == "debian" || $ID == "kali" || $ID == "pop" ]]; then
 
       if ! grep -q -r "download.docker.com" /etc/apt/sources.list.d/; then
 
-        if grep -q -E "ID=(ubuntu|pop)" /etc/os-release; then
+        if [[ $ID == "ubuntu" || $ID == "pop" ]]; then
 
           echo -n -e "${C_YELLOW}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
@@ -83,7 +86,7 @@ install_docker(){
           "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
           $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-        elif grep -q "ID=kali" /etc/os-release; then
+        elif [[ $ID == "kali" ]]; then
 
           echo -n -e "${C_YELLOW}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
@@ -92,9 +95,9 @@ install_docker(){
           curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes
           echo \
           "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-          bullseye stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          trixie stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-        elif grep -q "ID=debian" /etc/os-release; then
+        elif [[ $ID == "debian" ]]; then
 
           echo -n -e "${C_YELLOW}"
           echo "Adding Docker repo for $(lsb_release -cs)..."
@@ -109,13 +112,13 @@ install_docker(){
 
       fi
 
-    elif grep -q "arch" /etc/os-release; then
+    elif [[ $ID == "arch" ]]; then
 
       echo -n -e "${C_YELLOW}"
       echo "Docker will be installed with pacman..."
       echo -n -e "${C_RST}"
 
-    elif grep -q rhel /etc/os-release; then
+    elif [[ $ID == "rhel" || $ID == "centos" || $ID == "almalinux" || $ID == "rocky" ]]; then
 
       echo -n -e "${C_YELLOW}"
       echo "Adding Docker repo for RedHat..."
@@ -123,7 +126,7 @@ install_docker(){
 
       dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
 
-    elif grep -q 'ID=fedora' /etc/os-release; then
+    elif [[ $ID == "fedora" ]]; then
 
       echo -n -e "${C_YELLOW}"
       echo "Adding Docker repo for Fedora..."
@@ -133,9 +136,8 @@ install_docker(){
 
     else
 
-      OS_VERSION=$(grep "^ID=" /etc/os-release | cut -d "=" -f2)
       echo -n -e "${C_RED}"
-      echo -e "You are using unsupported or untested (Linux) operating system - ${C_CYAN}${OS_VERSION}${C_RED}. Catapult may still work if you install Docker manually"
+      echo -e "You are using unsupported or untested (Linux) operating system - ${C_CYAN}${ID}${C_RED}. Catapult may still work if you install Docker manually"
       echo -e "You'll need to follow these steps:"
       echo -e
       echo -e "1) Install ${C_YELLOW}Docker engine and Docker compose plugin${C_RED} for your OS from: ${C_YELLOW}https://docs.docker.com/engine/install${C_RED}"
@@ -148,23 +150,23 @@ install_docker(){
     fi
 
     # Installing Docker & required tools
-    if grep -q -E "ID=(kali|debian|ubuntu|pop)" /etc/os-release; then
+    if [[ $ID == "kali" || $ID == "debian" || $ID == "ubuntu" || $ID == "pop" ]]; then
 
       apt-get update
       apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
-      systemctl enable docker.service
+      systemctl enable docker.socket
 
-    elif grep -q "arch" /etc/os-release; then
+    elif [[ $ID == "arch" ]]; then
 
       pacman -S docker docker-compose docker-buildx --noconfirm
       mkdir -p /etc/docker
-      systemctl enable docker.service
+      systemctl enable docker.socket
 
-    elif grep -q -E "(rhel|fedora)" /etc/os-release; then
+    elif [[ $ID == "rhel" || $ID == "fedora" || $ID == "almalinux" || $ID == "rocky" || $ID == "centos" ]]; then
 
       dnf makecache
       dnf install -y --allowerasing docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
-      systemctl enable docker.service
+      systemctl enable docker.socket
 
     fi
 

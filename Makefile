@@ -11,7 +11,7 @@ export
 ## help: List all available make commands with descriptions
 .PHONY: help
 help:
-	@echo ${MAKEVAR_LOGO} | base64 -d
+	@bash -lc 'printf "%b\\n" "$$(printf "%s" "$${MAKEVAR_LOGO}" | base64 -d)"'
 	@echo
 	@sed -nr 's/^##\s+/\t/p' ${MAKEFILE_LIST} | column -t -s ':'
 
