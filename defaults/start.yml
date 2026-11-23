@@ -58,10 +58,12 @@
     # Saving account's passwords to Vault
     - role: nova.core.secrets_to_vault
       when:
-        - save_secrets_to_vault # Requires a running HashiCorp Vault server with LDAP auth enabled
-        - not role_only # Only deploys configuration under roles/vm/role_name and stops
-        - not role_only_wp # wp means with pre/post_vm_role
+        - dm_default
+          or dm_create | bool
+          or dm_base | bool
+          or dm_after_clone | bool
         - not deploy_mode == 'undeploy' # No need to save secrets when undeploying
+        - save_secrets_to_vault # Requires a running HashiCorp Vault server with LDAP auth enabled
 
     - role: nova.core.machine_operations # Creating a VM
 
@@ -78,9 +80,7 @@
     - role: nova.core.accounts # Creating required accounts
       become: "{{ default_ansible_become | default(true) }}"
       become_user: "{{ default_ansible_become_user | default('root') }}"
-      when:
-        - not role_only # Only deploys configuration under roles/vm/role_name and stops
-        - not role_only_wp # wp means with pre/post_vm_role
+      when: dm_default or dm_base | bool or dm_after_clone | bool
 
     - role: nova.core.template_os_configuration # Used for configuring project or env specific templates
       become: "{{ default_ansible_become | default(true) }}"
@@ -90,15 +90,16 @@
     - role: nova.core.os_configuration # Running OS specific configurations
       become: "{{ default_ansible_become | default(true) }}"
       become_user: "{{ default_ansible_become_user | default('root') }}"
-      when:
-        - not role_only # Only deploys configuration under roles/vm/role_name and stops
-        - not role_only_wp # wp means with pre/post_vm_role
+      when: dm_default
+        or dm_base | bool
+        or dm_after_clone | bool
 
     - role: nova.core.customization_pre_vm_role # Including pre_customization role if it exists
       become: "{{ default_ansible_become | default(true) }}"
       become_user: "{{ default_ansible_become_user | default('root') }}"
-      when:
-        - not role_only
+      when: dm_default
+        or dm_after_base | bool
+        or dm_after_clone | bool
 
     - role: nova.core.customization # Including machine specific role if exists
       become: "{{ default_ansible_become | default(true) }}"
@@ -107,8 +108,9 @@
     - role: nova.core.customization_post_vm_role # Including post_customization specific role if exists
       become: "{{ default_ansible_become | default(true) }}"
       become_user: "{{ default_ansible_become_user | default('root') }}"
-      when:
-        - not role_only
+      when: dm_default
+        or dm_after_base | bool
+        or dm_after_clone | bool
 
     - role: nova.core.finalize # Running final & cleanup tasks
       become: "{{ default_ansible_become | default(true) }}"

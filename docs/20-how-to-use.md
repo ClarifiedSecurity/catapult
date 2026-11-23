@@ -80,6 +80,8 @@ ctp project update-inventory
 
 Examples for the commands that are run against the inventory_hostname or group in Ansible. These commands usually interact with the target machines over SSH not the hypervisor or cloud provider APIs. For usage of advanced deploy patterns refer to examples under [ctp host list](#ctp-host-list) command. For more usage of advanced deploy patterns refer Ansible's documentation for [Advanced deploy patterns](https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html)
 
+Most of the deploy commands only run part of the playbook. Refer to the [deploy flow](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html#deployment-tree-with-deploy-modes) for a visual overview of where each command starts and stops.
+
 ### ctp host list
 
 List the inventory_hostnames for the given project, group_var or just to check if the inventory_hostname is valid. This command is useful to use a a pre-check before running any of the other commands. You can make sure that your advanced regex is correct and you don't run the command on the wrong inventory_hostname.
@@ -202,7 +204,7 @@ ctp host ip <inventory_hostname>
 
 ### ctp host deploy
 
-Run the full playbook and creates the VM if it doesn't exist
+Runs the full playbook from start to end and creates the VM if it doesn't exist.
 
 _Example usage:_
 
@@ -214,7 +216,7 @@ ctp host deploy <inventory_hostname>
 
 ### ctp host redeploy
 
-Destroys the existing VM and runs the the `ctp host deploy` command
+Destroys the existing VM and runs the `ctp host deploy` command.
 
 _Example usage:_
 
@@ -224,129 +226,9 @@ _Example usage:_
 ctp host redeploy <inventory_hostname>
 ```
 
-### ctp host deploy-with-mid-snapshot
-
-Deploys the machine, creates a snapshot in the middle of the deployment and then continues with the deployment. You can then use the snapshot to quickly revert to the mid-deployment state instead of redeploying the machine from scratch. This is useful when you are developing the playbook and you want to quickly test the changes without having to wait for the full deployment process. The snapshot is created after the `os_configuration` in the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) of the playbook.
-
-_Example usage:_
-
-- Deploys the VM with the given inventory_hostname and creates a mid-deployment snapshot
-
-```zsh
-ctp host deploy-with-mid-snapshot <inventory_hostname>
-```
-
-### ctp host redeploy-with-mid-snapshot
-
-Destroys the existing VM and runs the the `ctp host deploy-with-mid-snapshot` command. This is useful when you want to redeploy the machine and create a mid-deployment snapshot to quickly revert to the mid-deployment state instead of redeploying the machine from scratch.
-
-_Example usage:_
-
-- Redeploys the VM with the given inventory_hostname and creates a mid-deployment snapshot
-
-```zsh
-ctp host redeploy-with-mid-snapshot <inventory_hostname>
-```
-
-### ctp host deploy-until-configuration
-
-Deploys the machine, stops the play after os_configuration in the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp host deploy-from-configuration` to configure them in the correct order afterwards.
-
-_Example usage:_
-
-- Deploys the VM with the given inventory_hostname and creates a snapshot
-
-```zsh
-ctp host deploy-until-configuration <inventory_hostname>
-```
-
-### ctp host redeploy-until-configuration
-
-Redeploys the machine, stops the play after os_configuration in the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) and creates a snapshot. This is a useful command if you want to create a snapshot of the VM after the OS is installed and configured. You can then use the snapshot to speed up the deployment/development process. You can deploy multiple machines that depend on each other in parallel and use the `ctp host deploy-from-configuration` to configure them in the correct order afterwards.
-
-_Example usage:_
-
-- Redeploys the VM with the given inventory_hostname and creates a snapshot
-
-```zsh
-ctp host redeploy-until-configuration <inventory_hostname>
-```
-
-### ctp host deploy-from-configuration
-
-Starts the play from `/srv/<project_name>/pre_vm_role` of the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) of the playbook and runs until the end. This is a useful command during mass deploy when you have run the `ctp host deploy-until-configuration` first and then you want to configure the cloned machines. Should anything go wrong you can always revert to the snapshot and start again.
-
-_Example usage:_
-
-- Starts configuring the VM with the given inventory_hostname from the pre_vm_role.
-
-```zsh
-ctp host deploy-from-configuration <inventory_hostname>
-```
-
-### ctp host deploy-role
-
-Runs only the `/srv/<project_name>/vm/<role_name>` part of the [deployment tree](https://clarifiedsecurity.github.io/catapult-docs/catapult/00-overview.html) of the playbook and then stops. This is a useful during role developing and or when you want to minimize the time it takes to configure something.
-
-_Example usage:_
-
-- Only runs the role for inventory_hostname and then stops the play can also be used against all or group_var
-
-```zsh
-ctp host deploy-role <inventory_hostname>
-```
-
-### ctp host deploy-single-role
-
-Runs only the role defined as the first parameter and then stops. The role `role path or FQCN` is tab-completable based on installed collections and roles in the project. This is a useful command when you want to run a specific role for a given inventory_hostname (or group) and then stop the play.
-
-_Example usage:_
-
-- Run a specific role for a given inventory_hostname (or group) and the stops play
-
-```zsh
-ctp host deploy-single-role <role path or FQCN> <inventory_hostname>
-```
-
-### ctp host deploy-pre-role
-
-Runs only the pre_role defined as the first parameter and then stops. The role `role path or FQCN` is tab-completable based on installed collections and roles in the project. This is a useful command when you want to run a specific role for a given inventory_hostname (or group) and then stop the play. The difference between `ctp host deploy-single-role` and `ctp host deploy-pre-role` is that the `ctp host deploy-pre-role` the the pre_role never connects to the target machine and runs the role from localhost. This is useful when interacting with the hypervisor, cloud provider or APIs.
-
-_Example usage:_
-
-- Run a specific role for a given inventory_hostname (or group) and the stops play
-
-```zsh
-ctp host deploy-pre-role <role path or FQCN> <inventory_hostname>
-```
-
-### ctp host deploy-network
-
-Runs ctp host deploy and also includes networks configuration role
-
-_Example usage:_
-
-- Deploys the VM with the given inventory_hostname and also configures the networks
-
-```zsh
-ctp host deploy-network <inventory_hostname>
-```
-
-### ctp host deploy-fresh
-
-Runs deploy as if the machine does not exist. This can be useful when deploy has failed before configuring accounts. Use this command to deploy the machine again as if it didn't exist and thus use the default values for the accounts.
-
-_Example usage:_
-
-- Deploys the VM with the given inventory_hostname as if it didn't exist
-
-```zsh
-ctp host deploy-fresh <inventory_hostname>
-```
-
 ### ctp host remove
 
-Destroys the existing VM
+Destroys the existing VM and stops.
 
 _Example usage:_
 
@@ -354,6 +236,150 @@ _Example usage:_
 
 ```zsh
 ctp host remove <inventory_hostname>
+```
+
+### ctp host deploy-to-clone
+
+Runs `ctp host deploy` and stops once the VM is cloned and its network is configured. Useful for testing or debugging the clone and network configuration process. Continue the deployment later with `ctp host deploy-from-clone`.
+
+_Example usage:_
+
+- Clones the VM with the given inventory_hostname and configures its network
+
+```zsh
+ctp host deploy-to-clone <inventory_hostname>
+```
+
+### ctp host redeploy-to-clone
+
+Destroys the existing VM and runs the `ctp host deploy-to-clone` command.
+
+_Example usage:_
+
+- Redeploys the VM with the given inventory_hostname until it's cloned and the network is configured
+
+```zsh
+ctp host redeploy-to-clone <inventory_hostname>
+```
+
+### ctp host deploy-to-base
+
+Runs `ctp host deploy` until the base configuration (accounts, hostname, OS settings, etc.) is applied, creates the `Pre-customization` snapshot and then stops. You can then revert to the snapshot to speed up the development process. You can also deploy multiple machines that depend on each other in parallel and use `ctp host deploy-from-base` to configure them in the correct order afterwards.
+
+_Example usage:_
+
+- Deploys the VM with the given inventory_hostname until the base configuration and creates a snapshot
+
+```zsh
+ctp host deploy-to-base <inventory_hostname>
+```
+
+### ctp host redeploy-to-base
+
+Destroys the existing VM and runs the `ctp host deploy-to-base` command.
+
+_Example usage:_
+
+- Redeploys the VM with the given inventory_hostname until the base configuration and creates a snapshot
+
+```zsh
+ctp host redeploy-to-base <inventory_hostname>
+```
+
+### ctp host deploy-from-clone
+
+Starts the play from an already cloned VM (for example after `ctp host deploy-to-clone`) and runs until the end, including the base configuration. The VM itself is not modified.
+
+_Example usage:_
+
+- Configures the existing VM with the given inventory_hostname from start to end
+
+```zsh
+ctp host deploy-from-clone <inventory_hostname>
+```
+
+### ctp host deploy-from-base
+
+Starts the play after the base configuration is applied (for example after `ctp host deploy-to-base`) and runs until the end. Should anything go wrong you can revert to the `Pre-customization` snapshot and start again.
+
+_Example usage:_
+
+- Configures the VM with the given inventory_hostname starting from the pre_vm_role
+
+```zsh
+ctp host deploy-from-base <inventory_hostname>
+```
+
+### ctp host deploy-with-network
+
+Runs the full `ctp host deploy` and also reconfigures the VM's network settings. By default the network is only configured on the first deploy, so use this when the network configuration of an existing VM has changed in the inventory.
+
+_Example usage:_
+
+- Deploys the VM with the given inventory_hostname and reconfigures its network
+
+```zsh
+ctp host deploy-with-network <inventory_hostname>
+```
+
+### ctp host deploy-with-mid-snap
+
+Runs the full `ctp host deploy` but creates the `Pre-customization` snapshot once the base configuration is applied and then continues. You can later revert to that snapshot and use `ctp host deploy-from-base` instead of redeploying the machine from scratch.
+
+_Example usage:_
+
+- Deploys the VM with the given inventory_hostname and creates a mid-deployment snapshot
+
+```zsh
+ctp host deploy-with-mid-snap <inventory_hostname>
+```
+
+### ctp host redeploy-with-mid-snap
+
+Destroys the existing VM and runs the `ctp host deploy-with-mid-snap` command.
+
+_Example usage:_
+
+- Redeploys the VM with the given inventory_hostname and creates a mid-deployment snapshot
+
+```zsh
+ctp host redeploy-with-mid-snap <inventory_hostname>
+```
+
+### ctp host deploy-pre-role
+
+Runs only the role given as the first argument and then stops. The role (path or FQCN) is tab-completable based on the collections and roles installed in the project. The role is run right after the deployment variables are loaded and never connects to the target machine, so it runs from localhost. This is useful when interacting with the hypervisor, cloud provider or APIs.
+
+_Example usage:_
+
+- Runs a specific role for the given inventory_hostname (or group) from localhost and stops the play
+
+```zsh
+ctp host deploy-pre-role <role path or FQCN> <inventory_hostname>
+```
+
+### ctp host deploy-role
+
+Connects to the machine, runs only the `/srv/<project_name>/vm/<role_name>` role and then stops. This is useful during role development or when you want to minimize the time it takes to configure something.
+
+_Example usage:_
+
+- Only runs the machine's role for the given inventory_hostname (or group) and stops the play
+
+```zsh
+ctp host deploy-role <inventory_hostname>
+```
+
+### ctp host deploy-single-role
+
+Connects to the machine, runs only the role given as the first argument and then stops. The role (path or FQCN) is tab-completable based on the collections and roles installed in the project. Use `ctp host deploy-pre-role` instead if the role should run from localhost without connecting to the machine.
+
+_Example usage:_
+
+- Runs a specific role on the given inventory_hostname (or group) and stops the play
+
+```zsh
+ctp host deploy-single-role <role path or FQCN> <inventory_hostname>
 ```
 
 ### ctp host rebuild-linode-vm
@@ -404,44 +430,57 @@ _Example usage:_
 ctp host console <inventory_hostname>
 ```
 
+### Deprecated deploy commands
+
+The following commands still work but will be removed in the future. Use the new commands instead.
+
+| Deprecated command                       | Use instead                    |
+| ---------------------------------------- | ------------------------------ |
+| `ctp host deploy-network`                | `ctp host deploy-with-network` |
+| `ctp host deploy-until-configuration`    | `ctp host deploy-to-base`      |
+| `ctp host redeploy-until-configuration`  | `ctp host redeploy-to-base`    |
+| `ctp host deploy-from-configuration`     | `ctp host deploy-from-base`    |
+| `ctp retry deploy-until-configuration`   | `ctp retry deploy-to-base`     |
+| `ctp retry redeploy-until-configuration` | `ctp retry redeploy-to-base`   |
+| `ctp retry deploy-from-configuration`    | `ctp retry deploy-from-base`   |
+
 ## Deploy commands based on @playbook.retry file
 
-Whenever a deploy fails a playbook.retry file is created under `/srv/inventories/<project_name>/playbook.retry`. Instead of going trough the logs to find what machines failed you can use the following commands to deploy only the failed machines. Keep in mind that only that latest fail is written into the playbook.retry file so when running multiple instances of Catapult (using `make shell` multiple times) and multiple deploys in parallel the latest fail will be written into the playbook.retry file.
+Whenever a deploy fails, Ansible writes the failed hosts into a `playbook.retry` file. Instead of going through the logs to find what machines failed, you can use the `ctp retry` commands to run a deploy command only on those machines.
 
-- Runs `ctp host deploy` on failed machines based on playbook.retry file
+Each Catapult shell session (every `make shell`) has its own retry file, so parallel deploys in different shells don't overwrite each other's failures. The path of the current session's retry file is stored in the `CTP_SESSION_RETRY_FILE` environment variable, already prefixed with `@` so it can be passed straight to Ansible's `-l` option. The retry file only contains the hosts from the latest failed deploy in that session.
+
+- Lists the hosts in the current session's retry file
 
 ```zsh
-ctp retry deploy
+ctp retry list
 ```
 
-- Runs `ctp host redeploy` failed machines based on playbook.retry file
+- Runs the matching `ctp host` command on the failed machines
 
 ```zsh
-ctp retry redeploy
+ctp retry <subcommand>
 ```
 
-- Runs `ctp host deploy-until-configuration` on failed machines based on playbook.retry file
+| Retry command                      | Runs                              |
+| ---------------------------------- | --------------------------------- |
+| `ctp retry deploy`                 | `ctp host deploy`                 |
+| `ctp retry redeploy`               | `ctp host redeploy`               |
+| `ctp retry deploy-with-network`    | `ctp host deploy-with-network`    |
+| `ctp retry deploy-to-clone`        | `ctp host deploy-to-clone`        |
+| `ctp retry redeploy-to-clone`      | `ctp host redeploy-to-clone`      |
+| `ctp retry deploy-to-base`         | `ctp host deploy-to-base`         |
+| `ctp retry redeploy-to-base`       | `ctp host redeploy-to-base`       |
+| `ctp retry deploy-from-clone`      | `ctp host deploy-from-clone`      |
+| `ctp retry deploy-from-base`       | `ctp host deploy-from-base`       |
+| `ctp retry deploy-with-mid-snap`   | `ctp host deploy-with-mid-snap`   |
+| `ctp retry redeploy-with-mid-snap` | `ctp host redeploy-with-mid-snap` |
+| `ctp retry deploy-role`            | `ctp host deploy-role`            |
+
+- Uses the retry file with any other Ansible command
 
 ```zsh
-ctp retry deploy-until-configuration
-```
-
-- Runs `ctp host redeploy-until-configuration` on failed machines based on playbook.retry file
-
-```zsh
-ctp retry redeploy-until-configuration
-```
-
-- Runs `ctp host deploy-from-configuration` on failed machines based on playbook.retry file
-
-```zsh
-ctp retry deploy-from-configuration
-```
-
-- Runs `ctp host deploy-role` on failed machines based on playbook.retry file
-
-```zsh
-ctp retry deploy-role
+ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -l "$CTP_SESSION_RETRY_FILE"
 ```
 
 ## VM commands

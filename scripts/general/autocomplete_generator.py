@@ -195,7 +195,7 @@ _{{ autocomplete.function_name }}() {
                 _ctp_cmd_disps+=("$_ctp_display_result")
                 (( _i++ ))
             done
-            compadd -M 'l:|=* r:|=*' -ld _ctp_cmd_disps -a _ctp_cmd_names
+            compadd -V ctp_commands -M 'l:|=* r:|=*' -ld _ctp_cmd_disps -a _ctp_cmd_names
             ;;
         args)
             case $line[1] in
@@ -236,7 +236,7 @@ _{{ autocomplete.function_name }}() {
                                     _disps+=("$_ctp_display_result")
                                     (( _i++ ))
                                 done
-                                compadd -M 'l:|=* r:|=*' -ld _disps -a _modes
+                                compadd -V ctp_subcommands -M 'l:|=* r:|=*' -ld _disps -a _modes
                                 ;;
                         esac
                     {% if entry.command == "host" %}

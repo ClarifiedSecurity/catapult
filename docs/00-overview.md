@@ -22,3 +22,48 @@ When deploying a remote host it's important to understand what steps Catapult go
 | 9   | [customization_post_vm_role](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/customization_post_vm_role) | Including post-VM customization role if it exists. Same as `customization_pre_vm_role` but runs after the VM configuration.                                          |
 | 10  | [finalize](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/finalize)                                     | Running finalization tasks like running tests, updates, cleanup, etc.                                                                                                |
 | 11  | [get_ip](https://github.com/ClarifiedSecurity/nova.core/tree/main/nova/core/roles/get_ip)                                         | Printing out the connection info of the VM                                                                                                                           |
+
+## Deployment Tree with deploy modes
+
+The diagram below shows the logical start and end of each command, using the step numbers from the [Simple Deployment Tree](#simple-deployment-tree).
+
+```text
+                      1     2     3     4     5     6     7     8     9     10    11
+                      vars  VM    net   conn  acct  OS    pre   cust  post  fin   IP
+
+deploy                ●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●
+redeploy              ●━━━━━↻━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●
+remove                ●━━━━━✕
+deploy-to-clone       ●━━━━━●━━━━━●
+deploy-to-base        ●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━◆
+deploy-with-network   ●━━━━━●━━━━━◎━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●
+deploy-with-mid-snap  ●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━◆━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●
+deploy-from-clone                       ●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●━━━━━●
+deploy-from-base                                          ●━━━━━●━━━━━●━━━━━●━━━━━●
+deploy-role           ●┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄●┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄●
+```
+
+| Symbol | Meaning                                                                     |
+| ------ | --------------------------------------------------------------------------- |
+| `●`    | Step runs                                                                   |
+| `↻`    | Existing VM is removed and a new one is created (all `redeploy-*` commands) |
+| `✕`    | VM is removed and the play stops                                            |
+| `◎`    | Network settings are reconfigured even if the VM already exists             |
+| `◆`    | `Pre-customization` snapshot is created after the step                      |
+| `┄`    | Steps in between are skipped                                                |
+
+### Running any role on its own
+
+`deploy-single-role` and `deploy-pre-role` don't follow the deploy flow. Instead of the numbered steps they run one role of your choice, given as the first (tab-completable) argument, and then stop. The role can come from the project, from installed collection like `nova.core`. The two commands differ in where that role is included:
+
+```text
+deploy-pre-role       vars ━━▶ <any role> ■
+deploy-single-role    vars ━━▶ conn ━━▶ <any role> ■
+```
+
+| Command              | Where the role is included                          | Typical use                                                                                                 |
+| -------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `deploy-pre-role`    | Right after **1 - deploy_vars**, before any VM work | Roles that don't need a connection to the VM and run on localhost, like snapshots, power state or API calls |
+| `deploy-single-role` | After **4 - connection**                            | Running or developing one role against an existing VM                                                       |
+
+`■` means the play stops.
