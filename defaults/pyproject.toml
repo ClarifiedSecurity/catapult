@@ -68,6 +68,9 @@ dependencies = [
     "azure-nspkg",
     "azure-storage-blob",
     "azure-storage-file-share",
+    "azure.mgmt.containerservicefleet",
+    "azure.mgmt.redisenterprise",
+    "azure.mgmt.synapse",
     "bcrypt==4.3.0", # https://foss.heptapod.net/python-libs/passlib/-/issues/196
     "boto3",
     "botocore",
