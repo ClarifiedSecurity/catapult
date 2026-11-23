@@ -79,24 +79,47 @@ autocomplete:
       description: Commands for retrying failed machines
       hosts_as_arguments: false
       subcommands:
+        - subcommand_name: list
+          subcommand_description: List the current hosts in the playbook.retry file
+          subcommand_to_execute:
+            cat $ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry 2> /dev/null ||
+            echo "No hosts found in $ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry"
+
         - subcommand_name: deploy
           subcommand_description: Run deploy on failed machines based on playbook.retry file
-          subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -l @playbook.retry "$@"
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e deploy_mode=deploy
+            -l @$ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry "$@"
+
         - subcommand_name: redeploy
           subcommand_description: Run redeploy failed machines based on playbook.retry file
-          subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=redeploy -l @playbook.retry "$@"
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e deploy_mode=redeploy
+            -l @$ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry "$@"
+
         - subcommand_name: deploy-until-configuration
           subcommand_description: Run deploy-until-configuration on failed machines based on playbook.retry file
-          subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e just_clone=true -l @playbook.retry "$@"
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e deploy_mode=deploy -e dm_base=true
+            -l @$ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry "$@"
+
         - subcommand_name: redeploy-until-configuration
           subcommand_description: Run redeploy-until-configuration on failed machines based on playbook.retry file
-          subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=redeploy -e just_clone=true -l @playbook.retry "$@"
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e deploy_mode=redeploy -e dm_base=true
+            -l @$ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry "$@"
+
         - subcommand_name: deploy-from-configuration
           subcommand_description: Run deploy-from-configuration on failed machines based on playbook.retry file
-          subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only_wp=true -l @playbook.retry "$@"
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e deploy_mode=deploy -e dm_from_base=true
+            -l @$ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry "$@"
+
         - subcommand_name: deploy-role
           subcommand_description: Run deploy-role on failed machines based on playbook.retry file
-          subcommand_to_execute: ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e=deploy_mode=deploy -e role_only=true -l @playbook.retry "$@"
+          subcommand_to_execute:
+            ansible-playbook $PWD/playbook.yml -e @~/.vault/vlt -e deploy_mode=deploy -e dm_customize=true
+            -l @$ANSIBLE_RETRY_FILES_SAVE_PATH/playbook.retry "$@"
 
     - command: vm
       description: Commands for configuring hosts on an hypervisor level

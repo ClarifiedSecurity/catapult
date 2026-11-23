@@ -21,6 +21,4 @@ if [[ "$MAKEVAR_ARA_ENABLE" == 1 ]]; then
 
     export ANSIBLE_CALLBACK_PLUGINS="${ANSIBLE_CALLBACK_PLUGINS}"
 
-    # ara-manage migrate
-
 fi

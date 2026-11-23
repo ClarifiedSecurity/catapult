@@ -52,6 +52,13 @@ function playbook_copy() {
         cp -f /srv/defaults/start.yml "$selected_folder/playbook.yml" || echo -e "${C_RED}Failed to copy playbook file.${C_RST}"
     fi
 
+    # Unique Ansible retry files save path for each project and shell session
+    local retry_dir_name
+    retry_dir_name="$(basename "$selected_folder")"
+    export ANSIBLE_RETRY_FILES_SAVE_PATH="/tmp/${retry_dir_name}_retry_$$"
+    export CTP_SESSION_RETRY_FILE="@${ANSIBLE_RETRY_FILES_SAVE_PATH}/playbook.retry"
+    rm -f "${PWD}/playbook.retry"
+
     echo -ne "${C_RST}"
 }
 
