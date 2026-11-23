@@ -1,4 +1,7 @@
 ---
+base_vm_template: BASE_TEMPLATE_pfsense
+vm_template: catapult-template-pfsense
+
 # Accounts
 admin_account: admin
 template_username: "{{ admin_account }}"
